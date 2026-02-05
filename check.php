@@ -1,62 +1,70 @@
 <?php
+// VERSION: 2026-02-06 01:55
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>XHRM Final Diagnostic</h1>";
+echo "<h1>XHRM Hyper-Diagnostic (v1.2)</h1>";
+echo "<p><b>Server Time:</b> " . date('Y-m-d H:i:s') . "</p>";
+
+function log_debug($msg, $color = 'black')
+{
+    echo "<p style='color:$color'>$msg</p>";
+}
 
 try {
+    log_debug("Step 1: Loading Autoloader...");
     require 'vendor/autoload.php';
-    echo "<p style='color:green'>✅ Autoloader loaded.</p>";
+    log_debug("✅ Autoloader loaded.", 'green');
 
+    log_debug("Step 2: Loading Conf.php...");
     require_once 'lib/confs/Conf.php';
-    echo "<p style='color:green'>✅ Conf.php loaded.</p>";
+    log_debug("✅ Conf.php loaded.", 'green');
 
-    echo "<h3>1. Permission Check</h3>";
-    $paths = [
-        'src/log' => 'Log Directory',
-        'src/cache' => 'Cache Directory',
-        'src/config/proxy' => 'Doctrine Proxies',
-        'lib/confs' => 'Config Directory'
-    ];
-
-    echo "<ul>";
-    foreach ($paths as $path => $name) {
-        $fullPath = __DIR__ . '/' . $path;
-        if (is_dir($fullPath)) {
-            $writable = is_writable($fullPath) ? "<span style='color:green'>Writable</span>" : "<span style='color:red'>NOT Writable</span>";
-            echo "<li>✅ $name: Exists ($writable)</li>";
-        } else {
-            echo "<li>❌ $name: <span style='color:red'>MISSING</span> ($fullPath)</li>";
-        }
+    log_debug("Step 3: Checking XHRM Classes...");
+    if (class_exists('XHRM\Framework\Framework')) {
+        log_debug("✅ Framework class exists.", 'green');
+    } else {
+        throw new Exception("CRITICAL: Framework class NOT found!");
     }
-    echo "</ul>";
 
-    echo "<h3>2. Bootstrapping Framework</h3>";
-    echo "<p>Attempting to boot the Framework (this is where the 500 error usually happens)...</p>";
-
+    log_debug("Step 4: Initializing Framework (Kernel)...");
     try {
-        $env = 'prod';
-        $debug = false;
-        $kernel = new \XHRM\Framework\Framework($env, $debug);
-        echo "<p style='color:green'>✅ Framework instantiated.</p>";
-
-        // This is the heavy lifting
-        echo "<p>Checking Service Container initialization...</p>";
-        $container = $kernel->getContainer();
-        echo "<p style='color:green'>✅ Service Container initialized.</p>";
-
-        echo "<p style='color:blue'>💡 If you see this, the core framework is OK. The 500 error might be caused by a redirect loop or a specific plugin route.</p>";
-
-    } catch (Throwable $bootError) {
-        echo "<div style='background:#fee; padding:15px; border:2px solid red;'>";
-        echo "<h3>🔥 BOOT ERROR DETECTED:</h3>";
-        echo "<p><b>Message:</b> " . htmlspecialchars($bootError->getMessage()) . "</p>";
-        echo "<p><b>File:</b> " . $bootError->getFile() . " on line " . $bootError->getLine() . "</p>";
-        echo "<p><b>Trace Hint:</b> " . substr($bootError->getTraceAsString(), 0, 500) . "...</p>";
-        echo "</div>";
+        $kernel = new \XHRM\Framework\Framework('prod', false);
+        log_debug("✅ Framework instantiated.", 'green');
+    } catch (Throwable $ke) {
+        log_debug("❌ FRAMEWORK INSTANTIATION FAILED: " . $ke->getMessage(), 'red');
+        echo "<pre>" . $ke->getTraceAsString() . "</pre>";
+        exit;
     }
+
+    log_debug("Step 5: Accessing Container...");
+    try {
+        $container = \XHRM\Framework\ServiceContainer::getContainer();
+        log_debug("✅ ServiceContainer accessed.", 'green');
+    } catch (Throwable $ce) {
+        log_debug("❌ CONTAINER ACCESS FAILED: " . $ce->getMessage(), 'red');
+        exit;
+    }
+
+    log_debug("Step 6: Testing Logger (Common crash point)...");
+    try {
+        $logger = $container->get(\XHRM\Framework\Services::LOGGER);
+        log_debug("✅ Logger service retrieved.", 'green');
+    } catch (Throwable $le) {
+        log_debug("❌ LOGGER INITIALIZATION FAILED: " . $le->getMessage(), 'red');
+        log_debug("<i>Check if /src/log folder is writable!</i>", 'blue');
+    }
+
+    log_debug("<h3>Final Results</h3>");
+    log_debug("If you reached here, the core system can boot! The 500 error is likely inside a specific page or route.", 'blue');
 
 } catch (Throwable $e) {
-    echo "<p style='color:red'>Fatal Page Error: " . $e->getMessage() . "</p>";
+    echo "<div style='background:#fee; padding:15px; border:4px solid red; margin-top:20px;'>";
+    echo "<h2>🔥 CRITICAL SYSTEM ERROR</h2>";
+    echo "<p><b>Message:</b> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><b>File:</b> " . $e->getFile() . " on line " . $e->getLine() . "</p>";
+    echo "<h3>Stack Trace:</h3>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "</div>";
 }
 ?>
