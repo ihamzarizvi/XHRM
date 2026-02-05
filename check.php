@@ -2,29 +2,43 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>XHRM Diagnostic Tool</h1>";
+echo "<h1>XHRM Advanced Diagnostic</h1>";
 
-$autoloader = __DIR__ . '/vendor/autoload.php';
+try {
+    require 'vendor/autoload.php';
+    echo "<p style='color:green'>✅ Autoloader loaded.</p>";
+    
+    use XHRM\Config\Config;
+    
+    echo "<h3>Testing Core Functions</h3>";
+    $installed = Config::isInstalled();
+    echo "<p>Config::isInstalled(): " . ($installed ? "TRUE" : "FALSE") . "</p>";
 
-if (file_exists($autoloader)) {
-    echo "<p style='color:green'>✅ Autoloader found at: " . htmlspecialchars($autoloader) . "</p>";
-    try {
-        require $autoloader;
-        echo "<p style='color:green'>✅ Autoloader loaded successfully!</p>";
-
-        if (class_exists('XHRM\Config\Config')) {
-            echo "<p style='color:green'>✅ XHRM Core Class found!</p>";
+    echo "<h3>Checking Directories</h3>";
+    $dirs = [
+        'src/config',
+        'src/log',
+        'src/confs',
+        'web',
+        'installer'
+    ];
+    
+    foreach ($dirs as $dir) {
+        $path = __DIR__ . '/' . $dir;
+        if (is_dir($path)) {
+            $writable = is_writable($path) ? "Writable" : "NOT Writable";
+            echo "<p>✅ $dir: Exists ($writable)</p>";
         } else {
-            echo "<p style='color:red'>❌ XHRM Core Class NOT found. Check your composer.json autoload paths.</p>";
+            echo "<p style='color:red'>❌ $dir: DOES NOT EXIST</p>";
         }
-    } catch (Exception $e) {
-        echo "<p style='color:red'>❌ Error loading autoloader: " . $e->getMessage() . "</p>";
     }
-} else {
-    echo "<p style='color:red'>❌ Autoloader NOT found at: " . htmlspecialchars($autoloader) . "</p>";
-}
 
-echo "<p><b>PHP Version:</b> " . phpversion() . "</p>";
-echo "<p><b>Document Root:</b> " . $_SERVER['DOCUMENT_ROOT'] . "</p>";
-echo "<p><b>Current Script:</b> " . $_SERVER['SCRIPT_FILENAME'] . "</p>";
+} catch (Throwable $e) {
+    echo "<div style='background:#fee; padding:10px; border:1px solid red;'>";
+    echo "<h3>🔥 Fatal Error Caught:</h3>";
+    echo "<p><b>Message:</b> " . $e->getMessage() . "</p>";
+    echo "<p><b>File:</b> " . $e->getFile() . " on line " . $e->getLine() . "</p>";
+    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+    echo "</div>";
+}
 ?>
