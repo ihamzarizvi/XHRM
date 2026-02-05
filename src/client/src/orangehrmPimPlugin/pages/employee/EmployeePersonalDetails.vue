@@ -1,32 +1,32 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
   <edit-employee-layout :employee-id="empNumber" screen="personal">
-    <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+    <div class="XHRM-horizontal-padding XHRM-vertical-padding">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('general.personal_details') }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="1" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="1" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <full-name-input
                 v-model:firstName="employee.firstName"
@@ -39,7 +39,7 @@
           <oxd-grid
             v-if="showDeprecatedFields"
             :cols="3"
-            class="orangehrm-full-width-grid"
+            class="XHRM-full-width-grid"
           >
             <oxd-grid-item>
               <oxd-input-field
@@ -53,7 +53,7 @@
 
         <oxd-divider />
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="employee.employeeId"
@@ -70,7 +70,7 @@
               />
             </oxd-grid-item>
           </oxd-grid>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="employee.drivingLicenseNo"
@@ -87,7 +87,7 @@
               />
             </oxd-grid-item>
           </oxd-grid>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item v-if="showSsnField">
               <oxd-input-field
                 v-model="employee.ssnNumber"
@@ -109,7 +109,7 @@
 
         <oxd-divider />
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="employee.nationality"
@@ -129,7 +129,7 @@
               />
             </oxd-grid-item>
           </oxd-grid>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <date-input
                 v-model="employee.birthday"
@@ -162,7 +162,7 @@
 
         <oxd-divider v-if="showDeprecatedFields" />
         <oxd-form-row v-if="showDeprecatedFields">
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="employee.militaryService"
@@ -193,8 +193,8 @@
 
 <script>
 import {APIService} from '@ohrm/core/util/services/api.service';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
+import EditEmployeeLayout from '@/XHRMPimPlugin/components/EditEmployeeLayout';
+import FullNameInput from '@/XHRMPimPlugin/components/FullNameInput';
 import {
   required,
   shouldNotExceedCharLength,
@@ -378,3 +378,4 @@ export default {
 </script>
 
 <style src="./employee.scss" lang="scss" scoped></style>
+

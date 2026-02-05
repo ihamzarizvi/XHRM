@@ -1,9 +1,9 @@
-<template>
+﻿<template>
   <oxd-dialog
     :style="{width: '90%', maxWidth: '450px'}"
     @update:show="onCancel"
   >
-    <div class="orangehrm-modal-header">
+    <div class="XHRM-modal-header">
       <oxd-text type="card-title">
         {{ $t('time.add_customer') }}
       </oxd-text>
@@ -28,7 +28,7 @@
         />
       </oxd-form-row>
       <oxd-divider />
-      <oxd-form-actions class="orangehrm-form-action">
+      <oxd-form-actions class="XHRM-form-action">
         <required-text />
         <oxd-button
           display-type="ghost"
@@ -131,3 +131,4 @@ export default {
   },
 };
 </script>
+

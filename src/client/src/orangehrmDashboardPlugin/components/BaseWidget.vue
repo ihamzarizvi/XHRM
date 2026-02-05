@@ -1,30 +1,30 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-sheet :gutters="false" class="orangehrm-dashboard-widget">
-    <div class="orangehrm-dashboard-widget-header">
-      <div class="orangehrm-dashboard-widget-name">
+  <oxd-sheet :gutters="false" class="XHRM-dashboard-widget">
+    <div class="XHRM-dashboard-widget-header">
+      <div class="XHRM-dashboard-widget-name">
         <oxd-icon
           :name="icon"
           :type="iconType"
-          class="orangehrm-dashboard-widget-icon"
+          class="XHRM-dashboard-widget-icon"
         ></oxd-icon>
         <oxd-text tag="p">
           {{ title }}
@@ -35,15 +35,15 @@
     <oxd-divider />
     <oxd-loading-spinner
       v-if="loading"
-      class="orangehrm-dashboard-widget-loader"
+      class="XHRM-dashboard-widget-loader"
     />
     <div v-else ref="widgetRef" :class="widgetBodyClasses">
       <slot></slot>
-      <div v-if="empty" class="orangehrm-dashboard-widget-body-nocontent">
+      <div v-if="empty" class="XHRM-dashboard-widget-body-nocontent">
         <img
           :src="defaultPic"
           alt="No Content"
-          class="orangehrm-dashboard-widget-img"
+          class="XHRM-dashboard-widget-img"
         />
         <oxd-text tag="p">
           {{ emptyText || $t('dashboard.not_available') }}
@@ -95,7 +95,7 @@ export default {
     const defaultPic = `${window.appGlobal.publicPath}/images/dashboard_empty_widget_watermark.png`;
 
     const widgetBodyClasses = computed(() => ({
-      'orangehrm-dashboard-widget-body': true,
+      'XHRM-dashboard-widget-body': true,
       '--scroll-visible':
         widgetRef.value?.scrollHeight > widgetRef.value?.clientHeight,
     }));
@@ -110,3 +110,4 @@ export default {
 </script>
 
 <style src="./base-widget.scss" lang="scss" scoped></style>
+

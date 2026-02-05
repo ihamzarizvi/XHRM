@@ -1,47 +1,47 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-sheet :gutters="false" type="white" class="orangehrm-buzz">
-    <div class="orangehrm-buzz-post">
-      <div class="orangehrm-buzz-post-header">
-        <div class="orangehrm-buzz-post-header-details">
+  <oxd-sheet :gutters="false" type="white" class="XHRM-buzz">
+    <div class="XHRM-buzz-post">
+      <div class="XHRM-buzz-post-header">
+        <div class="XHRM-buzz-post-header-details">
           <profile-image :employee="post.employee"></profile-image>
-          <div class="orangehrm-buzz-post-header-text">
-            <oxd-text tag="p" class="orangehrm-buzz-post-emp-name">
+          <div class="XHRM-buzz-post-header-text">
+            <oxd-text tag="p" class="XHRM-buzz-post-emp-name">
               {{ employeeFullName }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-buzz-post-time">
+            <oxd-text tag="p" class="XHRM-buzz-post-time">
               {{ postDateTime }}
             </oxd-text>
           </div>
         </div>
         <div
           v-if="post.permission.canUpdate || post.permission.canDelete"
-          class="orangehrm-buzz-post-header-config"
+          class="XHRM-buzz-post-header-config"
         >
           <oxd-dropdown>
             <oxd-icon-button name="three-dots" :with-container="true" />
             <template #content>
               <li
                 v-if="post.permission.canDelete"
-                class="orangehrm-buzz-post-header-config-item"
+                class="XHRM-buzz-post-header-config-item"
                 @click="$emit('delete', $event)"
               >
                 <oxd-icon name="trash" />
@@ -51,7 +51,7 @@
               </li>
               <li
                 v-if="post.permission.canUpdate"
-                class="orangehrm-buzz-post-header-config-item"
+                class="XHRM-buzz-post-header-config-item"
                 @click="$emit('edit', $event)"
               >
                 <oxd-icon name="pencil" />
@@ -65,11 +65,11 @@
       </div>
       <oxd-divider />
     </div>
-    <div class="orangehrm-buzz-post-body">
+    <div class="XHRM-buzz-post-body">
       <slot name="content"></slot>
       <slot name="body"></slot>
     </div>
-    <div class="orangehrm-buzz-post-footer">
+    <div class="XHRM-buzz-post-footer">
       <slot name="actionButton"></slot>
       <slot name="postStats"></slot>
     </div>
@@ -82,7 +82,7 @@ import {computed} from 'vue';
 import useLocale from '@/core/util/composable/useLocale';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 import {OxdDropdownMenu, OxdIcon, OxdSheet} from '@ohrm/oxd';
 
@@ -137,3 +137,4 @@ export default {
 </script>
 
 <style lang="scss" scoped src="./post-container.scss"></style>
+

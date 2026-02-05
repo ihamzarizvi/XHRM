@@ -466,14 +466,14 @@ INSERT INTO `hs_hr_province`(`id`, `province_name`, `province_code`, `cou_code`)
     (64, 'Armed Forces Middle East', 'AE', 'US'),
     (65, 'Armed Forces Pacific', 'AP', 'US');
 
-INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','OrangeHRM','info@orangehrm.com','VER001','HR Admin'),
-								  ('MOD002','PIM','OrangeHRM','info@orangehrm.com','VER001','HR Functions'),
-								  ('MOD004','Report','OrangeHRM','info@orangehrm.com','VER001','Reporting'),
-								  ('MOD005', 'Leave', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Leave Tracking'),
-								  ('MOD006', 'Time', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Time Tracking'),
-								  ('MOD007', 'Benefits', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Benefits Tracking'),
- 	 							('MOD008', 'Recruitment', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Recruitment'),
- 	 							('MOD009', 'Performance', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Performance');
+INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','XHRM','info@orangehrm.com','VER001','HR Admin'),
+								  ('MOD002','PIM','XHRM','info@orangehrm.com','VER001','HR Functions'),
+								  ('MOD004','Report','XHRM','info@orangehrm.com','VER001','Reporting'),
+								  ('MOD005', 'Leave', 'XHRM', 'info@orangehrm.com', 'VER001', 'Leave Tracking'),
+								  ('MOD006', 'Time', 'XHRM', 'info@orangehrm.com', 'VER001', 'Time Tracking'),
+								  ('MOD007', 'Benefits', 'XHRM', 'info@orangehrm.com', 'VER001', 'Benefits Tracking'),
+ 	 							('MOD008', 'Recruitment', 'XHRM', 'info@orangehrm.com', 'VER001', 'Recruitment'),
+ 	 							('MOD009', 'Performance', 'XHRM', 'info@orangehrm.com', 'VER001', 'Performance');
 
 INSERT INTO `ohrm_work_week` VALUES (1, NULL, 0, 0, 0, 0, 0, 8, 8);
 

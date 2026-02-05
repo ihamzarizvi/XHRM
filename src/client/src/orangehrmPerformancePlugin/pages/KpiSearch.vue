@@ -1,30 +1,30 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-table-filter
       :filter-title="$t('performance.key_performance_indicators_for_job_title')"
     >
       <oxd-form @submit-valid="filterItems" @reset="resetDataTable">
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <jobtitle-dropdown v-model="filters.jobTitleId" />
             </oxd-grid-item>
@@ -40,7 +40,7 @@
             type="reset"
           />
           <oxd-button
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             :label="$t('general.search')"
             type="submit"
@@ -49,8 +49,8 @@
       </oxd-form>
     </oxd-table-filter>
     <br />
-    <div class="orangehrm-paper-container">
-      <div class="orangehrm-header-container">
+    <div class="XHRM-paper-container">
+      <div class="XHRM-header-container">
         <oxd-button
           :label="$t('general.add')"
           icon-name="plus"
@@ -64,7 +64,7 @@
         :loading="isLoading"
         @delete="onClickDeleteSelected"
       ></table-header>
-      <div class="orangehrm-container">
+      <div class="XHRM-container">
         <oxd-card-table
           v-model:selected="checkedItems"
           v-model:order="sortDefinition"
@@ -76,7 +76,7 @@
           row-decorator="oxd-table-decorator-card"
         />
       </div>
-      <div class="orangehrm-bottom-container">
+      <div class="XHRM-bottom-container">
         <oxd-pagination
           v-if="showPaginator"
           v-model:current="currentPage"
@@ -95,7 +95,7 @@ import {navigate} from '@ohrm/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@/core/util/composable/usePaginate';
 import useSort from '@/core/util/composable/useSort';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown.vue';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown.vue';
 import usei18n from '@/core/util/composable/usei18n';
 
 const defaultFilters = {
@@ -298,3 +298,4 @@ export default {
   },
 };
 </script>
+

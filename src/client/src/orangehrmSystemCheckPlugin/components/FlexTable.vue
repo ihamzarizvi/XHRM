@@ -1,15 +1,15 @@
-<template>
-  <div class="orangehrm-flex-table">
-    <oxd-text tag="p" class="orangehrm-flex-table-title">
+﻿<template>
+  <div class="XHRM-flex-table">
+    <oxd-text tag="p" class="XHRM-flex-table-title">
       {{ titleName }}
     </oxd-text>
-    <oxd-divider class="orangehrm-flex-table-divider" />
+    <oxd-divider class="XHRM-flex-table-divider" />
     <div
       v-for="(item, index) in items"
       :key="index"
-      class="orangehrm-flex-table-row"
+      class="XHRM-flex-table-row"
     >
-      <oxd-text class="orangehrm-flex-table-content">{{ item.label }}</oxd-text>
+      <oxd-text class="XHRM-flex-table-content">{{ item.label }}</oxd-text>
       <oxd-text :class="getClass(item.value.status)">
         {{ item.value.message }}
       </oxd-text>
@@ -34,19 +34,19 @@ export default {
   methods: {
     getClass(id) {
       if (id === 1) {
-        return 'orangehrm-flex-table-value --success';
+        return 'XHRM-flex-table-value --success';
       }
       if (id === 2) {
-        return 'orangehrm-flex-table-value --warning';
+        return 'XHRM-flex-table-value --warning';
       }
-      return 'orangehrm-flex-table-value --error';
+      return 'XHRM-flex-table-value --error';
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.orangehrm-flex-table {
+.XHRM-flex-table {
   margin-bottom: 0.75rem;
   &-title {
     font-weight: 700;
@@ -77,3 +77,4 @@ export default {
   }
 }
 </style>
+

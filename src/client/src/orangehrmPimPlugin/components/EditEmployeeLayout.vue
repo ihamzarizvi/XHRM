@@ -1,37 +1,37 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-edit-employee">
-        <div class="orangehrm-edit-employee-navigation">
-          <div class="orangehrm-edit-employee-imagesection">
-            <div class="orangehrm-edit-employee-name">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-edit-employee">
+        <div class="XHRM-edit-employee-navigation">
+          <div class="XHRM-edit-employee-imagesection">
+            <div class="XHRM-edit-employee-name">
               <oxd-text tag="h6" class="--strong">{{ employeeName }}</oxd-text>
               <oxd-text v-if="!isCurrentEmp" type="subtitle-2">
                 {{ $t('general.past_employee') }}
               </oxd-text>
             </div>
-            <div class="orangehrm-edit-employee-image-wrapper">
+            <div class="XHRM-edit-employee-image-wrapper">
               <div
-                class="orangehrm-edit-employee-image"
+                class="XHRM-edit-employee-image"
                 @click="onClickProfilePic"
               >
                 <img
@@ -44,7 +44,7 @@
           </div>
           <tabs-navigation :tabs="tabs"></tabs-navigation>
         </div>
-        <div class="orangehrm-edit-employee-content">
+        <div class="XHRM-edit-employee-content">
           <slot></slot>
           <profile-custom-fields
             v-if="screen !== 'default'"
@@ -68,9 +68,9 @@
 import {computed, ref} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
 import {navigate} from '@ohrm/core/util/helper/navigation';
-import TabsNavigation from '@/orangehrmPimPlugin/components/TabsNavigation';
-import ProfileAttachments from '@/orangehrmPimPlugin/components/ProfileAttachments';
-import ProfileCustomFields from '@/orangehrmPimPlugin/components/ProfileCustomFields';
+import TabsNavigation from '@/XHRMPimPlugin/components/TabsNavigation';
+import ProfileAttachments from '@/XHRMPimPlugin/components/ProfileAttachments';
+import ProfileCustomFields from '@/XHRMPimPlugin/components/ProfileCustomFields';
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
@@ -155,11 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-card-container {
+.XHRM-card-container {
   padding: unset;
 }
 
-.orangehrm-edit-employee {
+.XHRM-edit-employee {
   display: flex;
   @include oxd-respond-to('xs') {
     flex-direction: column;
@@ -223,3 +223,4 @@ export default {
   }
 }
 </style>
+

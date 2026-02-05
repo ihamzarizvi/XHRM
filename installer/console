@@ -1,19 +1,19 @@
 #!/usr/bin/env php
 <?php
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.orangehrm.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -31,16 +31,16 @@ if (!$pathToAutoload) {
     exit(1);
 }
 
-use OrangeHRM\Framework\Console\Console;
-use OrangeHRM\Framework\Http\Session\MemorySessionStorage;
-use OrangeHRM\Framework\Http\Session\Session;
-use OrangeHRM\Framework\ServiceContainer;
-use OrangeHRM\Framework\Services;
-use OrangeHRM\Installer\Command\InstallerCountryListCommand;
-use OrangeHRM\Installer\Command\InstallOnExistingDatabaseCommand;
-use OrangeHRM\Installer\Command\InstallOnNewDatabaseCommand;
-use OrangeHRM\Installer\Command\UpgradeCommand;
-use OrangeHRM\Installer\Framework\HttpKernel;
+use XHRM\Framework\Console\Console;
+use XHRM\Framework\Http\Session\MemorySessionStorage;
+use XHRM\Framework\Http\Session\Session;
+use XHRM\Framework\ServiceContainer;
+use XHRM\Framework\Services;
+use XHRM\Installer\Command\InstallerCountryListCommand;
+use XHRM\Installer\Command\InstallOnExistingDatabaseCommand;
+use XHRM\Installer\Command\InstallOnNewDatabaseCommand;
+use XHRM\Installer\Command\UpgradeCommand;
+use XHRM\Installer\Framework\HttpKernel;
 
 set_time_limit(0);
 
@@ -62,6 +62,6 @@ $console->add(new InstallOnExistingDatabaseCommand());
 $console->add(new UpgradeCommand());
 $console->add(new InstallerCountryListCommand());
 
-$console->setName('OrangeHRM Command Line Installer');
+$console->setName('XHRM Command Line Installer');
 $console->setVersion('1.0.0');
 $console->run();

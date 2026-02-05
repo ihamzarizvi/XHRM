@@ -1,27 +1,27 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Command;
+namespace XHRM\Installer\Command;
 
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Installer\Util\AppSetupUtility;
-use OrangeHRM\Installer\Util\StateContainer;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Installer\Util\AppSetupUtility;
+use XHRM\Installer\Util\StateContainer;
 
 class InstallOnExistingDatabaseCommand extends InstallOnNewDatabaseCommand
 {
@@ -47,8 +47,8 @@ class InstallOnExistingDatabaseCommand extends InstallOnNewDatabaseCommand
             fn (?string $value) => $this->databasePortValidator($value)
         );
         $dbName = $this->getRequiredField('Database Name'); // not validated because existing database
-        $dbUser = $this->getRequiredField('OrangeHRM Database Username');
-        $dbPassword = $this->getIO()->askHidden('OrangeHRM Database User Password <comment>(hidden)</comment>');
+        $dbUser = $this->getRequiredField('XHRM Database Username');
+        $dbPassword = $this->getIO()->askHidden('XHRM Database User Password <comment>(hidden)</comment>');
         $enableDataEncryption = $this->getIO()->confirm('Enable Data Encryption', false);
 
         StateContainer::getInstance()->storeDbInfo(

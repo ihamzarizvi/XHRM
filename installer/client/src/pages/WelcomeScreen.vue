@@ -1,30 +1,30 @@
 <!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.orangehrm.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 <template>
   <oxd-form class="orangehrm-installer-page" @submit="toggleModal">
     <oxd-text tag="h5" class="orangehrm-installer-page-title">
-      Welcome to OrangeHRM Starter Version {{ productversion }} Setup Wizard
+      Welcome to XHRM Starter Version {{ productversion }} Setup Wizard
     </oxd-text>
     <br />
     <oxd-text tag="p" class="orangehrm-installer-page-content">
       This setup wizard will guide through the steps necessary to install/
-      upgrade OrangeHRM Starter components and their dependencies.
+      upgrade XHRM Starter components and their dependencies.
     </oxd-text>
     <br />
     <oxd-text tag="p" class="orangehrm-installer-page-content">
@@ -38,7 +38,7 @@
         option-label="Fresh Installation"
       />
       <oxd-text tag="p" class="orangehrm-installer-page-content --label">
-        Choose this option if you are installing OrangeHRM Starter for the first
+        Choose this option if you are installing XHRM Starter for the first
         time
       </oxd-text>
     </oxd-form-row>
@@ -50,7 +50,7 @@
         option-label="Upgrading an Existing Installation"
       />
       <oxd-text tag="p" class="orangehrm-installer-page-content --label">
-        Choose this option if you are already using a prior version of OrangeHRM
+        Choose this option if you are already using a prior version of XHRM
         Starter (version 4.0 onwards) and would like to upgrade to
         <b>version {{ productversion }}</b>
       </oxd-text>

@@ -1,29 +1,29 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
   <login-layout>
-    <oxd-text class="orangehrm-login-title" tag="h5">
+    <oxd-text class="XHRM-login-title" tag="h5">
       {{ $t('auth.login') }}
     </oxd-text>
-    <div class="orangehrm-login-form">
-      <div class="orangehrm-login-error">
+    <div class="XHRM-login-form">
+      <div class="XHRM-login-error">
         <oxd-alert
           :show="error !== null"
           :message="error?.message || ''"
@@ -32,7 +32,7 @@
         <oxd-sheet
           v-if="isDemoMode"
           type="gray-lighten-2"
-          class="orangehrm-demo-credentials"
+          class="XHRM-demo-credentials"
         >
           <oxd-text tag="p">Username : Admin</oxd-text>
           <oxd-text tag="p">Password : admin123</oxd-text>
@@ -70,41 +70,41 @@
           />
         </oxd-form-row>
 
-        <oxd-form-actions class="orangehrm-login-action">
+        <oxd-form-actions class="XHRM-login-action">
           <oxd-button
-            class="orangehrm-login-button"
+            class="XHRM-login-button"
             display-type="main"
             :label="$t('auth.login')"
             type="submit"
           />
         </oxd-form-actions>
-        <div class="orangehrm-login-forgot">
-          <oxd-text class="orangehrm-login-forgot-header" @click="navigateUrl">
+        <div class="XHRM-login-forgot">
+          <oxd-text class="XHRM-login-forgot-header" @click="navigateUrl">
             {{ $t('auth.forgot_password') }}?
           </oxd-text>
         </div>
       </oxd-form>
       <template v-if="authenticators.length > 0">
-        <oxd-divider class="orangehrm-login-seperator"></oxd-divider>
+        <oxd-divider class="XHRM-login-seperator"></oxd-divider>
         <social-media-auth :authenticators="authenticators"></social-media-auth>
       </template>
     </div>
-    <div class="orangehrm-login-footer">
-      <div v-if="showSocialMedia" class="orangehrm-login-footer-sm">
+    <div class="XHRM-login-footer">
+      <div v-if="showSocialMedia" class="XHRM-login-footer-sm">
         <a
-          href="https://www.linkedin.com/company/orangehrm/mycompany/"
+          href="https://www.linkedin.com/company/XHRM/mycompany/"
           target="_blank"
         >
-          <oxd-icon type="svg" class="orangehrm-sm-icon" name="linkedinFill" />
+          <oxd-icon type="svg" class="XHRM-sm-icon" name="linkedinFill" />
         </a>
-        <a href="https://www.facebook.com/OrangeHRM/" target="_blank">
-          <oxd-icon type="svg" class="orangehrm-sm-icon" name="facebookFill" />
+        <a href="https://www.facebook.com/XHRM/" target="_blank">
+          <oxd-icon type="svg" class="XHRM-sm-icon" name="facebookFill" />
         </a>
-        <a href="https://twitter.com/orangehrm?lang=en" target="_blank">
-          <oxd-icon type="svg" class="orangehrm-sm-icon" name="twitterFill" />
+        <a href="https://twitter.com/XHRM?lang=en" target="_blank">
+          <oxd-icon type="svg" class="XHRM-sm-icon" name="twitterFill" />
         </a>
-        <a href="https://www.youtube.com/c/OrangeHRMInc" target="_blank">
-          <oxd-icon type="svg" class="orangehrm-sm-icon" name="youtubeFill" />
+        <a href="https://www.youtube.com/c/XHRMInc" target="_blank">
+          <oxd-icon type="svg" class="XHRM-sm-icon" name="youtubeFill" />
         </a>
       </div>
       <slot name="footer"></slot>
@@ -117,8 +117,8 @@ import {urlFor} from '@ohrm/core/util/helper/url';
 import {OxdAlert, OxdIcon, OxdSheet} from '@ohrm/oxd';
 import {required} from '@ohrm/core/util/validation/rules';
 import {navigate, reloadPage} from '@ohrm/core/util/helper/navigation';
-import LoginLayout from '@/orangehrmAuthenticationPlugin/components/LoginLayout.vue';
-import SocialMediaAuth from '@/orangehrmAuthenticationPlugin/components/SocialMediaAuth.vue';
+import LoginLayout from '@/XHRMAuthenticationPlugin/components/LoginLayout.vue';
+import SocialMediaAuth from '@/XHRMAuthenticationPlugin/components/SocialMediaAuth.vue';
 
 export default {
   components: {
@@ -191,3 +191,4 @@ export default {
 </script>
 
 <style src="./login.scss" lang="scss" scoped></style>
+

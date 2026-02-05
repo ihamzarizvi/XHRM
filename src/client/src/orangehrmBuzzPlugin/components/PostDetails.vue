@@ -1,37 +1,37 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-post-details">
+  <div class="XHRM-post-details">
     <oxd-icon-button
-      class="orangehrm-post-details-close"
+      class="XHRM-post-details-close"
       name="x"
       :with-container="false"
       @click="onClickClose"
     />
-    <div class="orangehrm-post-details-header">
+    <div class="XHRM-post-details-header">
       <profile-image :employee="post.employee"></profile-image>
-      <div class="orangehrm-post-details-header-text">
-        <oxd-text tag="p" class="orangehrm-post-details-emp-name">
+      <div class="XHRM-post-details-header-text">
+        <oxd-text tag="p" class="XHRM-post-details-emp-name">
           {{ employeeFullName }}
         </oxd-text>
-        <oxd-text tag="p" class="orangehrm-post-details-time">
+        <oxd-text tag="p" class="XHRM-post-details-time">
           {{ postDateTime }}
         </oxd-text>
       </div>
@@ -42,13 +42,13 @@
     <oxd-text
       v-show="!readMore"
       tag="p"
-      class="orangehrm-post-details-readmore"
+      class="XHRM-post-details-readmore"
       @click="onClickReadMore"
     >
       {{ $t('buzz.read_more') }}
     </oxd-text>
     <oxd-divider></oxd-divider>
-    <div class="orangehrm-post-details-actions">
+    <div class="XHRM-post-details-actions">
       <post-like :like="post.liked" @click="onClickLike"></post-like>
       <post-stats :post="post" :mobile="mobile"></post-stats>
     </div>
@@ -68,12 +68,12 @@ import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import PostStats from '@/orangehrmBuzzPlugin/components/PostStats';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import PostLikeButton from '@/orangehrmBuzzPlugin/components/PostLikeButton';
+import PostStats from '@/XHRMBuzzPlugin/components/PostStats';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
+import PostLikeButton from '@/XHRMBuzzPlugin/components/PostLikeButton';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import PostCommentContainer from '@/orangehrmBuzzPlugin/components/PostCommentContainer';
+import PostCommentContainer from '@/XHRMBuzzPlugin/components/PostCommentContainer';
 
 export default {
   name: 'PostDetails',
@@ -141,7 +141,7 @@ export default {
     };
 
     const postClasses = computed(() => ({
-      'orangehrm-post-details-text': true,
+      'XHRM-post-details-text': true,
       '--truncate': readMore.value === false,
     }));
 
@@ -163,3 +163,4 @@ export default {
 </script>
 
 <style src="./post-details.scss" lang="scss" scoped></style>
+

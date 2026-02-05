@@ -1,26 +1,26 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-comment-wrapper">
+  <div class="XHRM-comment-wrapper">
     <profile-image :employee="data.employee"></profile-image>
-    <div class="orangehrm-post-comment">
+    <div class="XHRM-post-comment">
       <oxd-form v-if="edit" @submit-valid="onSubmit">
         <oxd-input-field
           v-model="comment"
@@ -31,20 +31,20 @@
         <oxd-text tag="span">{{ $t('buzz.press_esc_to') }}&nbsp;</oxd-text>
         <oxd-text
           tag="span"
-          class="orangehrm-post-comment-action --cancel"
+          class="XHRM-post-comment-action --cancel"
           @click="onCancelComment"
         >
           {{ $t('general.cancel') }}
         </oxd-text>
       </oxd-form>
-      <div v-else class="orangehrm-post-comment-area">
-        <oxd-text tag="p" class="orangehrm-post-comment-employee">
+      <div v-else class="XHRM-post-comment-area">
+        <oxd-text tag="p" class="XHRM-post-comment-employee">
           {{ employeeFullName }}
         </oxd-text>
         <oxd-text
           tag="span"
           :class="{
-            'orangehrm-post-comment-text': true,
+            'XHRM-post-comment-text': true,
             '--truncate': readMore === false,
           }"
         >
@@ -53,32 +53,32 @@
         <oxd-text
           v-show="!readMore"
           tag="span"
-          class="orangehrm-post-comment-readmore"
+          class="XHRM-post-comment-readmore"
           @click="onClickReadMore"
         >
           {{ $t('buzz.read_more') }}
         </oxd-text>
-        <oxd-text tag="p" class="orangehrm-post-comment-datetime">
+        <oxd-text tag="p" class="XHRM-post-comment-datetime">
           {{ dateTime }}
         </oxd-text>
         <div
           v-if="data.comment.numOfLikes > 0"
-          class="orangehrm-post-comment-stats"
+          class="XHRM-post-comment-stats"
         >
           <oxd-icon
             name="heart-fill"
-            class="orangehrm-post-comment-stats-icon"
+            class="XHRM-post-comment-stats-icon"
           />
-          <oxd-text tag="p" class="orangehrm-post-comment-stats-text">
+          <oxd-text tag="p" class="XHRM-post-comment-stats-text">
             {{ data.comment.numOfLikes }}
           </oxd-text>
         </div>
       </div>
-      <div v-if="!edit" class="orangehrm-post-comment-action-area">
+      <div v-if="!edit" class="XHRM-post-comment-action-area">
         <oxd-text
           tag="p"
           :class="{
-            'orangehrm-post-comment-action': true,
+            'XHRM-post-comment-action': true,
             '--liked': data.comment.liked === true,
           }"
           @click="onClickLike"
@@ -88,7 +88,7 @@
         <oxd-text
           v-if="data.permission.canUpdate"
           tag="p"
-          class="orangehrm-post-comment-action"
+          class="XHRM-post-comment-action"
           @click="onClickEdit"
         >
           {{ $t('general.edit') }}
@@ -96,7 +96,7 @@
         <oxd-text
           v-if="data.permission.canDelete"
           tag="p"
-          class="orangehrm-post-comment-action"
+          class="XHRM-post-comment-action"
           @click="onClickDelete"
         >
           {{ $t('performance.delete') }}
@@ -117,8 +117,8 @@ import {APIService} from '@/core/util/services/api.service';
 import useAutoFocus from '@/core/util/composable/useAutoFocus';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 import {OxdIcon} from '@ohrm/oxd';
 
@@ -236,3 +236,4 @@ export default {
 </script>
 
 <style src="./post-comment.scss" lang="scss" scoped></style>
+

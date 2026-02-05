@@ -1,26 +1,26 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text class="XHRM-main-title">
         {{ $t('admin.email_configuration') }}
       </oxd-text>
 
@@ -28,7 +28,7 @@
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="emailConfiguration.sentAs"
@@ -64,7 +64,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row v-if="emailConfiguration.mailType === 'sendmail'">
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-group :label="$t('admin.path_to_sendmail')">
                 <oxd-text tag="p" class="sendmail-path-value">
@@ -75,7 +75,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row v-if="emailConfiguration.mailType !== 'sendmail'">
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="emailConfiguration.smtpHost"
@@ -94,7 +94,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row v-if="emailConfiguration.mailType !== 'sendmail'">
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-group
                 :label="$t('admin.use_smtp_authentication')"
@@ -122,7 +122,7 @@
             emailConfiguration.smtpAuthType === 'login'
           "
         >
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="emailConfiguration.smtpUsername"
@@ -145,12 +145,12 @@
         </oxd-form-row>
         <oxd-form-row
           v-if="emailConfiguration.mailType !== 'sendmail'"
-          class="orangehrm-input-field-bottom-space"
+          class="XHRM-input-field-bottom-space"
         >
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item class="organization-name-container">
-              <div class="orangehrm-optional-field-row">
-                <oxd-text tag="p" class="orangehrm-optional-field-label">
+              <div class="XHRM-optional-field-row">
+                <oxd-text tag="p" class="XHRM-optional-field-label">
                   {{ $t('admin.tls') }}
                 </oxd-text>
                 <oxd-switch-input v-model="useTLSSecureConnection" />
@@ -159,7 +159,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row v-if="emailConfiguration.mailType !== 'sendmail'">
-          <oxd-grid :cols="1" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="1" class="XHRM-full-width-grid">
             <oxd-grid-item class="organization-name-container">
               <oxd-text tag="p" class="tls-hint">
                 {{
@@ -173,10 +173,10 @@
         </oxd-form-row>
 
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item class="organization-name-container">
-              <div class="orangehrm-optional-field-row">
-                <oxd-text tag="p" class="orangehrm-optional-field-label">
+              <div class="XHRM-optional-field-row">
+                <oxd-text tag="p" class="XHRM-optional-field-label">
                   {{ $t('admin.send_test_email') }}
                 </oxd-text>
                 <oxd-switch-input v-model="sendTestMailEditable" />
@@ -185,7 +185,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row v-if="sendTestMailEditable">
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="emailConfiguration.testEmailAddress"
@@ -369,3 +369,4 @@ export default {
 </script>
 
 <style src="./email-configuration.scss" lang="scss" scoped></style>
+

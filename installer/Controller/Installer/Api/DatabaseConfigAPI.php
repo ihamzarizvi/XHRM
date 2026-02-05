@@ -1,30 +1,30 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Controller\Installer\Api;
+namespace XHRM\Installer\Controller\Installer\Api;
 
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Framework\Http\Request;
-use OrangeHRM\Framework\Http\Response;
-use OrangeHRM\Installer\Controller\AbstractInstallerRestController;
-use OrangeHRM\Installer\Util\AppSetupUtility;
-use OrangeHRM\Installer\Util\StateContainer;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Framework\Http\Request;
+use XHRM\Framework\Http\Response;
+use XHRM\Installer\Controller\AbstractInstallerRestController;
+use XHRM\Installer\Util\AppSetupUtility;
+use XHRM\Installer\Util\StateContainer;
 
 class DatabaseConfigAPI extends AbstractInstallerRestController
 {
@@ -42,24 +42,24 @@ class DatabaseConfigAPI extends AbstractInstallerRestController
         $enableDataEncryption = $request->request->getBoolean('enableDataEncryption');
 
         if ($dbType === AppSetupUtility::INSTALLATION_DB_TYPE_EXISTING &&
-            ($request->request->has('useSameDbUserForOrangeHRM') ||
+            ($request->request->has('useSameDbUserForXHRM') ||
                 $request->request->has('ohrmDbUser') ||
                 $request->request->has('ohrmDbPassword'))) {
             $this->getResponse()->setStatusCode(Response::HTTP_BAD_REQUEST);
             return [
                 'error' => [
                     'status' => $this->getResponse()->getStatusCode(),
-                    'message' => 'Unexpected Parameter `useSameDbUserForOrangeHRM` or `ohrmDbUser` or `ohrmDbPassword` Received'
+                    'message' => 'Unexpected Parameter `useSameDbUserForXHRM` or `ohrmDbUser` or `ohrmDbPassword` Received'
                 ]
             ];
         }
 
         $appSetupUtility = new AppSetupUtility();
         if ($dbType === AppSetupUtility::INSTALLATION_DB_TYPE_NEW) {
-            $useSameDbUserForOrangeHRM = $request->request->getBoolean('useSameDbUserForOrangeHRM', false);
+            $useSameDbUserForXHRM = $request->request->getBoolean('useSameDbUserForXHRM', false);
             $ohrmDbUser = $dbUser;
             $ohrmDbPassword = $dbPassword;
-            if (!$useSameDbUserForOrangeHRM) {
+            if (!$useSameDbUserForXHRM) {
                 $ohrmDbUser = $request->request->get('ohrmDbUser');
                 $ohrmDbPassword = $request->request->get('ohrmDbPassword');
             }
@@ -91,12 +91,12 @@ class DatabaseConfigAPI extends AbstractInstallerRestController
                         'message' => 'Database Already Exist'
                     ]
                 ];
-            } elseif (!$useSameDbUserForOrangeHRM && $appSetupUtility->isDatabaseUserExist($ohrmDbUser)) {
+            } elseif (!$useSameDbUserForXHRM && $appSetupUtility->isDatabaseUserExist($ohrmDbUser)) {
                 $this->getResponse()->setStatusCode(Response::HTTP_BAD_REQUEST);
                 return [
                     'error' => [
                         'status' => $this->getResponse()->getStatusCode(),
-                        'message' => "Database User `$ohrmDbUser` Already Exist. Please Use Another Username for `OrangeHRM Database Username`."
+                        'message' => "Database User `$ohrmDbUser` Already Exist. Please Use Another Username for `XHRM Database Username`."
                     ]
                 ];
             } else {
@@ -106,8 +106,8 @@ class DatabaseConfigAPI extends AbstractInstallerRestController
                         'dbPort' => $dbPort,
                         'dbUser' => $dbUser,
                         'dbName' => $dbName,
-                        'useSameDbUserForOrangeHRM' => $useSameDbUserForOrangeHRM,
-                        'ohrmDbUser' => $useSameDbUserForOrangeHRM ? null : ($dbInfo[StateContainer::ORANGEHRM_DB_USER] ?? null),
+                        'useSameDbUserForXHRM' => $useSameDbUserForXHRM,
+                        'ohrmDbUser' => $useSameDbUserForXHRM ? null : ($dbInfo[StateContainer::XHRM_DB_USER] ?? null),
                         'enableDataEncryption' => $enableDataEncryption,
                     ],
                     'meta' => []
@@ -162,7 +162,7 @@ class DatabaseConfigAPI extends AbstractInstallerRestController
     protected function handleGet(Request $request): array
     {
         $dbInfo = StateContainer::getInstance()->getDbInfo();
-        $useSameDbUserForOrangeHRM = isset($dbInfo[StateContainer::ORANGEHRM_DB_USER]) && $dbInfo[StateContainer::DB_USER] == $dbInfo[StateContainer::ORANGEHRM_DB_USER];
+        $useSameDbUserForXHRM = isset($dbInfo[StateContainer::XHRM_DB_USER]) && $dbInfo[StateContainer::DB_USER] == $dbInfo[StateContainer::XHRM_DB_USER];
         return [
             'data' => [
                 'dbHost' => $dbInfo[StateContainer::DB_HOST],
@@ -170,8 +170,8 @@ class DatabaseConfigAPI extends AbstractInstallerRestController
                 'dbName' => $dbInfo[StateContainer::DB_NAME],
                 'dbUser' => $dbInfo[StateContainer::DB_USER],
                 'dbType' => StateContainer::getInstance()->getDbType(),
-                'useSameDbUserForOrangeHRM' => $useSameDbUserForOrangeHRM,
-                'ohrmDbUser' => $useSameDbUserForOrangeHRM ? null : ($dbInfo[StateContainer::ORANGEHRM_DB_USER] ?? null),
+                'useSameDbUserForXHRM' => $useSameDbUserForXHRM,
+                'ohrmDbUser' => $useSameDbUserForXHRM ? null : ($dbInfo[StateContainer::XHRM_DB_USER] ?? null),
                 'enableDataEncryption' => $dbInfo[StateContainer::ENABLE_DATA_ENCRYPTION],
             ],
             'meta' => []

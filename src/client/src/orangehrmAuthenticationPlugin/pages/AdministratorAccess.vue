@@ -1,32 +1,32 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-admin-access-container">
-    <div class="orangehrm-card-container">
+  <div class="XHRM-admin-access-container">
+    <div class="XHRM-card-container">
       <oxd-form
         ref="verifyForm"
         method="post"
         :action="submitUrl"
         @submit-valid="onSubmit"
       >
-        <oxd-text tag="h6" class="orangehrm-admin-access-title">
+        <oxd-text tag="h6" class="XHRM-admin-access-title">
           {{ $t('auth.admin_access') }}
         </oxd-text>
 
@@ -66,16 +66,16 @@
             autofocus
           />
         </oxd-form-row>
-        <div class="orangehrm-admin-access-button-container">
+        <div class="XHRM-admin-access-button-container">
           <oxd-button
-            class="orangehrm-admin-access-button"
+            class="XHRM-admin-access-button"
             display-type="ghost"
             size="large"
             :label="$t('general.cancel')"
             @click="onCancel"
           />
           <oxd-button
-            class="orangehrm-admin-access-button"
+            class="XHRM-admin-access-button"
             display-type="secondary"
             size="large"
             :label="$t('general.confirm')"
@@ -128,11 +128,11 @@ export default {
         password: [required],
       },
       noteClasses: {
-        'orangehrm-admin-access-note': true,
+        'XHRM-admin-access-note': true,
         '--padding': this.error === null,
       },
       noteContainerClass: {
-        'orangehrm-admin-access-note-container': this.error === null,
+        'XHRM-admin-access-note-container': this.error === null,
       },
     };
   },
@@ -155,11 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-card-container {
+.XHRM-card-container {
   box-shadow: 3px 3px 10px $oxd-interface-gray-color;
 }
 
-.orangehrm-admin-access {
+.XHRM-admin-access {
   &-container {
     display: flex;
     width: inherit;
@@ -199,3 +199,4 @@ export default {
   }
 }
 </style>
+

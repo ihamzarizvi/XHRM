@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -20,55 +20,55 @@
 <template>
   <oxd-dialog
     :gutters="false"
-    class="orangehrm-dialog-modal"
+    class="XHRM-dialog-modal"
     @update:show="onCancel"
   >
-    <div class="orangehrm-dialog-header-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+    <div class="XHRM-dialog-header-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('leave.insufficient_leave_balance') }}
       </oxd-text>
     </div>
     <oxd-divider
-      class="orangehrm-dialog-horizontal-margin orangehrm-clear-margins"
+      class="XHRM-dialog-horizontal-margin XHRM-clear-margins"
     />
     <div
-      class="orangehrm-dialog-horizontal-padding orangehrm-dialog-vertical-padding"
+      class="XHRM-dialog-horizontal-padding XHRM-dialog-vertical-padding"
     >
       <oxd-grid :cols="3">
         <oxd-grid-item>
           <oxd-input-group :label="$t('general.employee_name')">
-            <oxd-text class="orangehrm-leave-balance-text" tag="p">
+            <oxd-text class="XHRM-leave-balance-text" tag="p">
               {{ employeeName }}
             </oxd-text>
           </oxd-input-group>
         </oxd-grid-item>
         <oxd-grid-item>
           <oxd-input-group :label="$t('leave.leave_type')">
-            <oxd-text class="orangehrm-leave-balance-text" tag="p">
+            <oxd-text class="XHRM-leave-balance-text" tag="p">
               {{ leaveType }}
             </oxd-text>
           </oxd-input-group>
         </oxd-grid-item>
         <oxd-grid-item>
           <oxd-input-group :label="$t('leave.balance')">
-            <oxd-text class="orangehrm-leave-balance-text" tag="p">
+            <oxd-text class="XHRM-leave-balance-text" tag="p">
               {{ leaveBalance }}
             </oxd-text>
           </oxd-input-group>
         </oxd-grid-item>
       </oxd-grid>
     </div>
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         :headers="headers"
         :items="items"
         :clickable="false"
-        class="orangehrm-horizontal-padding"
+        class="XHRM-horizontal-padding"
         row-decorator="oxd-table-decorator-card"
       />
     </div>
     <div
-      class="orangehrm-dialog-horizontal-padding orangehrm-dialog-vertical-padding"
+      class="XHRM-dialog-horizontal-padding XHRM-dialog-vertical-padding"
     >
       <oxd-form-actions>
         <oxd-button
@@ -192,3 +192,4 @@ export default {
 </script>
 
 <style src="./leave-balance-modal.scss" lang="scss" scoped></style>
+

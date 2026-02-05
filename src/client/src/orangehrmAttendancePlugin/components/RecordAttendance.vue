@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -20,7 +20,7 @@
 <template>
   <oxd-form :loading="isLoading" @submit-valid="onSave">
     <oxd-form-row>
-      <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+      <oxd-grid :cols="4" class="XHRM-full-width-grid">
         <template v-if="attendanceRecord.previousRecord">
           <oxd-grid-item
             :class="
@@ -33,7 +33,7 @@
                 {{ previousAttendanceRecordTime }}
                 <oxd-text
                   tag="span"
-                  class="orangehrm-attendance-punchedIn-timezone"
+                  class="XHRM-attendance-punchedIn-timezone"
                 >
                   {{ `(GMT ${previousRecordTimezone})` }}
                 </oxd-text>
@@ -87,7 +87,7 @@
 
     <!-- Note input -->
     <oxd-form-row>
-      <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+      <oxd-grid :cols="4" class="XHRM-full-width-grid">
         <oxd-grid-item class="--span-column-2">
           <oxd-input-field
             v-model="attendanceRecord.note"
@@ -131,7 +131,7 @@ import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@ohrm/core/util/services/api.service';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {reloadPage, navigate} from '@/core/util/helper/navigation';
-import TimezoneDropdown from '@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue';
+import TimezoneDropdown from '@/XHRMAttendancePlugin/components/TimezoneDropdown.vue';
 
 const attendanceRecordModal = {
   date: null,
@@ -356,3 +356,4 @@ export default {
 </script>
 
 <style src="./record-attendance.scss" lang="scss" scoped></style>
+

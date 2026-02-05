@@ -1,40 +1,40 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-module-under-development">
-        <oxd-text tag="h4" class="orangehrm-module-under-development-heading">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-module-under-development">
+        <oxd-text tag="h4" class="XHRM-module-under-development-heading">
           {{ $t('general.launching_soon') }}
         </oxd-text>
         <img
           :src="moduleUnderDevelopment"
-          class="orangehrm-module-under-development-img"
+          class="XHRM-module-under-development-img"
           alt="this module is under development"
         />
-        <oxd-text tag="p" class="orangehrm-module-under-development-text">
+        <oxd-text tag="p" class="XHRM-module-under-development-text">
           {{ $t('general.page_under_development') }}
           <a
             target="_blank"
-            class="orangehrm-module-under-development-link"
-            href="https://sourceforge.net/projects/orangehrm/files/latest/download"
+            class="XHRM-module-under-development-link"
+            href="https://sourceforge.net/projects/XHRM/files/latest/download"
           >
             {{ $t('general.click_here') }}
           </a>
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-module-under-development {
+.XHRM-module-under-development {
   text-align: center;
   &-img {
     max-width: 100%;
@@ -82,3 +82,4 @@ export default {
   }
 }
 </style>
+

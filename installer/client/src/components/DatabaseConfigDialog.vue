@@ -13,7 +13,7 @@
         tag="p"
         class="orangehrm-database-config-dialog-content orangehrm-database-config--title"
       >
-        The following features and add-ons are not supported in OrangeHRM
+        The following features and add-ons are not supported in XHRM
         Starter version {{ productVersion }}. You may continue to upgrade your
         system to version {{ productVersion }}, but please note that any data
         used in these features will be inaccessible.
@@ -82,7 +82,7 @@ export default {
   computed: {
     optionLabel() {
       return (
-        'I want to continue upgrading the OrangeHRM system to version ' +
+        'I want to continue upgrading the XHRM system to version ' +
         this.productVersion +
         ' and I am aware that by doing so, any gathered data in incomplete features/add-ons will be inaccessible.'
       );

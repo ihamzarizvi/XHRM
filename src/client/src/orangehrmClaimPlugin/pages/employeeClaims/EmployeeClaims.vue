@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -21,7 +21,7 @@
   <oxd-table-filter :filter-title="$t('claim.employee_claims')">
     <oxd-form @submit-valid="filterItems">
       <oxd-form-row>
-        <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="4" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <employee-autocomplete
               v-model="filters.employee"
@@ -53,7 +53,7 @@
         </oxd-grid>
       </oxd-form-row>
       <oxd-form-row>
-        <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="4" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <date-input
               v-model="filters.fromDate"
@@ -84,7 +84,7 @@
           @click="onClickReset"
         />
         <oxd-button
-          class="orangehrm-left-space"
+          class="XHRM-left-space"
           display-type="secondary"
           :label="$t('general.search')"
           type="submit"
@@ -93,8 +93,8 @@
     </oxd-form>
   </oxd-table-filter>
   <br />
-  <div class="orangehrm-paper-container">
-    <div class="orangehrm-header-container">
+  <div class="XHRM-paper-container">
+    <div class="XHRM-header-container">
       <oxd-button
         :label="$t('claim.assign_claim')"
         icon-name="plus"
@@ -103,7 +103,7 @@
       />
     </div>
     <table-header :total="total" :loading="isLoading" />
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         v-model:order="sortDefinition"
         :items="items.data"
@@ -114,7 +114,7 @@
         row-decorator="oxd-table-decorator-card"
       />
     </div>
-    <div class="orangehrm-bottom-container">
+    <div class="XHRM-bottom-container">
       <oxd-pagination
         v-if="showPaginator"
         v-model:current="currentPage"
@@ -130,9 +130,9 @@ import {navigate} from '@/core/util/helper/navigation';
 import useSort from '@ohrm/core/util/composable/useSort';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import ReferenceIdAutocomplete from '@/orangehrmClaimPlugin/components/ReferenceIdAutocomplete.vue';
-import ClaimEventDropdown from '@/orangehrmClaimPlugin/components/ClaimEventDropdown.vue';
-import StatusDropdown from '@/orangehrmClaimPlugin/components/StatusDropdown.vue';
+import ReferenceIdAutocomplete from '@/XHRMClaimPlugin/components/ReferenceIdAutocomplete.vue';
+import ClaimEventDropdown from '@/XHRMClaimPlugin/components/ClaimEventDropdown.vue';
+import StatusDropdown from '@/XHRMClaimPlugin/components/StatusDropdown.vue';
 import {
   shouldNotExceedCharLength,
   validDateFormat,
@@ -393,3 +393,4 @@ export default {
   },
 };
 </script>
+

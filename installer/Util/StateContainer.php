@@ -1,30 +1,30 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Util;
+namespace XHRM\Installer\Util;
 
 use DateTime;
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Framework\Http\Session\Session;
-use OrangeHRM\Framework\ServiceContainer;
-use OrangeHRM\Framework\Services;
-use OrangeHRM\Installer\Controller\AbstractInstallerVueController;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Framework\Http\Session\Session;
+use XHRM\Framework\ServiceContainer;
+use XHRM\Framework\Services;
+use XHRM\Installer\Controller\AbstractInstallerVueController;
 
 class StateContainer
 {
@@ -33,8 +33,8 @@ class StateContainer
     public const DB_PORT = 'dbPort';
     public const DB_USER = 'dbUser';
     public const DB_PASSWORD = 'dbPass';
-    public const ORANGEHRM_DB_USER = 'ohrmDbUser';
-    public const ORANGEHRM_DB_PASSWORD = 'ohrmDbPassword';
+    public const XHRM_DB_USER = 'ohrmDbUser';
+    public const XHRM_DB_PASSWORD = 'ohrmDbPassword';
     public const IS_SET_DB_INFO = 'isSetDbInfo';
     public const INSTALLATION_DB_TYPE = 'dbType';
     public const ENABLE_DATA_ENCRYPTION = 'enableDataEncryption';
@@ -161,8 +161,8 @@ class StateContainer
         $this->getSession()->set(self::DB_PORT, $dbPort);
         $this->getSession()->set(self::ENABLE_DATA_ENCRYPTION, $enableDataEncryption);
         if ($ohrmDbUserCredential instanceof UserCredential) {
-            $this->getSession()->set(self::ORANGEHRM_DB_USER, $ohrmDbUserCredential->getUsername());
-            $this->getSession()->set(self::ORANGEHRM_DB_PASSWORD, $ohrmDbUserCredential->getPassword() ?? '');
+            $this->getSession()->set(self::XHRM_DB_USER, $ohrmDbUserCredential->getUsername());
+            $this->getSession()->set(self::XHRM_DB_PASSWORD, $ohrmDbUserCredential->getPassword() ?? '');
         }
         $this->getSession()->set(self::IS_SET_DB_INFO, true);
     }
@@ -180,9 +180,9 @@ class StateContainer
             self::DB_PORT => $this->getSession()->get(self::DB_PORT),
             self::ENABLE_DATA_ENCRYPTION => $this->getSession()->get(self::ENABLE_DATA_ENCRYPTION),
         ];
-        if ($this->getSession()->has(self::ORANGEHRM_DB_USER)) {
-            $dbInfo[self::ORANGEHRM_DB_USER] = $this->getSession()->get(self::ORANGEHRM_DB_USER);
-            $dbInfo[self::ORANGEHRM_DB_PASSWORD] = $this->getSession()->get(self::ORANGEHRM_DB_PASSWORD);
+        if ($this->getSession()->has(self::XHRM_DB_USER)) {
+            $dbInfo[self::XHRM_DB_USER] = $this->getSession()->get(self::XHRM_DB_USER);
+            $dbInfo[self::XHRM_DB_PASSWORD] = $this->getSession()->get(self::XHRM_DB_PASSWORD);
         }
         return $dbInfo;
     }
@@ -197,8 +197,8 @@ class StateContainer
         $this->getSession()->remove(self::DB_PASSWORD);
         $this->getSession()->remove(self::DB_HOST);
         $this->getSession()->remove(self::DB_PORT);
-        $this->getSession()->remove(self::ORANGEHRM_DB_USER);
-        $this->getSession()->remove(self::ORANGEHRM_DB_PASSWORD);
+        $this->getSession()->remove(self::XHRM_DB_USER);
+        $this->getSession()->remove(self::XHRM_DB_PASSWORD);
         $this->getSession()->remove(self::ENABLE_DATA_ENCRYPTION);
         $this->getSession()->set(self::IS_SET_DB_INFO, false);
         DatabaseServerConnection::reset();

@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -23,7 +23,7 @@
       <oxd-table-filter :filter-title="$t('leave.leave_list')">
         <oxd-form @submit-valid="filterItems" @reset="onReset">
           <oxd-form-row>
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <date-input
                   v-model="filters.fromDate"
@@ -58,7 +58,7 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <employee-autocomplete
                   v-model="filters.employee"
@@ -79,8 +79,8 @@
                 />
               </oxd-grid-item>
 
-              <oxd-grid-item class="orangehrm-leave-filter --span-column-2">
-                <oxd-text class="orangehrm-leave-filter-text" tag="p">
+              <oxd-grid-item class="XHRM-leave-filter --span-column-2">
+                <oxd-text class="XHRM-leave-filter-text" tag="p">
                   {{ $t('leave.include_past_employees') }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includePastEmps" />
@@ -98,7 +98,7 @@
               type="reset"
             />
             <oxd-button
-              class="orangehrm-left-space"
+              class="XHRM-left-space"
               display-type="secondary"
               :label="$t('general.search')"
               type="submit"
@@ -111,9 +111,9 @@
 </template>
 
 <script>
-import LeaveListTable from '@/orangehrmLeavePlugin/components/LeaveListTable';
+import LeaveListTable from '@/XHRMLeavePlugin/components/LeaveListTable';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
+import LeaveTypeDropdown from '@/XHRMLeavePlugin/components/LeaveTypeDropdown';
 import {OxdSwitchInput} from '@ohrm/oxd';
 
 export default {
@@ -137,7 +137,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-leave-filter {
+.XHRM-leave-filter {
   display: flex;
   align-items: center;
   white-space: nowrap;
@@ -147,3 +147,4 @@ export default {
   }
 }
 </style>
+

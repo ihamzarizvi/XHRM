@@ -1,7 +1,7 @@
-<template>
+﻿<template>
   <oxd-layout
     :class="{
-      'orangehrm-upgrade-layout': showUpgrade,
+      'XHRM-upgrade-layout': showUpgrade,
     }"
     v-bind="$attrs"
   >
@@ -125,10 +125,11 @@ export default {
 </script>
 
 <style lang="scss">
-.orangehrm-upgrade-layout {
+.XHRM-upgrade-layout {
   .oxd-topbar-header-userarea {
     align-self: center;
     margin-left: unset;
   }
 }
 </style>
+

@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
+ *
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with XHRM.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace XHRM\Core\Api\V2\Validator\Rules;
+
+class TimezoneOffset extends AbstractRule
+{
+    public const WESTERNMOST_TIMEZONE_OFFSET = -12.00;
+    public const EASTERN_MOST_TIMEZONE_OFFSET = 14.00;
+
+    /**
+     * @inheritDoc
+     */
+    public function validate($input): bool
+    {
+        if (
+            !(
+                is_numeric($input) &&
+                $input >= self::WESTERNMOST_TIMEZONE_OFFSET &&
+                $input <= self::EASTERN_MOST_TIMEZONE_OFFSET
+            )
+        ) {
+            return false;
+        }
+        return true;
+    }
+}
+

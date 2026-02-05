@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -38,7 +38,7 @@
       :account-types="accountTypes"
       @close="onEditModalClose"
     ></edit-salary-component>
-    <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
+    <div class="XHRM-horizontal-padding XHRM-vertical-padding">
       <profile-action-header
         :action-button-shown="$can.update(`salary_details`)"
         @click="onClickAdd"
@@ -52,7 +52,7 @@
       :loading="isLoading"
       @delete="onClickDeleteSelected"
     ></table-header>
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         v-model:selected="checkedItems"
         :headers="tableHeaders"
@@ -64,7 +64,7 @@
         row-decorator="oxd-table-decorator-card"
       />
     </div>
-    <div class="orangehrm-bottom-container">
+    <div class="XHRM-bottom-container">
       <oxd-pagination
         v-if="showPaginator"
         v-model:current="currentPage"
@@ -78,10 +78,10 @@
 <script>
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
 import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveSalaryComponent from '@/orangehrmPimPlugin/components/SaveSalaryComponent';
-import EditSalaryComponent from '@/orangehrmPimPlugin/components/EditSalaryComponent';
+import ProfileActionHeader from '@/XHRMPimPlugin/components/ProfileActionHeader';
+import EditEmployeeLayout from '@/XHRMPimPlugin/components/EditEmployeeLayout';
+import SaveSalaryComponent from '@/XHRMPimPlugin/components/SaveSalaryComponent';
+import EditSalaryComponent from '@/XHRMPimPlugin/components/EditSalaryComponent';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
 
 const salaryNormalizer = (data) => {
@@ -290,3 +290,4 @@ export default {
   },
 };
 </script>
+

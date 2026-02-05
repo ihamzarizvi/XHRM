@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -21,20 +21,20 @@
   <oxd-dialog
     v-if="show"
     :gutters="false"
-    class="orangehrm-dialog-modal"
+    class="XHRM-dialog-modal"
     @update:show="onCancel"
   >
-    <div class="orangehrm-dialog-header-container">
+    <div class="XHRM-dialog-header-container">
       <oxd-text type="card-title">
         {{ $t('leave.updating_entitlement') }} -
         {{ $t('leave.matching_employees') }}
       </oxd-text>
     </div>
     <oxd-divider
-      class="orangehrm-dialog-horizontal-margin orangehrm-clear-margins"
+      class="XHRM-dialog-horizontal-margin XHRM-clear-margins"
     />
     <div
-      class="orangehrm-dialog-horizontal-padding orangehrm-dialog-vertical-padding"
+      class="XHRM-dialog-horizontal-padding XHRM-dialog-vertical-padding"
     >
       <oxd-text type="subtitle-2">
         {{
@@ -42,17 +42,17 @@
         }}
       </oxd-text>
     </div>
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         :headers="headers"
         :items="items"
         :clickable="false"
-        class="orangehrm-horizontal-padding"
+        class="XHRM-horizontal-padding"
         row-decorator="oxd-table-decorator-card"
       />
     </div>
     <div
-      class="orangehrm-dialog-horizontal-padding orangehrm-dialog-vertical-padding"
+      class="XHRM-dialog-horizontal-padding XHRM-dialog-vertical-padding"
     >
       <oxd-form-actions>
         <oxd-button
@@ -162,9 +162,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-container {
+.XHRM-container {
   max-height: 165px;
   overflow-y: auto;
   @include oxd-scrollbar();
 }
 </style>
+

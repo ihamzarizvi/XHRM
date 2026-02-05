@@ -4,20 +4,20 @@ database:
   databaseName: orangehrm_mysql
   privilegedDatabaseUser: root
   privilegedDatabasePassword: root
-  useSameDbUserForOrangeHRM: y # y/n, if this field `n` fill `orangehrmDatabaseUser` and `orangehrmDatabasePassword`
+  useSameDbUserForXHRM: y # y/n, if this field `n` fill `orangehrmDatabaseUser` and `orangehrmDatabasePassword`
   orangehrmDatabaseUser: ~
   orangehrmDatabasePassword: ~
   isExistingDatabase: n # y/n
   enableDataEncryption: n # y/n
 
 organization:
-  name: OrangeHRM
+  name: XHRM
   country: US
 
 admin:
   adminUserName: Admin
   adminPassword: Ohrm@1423
-  adminEmployeeFirstName: OrangeHRM
+  adminEmployeeFirstName: XHRM
   adminEmployeeLastName: Admin
   workEmail: admin@example.com
   contactNumber: ~

@@ -1,6 +1,6 @@
-<template>
-  <div class="orangehrm-action-header">
-    <oxd-text tag="h6" class="orangehrm-main-title">
+﻿<template>
+  <div class="XHRM-action-header">
+    <oxd-text tag="h6" class="XHRM-main-title">
       <slot></slot>
     </oxd-text>
     <oxd-button
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-action {
+.XHRM-action {
   &-header {
     display: flex;
     overflow-wrap: break-word;
@@ -40,3 +40,4 @@ export default {
   }
 }
 </style>
+

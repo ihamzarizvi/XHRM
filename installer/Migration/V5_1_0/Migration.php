@@ -1,31 +1,31 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Migration\V5_1_0;
+namespace XHRM\Installer\Migration\V5_1_0;
 
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use OrangeHRM\Entity\WorkflowStateMachine;
-use OrangeHRM\Installer\Util\V1\AbstractMigration;
-use OrangeHRM\Installer\Util\V1\LangStringHelper;
-use OrangeHRM\Installer\Util\V1\TranslationHelper;
+use XHRM\Entity\WorkflowStateMachine;
+use XHRM\Installer\Util\V1\AbstractMigration;
+use XHRM\Installer\Util\V1\LangStringHelper;
+use XHRM\Installer\Util\V1\TranslationHelper;
 
 class Migration extends AbstractMigration
 {
@@ -581,27 +581,27 @@ class Migration extends AbstractMigration
         $this->updateMenuConfigurator(
             'recruitment',
             'addJobVacancy',
-            'OrangeHRM\\Recruitment\\Menu\\VacancyMenuConfigurator'
+            'XHRM\\Recruitment\\Menu\\VacancyMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'recruitment',
             'addCandidate',
-            'OrangeHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
+            'XHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'recruitment',
             'changeCandidateVacancyStatus',
-            'OrangeHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
+            'XHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'recruitment',
             'candidateHistory',
-            'OrangeHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
+            'XHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'recruitment',
             'interviewAttachments',
-            'OrangeHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
+            'XHRM\\Recruitment\\Menu\\CandidateMenuConfigurator'
         );
     }
 
@@ -610,32 +610,32 @@ class Migration extends AbstractMigration
         $this->updateMenuConfigurator(
             'performance',
             'saveKpi',
-            'OrangeHRM\\Performance\\Menu\\KpiMenuConfigurator'
+            'XHRM\\Performance\\Menu\\KpiMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'performance',
             'addPerformanceTracker',
-            'OrangeHRM\\Performance\\Menu\\PerformanceTrackerMenuConfigurator'
+            'XHRM\\Performance\\Menu\\PerformanceTrackerMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'performance',
             'addPerformanceTrackerLog',
-            'OrangeHRM\\Performance\\Menu\\PerformanceTrackerLogMenuConfigurator'
+            'XHRM\\Performance\\Menu\\PerformanceTrackerLogMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'performance',
             'saveReview',
-            'OrangeHRM\\Performance\\Menu\\ManageReviewMenuConfigurator'
+            'XHRM\\Performance\\Menu\\ManageReviewMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'performance',
             'reviewEvaluate',
-            'OrangeHRM\\Performance\\Menu\\MyReviewMenuConfigurator'
+            'XHRM\\Performance\\Menu\\MyReviewMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'performance',
             'reviewEvaluateByAdmin',
-            'OrangeHRM\\Performance\\Menu\\AdminReviewMenuConfigurator'
+            'XHRM\\Performance\\Menu\\AdminReviewMenuConfigurator'
         );
     }
 }

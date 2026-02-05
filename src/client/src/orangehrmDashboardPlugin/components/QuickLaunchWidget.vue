@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -24,20 +24,20 @@
     :loading="isLoading"
     :title="$t('dashboard.quick_launch')"
   >
-    <oxd-grid :cols="3" class="orangehrm-quick-launch">
+    <oxd-grid :cols="3" class="XHRM-quick-launch">
       <oxd-grid-item
         v-for="action in sortedActions"
         :key="action"
-        class="orangehrm-quick-launch-card"
+        class="XHRM-quick-launch-card"
       >
         <oxd-icon-button
           icon-type="svg"
-          class="orangehrm-quick-launch-icon"
+          class="XHRM-quick-launch-icon"
           :name="action.icon"
           :title="action.label"
           @click="onClickAction(action.path)"
         />
-        <div class="orangehrm-quick-launch-heading" :title="action.label">
+        <div class="XHRM-quick-launch-heading" :title="action.label">
           <oxd-text tag="p" class="--text">
             {{ action.label }}
           </oxd-text>
@@ -50,7 +50,7 @@
 <script>
 import {navigate} from '@/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import BaseWidget from '@/XHRMDashboardPlugin/components/BaseWidget.vue';
 
 export default {
   name: 'QuickLaunchWidget',
@@ -154,3 +154,4 @@ export default {
 </script>
 
 <style src="./quick-launch-widget.scss" lang="scss" scoped></style>
+

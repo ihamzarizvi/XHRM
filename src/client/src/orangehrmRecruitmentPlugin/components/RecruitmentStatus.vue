@@ -1,30 +1,30 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-card-container">
+  <div class="XHRM-card-container">
     <oxd-form :loading="isLoading">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('recruitment.application_stage') }}
       </oxd-text>
       <oxd-divider />
-      <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+      <oxd-grid :cols="3" class="XHRM-full-width-grid">
         <oxd-grid-item>
           <oxd-input-group :label="$t('general.name')">
             <oxd-text tag="p">
@@ -48,13 +48,13 @@
         </oxd-grid-item>
       </oxd-grid>
       <oxd-divider />
-      <div class="orangehrm-recruitment">
-        <div v-if="recruitmentStatus" class="orangehrm-recruitment-status">
+      <div class="XHRM-recruitment">
+        <div v-if="recruitmentStatus" class="XHRM-recruitment-status">
           <oxd-text type="subtitle-2">
             {{ $t('general.status') }}: {{ recruitmentStatus }}
           </oxd-text>
         </div>
-        <div class="orangehrm-recruitment-actions">
+        <div class="XHRM-recruitment-actions">
           <oxd-button
             v-if="hasWorkflow(3)"
             :label="$t('general.reject')"
@@ -221,7 +221,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-recruitment {
+.XHRM-recruitment {
   display: flex;
   justify-content: space-between;
   &-actions {
@@ -250,3 +250,4 @@ export default {
   }
 }
 </style>
+

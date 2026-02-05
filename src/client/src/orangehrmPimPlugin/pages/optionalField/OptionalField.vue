@@ -1,26 +1,26 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text class="XHRM-main-title">
         {{ $t('pim.optional_fields') }}
       </oxd-text>
 
@@ -28,12 +28,12 @@
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-text class="orangehrm-sub-title" tag="h6">
+          <oxd-text class="XHRM-sub-title" tag="h6">
             {{ $t('pim.show_deprecated_fields') }}
           </oxd-text>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <div class="orangehrm-optional-field-row">
-              <oxd-text tag="p" class="orangehrm-optional-field-label">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <div class="XHRM-optional-field-row">
+              <oxd-text tag="p" class="XHRM-optional-field-label">
                 {{
                   $t(
                     'pim.show_nick_name_smoker_and_military_service_in_personal_details',
@@ -50,24 +50,24 @@
         <oxd-divider />
 
         <oxd-form-row>
-          <oxd-text class="orangehrm-sub-title" tag="h6">
+          <oxd-text class="XHRM-sub-title" tag="h6">
             {{ $t('pim.country_specific_information') }}
           </oxd-text>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <div class="orangehrm-optional-field-row">
-              <oxd-text tag="p" class="orangehrm-optional-field-label">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <div class="XHRM-optional-field-row">
+              <oxd-text tag="p" class="XHRM-optional-field-label">
                 {{ $t('pim.show_ssn_field_in_personal_details') }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showSSN" />
             </div>
-            <div class="orangehrm-optional-field-row">
-              <oxd-text tag="p" class="orangehrm-optional-field-label">
+            <div class="XHRM-optional-field-row">
+              <oxd-text tag="p" class="XHRM-optional-field-label">
                 {{ $t('pim.show_sin_field_in_personal_details') }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showSIN" />
             </div>
-            <div class="orangehrm-optional-field-row">
-              <oxd-text tag="p" class="orangehrm-optional-field-label">
+            <div class="XHRM-optional-field-row">
+              <oxd-text tag="p" class="XHRM-optional-field-label">
                 {{ $t('pim.show_us_tax_exemptions_menu') }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showTaxExemptions" />
@@ -150,16 +150,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-optional-field-row {
+.XHRM-optional-field-row {
   grid-column-start: 1;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 0.75rem;
 }
 
-.orangehrm-optional-field-label {
+.XHRM-optional-field-label {
   @include oxd-input-control();
   padding: 0;
   flex-basis: 75%;
 }
 </style>
+

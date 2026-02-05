@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -22,25 +22,25 @@
     v-if="!mobile"
     :gutters="false"
     type="white"
-    class="orangehrm-buzz-stats-modal"
+    class="XHRM-buzz-stats-modal"
   >
     <div
       v-for="user in users"
       :key="user"
-      class="orangehrm-buzz-stats-modal-employee"
+      class="XHRM-buzz-stats-modal-employee"
     >
       <profile-image :employee="user.employee"></profile-image>
-      <oxd-text tag="p" class="orangehrm-buzz-stats-modal-employee-name">
+      <oxd-text tag="p" class="XHRM-buzz-stats-modal-employee-name">
         {{ user.fullName }}
       </oxd-text>
     </div>
-    <oxd-loading-spinner v-if="isLoading" class="orangehrm-buzz-loader" />
+    <oxd-loading-spinner v-if="isLoading" class="XHRM-buzz-loader" />
   </oxd-sheet>
-  <oxd-dialog v-else class="orangehrm-buzz-stats-dialog" @update:show="onClose">
-    <div class="orangehrm-buzz-stats-dialog-header">
+  <oxd-dialog v-else class="XHRM-buzz-stats-dialog" @update:show="onClose">
+    <div class="XHRM-buzz-stats-dialog-header">
       <oxd-icon
         :class="{
-          'orangehrm-buzz-stats-dialog-icon': true,
+          'XHRM-buzz-stats-dialog-icon': true,
           '--likes': type === 'likes',
         }"
         :name="icon"
@@ -57,21 +57,21 @@
     <div
       v-for="user in users"
       :key="user"
-      class="orangehrm-buzz-stats-dialog-employee"
+      class="XHRM-buzz-stats-dialog-employee"
     >
       <profile-image :employee="user.employee"></profile-image>
-      <oxd-text tag="p" class="orangehrm-buzz-stats-dialog-employee-name">
+      <oxd-text tag="p" class="XHRM-buzz-stats-dialog-employee-name">
         {{ user.fullName }}
       </oxd-text>
     </div>
-    <oxd-loading-spinner v-if="isLoading" class="orangehrm-buzz-loader" />
+    <oxd-loading-spinner v-if="isLoading" class="XHRM-buzz-loader" />
   </oxd-dialog>
 </template>
 
 <script>
 import {onBeforeMount, reactive, toRefs} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
 import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 import {OxdDialog, OxdIcon, OxdSheet, OxdSpinner} from '@ohrm/oxd';
@@ -184,3 +184,4 @@ export default {
 </script>
 
 <style lang="scss" scoped src="./post-stats-modal.scss"></style>
+

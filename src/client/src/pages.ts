@@ -1,38 +1,38 @@
-/**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+﻿/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
 import CorePages from '@/core/pages';
-import AdminPages from '@/orangehrmAdminPlugin';
-import PimPages from '@/orangehrmPimPlugin';
-import HelpPages from '@/orangehrmHelpPlugin';
-import TimePages from '@/orangehrmTimePlugin';
-import LeavePages from '@/orangehrmLeavePlugin';
-import OAuthPages from '@/orangehrmCoreOAuthPlugin';
-import AttendancePages from '@/orangehrmAttendancePlugin';
-import MaintenancePages from '@/orangehrmMaintenancePlugin';
-import RecruitmentPages from '@/orangehrmRecruitmentPlugin';
-import PerformancePages from '@/orangehrmPerformancePlugin';
-import CorporateDirectoryPages from '@/orangehrmCorporateDirectoryPlugin';
-import authenticationPages from '@/orangehrmAuthenticationPlugin';
-import languagePages from '@/orangehrmAdminPlugin';
-import dashboardPages from '@/orangehrmDashboardPlugin';
-import buzzPages from '@/orangehrmBuzzPlugin';
-import systemCheckPages from '@/orangehrmSystemCheckPlugin';
-import claimPages from '@/orangehrmClaimPlugin';
+import AdminPages from '@/XHRMAdminPlugin';
+import PimPages from '@/XHRMPimPlugin';
+import HelpPages from '@/XHRMHelpPlugin';
+import TimePages from '@/XHRMTimePlugin';
+import LeavePages from '@/XHRMLeavePlugin';
+import OAuthPages from '@/XHRMCoreOAuthPlugin';
+import AttendancePages from '@/XHRMAttendancePlugin';
+import MaintenancePages from '@/XHRMMaintenancePlugin';
+import RecruitmentPages from '@/XHRMRecruitmentPlugin';
+import PerformancePages from '@/XHRMPerformancePlugin';
+import CorporateDirectoryPages from '@/XHRMCorporateDirectoryPlugin';
+import authenticationPages from '@/XHRMAuthenticationPlugin';
+import languagePages from '@/XHRMAdminPlugin';
+import dashboardPages from '@/XHRMDashboardPlugin';
+import buzzPages from '@/XHRMBuzzPlugin';
+import systemCheckPages from '@/XHRMSystemCheckPlugin';
+import claimPages from '@/XHRMClaimPlugin';
 
 export default {
   ...AdminPages,
@@ -54,3 +54,4 @@ export default {
   ...systemCheckPages,
   ...claimPages,
 };
+

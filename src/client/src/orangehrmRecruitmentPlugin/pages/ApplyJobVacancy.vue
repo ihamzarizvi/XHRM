@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-card-container-header">
-        <oxd-text class="orangehrm-main-title" tag="h6">
+  <div class="XHRM-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-card-container-header">
+        <oxd-text class="XHRM-main-title" tag="h6">
           {{
             $t('recruitment.apply_for_n_vacancy', {
               vacancyName: vacancyName,
@@ -32,22 +32,22 @@
       </div>
       <template v-if="vacancyDescription">
         <oxd-divider />
-        <oxd-text class="orangehrm-vacancy-description" tag="p">
+        <oxd-text class="XHRM-vacancy-description" tag="p">
           {{ $t('general.description') }}
         </oxd-text>
         <oxd-text tag="p" :class="descriptionClasses">
-          <pre class="orangehrm-applicant-card-pre-tag"
+          <pre class="XHRM-applicant-card-pre-tag"
             >{{ vacancyDescription }}
         </pre
           >
         </oxd-text>
         <div
           v-if="vacancyDescription.length > descriptionLength"
-          class="orangehrm-vacancy-card-footer"
+          class="XHRM-vacancy-card-footer"
         >
           <oxd-text
             tag="p"
-            class="orangehrm-vacancy-card-anchor-tag"
+            class="XHRM-vacancy-card-anchor-tag"
             @click="onToggleMore"
           >
             {{
@@ -67,9 +67,9 @@
       >
         <input name="_token" :value="token" type="hidden" />
         <input name="vacancyId" :value="vacancyId" type="hidden" />
-        <div class="orangehrm-applicant-container">
-          <oxd-form-row class="orangehrm-applicant-container-row">
-            <oxd-grid :cols="1" class="orangehrm-full-width-grid">
+        <div class="XHRM-applicant-container">
+          <oxd-form-row class="XHRM-applicant-container-row">
+            <oxd-grid :cols="1" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <full-name-input
                   v-model:firstName="applicant.firstName"
@@ -82,9 +82,9 @@
               </oxd-grid-item>
             </oxd-grid>
           </oxd-form-row>
-          <oxd-form-row class="orangehrm-applicant-container-row">
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-              <oxd-grid-item class="orangehrm-applicant-container-colspan-2">
+          <oxd-form-row class="XHRM-applicant-container-row">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
+              <oxd-grid-item class="XHRM-applicant-container-colspan-2">
                 <oxd-input-field
                   v-model="applicant.email"
                   name="email"
@@ -106,7 +106,7 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <oxd-input-field
                   v-model="applicant.resume"
@@ -117,7 +117,7 @@
                   :rules="rules.resume"
                   required
                 />
-                <oxd-text class="orangehrm-input-hint" tag="p">
+                <oxd-text class="XHRM-input-hint" tag="p">
                   {{
                     $t('general.accept_custom_format_file_up_to_n_mb', {
                       count: formattedFileSize,
@@ -128,8 +128,8 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-              <oxd-grid-item class="orangehrm-applicant-container-colspan-2">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
+              <oxd-grid-item class="XHRM-applicant-container-colspan-2">
                 <oxd-input-field
                   v-model="applicant.keywords"
                   name="keywords"
@@ -143,8 +143,8 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-              <oxd-grid-item class="orangehrm-applicant-container-colspan-2">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
+              <oxd-grid-item class="XHRM-applicant-container-colspan-2">
                 <oxd-input-field
                   v-model="applicant.comment"
                   name="comment"
@@ -157,9 +157,9 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
               <oxd-grid-item
-                class="orangehrm-applicant-container-colspan-2 orangehrm-applicant-container-grid-checkbox"
+                class="XHRM-applicant-container-colspan-2 XHRM-applicant-container-grid-checkbox"
               >
                 <oxd-input-field
                   v-model="applicant.consentToKeepData"
@@ -184,14 +184,14 @@
       </oxd-form>
     </div>
   </div>
-  <div class="orangehrm-paper-container">
-    <oxd-text tag="p" class="orangehrm-vacancy-list-poweredby">
+  <div class="XHRM-paper-container">
+    <oxd-text tag="p" class="XHRM-vacancy-list-poweredby">
       {{ $t('recruitment.powered_by') }}
     </oxd-text>
     <img
       :src="defaultPic"
-      alt="OrangeHRM Picture"
-      class="orangehrm-container-img"
+      alt="XHRM Picture"
+      class="XHRM-container-img"
     />
     <slot name="footer"></slot>
   </div>
@@ -200,8 +200,8 @@
 
 <script>
 import {ref, toRefs} from 'vue';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import SuccessDialog from '@/orangehrmRecruitmentPlugin/components/SuccessDialog';
+import FullNameInput from '@/XHRMPimPlugin/components/FullNameInput';
+import SuccessDialog from '@/XHRMRecruitmentPlugin/components/SuccessDialog';
 import {
   maxFileSize,
   required,
@@ -310,8 +310,8 @@ export default {
     },
     descriptionClasses() {
       return {
-        'orangehrm-vacancy-description': true,
-        'orangehrm-vacancy-card-body': !this.isViewDetails,
+        'XHRM-vacancy-description': true,
+        'XHRM-vacancy-card-body': !this.isViewDetails,
       };
     },
     isMobile() {
@@ -359,3 +359,4 @@ export default {
 </script>
 
 <style src="./public-job-vacancy.scss" lang="scss" scoped></style>
+

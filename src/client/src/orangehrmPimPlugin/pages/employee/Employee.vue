@@ -1,28 +1,28 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-table-filter :filter-title="$t('pim.employee_information')">
       <oxd-form @submit-valid="filterItems" @reset="filterItems">
         <oxd-form-row>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <employee-autocomplete
                 v-model="filters.employee"
@@ -69,7 +69,7 @@
             type="reset"
           />
           <oxd-button
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             :label="$t('general.search')"
             type="submit"
@@ -78,10 +78,10 @@
       </oxd-form>
     </oxd-table-filter>
     <br />
-    <div class="orangehrm-paper-container">
+    <div class="XHRM-paper-container">
       <div
         v-if="$can.create('employee_list')"
-        class="orangehrm-header-container"
+        class="XHRM-header-container"
       >
         <oxd-button
           :label="$t('general.add')"
@@ -96,7 +96,7 @@
         :loading="isLoading"
         @delete="onClickDeleteSelected"
       ></table-header>
-      <div class="orangehrm-container">
+      <div class="XHRM-container">
         <oxd-card-table
           ref="cardTable"
           v-model:selected="checkedItems"
@@ -106,12 +106,12 @@
           :selectable="$can.delete('employee_list')"
           :clickable="true"
           :loading="isLoading"
-          class="orangehrm-employee-list"
+          class="XHRM-employee-list"
           row-decorator="oxd-table-decorator-card"
           @click="onClickEdit"
         />
       </div>
-      <div class="orangehrm-bottom-container">
+      <div class="XHRM-bottom-container">
         <oxd-pagination
           v-if="showPaginator"
           v-model:current="currentPage"
@@ -130,9 +130,9 @@ import usePaginate from '@ohrm/core/util/composable/usePaginate';
 import {navigate} from '@ohrm/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import SubunitDropdown from '@/orangehrmPimPlugin/components/SubunitDropdown';
-import EmploymentStatusDropdown from '@/orangehrmPimPlugin/components/EmploymentStatusDropdown';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown';
+import SubunitDropdown from '@/XHRMPimPlugin/components/SubunitDropdown';
+import EmploymentStatusDropdown from '@/XHRMPimPlugin/components/EmploymentStatusDropdown';
 import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
 import useSort from '@ohrm/core/util/composable/useSort';
 import {
@@ -429,3 +429,4 @@ export default {
 </script>
 
 <style src="./employee.scss" lang="scss" scoped></style>
+

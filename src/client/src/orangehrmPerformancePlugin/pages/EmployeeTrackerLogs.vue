@@ -1,70 +1,70 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-employee-tracker">
-        <div class="orangehrm-employee-tracker-image-section">
-          <div class="orangehrm-employee-tracker-image-wrapper">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-employee-tracker">
+        <div class="XHRM-employee-tracker-image-section">
+          <div class="XHRM-employee-tracker-image-wrapper">
             <img alt="profile picture" class="employee-image" :src="imgSrc" />
           </div>
         </div>
-        <div class="orangehrm-employee-tracker-header-section">
-          <div class="orangehrm-employee-tracker-header">
-            <oxd-text tag="h5" class="orangehrm-employee-tracker-header-title">
+        <div class="XHRM-employee-tracker-header-section">
+          <div class="XHRM-employee-tracker-header">
+            <oxd-text tag="h5" class="XHRM-employee-tracker-header-title">
               {{ trackerName }}
             </oxd-text>
             <oxd-text
               tag="h6"
-              class="orangehrm-employee-tracker-header-subtitle"
+              class="XHRM-employee-tracker-header-subtitle"
             >
               {{ employeeName }}
             </oxd-text>
           </div>
-          <div class="orangehrm-employee-tracker-ratings">
+          <div class="XHRM-employee-tracker-ratings">
             <div
               v-if="meta.positive > 0"
-              class="orangehrm-employee-tracker-ratings-info"
+              class="XHRM-employee-tracker-ratings-info"
             >
               <oxd-icon
-                class="orangehrm-employee-tracker-ratings-icon --positive"
+                class="XHRM-employee-tracker-ratings-icon --positive"
                 type="svg"
                 name="thumbsup"
               />
               <oxd-text
-                class="orangehrm-employee-tracker-ratings-text --positive"
+                class="XHRM-employee-tracker-ratings-text --positive"
               >
                 {{ meta.positive }}
               </oxd-text>
             </div>
             <div
               v-if="meta.negative > 0"
-              class="orangehrm-employee-tracker-ratings-info"
+              class="XHRM-employee-tracker-ratings-info"
             >
               <oxd-icon
-                class="orangehrm-employee-tracker-ratings-icon --negative"
+                class="XHRM-employee-tracker-ratings-icon --negative"
                 type="svg"
                 name="thumbsdown"
               />
               <oxd-text
-                class="orangehrm-employee-tracker-ratings-text --negative"
+                class="XHRM-employee-tracker-ratings-text --negative"
               >
                 {{ meta.negative }}
               </oxd-text>
@@ -74,9 +74,9 @@
       </div>
     </div>
     <br />
-    <div class="orangehrm-paper-container">
-      <div class="orangehrm-header-container">
-        <oxd-text tag="h5" class="orangehrm-employee-tracker-list-header">
+    <div class="XHRM-paper-container">
+      <div class="XHRM-header-container">
+        <oxd-text tag="h5" class="XHRM-employee-tracker-list-header">
           {{ $t('performance.tracker_logs') }}
         </oxd-text>
         <oxd-button
@@ -86,13 +86,13 @@
           @click="onClickAdd"
         />
       </div>
-      <div ref="scrollerRef" class="orangehrm-container">
+      <div ref="scrollerRef" class="XHRM-container">
         <oxd-sheet
           v-for="(item, index) in items"
           :key="index"
           :gutters="false"
           type="gray-lighten-2"
-          class="orangehrm-scroll-card"
+          class="XHRM-scroll-card"
         >
           <employee-tracker-log-card
             :tracker-log="item"
@@ -102,7 +102,7 @@
         </oxd-sheet>
         <div
           v-if="showNoRecordsFound"
-          class="orangehrm-employee-tracker-no-records"
+          class="XHRM-employee-tracker-no-records"
         >
           <oxd-text>
             {{ $t('general.n_records_found', {count: 0}) }}
@@ -110,7 +110,7 @@
         </div>
         <oxd-loading-spinner
           v-if="isLoading"
-          class="orangehrm-container-loader"
+          class="XHRM-container-loader"
         />
       </div>
     </div>
@@ -137,10 +137,10 @@ import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTran
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import useLocale from '@/core/util/composable/useLocale';
 import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
-import AddTrackerLogModal from '@/orangehrmPerformancePlugin/components/AddTrackerLogModal';
-import EditTrackerLogModal from '@/orangehrmPerformancePlugin/components/EditTrackerLogModal';
+import AddTrackerLogModal from '@/XHRMPerformancePlugin/components/AddTrackerLogModal';
+import EditTrackerLogModal from '@/XHRMPerformancePlugin/components/EditTrackerLogModal';
 import DeleteConfirmationDialog from '@/core/components/dialogs/DeleteConfirmationDialog';
-import EmployeeTrackerLogCard from '@/orangehrmPerformancePlugin/components/EmployeeTrackerLogCard';
+import EmployeeTrackerLogCard from '@/XHRMPerformancePlugin/components/EmployeeTrackerLogCard';
 import {OxdIcon, OxdSheet, OxdSpinner} from '@ohrm/oxd';
 
 export default {
@@ -322,3 +322,4 @@ export default {
 </script>
 
 <style src="./employee-tracker-log.scss" lang="scss" scoped></style>
+

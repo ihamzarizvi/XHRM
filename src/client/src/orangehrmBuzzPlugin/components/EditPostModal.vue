@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -37,16 +37,16 @@
       </photo-frame>
       <br v-if="data.type === 'video' || data.type === 'photo'" />
 
-      <oxd-text tag="p" class="orangehrm-buzz-share-employee">
+      <oxd-text tag="p" class="XHRM-buzz-share-employee">
         {{ originalPost.employee }}
       </oxd-text>
-      <oxd-text tag="p" class="orangehrm-buzz-share-date">
+      <oxd-text tag="p" class="XHRM-buzz-share-date">
         {{ originalPost.dateTime }}
       </oxd-text>
       <oxd-text
         v-if="originalPost.text"
         tag="p"
-        class="orangehrm-buzz-share-text"
+        class="XHRM-buzz-share-text"
       >
         {{ originalPost.text }}
       </oxd-text>
@@ -81,11 +81,11 @@ import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import PostModal from '@/orangehrmBuzzPlugin/components/PostModal';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import PhotoInput from '@/orangehrmBuzzPlugin/components/PhotoInput';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
+import PostModal from '@/XHRMBuzzPlugin/components/PostModal';
+import PhotoFrame from '@/XHRMBuzzPlugin/components/PhotoFrame';
+import VideoFrame from '@/XHRMBuzzPlugin/components/VideoFrame';
+import PhotoInput from '@/XHRMBuzzPlugin/components/PhotoInput';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 import {OxdBuzzPostInput, promiseDebounce} from '@ohrm/oxd';
 
@@ -229,7 +229,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-buzz-share {
+.XHRM-buzz-share {
   &-employee {
     font-size: 0.9rem;
   }
@@ -244,3 +244,4 @@ export default {
   }
 }
 </style>
+

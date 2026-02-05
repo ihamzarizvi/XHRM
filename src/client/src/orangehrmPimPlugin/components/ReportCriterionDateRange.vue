@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -29,7 +29,7 @@
   </oxd-grid-item>
   <oxd-grid-item
     v-if="operator && operator.id === 'between'"
-    class="orangehrm-report-daterange --span-column-2"
+    class="XHRM-report-daterange --span-column-2"
   >
     <oxd-input-field
       type="date"
@@ -39,7 +39,7 @@
       :display-format="jsDateFormat"
       @update:model-value="$emit('update:valueX', $event)"
     />
-    <oxd-text class="orangehrm-report-range-text" tag="p">to</oxd-text>
+    <oxd-text class="XHRM-report-range-text" tag="p">to</oxd-text>
     <oxd-input-field
       type="date"
       :rules="rules.valueY"
@@ -134,7 +134,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-report {
+.XHRM-report {
   &-daterange {
     display: flex;
     justify-content: center;
@@ -149,3 +149,4 @@ export default {
   display: none;
 }
 </style>
+

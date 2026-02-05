@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -20,15 +20,15 @@
 <template>
   <!-- Always use inside OXD-Form -->
   <oxd-input-group v-if="fileSelected" :label="label">
-    <div class="orangehrm-file-current">
-      <div class="orangehrm-file-preview" @click="downloadFile">
-        <oxd-icon class="orangehrm-file-icon" name="file-earmark-text" />
-        <oxd-text class="orangehrm-file-name" tag="p" :title="file.filename">
+    <div class="XHRM-file-current">
+      <div class="XHRM-file-preview" @click="downloadFile">
+        <oxd-icon class="XHRM-file-icon" name="file-earmark-text" />
+        <oxd-text class="XHRM-file-name" tag="p" :title="file.filename">
           {{ file.filename }}
-          <oxd-icon class="orangehrm-file-download" name="download" />
+          <oxd-icon class="XHRM-file-download" name="download" />
         </oxd-text>
       </div>
-      <div v-if="!disabled" class="orangehrm-file-options">
+      <div v-if="!disabled" class="XHRM-file-options">
         <oxd-input-field
           type="radio"
           :option-label="$t('general.keep_current')"
@@ -56,7 +56,7 @@
   </oxd-input-group>
   <div
     v-if="method === 'replaceCurrent' || !fileSelected"
-    class="orangehrm-file-input"
+    class="XHRM-file-input"
   >
     <oxd-input-field
       v-bind="$attrs"
@@ -67,7 +67,7 @@
       :placeholder="$t('general.no_file_selected')"
       @update:model-value="$emit('update:newFile', $event)"
     />
-    <oxd-text class="orangehrm-input-hint" tag="p">{{ hint }}</oxd-text>
+    <oxd-text class="XHRM-input-hint" tag="p">{{ hint }}</oxd-text>
   </div>
 </template>
 
@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-file {
+.XHRM-file {
   &-current {
     display: flex;
     margin-bottom: 1rem;
@@ -195,3 +195,4 @@ export default {
   align-self: center;
 }
 </style>
+

@@ -1,6 +1,6 @@
 
-.orangehrm-header-container,
-.orangehrm-dialog-header-container {
+.XHRM-header-container,
+.XHRM-dialog-header-container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -11,30 +11,30 @@
   }
 }
 
-.orangehrm-header-container {
+.XHRM-header-container {
   padding: 25px;
 }
 
-.orangehrm-dialog-header-container {
+.XHRM-dialog-header-container {
   padding: 1.2rem;
 }
 
-.orangehrm-main-title {
+.XHRM-main-title {
   font-size: 16px !important;
   font-weight: 700 !important;
 }
 
-.orangehrm-sub-title {
+.XHRM-sub-title {
   padding: 0.25rem 0 !important;
   font-size: 14px !important;
   font-weight: 700 !important;
 }
 
-.orangehrm-left-space {
+.XHRM-left-space {
   margin-left: 10px;
 }
 
-.orangehrm-card-container {
+.XHRM-card-container {
   background-color: $oxd-white-color;
   border-radius: 1.2rem;
   padding: 25px;
@@ -47,7 +47,7 @@
   }
 }
 
-.orangehrm-container {
+.XHRM-container {
   background-color: $oxd-interface-gray-lighten-2-color;
   /*border-radius: 1.2rem;*/
   padding: 0.5rem;
@@ -65,46 +65,46 @@
   }
 }
 
-.orangehrm-paper-container {
+.XHRM-paper-container {
   background-color: $oxd-white-color;
   border-radius: 1.2rem;
 }
 
-.orangehrm-horizontal-padding {
+.XHRM-horizontal-padding {
   padding-left: 25px;
   padding-right: 25px;
 }
 
-.orangehrm-dialog-horizontal-padding {
+.XHRM-dialog-horizontal-padding {
   padding-left: 1.2rem;
   padding-right: 1.2rem;
 }
 
-.orangehrm-vertical-padding {
+.XHRM-vertical-padding {
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
-.orangehrm-dialog-vertical-padding {
+.XHRM-dialog-vertical-padding {
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
 }
 
-.orangehrm-top-padding {
+.XHRM-top-padding {
   padding-top: 25px;
 }
 
-.orangehrm-horizontal-margin {
+.XHRM-horizontal-margin {
   margin-left: 25px;
   margin-right: 25px;
 }
 
-.orangehrm-dialog-horizontal-margin {
+.XHRM-dialog-horizontal-margin {
   margin-left: 1.2rem;
   margin-right: 1.2rem;
 }
 
-.orangehrm-bottom-container {
+.XHRM-bottom-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -112,27 +112,27 @@
   padding: 25px;
 }
 
-.orangehrm-background-container {
+.XHRM-background-container {
   padding: 1.5rem 0;
   flex: 1;
 }
 
-.orangehrm-input-hint {
+.XHRM-input-hint {
   font-size: 0.75rem;
   margin-top: -15px;
   padding-bottom: 1rem;
 }
 
-.orangehrm-clear-margins {
+.XHRM-clear-margins {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.orangehrm-copyright-wrapper {
+.XHRM-copyright-wrapper {
   margin: 0.5rem 0;
 }
 
-.orangehrm-copyright {
+.XHRM-copyright {
   font-size: 0.8rem;
   text-align: center;
 
@@ -141,21 +141,21 @@
   }
 }
 
-.orangehrm-form-action {
+.XHRM-form-action {
   gap: 5px;
   flex-wrap: wrap !important;
 }
 
-.orangehrm-dialog-modal {
+.XHRM-dialog-modal {
   width: 90%;
   max-width: 600px;
 }
 
-.orangehrm-dialog-popup {
+.XHRM-dialog-popup {
   max-width: 450px;
 }
 
-.orangehrm-input-field-bottom-space {
+.XHRM-input-field-bottom-space {
   margin-bottom: 1rem;
 }
 

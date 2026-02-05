@@ -1,4 +1,4 @@
-"use strict";(self["webpackChunkorangehrm_installer"]=self["webpackChunkorangehrm_installer"]||[]).push([[808],{3808:function(e,t,s){s.r(t),s.d(t,{scopeCss:function(){return P}});s(3248);
+"use strict";(self["webpackChunkXHRM_installer"]=self["webpackChunkXHRM_installer"]||[]).push([[808],{3808:function(e,t,s){s.r(t),s.d(t,{scopeCss:function(){return P}});s(3248);
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

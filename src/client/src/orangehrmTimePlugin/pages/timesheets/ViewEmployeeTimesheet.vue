@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <timesheet
       :loading="isLoading"
       :columns="timesheetColumns"
@@ -27,7 +27,7 @@
       :subtotal="timesheetSubtotal"
     >
       <template #header-title>
-        <oxd-text tag="h6" class="orangehrm-main-title">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ title }}
         </oxd-text>
       </template>
@@ -94,11 +94,11 @@
 <script>
 import {toRefs} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
-import Timesheet from '@/orangehrmTimePlugin/components/Timesheet.vue';
-import useTimesheet from '@/orangehrmTimePlugin/util/composable/useTimesheet';
-import TimesheetPeriod from '@/orangehrmTimePlugin/components/TimesheetPeriod.vue';
-import TimesheetActions from '@/orangehrmTimePlugin/components/TimesheetActions.vue';
-import SaveTimesheetAction from '@/orangehrmTimePlugin/components/SaveTimesheetAction.vue';
+import Timesheet from '@/XHRMTimePlugin/components/Timesheet.vue';
+import useTimesheet from '@/XHRMTimePlugin/util/composable/useTimesheet';
+import TimesheetPeriod from '@/XHRMTimePlugin/components/TimesheetPeriod.vue';
+import TimesheetActions from '@/XHRMTimePlugin/components/TimesheetActions.vue';
+import SaveTimesheetAction from '@/XHRMTimePlugin/components/SaveTimesheetAction.vue';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 
 export default {
@@ -199,3 +199,4 @@ export default {
   },
 };
 </script>
+

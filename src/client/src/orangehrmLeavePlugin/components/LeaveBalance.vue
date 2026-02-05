@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -20,7 +20,7 @@
 <template>
   <oxd-input-group>
     <template #label>
-      <div class="orangehrm-leave-balance">
+      <div class="XHRM-leave-balance">
         <oxd-label :label="$t('leave.leave_balance')" />
         <oxd-icon-button
           v-if="leaveData.type"
@@ -31,10 +31,10 @@
         />
       </div>
     </template>
-    <oxd-text v-if="balance >= 0" class="orangehrm-leave-balance-text" tag="p">
+    <oxd-text v-if="balance >= 0" class="XHRM-leave-balance-text" tag="p">
       {{ leaveBalance }}
     </oxd-text>
-    <oxd-text v-else class="orangehrm-leave-balance-text --error" tag="p">
+    <oxd-text v-else class="XHRM-leave-balance-text --error" tag="p">
       {{ $t('leave.balance_not_sufficient') }}
     </oxd-text>
   </oxd-input-group>
@@ -50,9 +50,9 @@
 <script>
 import {toRefs, reactive, computed, watchPostEffect} from 'vue';
 import {APIService} from '@ohrm/core/util/services/api.service';
-import LeaveBalanceModal from '@/orangehrmLeavePlugin/components/LeaveBalanceModal';
-import LeaveBalanceInsufficientModal from '@/orangehrmLeavePlugin/components/LeaveBalanceInsufficientModal';
-import useLeaveValidators from '@/orangehrmLeavePlugin/util/composable/useLeaveValidators';
+import LeaveBalanceModal from '@/XHRMLeavePlugin/components/LeaveBalanceModal';
+import LeaveBalanceInsufficientModal from '@/XHRMLeavePlugin/components/LeaveBalanceInsufficientModal';
+import useLeaveValidators from '@/XHRMLeavePlugin/util/composable/useLeaveValidators';
 import {OxdLabel} from '@ohrm/oxd';
 
 export default {
@@ -131,17 +131,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-leave-balance {
+.XHRM-leave-balance {
   display: flex;
   align-items: center;
   & .--help {
     margin-left: 5px;
   }
 }
-.orangehrm-leave-balance-text {
+.XHRM-leave-balance-text {
   padding: $oxd-input-control-vertical-padding 0rem;
   &.--error {
     color: $oxd-feedback-danger-color;
   }
 }
 </style>
+

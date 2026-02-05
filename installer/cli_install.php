@@ -1,34 +1,34 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Config\Config;
-use OrangeHRM\Framework\Http\Session\MemorySessionStorage;
-use OrangeHRM\Framework\Http\Session\Session;
-use OrangeHRM\Framework\ServiceContainer;
-use OrangeHRM\Framework\Services;
-use OrangeHRM\Installer\Framework\HttpKernel;
-use OrangeHRM\Installer\Util\AppSetupUtility;
-use OrangeHRM\Installer\Util\StateContainer;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Config\Config;
+use XHRM\Framework\Http\Session\MemorySessionStorage;
+use XHRM\Framework\Http\Session\Session;
+use XHRM\Framework\ServiceContainer;
+use XHRM\Framework\Services;
+use XHRM\Installer\Framework\HttpKernel;
+use XHRM\Installer\Util\AppSetupUtility;
+use XHRM\Installer\Util\StateContainer;
 use Symfony\Component\Yaml\Yaml;
-use OrangeHRM\Framework\Http\Request;
-use OrangeHRM\Installer\Controller\Installer\Api\InstallerDataRegistrationAPI;
+use XHRM\Framework\Http\Request;
+use XHRM\Installer\Controller\Installer\Api\InstallerDataRegistrationAPI;
 
 $pathToAutoload = realpath(__DIR__ . '/../src/vendor/autoload.php');
 
@@ -70,7 +70,7 @@ $cliConfig = Yaml::parseFile(realpath(__DIR__ . '/cli_install_config.yaml'));
 
 if ($cliConfig['license']['agree'] != 'y') {
     $licenseFilePath = realpath(__DIR__ . '/../LICENSE');
-    echo "For continue installation need to accept OrangeHRM license agreement. It is available in '$licenseFilePath'.";
+    echo "For continue installation need to accept XHRM license agreement. It is available in '$licenseFilePath'.";
     die;
 }
 echo "Agreed to license from config file\n";
@@ -81,7 +81,7 @@ $dbPort = $cliConfig['database']['hostPort'];
 $dbUser = $cliConfig['database']['privilegedDatabaseUser'];
 $dbPassword = $cliConfig['database']['privilegedDatabasePassword'];
 $dbName = $cliConfig['database']['databaseName'];
-$useSameDbUserForOrangeHRM = $cliConfig['database']['useSameDbUserForOrangeHRM'] == 'y';
+$useSameDbUserForXHRM = $cliConfig['database']['useSameDbUserForXHRM'] == 'y';
 $enableDataEncryption = $cliConfig['database']['enableDataEncryption'] == 'y';
 
 $organizationName = $cliConfig['organization']['name'];
@@ -99,9 +99,9 @@ $contact = $cliConfig['admin']['contactNumber'];
 if ($dbType === AppSetupUtility::INSTALLATION_DB_TYPE_NEW) {
     $ohrmDbUser = $dbUser;
     $ohrmDbPassword = $dbPassword;
-    if (!$useSameDbUserForOrangeHRM) {
-        $ohrmDbUser = $cliConfig['database']['orangehrmDatabaseUser'];
-        $ohrmDbPassword = $cliConfig['database']['orangehrmDatabasePassword'];
+    if (!$useSameDbUserForXHRM) {
+        $ohrmDbUser = $cliConfig['database']['XHRMDatabaseUser'];
+        $ohrmDbPassword = $cliConfig['database']['XHRMDatabasePassword'];
     }
 
     StateContainer::getInstance()->storeDbInfo(
@@ -144,7 +144,7 @@ echo "Applying database changes\n";
 $appSetupUtility->runMigrations('3.3.3', Config::PRODUCT_VERSION);
 echo "Instance creation & Admin user creation\n";
 $appSetupUtility->insertSystemConfiguration();
-echo "Create OrangeHRM database user\n";
+echo "Create XHRM database user\n";
 $appSetupUtility->createDBUser();
 echo "Creating configuration files\n";
 $appSetupUtility->writeConfFile();

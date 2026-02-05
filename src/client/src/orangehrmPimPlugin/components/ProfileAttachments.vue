@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-attachment">
+  <div class="XHRM-attachment">
     <oxd-divider />
     <save-attachment
       v-if="showSaveModal"
@@ -36,7 +36,7 @@
       @close="onEditModalClose"
     ></edit-attachment>
     <template v-else>
-      <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
+      <div class="XHRM-horizontal-padding XHRM-vertical-padding">
         <profile-action-header
           :action-button-shown="$can.create(`${screen}_attachment`)"
           @click="onClickAdd"
@@ -50,7 +50,7 @@
         :loading="isLoading"
         @delete="onClickDeleteSelected"
       ></table-header>
-      <div class="orangehrm-container">
+      <div class="XHRM-container">
         <oxd-card-table
           v-model:selected="checkedItems"
           :headers="tableHeaders"
@@ -61,7 +61,7 @@
           row-decorator="oxd-table-decorator-card"
         />
       </div>
-      <div v-if="showPaginator" class="orangehrm-bottom-container">
+      <div v-if="showPaginator" class="XHRM-bottom-container">
         <oxd-pagination v-model:current="currentPage" :length="pages" />
       </div>
     </template>
@@ -73,9 +73,9 @@
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
 import {convertFilesizeToString} from '@ohrm/core/util/helper/filesize';
-import SaveAttachment from '@/orangehrmPimPlugin/components/SaveAttachment';
-import EditAttachment from '@/orangehrmPimPlugin/components/EditAttachment';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
+import SaveAttachment from '@/XHRMPimPlugin/components/SaveAttachment';
+import EditAttachment from '@/XHRMPimPlugin/components/EditAttachment';
+import ProfileActionHeader from '@/XHRMPimPlugin/components/ProfileActionHeader';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {parseDate, formatDate} from '@/core/util/helper/datefns';
@@ -297,8 +297,9 @@ export default {
   margin-top: 0;
   margin-bottom: 0;
 }
-.orangehrm-attachment {
+.XHRM-attachment {
   border-bottom-right-radius: 1.2rem;
   overflow: hidden;
 }
 </style>
+

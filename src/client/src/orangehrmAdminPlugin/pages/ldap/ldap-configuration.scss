@@ -1,34 +1,34 @@
-// OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+// XHRM is a comprehensive Human Resource Management (HRM) System that captures
 // all the essential functionalities required for any enterprise.
-// Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+// Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
 //
-// OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+// XHRM is free software: you can redistribute it and/or modify it under the terms of
 // the GNU General Public License as published by the Free Software Foundation, either
 // version 3 of the License, or (at your option) any later version.
 //
-// OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+// XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 // without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 // See the GNU General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License along with OrangeHRM.
+// You should have received a copy of the GNU General Public License along with XHRM.
 // If not, see <https://www.gnu.org/licenses/>.
 
 
-.orangehrm-header-container {
+.XHRM-header-container {
   padding: 0;
 }
-.orangehrm-column-half {
+.XHRM-column-half {
   width: 50%;
 }
-.orangehrm-form-divider {
+.XHRM-form-divider {
   margin: 1rem 0;
 }
-.orangehrm-subtitle {
+.XHRM-subtitle {
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 1rem;
 }
-.orangehrm-ldap-switch {
+.XHRM-ldap-switch {
   display: flex;
   align-items: center;
   white-space: nowrap;
@@ -38,7 +38,7 @@
     font-size: $oxd-input-control-font-size;
   }
 }
-.orangehrm-ldap-grid {
+.XHRM-ldap-grid {
   grid-template-columns: repeat(3, 1fr);
   &-header {
     font-size: 12px;

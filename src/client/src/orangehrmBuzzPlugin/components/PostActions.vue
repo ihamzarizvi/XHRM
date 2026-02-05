@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-buzz-post-actions">
+  <div class="XHRM-buzz-post-actions">
     <post-like :like="post.liked" @click="onClickAction('like')"></post-like>
     <post-comment @click="onClickAction('comment')"></post-comment>
     <post-share @click="onClickAction('share')"></post-share>
@@ -27,10 +27,10 @@
 
 <script>
 import {APIService} from '@/core/util/services/api.service';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import PostLikeButton from '@/orangehrmBuzzPlugin/components/PostLikeButton.vue';
-import PostShareButton from '@/orangehrmBuzzPlugin/components/PostShareButton.vue';
-import PostCommentButton from '@/orangehrmBuzzPlugin/components/PostCommentButton.vue';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
+import PostLikeButton from '@/XHRMBuzzPlugin/components/PostLikeButton.vue';
+import PostShareButton from '@/XHRMBuzzPlugin/components/PostShareButton.vue';
+import PostCommentButton from '@/XHRMBuzzPlugin/components/PostCommentButton.vue';
 
 export default {
   name: 'PostActions',
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-buzz-post-actions {
+.XHRM-buzz-post-actions {
   gap: 5px;
   display: flex;
   flex-shrink: 0;
@@ -101,3 +101,4 @@ export default {
   }
 }
 </style>
+

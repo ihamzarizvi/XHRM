@@ -1,0 +1,8 @@
+Why Node.js is required:
+
+1. XAMPP is the Backend Server (Runtime): It runs PHP and MySQL, which powers the application logic. 
+2. Node.js is the Frontend Builder (Build time): The XHRM/XHRM frontend is built with Vue.js. The source code is in `src/client`. To change the logo and branding text (whitelabeling) effectively in the UI, we must recompile the Vue components. 
+   - Without Node.js: The browser uses old, pre-compiled "XHRM" assets.
+   - With Node.js: We can run `npm run build` to create new "XHRM" assets.
+
+I am installing Node.js solely to run this build process once. After the build is done, XAMPP will serve the new whitelabeled files.

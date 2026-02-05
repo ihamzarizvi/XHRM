@@ -6,7 +6,7 @@ langStrings:
     value: 'Customer Support'
     unitId: customer_support
   -
-    value: 'Learning how to use a new application can be challenging. At OrangeHRM, we are committed to providing you with the necessary knowledge and skills required to fully utilize the application thereby allowing you to quickly and efficiently manage your HR processes.'
+    value: 'Learning how to use a new application can be challenging. At XHRM, we are committed to providing you with the necessary knowledge and skills required to fully utilize the application thereby allowing you to quickly and efficiently manage your HR processes.'
     unitId: getting_started_with_orangehrm_message_1
   -
     value: 'The following information repositories are available to help you understand the application:'

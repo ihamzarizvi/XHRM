@@ -219,7 +219,7 @@ langStrings:
     value: 'Attribute field to use as a unique immutable identifier for user objects. This is used to track username changes. Ex: entryUUID, objectGUID'
     unitId: user_unique_attribute_input_hint
   -
-    value: 'Field in OrangeHRM'
+    value: 'Field in XHRM'
     unitId: field_in_orangehrm
   -
     value: 'Field in LDAP Directory'

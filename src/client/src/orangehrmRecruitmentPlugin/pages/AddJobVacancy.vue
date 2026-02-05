@@ -1,31 +1,31 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('recruitment.add_vacancy') }}
       </oxd-text>
       <oxd-divider />
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <oxd-input-field
               v-model="vacancy.name"
@@ -42,8 +42,8 @@
             />
           </oxd-grid-item>
         </oxd-grid>
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-          <oxd-grid-item class="orangehrm-grid-item-span-2">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
+          <oxd-grid-item class="XHRM-grid-item-span-2">
             <oxd-input-field
               v-model="vacancy.description"
               type="textarea"
@@ -53,7 +53,7 @@
             />
           </oxd-grid-item>
         </oxd-grid>
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <employee-autocomplete
               v-model="vacancy.hiringManager"
@@ -66,7 +66,7 @@
             />
           </oxd-grid-item>
           <oxd-grid-item>
-            <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="2" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <oxd-input-field
                   v-model="vacancy.numOfPositions"
@@ -77,27 +77,27 @@
             </oxd-grid>
           </oxd-grid-item>
         </oxd-grid>
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
-            <oxd-text class="orangehrm-text" tag="p">
+            <oxd-text class="XHRM-text" tag="p">
               {{ $t('general.active') }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.status" />
           </oxd-grid-item>
         </oxd-grid>
         <br />
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
-            <oxd-text class="orangehrm-text" tag="p">
+            <oxd-text class="XHRM-text" tag="p">
               {{ $t('recruitment.publish_in_rss_feed_and_web_page') }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.isPublished" />
           </oxd-grid-item>
         </oxd-grid>
         <br />
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-          <oxd-grid-item class="orangehrm-grid-item-span-2">
-            <div class="orangehrm-vacancy-links">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
+          <oxd-grid-item class="XHRM-grid-item-span-2">
+            <div class="XHRM-vacancy-links">
               <vacancy-link-card
                 :label="$t('recruitment.rss_feed_url')"
                 :url="rssFeedUrl"
@@ -136,7 +136,7 @@ import {
   numberShouldBeBetweenMinAndMaxValue,
 } from '@ohrm/core/util/validation/rules';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown';
 import VacancyLinkCard from '../components/VacancyLinkCard.vue';
 import {OxdSwitchInput} from '@ohrm/oxd';
 import useServerValidation from '@/core/util/composable/useServerValidation';
@@ -232,3 +232,4 @@ export default {
 </script>
 
 <style src="./vacancy.scss" lang="scss" scoped></style>
+

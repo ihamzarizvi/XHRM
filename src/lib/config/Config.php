@@ -1,26 +1,26 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Config;
+namespace XHRM\Config;
 
 use Conf;
-use OrangeHRM\ORM\Exception\ConfigNotFoundException;
+use XHRM\ORM\Exception\ConfigNotFoundException;
 
 class Config
 {
@@ -52,9 +52,9 @@ class Config
 
     public const PRODUCT_NAME = 'XHRM OS';
     public const PRODUCT_VERSION = '5.8';
-    public const ORANGEHRM_API_VERSION = '2.7.0';
+    public const XHRM_API_VERSION = '2.7.0';
     public const PRODUCT_MODE = self::MODE_PROD;
-    public const REGISTRATION_URL = 'https://ospenguin.orangehrm.com';
+    public const REGISTRATION_URL = 'https://ospenguin.XHRM.com';
 
     public const DEFAULT_MAX_SESSION_IDLE_TIME = 1800;
 
@@ -168,3 +168,4 @@ class Config
         return self::$conf;
     }
 }
+

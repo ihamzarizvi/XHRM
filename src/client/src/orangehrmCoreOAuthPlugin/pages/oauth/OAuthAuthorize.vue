@@ -1,35 +1,35 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-oauth-container">
-    <div class="orangehrm-card-container">
+  <div class="XHRM-oauth-container">
+    <div class="XHRM-card-container">
       <login-branding
         :img-src="loginBannerSrc"
-        class="orangehrm-oauth-branding"
+        class="XHRM-oauth-branding"
       />
       <oxd-divider />
       <template v-if="errorType === null">
         <oxd-text>
           {{ $t('auth.client_name_would_like_to', {clientName: clientName}) }}:
         </oxd-text>
-        <ul class="orangehrm-oauth-list">
+        <ul class="XHRM-oauth-list">
           <li>
             <oxd-text>{{ $t('auth.access_and_manage_your_data') }}</oxd-text>
           </li>
@@ -51,17 +51,17 @@
           <div v-for="(value, name) in params" :key="name">
             <input :name="name" :value="value" type="hidden" />
           </div>
-          <div class="orangehrm-oauth-button-container">
+          <div class="XHRM-oauth-button-container">
             <oxd-button
               display-type="ghost"
               size="large"
-              class="orangehrm-oauth-button"
+              class="XHRM-oauth-button"
               :label="$t('auth.deny')"
               @click="onCancel"
             />
             <oxd-button
               display-type="secondary"
-              class="orangehrm-oauth-button"
+              class="XHRM-oauth-button"
               size="large"
               :label="$t('auth.allow_access')"
               type="submit"
@@ -69,7 +69,7 @@
           </div>
         </oxd-form>
       </template>
-      <template v-else-if="params['client_id'] === 'orangehrm_mobile_app'">
+      <template v-else-if="params['client_id'] === 'XHRM_mobile_app'">
         <oxd-alert
           :show="true"
           type="error"
@@ -82,7 +82,7 @@
           type="error"
           :message="$t('auth.this_request_is_invalid')"
         />
-        <oxd-text class="orangehrm-oauth-error">
+        <oxd-text class="XHRM-oauth-error">
           {{ $t('general.error') }}: {{ errorType }}
         </oxd-text>
       </template>
@@ -93,7 +93,7 @@
 
 <script>
 import {urlFor} from '@/core/util/helper/url';
-import LoginBranding from '@/orangehrmAuthenticationPlugin/components/LoginBranding.vue';
+import LoginBranding from '@/XHRMAuthenticationPlugin/components/LoginBranding.vue';
 import {OxdAlert} from '@ohrm/oxd';
 
 export default {
@@ -145,3 +145,4 @@ export default {
 </script>
 
 <style src="./oauth-authorize.scss" scoped lang="scss"></style>
+

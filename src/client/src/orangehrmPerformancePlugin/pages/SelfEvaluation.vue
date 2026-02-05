@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <review-confirm-modal ref="confirmDialog"> </review-confirm-modal>
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h5" class="orangehrm-performance-review-title">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h5" class="XHRM-performance-review-title">
         {{ $t('performance.performance_review') }}
       </oxd-text>
     </div>
@@ -66,7 +66,7 @@
         >
           <oxd-form-actions v-show="hasActions">
             <oxd-divider />
-            <div class="orangehrm-performance-review-actions">
+            <div class="XHRM-performance-review-actions">
               <oxd-button
                 v-if="hasCancelAction"
                 display-type="ghost"
@@ -138,8 +138,8 @@ import ReviewSummary from '../components/ReviewSummary';
 import FinalEvaluation from '../components/FinalEvaluation';
 import EvaluationForm from '../components/EvaluationForm';
 import useForm from '@ohrm/core/util/composable/useForm';
-import useReviewEvaluation from '@/orangehrmPerformancePlugin/util/composable/useReviewEvaluation';
-import ReviewConfirmModal from '@/orangehrmPerformancePlugin/components/ReviewConfirmModal';
+import useReviewEvaluation from '@/XHRMPerformancePlugin/util/composable/useReviewEvaluation';
+import ReviewConfirmModal from '@/XHRMPerformancePlugin/components/ReviewConfirmModal';
 
 const reviewerModel = {
   details: {
@@ -335,3 +335,4 @@ export default {
 </script>
 
 <style src="./review-evaluate.scss" lang="scss" scoped></style>
+

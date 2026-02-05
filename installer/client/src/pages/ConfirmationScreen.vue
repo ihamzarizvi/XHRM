@@ -1,18 +1,18 @@
 <!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.orangehrm.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -28,7 +28,7 @@
     </oxd-text>
     <br />
     <oxd-text tag="p" class="orangehrm-installer-page-content">
-      All the information required for OrangeHRM installation collected in the
+      All the information required for XHRM installation collected in the
       earlier steps are given below. On confirmation the installer will create
       the database, database users, configuration file, etc
     </oxd-text>
@@ -50,7 +50,7 @@
     <oxd-text class="confirmation-text-info">{{ database.dbUser }}</oxd-text>
     <br />
     <oxd-text class="confirmation-text-section">
-      OrangeHRM Admin Username
+      XHRM Admin Username
     </oxd-text>
     <oxd-text class="confirmation-text-info">{{ adminUserName }}</oxd-text>
     <br v-if="database.enableDataEncryption" />

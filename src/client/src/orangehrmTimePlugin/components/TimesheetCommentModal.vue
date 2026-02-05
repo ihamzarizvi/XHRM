@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -22,7 +22,7 @@
     :style="{width: '90%', maxWidth: '450px'}"
     @update:show="onCancel"
   >
-    <div class="orangehrm-modal-header">
+    <div class="XHRM-modal-header">
       <oxd-text type="card-title">
         {{ $t('general.comment') }}
       </oxd-text>
@@ -30,23 +30,23 @@
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
       <oxd-form-row>
-        <oxd-grid :cols="2" class="orangehrm-timesheet-grid">
-          <oxd-text tag="p" class="orangehrm-timesheet-title">
+        <oxd-grid :cols="2" class="XHRM-timesheet-grid">
+          <oxd-text tag="p" class="XHRM-timesheet-title">
             {{ $t('time.project') }}:
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-timesheet-text">
+          <oxd-text tag="p" class="XHRM-timesheet-text">
             {{ projectName }}
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-timesheet-title">
+          <oxd-text tag="p" class="XHRM-timesheet-title">
             {{ $t('time.activity') }}:
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-timesheet-text">
+          <oxd-text tag="p" class="XHRM-timesheet-text">
             {{ data.activity.name }}
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-timesheet-title">
+          <oxd-text tag="p" class="XHRM-timesheet-title">
             {{ $t('general.date') }}:
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-timesheet-text">
+          <oxd-text tag="p" class="XHRM-timesheet-text">
             {{ commentDate }}
           </oxd-text>
         </oxd-grid>
@@ -186,7 +186,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-timesheet {
+.XHRM-timesheet {
   &-grid {
     width: 100%;
     padding: 0 0.625rem;
@@ -203,3 +203,4 @@ export default {
   }
 }
 </style>
+

@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -30,7 +30,7 @@
       >
         <oxd-form @submit-valid="generateReport">
           <oxd-form-row>
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <oxd-input-group
                   :label="$t('leave.generate_for')"
@@ -56,7 +56,7 @@
           <oxd-form-row
             v-if="filters.type === 'leave_type_leave_entitlements_and_usage'"
           >
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <leave-type-dropdown
                   v-model="filters.leaveType"
@@ -92,8 +92,8 @@
               <oxd-grid-item>
                 <jobtitle-dropdown v-model="filters.jobTitle" />
               </oxd-grid-item>
-              <oxd-grid-item class="orangehrm-leave-filter --span-column-2">
-                <oxd-text class="orangehrm-leave-filter-text" tag="p">
+              <oxd-grid-item class="XHRM-leave-filter --span-column-2">
+                <oxd-text class="XHRM-leave-filter-text" tag="p">
                   {{ $t('leave.include_past_employees') }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includePastEmps" />
@@ -102,7 +102,7 @@
           </oxd-form-row>
 
           <oxd-form-row v-else>
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <employee-autocomplete
                   v-model="filters.employee"
@@ -130,7 +130,7 @@
             <oxd-button
               type="submit"
               display-type="secondary"
-              class="orangehrm-left-space"
+              class="XHRM-left-space"
               :label="$t('general.generate')"
             />
           </oxd-form-actions>
@@ -149,10 +149,10 @@ import {
   validSelection,
 } from '@/core/util/validation/rules';
 import ReportsTable from '@/core/components/table/ReportsTable';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeavePeriodDropdown from '@/orangehrmLeavePlugin/components/LeavePeriodDropdown';
+import LeaveTypeDropdown from '@/XHRMLeavePlugin/components/LeaveTypeDropdown';
+import LeavePeriodDropdown from '@/XHRMLeavePlugin/components/LeavePeriodDropdown';
 import {OxdSwitchInput} from '@ohrm/oxd';
 
 const defaultFilters = {
@@ -236,3 +236,4 @@ export default {
 </script>
 
 <style src="./leave-entitlement-report.scss" lang="scss" scoped></style>
+

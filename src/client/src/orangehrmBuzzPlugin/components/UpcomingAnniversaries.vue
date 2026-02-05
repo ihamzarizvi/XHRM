@@ -1,67 +1,67 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-buzz-anniversary">
-    <oxd-text type="card-title" class="orangehrm-buzz-anniversary-title">
+  <div class="XHRM-buzz-anniversary">
+    <oxd-text type="card-title" class="XHRM-buzz-anniversary-title">
       {{ $t('buzz.upcoming_anniversaries') }}
     </oxd-text>
     <div
-      class="orangehrm-buzz-anniversary-content"
+      class="XHRM-buzz-anniversary-content"
       :class="{'--show-more': anniversariesCount > 5}"
     >
       <div
         v-for="anniversary in anniversaries"
         :key="anniversary"
-        class="orangehrm-buzz-anniversary-item"
+        class="XHRM-buzz-anniversary-item"
       >
-        <div class="orangehrm-buzz-anniversary-profile">
+        <div class="XHRM-buzz-anniversary-profile">
           <profile-image :employee="anniversary"></profile-image>
-          <div class="orangehrm-buzz-anniversary-profile-details">
-            <oxd-text tag="p" class="orangehrm-buzz-anniversary-emp-name">
+          <div class="XHRM-buzz-anniversary-profile-details">
+            <oxd-text tag="p" class="XHRM-buzz-anniversary-emp-name">
               {{ anniversary.empName }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-buzz-anniversary-job-details">
+            <oxd-text tag="p" class="XHRM-buzz-anniversary-job-details">
               {{ anniversary.jobTitle }}
             </oxd-text>
           </div>
         </div>
-        <div class="orangehrm-buzz-anniversary-duration">
+        <div class="XHRM-buzz-anniversary-duration">
           <img
             alt="year celebration"
-            class="orangehrm-buzz-anniversary-year-celebration"
+            class="XHRM-buzz-anniversary-year-celebration"
             :src="celebrationPic"
           />
-          <div class="orangehrm-buzz-anniversary-durations-text">
-            <oxd-text tag="p" class="orangehrm-buzz-anniversary-duration-years">
+          <div class="XHRM-buzz-anniversary-durations-text">
+            <oxd-text tag="p" class="XHRM-buzz-anniversary-duration-years">
               {{ anniversary.anniversaryYear }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-buzz-anniversary-duration-years">
+            <oxd-text tag="p" class="XHRM-buzz-anniversary-duration-years">
               {{ $t('buzz.n_year', {yearsCount: anniversary.anniversaryYear}) }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-buzz-anniversary-duration-date">
+            <oxd-text tag="p" class="XHRM-buzz-anniversary-duration-date">
               {{ anniversary.joinedDate }}
             </oxd-text>
           </div>
         </div>
       </div>
-      <div v-if="isEmpty" class="orangehrm-buzz-anniversary-nocontent">
+      <div v-if="isEmpty" class="XHRM-buzz-anniversary-nocontent">
         <img :src="noContentPic" alt="No Content" />
         <oxd-text tag="p">
           {{ $t('general.no_records_found') }}
@@ -70,7 +70,7 @@
     </div>
     <div
       v-if="anniversariesCount > 5"
-      class="orangehrm-buzz-anniversary-footer"
+      class="XHRM-buzz-anniversary-footer"
     >
       <oxd-text tag="p" @click="onSeeMore">
         {{ isViewDetails ? $t('general.show_more') : $t('general.show_less') }}
@@ -83,7 +83,7 @@
 import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
 import {parseDate, formatDate} from '@/core/util/helper/datefns';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 
 export default {
@@ -177,3 +177,4 @@ export default {
 </script>
 
 <style src="./upcoming-anniversaries.scss" lang="scss" scoped></style>
+

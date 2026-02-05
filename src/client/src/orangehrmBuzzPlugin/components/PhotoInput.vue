@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-photo-input">
+  <div class="XHRM-photo-input">
     <oxd-alert
       type="error"
       :show="!!validationMessage"
@@ -26,13 +26,13 @@
     >
       <oxd-icon-button
         name="x"
-        class="orangehrm-photo-input-remove"
+        class="XHRM-photo-input-remove"
         @click="onClickCloseAlert"
       />
     </oxd-alert>
     <photo-upload-area v-if="showUploadArea" @update:model-value="onFileChange">
     </photo-upload-area>
-    <div class="orangehrm-photo-input-field">
+    <div class="XHRM-photo-input-field">
       <oxd-input-field
         v-if="showUploadButton"
         type="file"
@@ -47,7 +47,7 @@
       <template #content="{index}">
         <oxd-icon-button
           name="x"
-          class="orangehrm-photo-input-remove --float"
+          class="XHRM-photo-input-remove --float"
           @click="onClickRemove(index)"
         />
       </template>
@@ -58,9 +58,9 @@
 <script>
 import {computed, ref} from 'vue';
 import usei18n from '@/core/util/composable/usei18n';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
+import PhotoFrame from '@/XHRMBuzzPlugin/components/PhotoFrame';
 import {maxFileSize, validFileTypes} from '@/core/util/validation/rules';
-import PhotoUploadArea from '@/orangehrmBuzzPlugin/components/PhotoUploadArea';
+import PhotoUploadArea from '@/XHRMBuzzPlugin/components/PhotoUploadArea';
 import {OxdAlert} from '@ohrm/oxd';
 
 export default {
@@ -146,3 +146,4 @@ export default {
 </script>
 
 <style src="./photo-input.scss" lang="scss" scoped></style>
+

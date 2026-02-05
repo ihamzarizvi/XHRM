@@ -1,32 +1,32 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text class="orangehrm-main-title" tag="h6">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text class="XHRM-main-title" tag="h6">
         {{ $t('performance.add_performance_tracker') }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="tracker.name"
@@ -38,7 +38,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <employee-autocomplete
                 v-model="tracker.employee"
@@ -74,7 +74,7 @@
 
 <script>
 import {navigate} from '@/core/util/helper/navigation';
-import ReviewerAutoComplete from '@/orangehrmPerformancePlugin/components/ReviewerAutoComplete';
+import ReviewerAutoComplete from '@/XHRMPerformancePlugin/components/ReviewerAutoComplete';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
 import {APIService} from '@/core/util/services/api.service';
 import {
@@ -156,3 +156,4 @@ export default {
   },
 };
 </script>
+

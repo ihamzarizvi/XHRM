@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -24,14 +24,14 @@
     :max-file-size="maxFileSize"
     :allowed-file-types="allowedFileTypes"
   >
-    <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+    <div class="XHRM-horizontal-padding XHRM-vertical-padding">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('pim.job_details') }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <date-input
                 v-model="job.joinedDate"
@@ -104,7 +104,7 @@
 
         <template v-if="showContractDetails">
           <oxd-form-row>
-            <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="3" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <date-input
                   v-model="contract.startDate"
@@ -125,7 +125,7 @@
             </oxd-grid>
           </oxd-form-row>
           <oxd-form-row>
-            <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="2" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <file-upload-input
                   v-model:newFile="contract.newAttachment"
@@ -158,7 +158,7 @@
 
     <div
       v-if="hasUpdatePermissions && !isLoading"
-      class="orangehrm-horizontal-padding orangehrm-vertical-padding"
+      class="XHRM-horizontal-padding XHRM-vertical-padding"
     >
       <profile-action-header
         icon-name=""
@@ -172,7 +172,7 @@
         <oxd-text
           v-if="termination && termination.id"
           tag="p"
-          class="orangehrm-terminate-date"
+          class="XHRM-terminate-date"
           @click="openTerminateModal"
         >
           {{ $t('pim.terminated_on') }}: {{ terminationDate }}
@@ -192,10 +192,10 @@
 <script>
 import {APIService} from '@ohrm/core/util/services/api.service';
 import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import JobSpecDownload from '@/orangehrmPimPlugin/components/JobSpecDownload';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import TerminateModal from '@/orangehrmPimPlugin/components/TerminateModal';
+import EditEmployeeLayout from '@/XHRMPimPlugin/components/EditEmployeeLayout';
+import JobSpecDownload from '@/XHRMPimPlugin/components/JobSpecDownload';
+import ProfileActionHeader from '@/XHRMPimPlugin/components/ProfileActionHeader';
+import TerminateModal from '@/XHRMPimPlugin/components/TerminateModal';
 import {
   required,
   maxFileSize,
@@ -493,3 +493,4 @@ export default {
 </script>
 
 <style src="./employee.scss" lang="scss" scoped></style>
+

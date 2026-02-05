@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -23,39 +23,39 @@
     :loading="isLoading"
     :title="$t('dashboard.time_at_work')"
   >
-    <div class="orangehrm-attendance-card">
-      <div class="orangehrm-attendance-card-profile">
-        <div class="orangehrm-attendance-card-profile-image">
+    <div class="XHRM-attendance-card">
+      <div class="XHRM-attendance-card-profile">
+        <div class="XHRM-attendance-card-profile-image">
           <img
             alt="profile picture"
             class="employee-image"
             :src="`../pim/viewPhoto/empNumber/${empNumber}`"
           />
         </div>
-        <div class="orangehrm-attendance-card-profile-record">
-          <oxd-text tag="p" class="orangehrm-attendance-card-state">
+        <div class="XHRM-attendance-card-profile-record">
+          <oxd-text tag="p" class="XHRM-attendance-card-state">
             {{ lastState }}
           </oxd-text>
-          <oxd-text tag="p" class="orangehrm-attendance-card-details">
+          <oxd-text tag="p" class="XHRM-attendance-card-details">
             {{ lastRecord }}
           </oxd-text>
         </div>
       </div>
-      <div class="orangehrm-attendance-card-bar">
-        <oxd-text tag="span" class="orangehrm-attendance-card-fulltime">
+      <div class="XHRM-attendance-card-bar">
+        <oxd-text tag="span" class="XHRM-attendance-card-fulltime">
           <b>{{ dayTotal.hours }}h</b> <b>{{ dayTotal.minutes }}m</b>
           {{ $t('general.today') }}
         </oxd-text>
         <oxd-icon-button
           name="stopwatch"
           display-type="solid-main"
-          class="orangehrm-attendance-card-action"
+          class="XHRM-attendance-card-action"
           @click="onClickPunchIn"
         />
       </div>
       <oxd-divider />
-      <div class="orangehrm-attendance-card-summary">
-        <div class="orangehrm-attendance-card-summary-week">
+      <div class="XHRM-attendance-card-summary">
+        <div class="XHRM-attendance-card-summary-week">
           <oxd-text tag="p">
             {{ $t('dashboard.this_week') }}
           </oxd-text>
@@ -63,9 +63,9 @@
             {{ currentWeek }}
           </oxd-text>
         </div>
-        <div class="orangehrm-attendance-card-summary-total">
-          <oxd-icon name="stopwatch" class="orangehrm-attendance-card-icon" />
-          <oxd-text tag="p" class="orangehrm-attendance-card-fulltime">
+        <div class="XHRM-attendance-card-summary-total">
+          <oxd-icon name="stopwatch" class="XHRM-attendance-card-icon" />
+          <oxd-text tag="p" class="XHRM-attendance-card-fulltime">
             {{ weekTotal.hours }}h {{ weekTotal.minutes }}m
           </oxd-text>
         </div>
@@ -91,7 +91,7 @@ import {
 import {navigate} from '@/core/util/helper/navigation';
 import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import BaseWidget from '@/XHRMDashboardPlugin/components/BaseWidget.vue';
 import {OxdBarChart, OxdIcon, CHART_COLORS} from '@ohrm/oxd';
 
 export default {
@@ -245,3 +245,4 @@ export default {
 </script>
 
 <style src="./employee-attendance-widget.scss" lang="scss" scoped></style>
+

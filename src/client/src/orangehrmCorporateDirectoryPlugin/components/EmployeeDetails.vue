@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -23,16 +23,16 @@
   ></oxd-divider>
   <div
     v-show="employeeWorkEmail || employeeWorkTelephone"
-    class="orangehrm-directory-card-rounded-body"
+    class="XHRM-directory-card-rounded-body"
   >
-    <div v-show="employeeWorkTelephone" class="orangehrm-directory-card-icon">
+    <div v-show="employeeWorkTelephone" class="XHRM-directory-card-icon">
       <oxd-icon-button
         display-type="success"
         name="telephone-fill"
         @click.stop="openClientTelephone"
       ></oxd-icon-button>
     </div>
-    <div v-show="employeeWorkEmail" class="orangehrm-directory-card-icon">
+    <div v-show="employeeWorkEmail" class="XHRM-directory-card-icon">
       <oxd-icon-button
         display-type="danger"
         name="envelope-fill"
@@ -42,18 +42,18 @@
   </div>
   <div
     v-show="employeeWorkTelephone"
-    class="orangehrm-directory-card-hover"
+    class="XHRM-directory-card-hover"
     @mouseleave="showTelephoneClip = false"
     @mouseover="showTelephoneClip = true"
   >
-    <div class="orangehrm-directory-card-hover-body">
+    <div class="XHRM-directory-card-hover-body">
       <oxd-text type="toast-message">{{ $t('pim.work_telephone') }}</oxd-text>
       <oxd-text ref="cloneTelephone" type="toast-title">
         {{ employeeWorkTelephone }}
       </oxd-text>
     </div>
     <div
-      class="orangehrm-directory-card-hover-body orangehrm-directory-card-hover-icon"
+      class="XHRM-directory-card-hover-body XHRM-directory-card-hover-icon"
     >
       <oxd-icon-button
         v-show="showTelephoneClip || isMobile"
@@ -65,18 +65,18 @@
   <oxd-divider v-show="employeeWorkTelephone"></oxd-divider>
   <div
     v-show="employeeWorkEmail"
-    class="orangehrm-directory-card-hover"
+    class="XHRM-directory-card-hover"
     @mouseleave="showEmailClip = false"
     @mouseover="showEmailClip = true"
   >
-    <div class="orangehrm-directory-card-hover-body">
+    <div class="XHRM-directory-card-hover-body">
       <oxd-text type="toast-message">{{ $t('general.work_email') }}</oxd-text>
       <oxd-text ref="cloneEmail" type="toast-title">
         {{ employeeWorkEmail }}
       </oxd-text>
     </div>
     <div
-      class="orangehrm-directory-card-hover-body orangehrm-directory-card-hover-icon"
+      class="XHRM-directory-card-hover-body XHRM-directory-card-hover-icon"
     >
       <oxd-icon-button
         v-show="showEmailClip || isMobile"
@@ -95,7 +95,7 @@
 <script>
 import {OxdDivider} from '@ohrm/oxd';
 import {APIService} from '@/core/util/services/api.service';
-import QRCode from '@/orangehrmCorporateDirectoryPlugin/components/QRCode';
+import QRCode from '@/XHRMCorporateDirectoryPlugin/components/QRCode';
 
 export default {
   name: 'EmployeeDetails',
@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-directory-card {
+.XHRM-directory-card {
   height: auto;
   overflow: hidden;
   padding: 0.5rem 1rem;
@@ -245,3 +245,4 @@ export default {
   }
 }
 </style>
+

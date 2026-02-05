@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -25,31 +25,31 @@
     :title="$t('dashboard.buzz_latest_posts')"
     :empty-text="$t('dashboard.no_posts_added')"
   >
-    <oxd-grid class="orangehrm-buzz-widget" :cols="1">
+    <oxd-grid class="XHRM-buzz-widget" :cols="1">
       <oxd-grid-item
         v-for="post in posts"
         :key="post"
-        class="orangehrm-buzz-widget-card"
+        class="XHRM-buzz-widget-card"
       >
-        <div class="orangehrm-buzz-widget-header" @click="onClickPost">
+        <div class="XHRM-buzz-widget-header" @click="onClickPost">
           <profile-image :employee="post.employee"></profile-image>
-          <div class="orangehrm-buzz-widget-header-text">
-            <oxd-text tag="p" class="orangehrm-buzz-widget-header-emp">
+          <div class="XHRM-buzz-widget-header-text">
+            <oxd-text tag="p" class="XHRM-buzz-widget-header-emp">
               {{ post.employeeFullName }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-buzz-widget-header-time">
+            <oxd-text tag="p" class="XHRM-buzz-widget-header-time">
               {{ post.dateTime }}
             </oxd-text>
           </div>
         </div>
-        <oxd-divider class="orangehrm-buzz-widget-divider" />
-        <oxd-text v-if="post.text" tag="p" class="orangehrm-buzz-widget-body">
+        <oxd-divider class="XHRM-buzz-widget-divider" />
+        <oxd-text v-if="post.text" tag="p" class="XHRM-buzz-widget-body">
           {{ post.text }}
         </oxd-text>
         <img
           v-if="post.postImgSrc"
           :src="post.postImgSrc"
-          class="orangehrm-buzz-widget-picture"
+          class="XHRM-buzz-widget-picture"
         />
         <video-frame v-if="post.postVideoSrc" :video-src="post.postVideoSrc">
         </video-frame>
@@ -65,10 +65,10 @@ import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage.vue';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import VideoFrame from '@/XHRMBuzzPlugin/components/VideoFrame';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage.vue';
+import BaseWidget from '@/XHRMDashboardPlugin/components/BaseWidget.vue';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 
 export default {
@@ -149,3 +149,4 @@ export default {
 </script>
 
 <style src="./buzz-latest-post-widget.scss" lang="scss" scoped></style>
+

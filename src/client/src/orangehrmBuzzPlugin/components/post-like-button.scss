@@ -1,19 +1,19 @@
-// OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+// XHRM is a comprehensive Human Resource Management (HRM) System that captures
 // all the essential functionalities required for any enterprise.
-// Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+// Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
 //
-// OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+// XHRM is free software: you can redistribute it and/or modify it under the terms of
 // the GNU General Public License as published by the Free Software Foundation, either
 // version 3 of the License, or (at your option) any later version.
 //
-// OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+// XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 // without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 // See the GNU General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License along with OrangeHRM.
+// You should have received a copy of the GNU General Public License along with XHRM.
 // If not, see <https://www.gnu.org/licenses/>.
 
-.orangehrm-heart-icon {
+.XHRM-heart-icon {
   background-color: rgba(100, 114, 140, 0.1);
   border-radius: 50px;
   width: 36px;
@@ -26,7 +26,7 @@
   }
 }
 
-.orangehrm-heart-icon-circle {
+.XHRM-heart-icon-circle {
   top: 0;
   left: 0;
   width: 32px;
@@ -35,110 +35,110 @@
   border-radius: 100%;
 }
 
-.orangehrm-like-animation {
+.XHRM-like-animation {
   position: relative;
 
-  .orangehrm-heart-icon-path {
+  .XHRM-heart-icon-path {
     fill: #e2264d;
     transform: scale(0.2);
     animation: animateHeart 0.3s linear forwards 0.25s;
   }
-  .orangehrm-heart-icon-circle {
+  .XHRM-heart-icon-circle {
     animation: animateCircle 0.3s linear forwards;
   }
-  .orangehrm-heart-icon-group1 {
+  .XHRM-heart-icon-group1 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(0, -30px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(10px, -50px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group2 {
+  .XHRM-heart-icon-group2 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(30px, -15px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(60px, -15px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group3 {
+  .XHRM-heart-icon-group3 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(30px, 0px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(60px, 10px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group4 {
+  .XHRM-heart-icon-group4 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(30px, 15px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(40px, 50px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group5 {
+  .XHRM-heart-icon-group5 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(-10px, 20px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(-60px, 30px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group6 {
+  .XHRM-heart-icon-group6 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(-30px, 0px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(-60px, -5px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;
     }
   }
-  .orangehrm-heart-icon-group7 {
+  .XHRM-heart-icon-group7 {
     opacity: 1;
     transition: 0.1s all 0.3s;
-    .orangehrm-heart-icon-oval1 {
+    .XHRM-heart-icon-oval1 {
       transform: scale(0) translate(-30px, -15px);
       transform-origin: 0 0 0;
       transition: 0.5s transform 0.3s;
     }
-    .orangehrm-heart-icon-oval2 {
+    .XHRM-heart-icon-oval2 {
       transform: scale(0) translate(-55px, -30px);
       transform-origin: 0 0 0;
       transition: 1.5s transform 0.3s;

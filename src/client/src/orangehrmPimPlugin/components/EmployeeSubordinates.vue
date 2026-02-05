@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -37,7 +37,7 @@
       :reporting-methods="reportingMethods"
       @close="onEditModalClose"
     ></edit-employee-report-to>
-    <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
+    <div class="XHRM-horizontal-padding XHRM-vertical-padding">
       <profile-action-header
         :action-button-shown="$can.create(`subordinates`)"
         @click="onClickAdd"
@@ -51,7 +51,7 @@
       :loading="isLoading"
       @delete="onClickDeleteSelected"
     ></table-header>
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         v-model:selected="checkedItems"
         :headers="tableHeaders"
@@ -63,7 +63,7 @@
         row-decorator="oxd-table-decorator-card"
       />
     </div>
-    <div v-if="showPaginator" class="orangehrm-bottom-container">
+    <div v-if="showPaginator" class="XHRM-bottom-container">
       <oxd-pagination v-model:current="currentPage" :length="pages" />
     </div>
     <delete-confirmation ref="deleteDialog"></delete-confirmation>
@@ -71,12 +71,12 @@
 </template>
 
 <script>
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
+import ProfileActionHeader from '@/XHRMPimPlugin/components/ProfileActionHeader';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@/core/util/composable/usePaginate';
-import SaveEmployeeReportTo from '@/orangehrmPimPlugin/components/SaveEmployeeReportTo';
-import EditEmployeeReportTo from '@/orangehrmPimPlugin/components/EditEmployeeReportTo';
+import SaveEmployeeReportTo from '@/XHRMPimPlugin/components/SaveEmployeeReportTo';
+import EditEmployeeReportTo from '@/XHRMPimPlugin/components/EditEmployeeReportTo';
 import usei18n from '@/core/util/composable/usei18n';
 
 export default {
@@ -269,3 +269,4 @@ export default {
   },
 };
 </script>
+

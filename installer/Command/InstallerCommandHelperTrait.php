@@ -1,29 +1,29 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Command;
+namespace XHRM\Installer\Command;
 
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Authentication\Utility\PasswordStrengthValidation;
-use OrangeHRM\Installer\Exception\InvalidArgumentException;
-use OrangeHRM\Installer\Util\Service\InstallerPasswordStrengthService;
-use OrangeHRM\Installer\Util\SystemCheck;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Authentication\Utility\PasswordStrengthValidation;
+use XHRM\Installer\Exception\InvalidArgumentException;
+use XHRM\Installer\Util\Service\InstallerPasswordStrengthService;
+use XHRM\Installer\Util\SystemCheck;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -141,7 +141,7 @@ trait InstallerCommandHelperTrait
     {
         $this->getIO()->title('System Check');
         $this->getIO()->block(
-            'In order for your OrangeHRM installation to function properly, please ensure that all of the system check items listed below are green. If any are red, please take the necessary steps to fix them.'
+            'In order for your XHRM installation to function properly, please ensure that all of the system check items listed below are green. If any are red, please take the necessary steps to fix them.'
         );
         foreach ($systemCheckResults as $category) {
             $rows = [];
@@ -197,7 +197,7 @@ trait InstallerCommandHelperTrait
      */
     private function completeStep(ConsoleSectionOutput $section, string $step, string $suffix = ''): void
     {
-        $section->overwrite("<fg=green>* $step ✓</>$suffix");
+        $section->overwrite("<fg=green>* $step ???</>$suffix");
     }
 
     /**

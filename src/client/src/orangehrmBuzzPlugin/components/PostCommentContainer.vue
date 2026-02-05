@@ -1,25 +1,25 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-buzz-comment">
-    <div class="orangehrm-buzz-comment-add">
+  <div class="XHRM-buzz-comment">
+    <div class="XHRM-buzz-comment-add">
       <profile-image :employee="employee"></profile-image>
       <oxd-form @submit-valid="onSubmit">
         <oxd-input-field
@@ -42,7 +42,7 @@
     <oxd-text
       v-if="total > 4"
       tag="p"
-      class="orangehrm-buzz-comment-readmore"
+      class="XHRM-buzz-comment-readmore"
       @click="onClickShowMore"
     >
       {{ showAllComments ? $t('general.show_less') : $t('general.show_more') }}
@@ -59,9 +59,9 @@ import useToast from '@/core/util/composable/useToast';
 import {onBeforeMount, reactive, ref, toRefs} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
 import useAutoFocus from '@/core/util/composable/useAutoFocus';
-import PostComment from '@/orangehrmBuzzPlugin/components/PostComment';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
+import PostComment from '@/XHRMBuzzPlugin/components/PostComment';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
 
 export default {
@@ -163,7 +163,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-buzz-comment {
+.XHRM-buzz-comment {
   &-add {
     gap: 10px;
     display: flex;
@@ -189,3 +189,4 @@ export default {
   }
 }
 </style>
+

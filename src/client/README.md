@@ -1,4 +1,4 @@
-# orangehrm
+# XHRM
 
 ### Prerequisites
 

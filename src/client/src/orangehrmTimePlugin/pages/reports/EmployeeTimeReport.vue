@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -28,7 +28,7 @@
       <oxd-table-filter :filter-title="$t('time.employee_report')">
         <oxd-form @submit-valid="generateReport">
           <oxd-form-row>
-            <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="2" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <employee-autocomplete
                   v-model="filters.employee"
@@ -43,7 +43,7 @@
           </oxd-form-row>
 
           <oxd-form-row>
-            <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="2" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <project-autocomplete
                   v-model="filters.project"
@@ -63,7 +63,7 @@
           </oxd-form-row>
 
           <oxd-form-row>
-            <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+            <oxd-grid :cols="4" class="XHRM-full-width-grid">
               <oxd-grid-item>
                 <date-input
                   v-model="filters.fromDate"
@@ -80,8 +80,8 @@
                   :rules="rules.toDate"
                 />
               </oxd-grid-item>
-              <oxd-grid-item class="orangehrm-switch-filter --span-column-2">
-                <oxd-text class="orangehrm-switch-filter-text" tag="p">
+              <oxd-grid-item class="XHRM-switch-filter --span-column-2">
+                <oxd-text class="XHRM-switch-filter-text" tag="p">
                   {{ $t('time.only_include_approved_timesheets') }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.timesheetState" />
@@ -123,8 +123,8 @@ import {
 } from '@/core/util/validation/rules';
 import ReportsTable from '@/core/components/table/ReportsTable';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import ActivityDropdown from '@/orangehrmTimePlugin/components/ActivityDropdown.vue';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
+import ActivityDropdown from '@/XHRMTimePlugin/components/ActivityDropdown.vue';
+import ProjectAutocomplete from '@/XHRMTimePlugin/components/ProjectAutocomplete.vue';
 import usei18n from '@/core/util/composable/usei18n';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {OxdSwitchInput} from '@ohrm/oxd';
@@ -194,3 +194,4 @@ export default {
 </script>
 
 <style src="./time-reports.scss" lang="scss" scoped></style>
+

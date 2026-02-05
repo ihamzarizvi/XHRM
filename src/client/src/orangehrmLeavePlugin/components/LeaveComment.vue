@@ -1,45 +1,45 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-comment">
-    <div class="orangehrm-comment-profile">
-      <div class="orangehrm-comment-profile-image-wrapper">
+  <div class="XHRM-comment">
+    <div class="XHRM-comment-profile">
+      <div class="XHRM-comment-profile-image-wrapper">
         <img
           alt="profile picture"
-          class="orangehrm-comment-profile-image"
+          class="XHRM-comment-profile-image"
           :src="imgSrc"
         />
       </div>
     </div>
-    <div class="orangehrm-comment-body">
-      <div class="orangehrm-comment-profile-name">
+    <div class="XHRM-comment-body">
+      <div class="XHRM-comment-profile-name">
         <oxd-text type="subtitle-2">
           {{ fullName }}
         </oxd-text>
       </div>
-      <div class="orangehrm-comment-message">
+      <div class="XHRM-comment-message">
         <oxd-text type="subtitle-2">
           {{ data.comment }}
         </oxd-text>
       </div>
-      <div class="orangehrm-comment-timestamp">
+      <div class="XHRM-comment-timestamp">
         <oxd-text type="subtitle-2">
           {{ commentDate }} - {{ data.time }}
         </oxd-text>
@@ -93,3 +93,4 @@ export default {
 </script>
 
 <style src="./leave-comment.scss" lang="scss" scoped></style>
+

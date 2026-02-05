@@ -1,57 +1,57 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-grid class="orangehrm-dashboard-grid" :cols="3">
+  <oxd-grid class="XHRM-dashboard-grid" :cols="3">
     <oxd-grid-item
       v-if="$can.read('dashboard_time_widget')"
-      class="orangehrm-dashboard-widget"
+      class="XHRM-dashboard-widget"
     >
       <employee-attendance-widget></employee-attendance-widget>
     </oxd-grid-item>
-    <oxd-grid-item class="orangehrm-dashboard-widget">
+    <oxd-grid-item class="XHRM-dashboard-widget">
       <my-action-summary-widget></my-action-summary-widget>
     </oxd-grid-item>
-    <oxd-grid-item class="orangehrm-dashboard-widget">
+    <oxd-grid-item class="XHRM-dashboard-widget">
       <quick-launch-widget></quick-launch-widget>
     </oxd-grid-item>
     <oxd-grid-item
       v-if="$can.read('dashboard_buzz_widget')"
-      class="orangehrm-dashboard-widget"
+      class="XHRM-dashboard-widget"
     >
       <buzz-latest-post-widget></buzz-latest-post-widget>
     </oxd-grid-item>
     <oxd-grid-item
       v-if="$can.read('dashboard_leave_widget')"
-      class="orangehrm-dashboard-widget"
+      class="XHRM-dashboard-widget"
     >
       <employees-on-leave-widget></employees-on-leave-widget>
     </oxd-grid-item>
     <oxd-grid-item
       v-if="$can.read('dashboard_subunit_widget')"
-      class="orangehrm-dashboard-widget"
+      class="XHRM-dashboard-widget"
     >
       <employee-subunit-widget></employee-subunit-widget>
     </oxd-grid-item>
     <oxd-grid-item
       v-if="$can.read('dashboard_location_widget')"
-      class="orangehrm-dashboard-widget"
+      class="XHRM-dashboard-widget"
     >
       <employee-location-widget></employee-location-widget>
     </oxd-grid-item>
@@ -60,13 +60,13 @@
 
 <script>
 import {APIService} from '@/core/util/services/api.service';
-import QuickLaunchWidget from '@/orangehrmDashboardPlugin/components/QuickLaunchWidget.vue';
-import BuzzLatestPostWidget from '@/orangehrmDashboardPlugin/components/BuzzLatestPostWidget.vue';
-import EmployeeSubunitWidget from '@/orangehrmDashboardPlugin/components/EmployeeSubunitWidget.vue';
-import MyActionSummaryWidget from '@/orangehrmDashboardPlugin/components/MyActionSummaryWidget.vue';
-import EmployeeLocationWidget from '@/orangehrmDashboardPlugin/components/EmployeeLocationWidget.vue';
-import EmployeesOnLeaveWidget from '@/orangehrmDashboardPlugin/components/EmployeesOnLeaveWidget.vue';
-import EmployeeAttendanceWidget from '@/orangehrmDashboardPlugin/components/EmployeeAttendanceWidget.vue';
+import QuickLaunchWidget from '@/XHRMDashboardPlugin/components/QuickLaunchWidget.vue';
+import BuzzLatestPostWidget from '@/XHRMDashboardPlugin/components/BuzzLatestPostWidget.vue';
+import EmployeeSubunitWidget from '@/XHRMDashboardPlugin/components/EmployeeSubunitWidget.vue';
+import MyActionSummaryWidget from '@/XHRMDashboardPlugin/components/MyActionSummaryWidget.vue';
+import EmployeeLocationWidget from '@/XHRMDashboardPlugin/components/EmployeeLocationWidget.vue';
+import EmployeesOnLeaveWidget from '@/XHRMDashboardPlugin/components/EmployeesOnLeaveWidget.vue';
+import EmployeeAttendanceWidget from '@/XHRMDashboardPlugin/components/EmployeeAttendanceWidget.vue';
 
 export default {
   components: {
@@ -86,10 +86,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-dashboard-grid {
+.XHRM-dashboard-grid {
   margin: 0 auto;
   box-sizing: border-box;
   max-width: calc(350px * 3);
   grid-template-columns: repeat(auto-fill, minmax(max(320px, 100%/3), 1fr));
 }
 </style>
+

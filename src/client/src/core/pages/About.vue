@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -22,56 +22,56 @@
     :style="{width: '90%', maxWidth: '450px'}"
     @update:show="onCancel"
   >
-    <div class="orangehrm-modal-header">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+    <div class="XHRM-modal-header">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('general.about') }}
       </oxd-text>
     </div>
     <oxd-divider />
-    <div v-if="isLoading" class="orangehrm-loader">
+    <div v-if="isLoading" class="XHRM-loader">
       <oxd-loading-spinner />
     </div>
-    <oxd-grid v-else :cols="2" class="orangehrm-about">
+    <oxd-grid v-else :cols="2" class="XHRM-about">
       <oxd-grid-item>
-        <oxd-text tag="p" class="orangehrm-about-title">
+        <oxd-text tag="p" class="XHRM-about-title">
           {{ $t('general.company_name') }}:
         </oxd-text>
       </oxd-grid-item>
       <oxd-grid-item>
-        <oxd-text tag="p" class="orangehrm-about-text">
+        <oxd-text tag="p" class="XHRM-about-text">
           {{ data.companyName }}
         </oxd-text>
       </oxd-grid-item>
       <oxd-grid-item>
-        <oxd-text tag="p" class="orangehrm-about-title">
+        <oxd-text tag="p" class="XHRM-about-title">
           {{ $t('general.version') }}:
         </oxd-text>
       </oxd-grid-item>
       <oxd-grid-item>
-        <oxd-text tag="p" class="orangehrm-about-text">
+        <oxd-text tag="p" class="XHRM-about-text">
           {{ data.productName }} {{ data.version }}
         </oxd-text>
       </oxd-grid-item>
       <template v-if="data.numberOfActiveEmployee !== undefined">
         <oxd-grid-item>
-          <oxd-text tag="p" class="orangehrm-about-title">
+          <oxd-text tag="p" class="XHRM-about-title">
             {{ $t('general.active_employees') }}:
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item>
-          <oxd-text tag="p" class="orangehrm-about-text">
+          <oxd-text tag="p" class="XHRM-about-text">
             {{ data.numberOfActiveEmployee }}
           </oxd-text>
         </oxd-grid-item>
       </template>
       <template v-if="data.numberOfPastEmployee !== undefined">
         <oxd-grid-item>
-          <oxd-text tag="p" class="orangehrm-about-title">
+          <oxd-text tag="p" class="XHRM-about-title">
             {{ $t('general.employees_terminated') }}:
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item>
-          <oxd-text tag="p" class="orangehrm-about-text">
+          <oxd-text tag="p" class="XHRM-about-text">
             {{ data.numberOfPastEmployee }}
           </oxd-text>
         </oxd-grid-item>
@@ -123,13 +123,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-loader {
+.XHRM-loader {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80px;
 }
-.orangehrm-about {
+.XHRM-about {
   grid-template-columns: 150px 1fr;
   &-title,
   &-text {
@@ -141,3 +141,4 @@ export default {
   }
 }
 </style>
+

@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-sheet :gutters="false" class="orangehrm-directory-card">
+  <oxd-sheet :gutters="false" class="XHRM-directory-card">
     <div
       v-show="showBackButton"
-      class="orangehrm-directory-card-top"
+      class="XHRM-directory-card-top"
       @click="$emit('hide-details', false)"
     >
       <oxd-icon name="arrow-right"></oxd-icon>
@@ -35,10 +35,10 @@
     </oxd-text>
     <div
       v-show="employeeSubUnit || employeeLocation"
-      class="orangehrm-directory-card-body"
+      class="XHRM-directory-card-body"
     >
       <oxd-icon
-        class="orangehrm-directory-card-icon"
+        class="XHRM-directory-card-icon"
         name="geo-alt-fill"
       ></oxd-icon>
       <div>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import ProfilePicture from '@/orangehrmCorporateDirectoryPlugin/components/ProfilePicture';
+import ProfilePicture from '@/XHRMCorporateDirectoryPlugin/components/ProfilePicture';
 import {OxdIcon, OxdSheet} from '@ohrm/oxd';
 
 export default {
@@ -107,19 +107,19 @@ export default {
     },
     cardTitleClasses() {
       return {
-        'orangehrm-directory-card-header': true,
+        'XHRM-directory-card-header': true,
         '--break-words': !this.hasDefaultSlot,
       };
     },
     cardSubTitleClasses() {
       return {
-        'orangehrm-directory-card-subtitle': true,
+        'XHRM-directory-card-subtitle': true,
         '--break-words': !this.hasDefaultSlot,
       };
     },
     cardDescriptionClasses() {
       return {
-        'orangehrm-directory-card-description': true,
+        'XHRM-directory-card-description': true,
         '--break-words': !this.hasDefaultSlot,
       };
     },
@@ -128,7 +128,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-directory-card {
+.XHRM-directory-card {
   height: auto;
   cursor: pointer;
   overflow: hidden;
@@ -191,3 +191,4 @@ export default {
   }
 }
 </style>
+

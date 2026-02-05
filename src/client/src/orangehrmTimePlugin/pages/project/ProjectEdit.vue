@@ -1,32 +1,32 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('time.edit_project') }}
       </oxd-text>
       <oxd-divider />
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
-        <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="2" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <oxd-input-field
               v-model="project.name"
@@ -49,14 +49,14 @@
               v-if="$can.update(`time_projects`)"
               icon-name="plus"
               display-type="text"
-              class="orangehrm-input-field-bottom-space"
+              class="XHRM-input-field-bottom-space"
               :label="$t('time.add_customer')"
               @click="onClickAddCustomer"
             />
           </oxd-grid-item>
         </oxd-grid>
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="project.description"
@@ -123,10 +123,10 @@ import {APIService} from '@/core/util/services/api.service';
 import {navigate} from '@ohrm/core/util/helper/navigation';
 import {promiseDebounce} from '@ohrm/oxd';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import Activities from '@/orangehrmTimePlugin/components/Activities.vue';
-import AddCustomerModal from '@/orangehrmTimePlugin/components/AddCustomerModal.vue';
-import CustomerAutocomplete from '@/orangehrmTimePlugin/components/CustomerAutocomplete.vue';
-import ProjectAdminAutocomplete from '@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue';
+import Activities from '@/XHRMTimePlugin/components/Activities.vue';
+import AddCustomerModal from '@/XHRMTimePlugin/components/AddCustomerModal.vue';
+import CustomerAutocomplete from '@/XHRMTimePlugin/components/CustomerAutocomplete.vue';
+import ProjectAdminAutocomplete from '@/XHRMTimePlugin/components/ProjectAdminAutocomplete.vue';
 
 const defaultProjectModel = {
   name: null,
@@ -292,3 +292,4 @@ export default {
   },
 };
 </script>
+

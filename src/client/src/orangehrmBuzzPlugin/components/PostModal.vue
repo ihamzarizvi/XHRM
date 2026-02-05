@@ -1,43 +1,43 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
   <oxd-dialog
-    class="orangehrm-dialog-modal"
+    class="XHRM-dialog-modal"
     :persistent="true"
     @update:show="onCancel"
   >
-    <div class="orangehrm-modal-header">
+    <div class="XHRM-modal-header">
       <oxd-text type="card-title">
         {{ title }}
       </oxd-text>
     </div>
     <oxd-divider />
     <oxd-form :loading="loading" @submit-valid="onSubmit">
-      <div class="orangehrm-buzz-post-modal-header">
+      <div class="XHRM-buzz-post-modal-header">
         <profile-image :employee="employee"></profile-image>
-        <div class="orangehrm-buzz-post-modal-header-text">
+        <div class="XHRM-buzz-post-modal-header-text">
           <slot name="header"></slot>
         </div>
       </div>
       <slot></slot>
-      <oxd-form-actions class="orangehrm-buzz-post-modal-actions">
+      <oxd-form-actions class="XHRM-buzz-post-modal-actions">
         <oxd-button
           type="submit"
           :disabled="disabled"
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
+import ProfileImage from '@/XHRMBuzzPlugin/components/ProfileImage';
 import {OxdDialog} from '@ohrm/oxd';
 
 export default {
@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-buzz-post-modal {
+.XHRM-buzz-post-modal {
   &-header {
     gap: 1rem;
     display: flex;
@@ -123,7 +123,8 @@ export default {
     }
   }
 }
-.orangehrm-modal-header {
+.XHRM-modal-header {
   text-align: center;
 }
 </style>
+

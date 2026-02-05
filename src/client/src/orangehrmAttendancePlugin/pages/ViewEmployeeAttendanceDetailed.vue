@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -23,7 +23,7 @@
   >
     <oxd-form @submit-valid="onClickView">
       <oxd-form-row>
-        <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="4" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <employee-autocomplete
               v-model="filters.employee"
@@ -58,10 +58,10 @@
     </oxd-form>
   </oxd-table-filter>
   <br />
-  <div class="orangehrm-paper-container">
+  <div class="XHRM-paper-container">
     <div
       v-if="isEditable && filters.employee"
-      class="orangehrm-header-container"
+      class="XHRM-header-container"
     >
       <oxd-button
         icon-name="plus"
@@ -69,7 +69,7 @@
         :label="$t('general.add')"
         @click="onClickAdd"
       />
-      <oxd-text class="orangehrm-header-total" tag="span">
+      <oxd-text class="XHRM-header-total" tag="span">
         {{ $t('time.total_duration') }}: {{ totalDuration }}
       </oxd-text>
     </div>
@@ -80,7 +80,7 @@
       :selected="checkedItems.length"
       @delete="onClickDeleteSelected"
     ></table-header>
-    <div class="orangehrm-container">
+    <div class="XHRM-container">
       <oxd-card-table
         v-model:selected="checkedItems"
         :headers="headers"
@@ -91,7 +91,7 @@
         row-decorator="oxd-table-decorator-card"
       />
     </div>
-    <div class="orangehrm-bottom-container">
+    <div class="XHRM-bottom-container">
       <oxd-pagination
         v-if="showPaginator"
         v-model:current="currentPage"
@@ -124,7 +124,7 @@ import useLocale from '@/core/util/composable/useLocale';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import RecordCell from '@/orangehrmAttendancePlugin/components/RecordCell.vue';
+import RecordCell from '@/XHRMAttendancePlugin/components/RecordCell.vue';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
 
@@ -394,3 +394,4 @@ export default {
   },
 };
 </script>
+

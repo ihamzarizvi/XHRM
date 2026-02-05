@@ -1,52 +1,52 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('help.getting_started_with_orangehrm') }}
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
+        {{ $t('help.getting_started_with_XHRM') }}
       </oxd-text>
       <oxd-divider />
-      <oxd-text tag="p" class="orangehrm-support-text">
-        {{ $t('help.getting_started_with_orangehrm_message_1') }}
+      <oxd-text tag="p" class="XHRM-support-text">
+        {{ $t('help.getting_started_with_XHRM_message_1') }}
       </oxd-text>
       <br />
-      <oxd-text tag="p" class="orangehrm-support-text">
-        {{ $t('help.getting_started_with_orangehrm_message_2') }}
+      <oxd-text tag="p" class="XHRM-support-text">
+        {{ $t('help.getting_started_with_XHRM_message_2') }}
       </oxd-text>
-      <div class="orangehrm-support">
-        <oxd-grid :cols="2" class="orangehrm-support-channel --mail">
+      <div class="XHRM-support">
+        <oxd-grid :cols="2" class="XHRM-support-channel --mail">
           <oxd-grid-item>
             <img :src="helpImgSrc" alt="help image" />
           </oxd-grid-item>
           <oxd-grid-item>
-            <oxd-text class="orangehrm-sub-title" tag="p">
+            <oxd-text class="XHRM-sub-title" tag="p">
               {{ $t('help.customer_support') }}
             </oxd-text>
-            <oxd-text tag="p" class="orangehrm-support-text">
+            <oxd-text tag="p" class="XHRM-support-text">
               {{ $t('help.contact_us_on_message') }}
               <a
-                class="orangehrm-support-link"
-                href="mailto:ossupport@orangehrm.com"
+                class="XHRM-support-link"
+                href="mailto:ossupport@XHRM.com"
               >
-                ossupport@orangehrm.com
+                ossupport@XHRM.com
               </a>
               {{ $t('help.we_will_be_delighted_to_help') }}
             </oxd-text>
@@ -68,10 +68,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-support-text {
+.XHRM-support-text {
   font-size: 12px;
 }
-.orangehrm-support {
+.XHRM-support {
   padding: 1rem 0;
   &-channel {
     grid-template-columns: 50px 1fr;
@@ -87,3 +87,4 @@ export default {
   }
 }
 </style>
+

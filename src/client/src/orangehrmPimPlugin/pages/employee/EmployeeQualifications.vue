@@ -1,7 +1,7 @@
-<template>
+﻿<template>
   <edit-employee-layout :employee-id="empNumber" screen="qualifications">
-    <div class="orangehrm-horizontal-padding orangehrm-top-padding">
-      <oxd-text tag="h6" class="orangehrm-main-title">{{
+    <div class="XHRM-horizontal-padding XHRM-top-padding">
+      <oxd-text tag="h6" class="XHRM-main-title">{{
         $t('general.qualifications')
       }}</oxd-text>
       <oxd-divider />
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import EmployeeSkills from '@/orangehrmPimPlugin/components/EmployeeSkills';
-import EmployeeEducation from '@/orangehrmPimPlugin/components/EmployeeEducation';
-import EmployeeLanguages from '@/orangehrmPimPlugin/components/EmployeeLanguages';
-import EmployeeWorkExperience from '@/orangehrmPimPlugin/components/EmployeeWorkExperience';
-import EmployeeLicense from '@/orangehrmPimPlugin/components/EmployeeLicense';
+import EditEmployeeLayout from '@/XHRMPimPlugin/components/EditEmployeeLayout';
+import EmployeeSkills from '@/XHRMPimPlugin/components/EmployeeSkills';
+import EmployeeEducation from '@/XHRMPimPlugin/components/EmployeeEducation';
+import EmployeeLanguages from '@/XHRMPimPlugin/components/EmployeeLanguages';
+import EmployeeWorkExperience from '@/XHRMPimPlugin/components/EmployeeWorkExperience';
+import EmployeeLicense from '@/XHRMPimPlugin/components/EmployeeLicense';
 
 export default {
   components: {
@@ -53,3 +53,4 @@ export default {
   },
 };
 </script>
+

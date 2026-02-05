@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -20,48 +20,48 @@
 <template>
   <div
     :class="{
-      'orangehrm-action-button-container': allowedActions.length < 2,
-      'orangehrm-action-buttons-container': allowedActions.length > 1,
+      'XHRM-action-button-container': allowedActions.length < 2,
+      'XHRM-action-buttons-container': allowedActions.length > 1,
     }"
   >
     <oxd-button
       display-type="ghost"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('general.back')"
       @click="onBack"
     />
     <oxd-button
       v-if="isCancelAllowed"
       display-type="danger"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('general.cancel')"
       @click="onClaimAction('CANCEL')"
     />
     <oxd-button
       v-if="isRejectAllowed"
       display-type="danger"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('general.reject')"
       @click="onClaimAction('REJECT')"
     />
     <oxd-button
       v-if="isApproveAllowed"
       display-type="secondary"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('general.approve')"
       @click="onClaimAction('APPROVE')"
     />
     <oxd-button
       v-if="isPayAllowed"
       display-type="secondary"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('claim.pay')"
       @click="onClaimAction('PAY')"
     />
     <oxd-button
       v-if="isSubmitAllowed"
       display-type="secondary"
-      class="orangehrm-sm-button"
+      class="XHRM-sm-button"
       :label="$t('general.submit')"
       @click="onClaimAction('SUBMIT')"
     />
@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.orangehrm-action-buttons-container {
+.XHRM-action-buttons-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -155,17 +155,18 @@ export default {
     align-items: flex-end;
   }
 }
-.orangehrm-action-button-container {
+.XHRM-action-button-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-end;
   padding: 25px;
 }
-.orangehrm-sm-button {
+.XHRM-sm-button {
   margin-left: 1rem;
   @media screen and (max-width: 600px) {
     margin-bottom: 1rem;
   }
 }
 </style>
+

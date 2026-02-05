@@ -1,17 +1,17 @@
-/**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+﻿/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -22,11 +22,11 @@ describe('core/util/helper/truncate', () => {
     'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem cumque, ipsa minima ducimus laboriosam accusamus corporis. Pariatur corporis facilis iure mollitia quaerat dolorem ipsam provident quo nostrum, similique numquam consectetur?';
   const shortText = 'Lorem ipsum dolor';
   const unicodeSampleText =
-    '국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다';
+    'êµ­ë¯¼ê²½ì œì˜ ë°œì „ì„ ìœ„í•œ ì¤‘ìš”ì •ì±…ì˜ ìˆ˜ë¦½ì— ê´€í•˜ì—¬ ëŒ€í†µë ¹ì˜ ìžë¬¸ì— ì‘í•˜ê¸° ìœ„í•˜ì—¬ êµ­ë¯¼ê²½ì œìžë¬¸íšŒì˜ë¥¼ ë‘˜ ìˆ˜ ìžˆë‹¤';
   const unicodeShortText =
-    '국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문...';
+    'êµ­ë¯¼ê²½ì œì˜ ë°œì „ì„ ìœ„í•œ ì¤‘ìš”ì •ì±…ì˜ ìˆ˜ë¦½ì— ê´€í•˜ì—¬ ëŒ€í†µë ¹ì˜ ìžë¬¸ì— ì‘í•˜ê¸° ìœ„í•˜ì—¬ êµ­ë¯¼ê²½ì œìžë¬¸...';
   const unicodeSampleText2 =
-    'ලෝරීම් ඉප්සම් යනු සරලව මුද්‍රණ හා අකුරු ඇමිනුම් කර්මාන්තයේ උදාහරණ අකුරු පෙළ වෙයි. එය ශතවර්ශ පහක් පමණ නොවී පැමිණ ඉලෙක්ට්‍රොනික යුගයටද පිවිසුණි';
+    'à¶½à·à¶»à·“à¶¸à·Š à¶‰à¶´à·Šà·ƒà¶¸à·Š à¶ºà¶±à·” à·ƒà¶»à¶½à·€ à¶¸à·”à¶¯à·Šâ€à¶»à¶« à·„à· à¶…à¶šà·”à¶»à·” à¶‡à¶¸à·’à¶±à·”à¶¸à·Š à¶šà¶»à·Šà¶¸à·à¶±à·Šà¶­à¶ºà·š à¶‹à¶¯à·à·„à¶»à¶« à¶…à¶šà·”à¶»à·” à¶´à·™à·… à·€à·™à¶ºà·’. à¶‘à¶º à·à¶­à·€à¶»à·Šà· à¶´à·„à¶šà·Š à¶´à¶¸à¶« à¶±à·œà·€à·“ à¶´à·à¶¸à·’à¶« à¶‰à¶½à·™à¶šà·Šà¶§à·Šâ€à¶»à·œà¶±à·’à¶š à¶ºà·”à¶œà¶ºà¶§à¶¯ à¶´à·’à·€à·’à·ƒà·”à¶«à·’';
 
   test('truncate::with default param should output text truncated to 50 chars + 3 chars ellipsis', () => {
     const result = truncate(sampleText);
@@ -63,3 +63,4 @@ describe('core/util/helper/truncate', () => {
     expect(result.length).toStrictEqual(23);
   });
 });
+

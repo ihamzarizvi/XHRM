@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -21,7 +21,7 @@
   <!-- Always use inside OXD-Form -->
   <oxd-input-group :label="localizedLabel" :classes="classes">
     <oxd-input-field
-      class="orangehrm-firstname"
+      class="XHRM-firstname"
       name="firstName"
       :placeholder="$t('general.first_name')"
       :model-value="firstName"
@@ -30,7 +30,7 @@
       @update:model-value="$emit('update:firstName', $event)"
     />
     <oxd-input-field
-      class="orangehrm-middlename"
+      class="XHRM-middlename"
       name="middleName"
       :model-value="middleName"
       :rules="rules.middleName"
@@ -39,7 +39,7 @@
       @update:model-value="$emit('update:middleName', $event)"
     />
     <oxd-input-field
-      class="orangehrm-lastname"
+      class="XHRM-lastname"
       name="lastName"
       :placeholder="$t('general.last_name')"
       :model-value="lastName"
@@ -109,21 +109,22 @@ export default {
     display: flex;
   }
 
-  ::v-deep(.orangehrm-firstname) {
+  ::v-deep(.XHRM-firstname) {
     border-bottom-right-radius: unset;
     border-top-right-radius: unset;
     text-overflow: ellipsis;
   }
 
-  ::v-deep(.orangehrm-lastname) {
+  ::v-deep(.XHRM-lastname) {
     border-bottom-left-radius: unset;
     border-top-left-radius: unset;
     text-overflow: ellipsis;
   }
 
-  ::v-deep(.orangehrm-middlename) {
+  ::v-deep(.XHRM-middlename) {
     border-radius: unset;
     text-overflow: ellipsis;
   }
 }
 </style>
+

@@ -1,25 +1,25 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-buzz-newsfeed">
-    <oxd-text type="card-title" class="orangehrm-buzz-newsfeed-title">
+  <div class="XHRM-buzz-newsfeed">
+    <oxd-text type="card-title" class="XHRM-buzz-newsfeed-title">
       {{ $t('buzz.buzz_newsfeed') }}
     </oxd-text>
 
@@ -30,7 +30,7 @@
     ></create-post>
     <slot></slot>
 
-    <oxd-grid :cols="1" class="orangehrm-buzz-newsfeed-posts">
+    <oxd-grid :cols="1" class="XHRM-buzz-newsfeed-posts">
       <oxd-grid-item v-for="(post, index) in posts" :key="post">
         <post-container
           :post="post"
@@ -72,7 +72,7 @@
 
       <oxd-grid-item
         v-show="!isLoading && posts.length === 0"
-        class="orangehrm-buzz-newsfeed-noposts"
+        class="XHRM-buzz-newsfeed-noposts"
       >
         <img :src="noPostsPic" alt="No Posts" />
         <oxd-text tag="p">
@@ -82,7 +82,7 @@
     </oxd-grid>
     <oxd-loading-spinner
       v-if="isLoading"
-      class="orangehrm-buzz-newsfeed-loader"
+      class="XHRM-buzz-newsfeed-loader"
     />
   </div>
 
@@ -118,18 +118,18 @@
 import useToast from '@/core/util/composable/useToast';
 import {APIService} from '@/core/util/services/api.service';
 import {onBeforeMount, reactive, ref, toRefs, watch} from 'vue';
-import PostBody from '@/orangehrmBuzzPlugin/components/PostBody.vue';
-import PostStats from '@/orangehrmBuzzPlugin/components/PostStats.vue';
-import CreatePost from '@/orangehrmBuzzPlugin/components/CreatePost.vue';
+import PostBody from '@/XHRMBuzzPlugin/components/PostBody.vue';
+import PostStats from '@/XHRMBuzzPlugin/components/PostStats.vue';
+import CreatePost from '@/XHRMBuzzPlugin/components/CreatePost.vue';
 import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
-import PostActions from '@/orangehrmBuzzPlugin/components/PostActions.vue';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import EditPostModal from '@/orangehrmBuzzPlugin/components/EditPostModal.vue';
-import PhotoCarousel from '@/orangehrmBuzzPlugin/components/PhotoCarousel.vue';
-import PostContainer from '@/orangehrmBuzzPlugin/components/PostContainer.vue';
-import SharePostModal from '@/orangehrmBuzzPlugin/components/SharePostModal.vue';
+import PostActions from '@/XHRMBuzzPlugin/components/PostActions.vue';
+import useBuzzAPIs from '@/XHRMBuzzPlugin/util/composable/useBuzzAPIs';
+import EditPostModal from '@/XHRMBuzzPlugin/components/EditPostModal.vue';
+import PhotoCarousel from '@/XHRMBuzzPlugin/components/PhotoCarousel.vue';
+import PostContainer from '@/XHRMBuzzPlugin/components/PostContainer.vue';
+import SharePostModal from '@/XHRMBuzzPlugin/components/SharePostModal.vue';
 import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import PostCommentContainer from '@/orangehrmBuzzPlugin/components/PostCommentContainer.vue';
+import PostCommentContainer from '@/XHRMBuzzPlugin/components/PostCommentContainer.vue';
 import {OxdSpinner} from '@ohrm/oxd';
 
 export default {
@@ -326,3 +326,4 @@ export default {
 </script>
 
 <style src="./news-feed.scss" lang="scss" scoped></style>
+

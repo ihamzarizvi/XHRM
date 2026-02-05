@@ -1,31 +1,31 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <leave-conflict
       v-if="showLeaveConflict"
       :workshift-exceeded="isWorkShiftExceeded"
       :data="leaveConflictData"
     ></leave-conflict>
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('leave.apply_leave') }}
       </oxd-text>
 
@@ -42,7 +42,7 @@
         @submit-valid="onSave"
       >
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="leave.type"
@@ -60,7 +60,7 @@
         </oxd-form-row>
 
         <oxd-form-row>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <date-input
                 v-model="leave.fromDate"
@@ -84,7 +84,7 @@
 
         <!-- Single Day|Duration -->
         <oxd-form-row v-if="appliedLeaveDuration == 1">
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <leave-duration-input
               v-model:duration="leave.duration.type"
               v-model:fromTime="leave.duration.fromTime"
@@ -98,7 +98,7 @@
 
         <!-- Partial Day|Duration -->
         <oxd-form-row v-if="appliedLeaveDuration > 1">
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="leave.partialOptions"
@@ -139,7 +139,7 @@
         <!-- Partial Day|Duration -->
 
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="leave.comment"
@@ -172,10 +172,10 @@ import {
 import {yearRange} from '@ohrm/core/util/helper/year-range';
 import {diffInDays} from '@ohrm/core/util/helper/datefns';
 import {APIService} from '@ohrm/core/util/services/api.service';
-import LeaveDurationInput from '@/orangehrmLeavePlugin/components/LeaveDurationInput';
-import LeaveBalance from '@/orangehrmLeavePlugin/components/LeaveBalance';
-import LeaveConflict from '@/orangehrmLeavePlugin/components/LeaveConflict';
-import useLeaveValidators from '@/orangehrmLeavePlugin/util/composable/useLeaveValidators';
+import LeaveDurationInput from '@/XHRMLeavePlugin/components/LeaveDurationInput';
+import LeaveBalance from '@/XHRMLeavePlugin/components/LeaveBalance';
+import LeaveConflict from '@/XHRMLeavePlugin/components/LeaveConflict';
+import useLeaveValidators from '@/XHRMLeavePlugin/util/composable/useLeaveValidators';
 import useForm from '@ohrm/core/util/composable/useForm';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 
@@ -351,3 +351,4 @@ export default {
   },
 };
 </script>
+

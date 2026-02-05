@@ -1,17 +1,17 @@
-/**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+﻿/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
@@ -947,12 +947,12 @@ describe('core/util/validation/rules::validHostnameFormat', () => {
   });
 
   test('validHostnameFormat:: with top level domain', () => {
-    const result = validHostnameFormat('orangehrm.com');
+    const result = validHostnameFormat('XHRM.com');
     expect(result).toStrictEqual(true);
   });
 
   test('validHostnameFormat:: with sub domain', () => {
-    const result = validHostnameFormat('osohrm.orangehrm.com');
+    const result = validHostnameFormat('osohrm.XHRM.com');
     expect(result).toStrictEqual(true);
   });
 
@@ -967,17 +967,17 @@ describe('core/util/validation/rules::validHostnameFormat', () => {
   });
 
   test('validHostnameFormat:: hostname with invalid characters', () => {
-    const result = validHostnameFormat('orangehrm_company.com');
+    const result = validHostnameFormat('XHRM_company.com');
     expect(result).toStrictEqual('Invalid');
   });
 
   test('validHostnameFormat:: hostname with space characters', () => {
-    const result = validHostnameFormat('orangehrm com');
+    const result = validHostnameFormat('XHRM com');
     expect(result).toStrictEqual('Invalid');
   });
 
   test('validHostnameFormat:: hostname with protocol', () => {
-    const result = validHostnameFormat('http://orangehrm.com');
+    const result = validHostnameFormat('http://XHRM.com');
     expect(result).toStrictEqual('Invalid');
   });
 
@@ -997,7 +997,7 @@ describe('core/util/validation/rules::validHostnameFormat', () => {
   });
 
   test('validHostnameFormat:: hostname with unicode characters', () => {
-    const result = validHostnameFormat('localhost.世界');
+    const result = validHostnameFormat('localhost.ä¸–ç•Œ');
     expect(result).toStrictEqual(true);
   });
 
@@ -1109,3 +1109,4 @@ describe('core/util/validation/rules::digitsOnlyWithTwoDecimalPoints', () => {
     expect(result).toEqual('Should be a valid number (xxx.xx)');
   });
 });
+

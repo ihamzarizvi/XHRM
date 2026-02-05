@@ -1,44 +1,44 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-header">
-        <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-header">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ $t('attendance.edit_attendance_records') }}
         </oxd-text>
         <oxd-text
           v-if="totalDuration"
           tag="span"
-          class="orangehrm-header-total"
+          class="XHRM-header-total"
         >
           {{ $t('time.total_duration') }}: {{ totalDuration }}
         </oxd-text>
       </div>
       <oxd-divider />
 
-      <div class="orangehrm-paper-container">
+      <div class="XHRM-paper-container">
         <oxd-form :loading="isLoading" @submit-valid="onSave">
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid no-gap">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid no-gap">
             <oxd-grid-item>
-              <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+              <oxd-grid :cols="2" class="XHRM-full-width-grid">
                 <oxd-grid-item>
                   <oxd-text type="subtitle-2">
                     {{ $t('attendance.punch_in') }}
@@ -89,9 +89,9 @@
 
             <oxd-grid-item
               v-if="attendance.punchOut"
-              class="orangehrm-punch-out-record"
+              class="XHRM-punch-out-record"
             >
-              <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+              <oxd-grid :cols="2" class="XHRM-full-width-grid">
                 <oxd-grid-item>
                   <oxd-text type="subtitle-2">
                     {{ $t('attendance.punch_out') }}
@@ -168,7 +168,7 @@ import {navigate} from '@/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
 import {promiseDebounce} from '@ohrm/oxd';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import TimezoneDropdown from '@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue';
+import TimezoneDropdown from '@/XHRMAttendancePlugin/components/TimezoneDropdown.vue';
 
 const attendanceRecordModal = {
   userDate: null,
@@ -423,3 +423,4 @@ export default {
 </script>
 
 <style src="./edit-attendance.scss" lang="scss" scoped></style>
+

@@ -1,42 +1,42 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Framework;
+namespace XHRM\Installer\Framework;
 
 use Exception;
-use OrangeHRM\Config\Config;
-use OrangeHRM\Framework\Event\EventDispatcher;
-use OrangeHRM\Framework\Filesystem\Filesystem;
-use OrangeHRM\Framework\Http\ControllerResolver;
-use OrangeHRM\Framework\Http\Request;
-use OrangeHRM\Framework\Http\RequestStack;
-use OrangeHRM\Framework\Http\Session\NativeSessionStorage;
-use OrangeHRM\Framework\Http\Session\Session;
-use OrangeHRM\Framework\Logger\Logger;
-use OrangeHRM\Framework\Routing\RequestContext;
-use OrangeHRM\Framework\Routing\UrlMatcher;
-use OrangeHRM\Framework\ServiceContainer;
-use OrangeHRM\Framework\Services;
-use OrangeHRM\Installer\Exception\SessionStorageNotWritable;
-use OrangeHRM\Installer\Subscriber\ExceptionSubscriber;
-use OrangeHRM\Installer\Subscriber\LoggerSubscriber;
-use OrangeHRM\Installer\Util\SystemCheck;
+use XHRM\Config\Config;
+use XHRM\Framework\Event\EventDispatcher;
+use XHRM\Framework\Filesystem\Filesystem;
+use XHRM\Framework\Http\ControllerResolver;
+use XHRM\Framework\Http\Request;
+use XHRM\Framework\Http\RequestStack;
+use XHRM\Framework\Http\Session\NativeSessionStorage;
+use XHRM\Framework\Http\Session\Session;
+use XHRM\Framework\Logger\Logger;
+use XHRM\Framework\Routing\RequestContext;
+use XHRM\Framework\Routing\UrlMatcher;
+use XHRM\Framework\ServiceContainer;
+use XHRM\Framework\Services;
+use XHRM\Installer\Exception\SessionStorageNotWritable;
+use XHRM\Installer\Subscriber\ExceptionSubscriber;
+use XHRM\Installer\Subscriber\LoggerSubscriber;
+use XHRM\Installer\Util\SystemCheck;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\Response;
@@ -208,7 +208,7 @@ class HttpKernel extends BaseHttpKernel
         $isSecure = $request->isSecure();
         $path = $request->getBasePath();
         $options = [
-            'name' => $isSecure ? 'orangehrm' : '_orangehrm',
+            'name' => $isSecure ? 'XHRM' : '_XHRM',
             'cookie_secure' => $isSecure,
             'cookie_httponly' => true,
             'cookie_path' => $path,

@@ -1,32 +1,32 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Migration\V5_0_0;
+namespace XHRM\Installer\Migration\V5_0_0;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
-use OrangeHRM\Installer\Util\V1\AbstractMigration;
-use OrangeHRM\Installer\Util\V1\LangStringHelper;
-use OrangeHRM\Installer\Util\V1\TranslationHelper;
+use XHRM\Installer\Util\V1\AbstractMigration;
+use XHRM\Installer\Util\V1\LangStringHelper;
+use XHRM\Installer\Util\V1\TranslationHelper;
 
 class Migration extends AbstractMigration
 {
@@ -48,7 +48,7 @@ class Migration extends AbstractMigration
         $this->getDataGroupHelper()->insertApiPermissions(__DIR__ . '/permission/api.yaml');
         $this->getDataGroupHelper()->insertDataGroupPermissions(__DIR__ . '/permission/data_group.yaml');
 
-        $this->updateMenuConfigurator('attendance', null, 'OrangeHRM\\Attendance\\Menu\\AttendanceMenuConfigurator');
+        $this->updateMenuConfigurator('attendance', null, 'XHRM\\Attendance\\Menu\\AttendanceMenuConfigurator');
         $this->getDataGroupHelper()->insertScreenPermissions(__DIR__ . '/permission/screen.yaml');
 
         $this->getSchemaHelper()->dropColumn('ohrm_leave', 'comments');
@@ -88,36 +88,36 @@ class Migration extends AbstractMigration
             true
         );
 
-        $this->updateMenuConfigurator('admin', 'saveJobTitle', 'OrangeHRM\\Admin\\Menu\\JobTitleMenuConfigurator');
-        $this->updateMenuConfigurator('admin', 'saveLocation', 'OrangeHRM\\Admin\\Menu\\LocationMenuConfigurator');
-        $this->updateMenuConfigurator('admin', 'payGrade', 'OrangeHRM\\Admin\\Menu\\PayGradeConfigurator');
-        $this->updateMenuConfigurator('admin', 'saveSystemUser', 'OrangeHRM\\Admin\\Menu\\UserMenuConfigurator');
+        $this->updateMenuConfigurator('admin', 'saveJobTitle', 'XHRM\\Admin\\Menu\\JobTitleMenuConfigurator');
+        $this->updateMenuConfigurator('admin', 'saveLocation', 'XHRM\\Admin\\Menu\\LocationMenuConfigurator');
+        $this->updateMenuConfigurator('admin', 'payGrade', 'XHRM\\Admin\\Menu\\PayGradeConfigurator');
+        $this->updateMenuConfigurator('admin', 'saveSystemUser', 'XHRM\\Admin\\Menu\\UserMenuConfigurator');
 
-        $this->updateMenuConfigurator('pim', 'viewMyDetails', 'OrangeHRM\\Pim\\Menu\\MyInfoMenuConfigurator');
+        $this->updateMenuConfigurator('pim', 'viewMyDetails', 'XHRM\\Pim\\Menu\\MyInfoMenuConfigurator');
         $this->updateMenuConfigurator(
             'pim',
             'definePredefinedReport',
-            'OrangeHRM\\Pim\\Menu\\PimReportMenuConfigurator'
+            'XHRM\\Pim\\Menu\\PimReportMenuConfigurator'
         );
         $this->updateMenuConfigurator(
             'pim',
             'displayPredefinedReport',
-            'OrangeHRM\\Pim\\Menu\\PimReportMenuConfigurator'
+            'XHRM\\Pim\\Menu\\PimReportMenuConfigurator'
         );
 
-        $this->updateMenuConfigurator('leave', 'defineLeaveType', 'OrangeHRM\\Leave\\Menu\\LeaveTypeMenuConfigurator');
+        $this->updateMenuConfigurator('leave', 'defineLeaveType', 'XHRM\\Leave\\Menu\\LeaveTypeMenuConfigurator');
         $this->updateMenuConfigurator(
             'leave',
             'viewLeaveRequest',
-            'OrangeHRM\\Leave\\Menu\\DetailedLeaveRequestMenuConfigurator'
+            'XHRM\\Leave\\Menu\\DetailedLeaveRequestMenuConfigurator'
         );
 
-        $this->updateMenuConfigurator('time', 'addCustomer', 'OrangeHRM\\Time\\Menu\\CustomerMenuConfigurator');
-        $this->updateMenuConfigurator('time', 'saveProject', 'OrangeHRM\\Time\\Menu\\ProjectMenuConfigurator');
+        $this->updateMenuConfigurator('time', 'addCustomer', 'XHRM\\Time\\Menu\\CustomerMenuConfigurator');
+        $this->updateMenuConfigurator('time', 'saveProject', 'XHRM\\Time\\Menu\\ProjectMenuConfigurator');
         $this->updateMenuConfigurator(
             'time',
             'displayProjectActivityDetailsReport',
-            'OrangeHRM\\Time\\Menu\\DetailedProjectActivityReportMenuConfigurator'
+            'XHRM\\Time\\Menu\\DetailedProjectActivityReportMenuConfigurator'
         );
 
         $this->configureLeaveMenuItemsIfLeavePeriodDefined();

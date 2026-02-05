@@ -1,40 +1,40 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Command;
+namespace XHRM\Installer\Command;
 
 use DateTimeZone;
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Config\Config;
-use OrangeHRM\Framework\Http\Request;
-use OrangeHRM\Installer\Controller\Installer\Api\ConfigFileAPI;
-use OrangeHRM\Installer\Controller\Installer\Api\InstallerDataRegistrationAPI;
-use OrangeHRM\Installer\Exception\InterruptProcessException;
-use OrangeHRM\Installer\Exception\InvalidArgumentException;
-use OrangeHRM\Installer\Framework\InstallerCommand;
-use OrangeHRM\Installer\Util\AppSetupUtility;
-use OrangeHRM\Installer\Util\Connection;
-use OrangeHRM\Installer\Util\DatabaseUserPermissionEvaluator;
-use OrangeHRM\Installer\Util\InstanceCreationHelper;
-use OrangeHRM\Installer\Util\Logger;
-use OrangeHRM\Installer\Util\StateContainer;
-use OrangeHRM\Installer\Util\SystemCheck;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Config\Config;
+use XHRM\Framework\Http\Request;
+use XHRM\Installer\Controller\Installer\Api\ConfigFileAPI;
+use XHRM\Installer\Controller\Installer\Api\InstallerDataRegistrationAPI;
+use XHRM\Installer\Exception\InterruptProcessException;
+use XHRM\Installer\Exception\InvalidArgumentException;
+use XHRM\Installer\Framework\InstallerCommand;
+use XHRM\Installer\Util\AppSetupUtility;
+use XHRM\Installer\Util\Connection;
+use XHRM\Installer\Util\DatabaseUserPermissionEvaluator;
+use XHRM\Installer\Util\InstanceCreationHelper;
+use XHRM\Installer\Util\Logger;
+use XHRM\Installer\Util\StateContainer;
+use XHRM\Installer\Util\SystemCheck;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
@@ -52,7 +52,7 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
     public const STEP_2 = 'Checking database permissions';
     public const STEP_3 = 'Applying database changes';
     public const STEP_4 = 'Instance and Admin user creation';
-    public const STEP_5 = 'Create OrangeHRM database user';
+    public const STEP_5 = 'Create XHRM database user';
     public const STEP_6 = 'Creating configuration files';
 
     private InputInterface $input;
@@ -133,7 +133,7 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
     protected function licenseAcceptance(): void
     {
         $this->getIO()->title('License Acceptance');
-        $this->getIO()->block('Please review the license terms before installing OrangeHRM Starter.');
+        $this->getIO()->block('Please review the license terms before installing XHRM Starter.');
         $this->getIO()->block('You can find the license file ("LICENSE") at the root folder of the code.');
         if ($this->getIO()->confirm('I accept the terms in the License Agreement') !== true) {
             throw new InterruptProcessException();
@@ -160,22 +160,22 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
             "<comment>Privileged Database User:</comment>\nShould have the rights to create databases, create tables, insert data into table, alter table structure and to create database users."
         );
         $this->getIO()->writeln(
-            "<comment>OrangeHRM Database User:</comment>\nShould have the rights to insert data into table, update data in a table, delete data in a table."
+            "<comment>XHRM Database User:</comment>\nShould have the rights to insert data into table, update data in a table, delete data in a table."
         );
 
         $dbUser = $this->getRequiredField('Privileged Database Username');
         $dbPassword = $this->getIO()->askHidden('Privileged Database User Password <comment>(hidden)</comment>');
         $useSameDbUser = $this->getIO()->confirm(
-            'Use the same `Privileged Database User` as `OrangeHRM Database User`',
+            'Use the same `Privileged Database User` as `XHRM Database User`',
             false
         );
 
         $ohrmDbUser = $dbUser;
         $ohrmDbPassword = $dbPassword;
         if ($useSameDbUser === false) {
-            $ohrmDbUser = $this->getRequiredField('OrangeHRM Database Username');
+            $ohrmDbUser = $this->getRequiredField('XHRM Database Username');
             $ohrmDbPassword = $this->getIO()->askHidden(
-                'OrangeHRM Database User Password <comment>(hidden)</comment>'
+                'XHRM Database User Password <comment>(hidden)</comment>'
             );
         }
         $enableDataEncryption = $this->getIO()->confirm('Enable Data Encryption', false);
@@ -203,7 +203,7 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
         }
         if (!$useSameDbUser && $this->getAppSetupUtility()->isDatabaseUserExist($ohrmDbUser)) {
             $this->getIO()->error(
-                "Database User `$ohrmDbUser` Already Exist. Please Use Another Username for `OrangeHRM Database Username`."
+                "Database User `$ohrmDbUser` Already Exist. Please Use Another Username for `XHRM Database Username`."
             );
             StateContainer::getInstance()->clearDbInfo();
             goto dbInfo;
@@ -218,7 +218,7 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
         if (isset($dbInfo[StateContainer::ENABLE_DATA_ENCRYPTION])
             && $dbInfo[StateContainer::ENABLE_DATA_ENCRYPTION] == true) {
             $results[1]['checks'][] = [
-                'label' => 'Write Permissions for “lib/confs/cryptokeys”',
+                'label' => 'Write Permissions for ???lib/confs/cryptokeys???',
                 'value' => $systemCheck->isWritableCryptoKeyDir()
             ];
         }
@@ -239,7 +239,7 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
     {
         $this->getIO()->title('Instance Creation');
         $this->getIO()->block(
-            'Fill in your organization details here. Details entered in this section will be captured to create your OrangeHRM Instance'
+            'Fill in your organization details here. Details entered in this section will be captured to create your XHRM Instance'
         );
         $organizationName = $this->getRequiredField(
             'Organization Name',
@@ -365,13 +365,13 @@ class InstallOnNewDatabaseCommand extends InstallerCommand
         );
 
         $regConsent = $this->getIO()->confirm(
-            'Register your system with OrangeHRM. By registering, You will be eligible for free support via emails, receive security alerts and news letters from OrangeHRM.',
+            'Register your system with XHRM. By registering, You will be eligible for free support via emails, receive security alerts and news letters from XHRM.',
             true
         );
         StateContainer::getInstance()->storeRegConsent($regConsent);
 
         $this->getIO()->note(
-            'Users who seek access to their data, or who seek to correct, amend, or delete the given information should direct their requests to data@orangehrm.com'
+            'Users who seek access to their data, or who seek to correct, amend, or delete the given information should direct their requests to data@XHRM.com'
         );
     }
 

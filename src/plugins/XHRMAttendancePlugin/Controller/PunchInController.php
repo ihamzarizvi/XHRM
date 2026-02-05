@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
+ *
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with XHRM.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace XHRM\Attendance\Controller;
+
+use XHRM\Attendance\Traits\Service\AttendanceServiceTrait;
+use XHRM\Core\Controller\AbstractVueController;
+use XHRM\Core\Traits\Auth\AuthUserTrait;
+use XHRM\Core\Vue\Component;
+use XHRM\Core\Vue\Prop;
+use XHRM\Entity\AttendanceRecord;
+use XHRM\Framework\Http\Request;
+
+class PunchInController extends AbstractVueController
+{
+    use AttendanceServiceTrait;
+    use AuthUserTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function preRender(Request $request): void
+    {
+        // check if previous record is a punch in.
+        $attendanceRecord = $this->getAttendanceService()
+            ->getAttendanceDao()
+            ->getLastPunchRecordByEmployeeNumberAndActionableList(
+                $this->getAuthUser()->getEmpNumber(),
+                [AttendanceRecord::STATE_PUNCHED_IN]
+            );
+        //previous record is punched in, redirect to punch out
+        if ($attendanceRecord instanceof AttendanceRecord) {
+            $this->setResponse($this->redirect('/attendance/punchOut'));
+            return;
+        }
+
+        $component = new Component('attendance-punch-in');
+        //if configuration enabled, editable is true
+        if ($this->getAttendanceService()->canUserChangeCurrentTime()) {
+            $component->addProp(new Prop('is-editable', Prop::TYPE_BOOLEAN, true));
+        }
+        $this->setComponent($component);
+    }
+}
+

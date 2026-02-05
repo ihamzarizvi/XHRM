@@ -1,39 +1,39 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Command;
+namespace XHRM\Installer\Command;
 
 use InvalidArgumentException;
-use OrangeHRM\Authentication\Dto\UserCredential;
-use OrangeHRM\Config\Config;
-use OrangeHRM\Framework\Http\Request;
-use OrangeHRM\Installer\Controller\Upgrader\Api\ConfigFileAPI;
-use OrangeHRM\Installer\Controller\Upgrader\Api\UpgraderDataRegistrationAPI;
-use OrangeHRM\Installer\Exception\SystemCheckException;
-use OrangeHRM\Installer\Framework\InstallerCommand;
-use OrangeHRM\Installer\Util\AppSetupUtility;
-use OrangeHRM\Installer\Util\Connection;
-use OrangeHRM\Installer\Util\DatabaseUserPermissionEvaluator;
-use OrangeHRM\Installer\Util\Logger;
-use OrangeHRM\Installer\Util\StateContainer;
-use OrangeHRM\Installer\Util\SystemCheck;
-use OrangeHRM\Installer\Util\UpgraderConfigUtility;
+use XHRM\Authentication\Dto\UserCredential;
+use XHRM\Config\Config;
+use XHRM\Framework\Http\Request;
+use XHRM\Installer\Controller\Upgrader\Api\ConfigFileAPI;
+use XHRM\Installer\Controller\Upgrader\Api\UpgraderDataRegistrationAPI;
+use XHRM\Installer\Exception\SystemCheckException;
+use XHRM\Installer\Framework\InstallerCommand;
+use XHRM\Installer\Util\AppSetupUtility;
+use XHRM\Installer\Util\Connection;
+use XHRM\Installer\Util\DatabaseUserPermissionEvaluator;
+use XHRM\Installer\Util\Logger;
+use XHRM\Installer\Util\StateContainer;
+use XHRM\Installer\Util\SystemCheck;
+use XHRM\Installer\Util\UpgraderConfigUtility;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -87,7 +87,7 @@ class UpgradeCommand extends InstallerCommand
         $this->getIO()->title('Database Information');
         $this->getIO()->block('Please provide the database information of the database you are going to upgrade.');
         $this->getIO()->caution(
-            "IMPORTANT: Make sure it's a copy of the database of your current OrangeHRM installation and not the original database. It's highly discouraged to use the original database for upgrading since it won't be recoverable if an error occurred during the upgrade."
+            "IMPORTANT: Make sure it's a copy of the database of your current XHRM installation and not the original database. It's highly discouraged to use the original database for upgrading since it won't be recoverable if an error occurred during the upgrade."
         );
         $this->getIO()->warning(
             "ENCRYPTION: If you have enabled data encryption in your current version, you need to copy the file 'lib/confs/cryptokeys/key.ohrm' from your current installation to corresponding location in the new version."
@@ -160,7 +160,7 @@ class UpgradeCommand extends InstallerCommand
 
         $this->getIO()->title('Current Version Details');
         $this->getIO()->block(
-            'Select your current OrangeHRM version here. You can find the version at the bottom of the OrangeHRM login page. OrangeHRM Upgrader only supports versions listed in the dropdown. Selecting a different version would lead to an upgrade failure and a database corruption.'
+            'Select your current XHRM version here. You can find the version at the bottom of the XHRM login page. XHRM Upgrader only supports versions listed in the dropdown. Selecting a different version would lead to an upgrade failure and a database corruption.'
         );
 
         $appSetupUtility = new AppSetupUtility();
@@ -169,7 +169,7 @@ class UpgradeCommand extends InstallerCommand
         $versions = array_keys(AppSetupUtility::MIGRATIONS_MAP);
         array_pop($versions);
         if ($input->isInteractive() && $currentVersion == null) {
-            $question = new ChoiceQuestion('Current OrangeHRM Version ' . self::REQUIRED_TAG, $versions);
+            $question = new ChoiceQuestion('Current XHRM Version ' . self::REQUIRED_TAG, $versions);
             $question->setValidator(function ($value) use ($versions) {
                 if (!in_array($value, $versions, true)) {
                     throw new InvalidArgumentException('Invalid version.');
@@ -186,8 +186,8 @@ class UpgradeCommand extends InstallerCommand
         }
         $this->getIO()->note("Current version: $currentVersion");
 
-        $this->getIO()->title('Upgrading OrangeHRM');
-        $fromAndToVersions = "from <comment>OrangeHRM $currentVersion</comment> to <comment>OrangeHRM " . Config::PRODUCT_VERSION . '</comment>';
+        $this->getIO()->title('Upgrading XHRM');
+        $fromAndToVersions = "from <comment>XHRM $currentVersion</comment> to <comment>XHRM " . Config::PRODUCT_VERSION . '</comment>';
         $continue = $this->getIO()->confirm("Do you want to start the upgrader $fromAndToVersions?", true);
         if ($continue !== true) {
             $this->getIO()->info('Aborted');
@@ -195,7 +195,7 @@ class UpgradeCommand extends InstallerCommand
         }
         if (!$input->isInteractive()) {
             $this->getIO()->info(
-                "Upgrading from OrangeHRM $currentVersion to OrangeHRM " . Config::PRODUCT_VERSION . '.'
+                "Upgrading from XHRM $currentVersion to XHRM " . Config::PRODUCT_VERSION . '.'
             );
         }
         $step1 = $this->startSection($output, self::STEP_1);

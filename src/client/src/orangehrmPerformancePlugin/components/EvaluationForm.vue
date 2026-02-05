@@ -1,37 +1,37 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-evaluation orangehrm-card-container">
-    <oxd-text class="orangehrm-main-title">
+  <div class="XHRM-evaluation XHRM-card-container">
+    <oxd-text class="XHRM-main-title">
       {{ title }}
     </oxd-text>
 
-    <div class="orangehrm-evaluation-header">
-      <oxd-grid :cols="3" class="orangehrm-evaluation-header-grid">
-        <oxd-grid-item class="orangehrm-evaluation-title">
+    <div class="XHRM-evaluation-header">
+      <oxd-grid :cols="3" class="XHRM-evaluation-header-grid">
+        <oxd-grid-item class="XHRM-evaluation-title">
           <img
-            class="orangehrm-evaluation-title-profile-image"
+            class="XHRM-evaluation-title-profile-image"
             alt="profile picture"
             :src="profileImgSrc"
           />
-          <div class="orangehrm-evaluation-title-name">
+          <div class="XHRM-evaluation-title-name">
             <oxd-text type="card-title">
               {{ employeeName }}
             </oxd-text>
@@ -59,24 +59,24 @@
 
     <template v-if="!isCollapsed">
       <oxd-divider />
-      <oxd-grid :cols="4" class="orangehrm-evaluation-grid">
-        <oxd-grid-item class="orangehrm-evaluation-grid-header">
+      <oxd-grid :cols="4" class="XHRM-evaluation-grid">
+        <oxd-grid-item class="XHRM-evaluation-grid-header">
           <oxd-text type="subtitle-2">{{ $t('general.kpis') }}</oxd-text>
         </oxd-grid-item>
-        <oxd-grid-item class="orangehrm-evaluation-grid-header">
+        <oxd-grid-item class="XHRM-evaluation-grid-header">
           <oxd-text type="subtitle-2">{{ $t('performance.rating') }}</oxd-text>
         </oxd-grid-item>
-        <oxd-grid-item class="orangehrm-evaluation-grid-header">
+        <oxd-grid-item class="XHRM-evaluation-grid-header">
           <oxd-text type="subtitle-2">{{ $t('general.comments') }}</oxd-text>
         </oxd-grid-item>
         <oxd-grid-item
-          class="orangehrm-evaluation-grid-spacer-md"
+          class="XHRM-evaluation-grid-spacer-md"
         ></oxd-grid-item>
 
         <template v-for="(kpi, index) in kpis" :key="kpi.id">
-          <oxd-grid-item class="orangehrm-evaluation-grid-kpi">
+          <oxd-grid-item class="XHRM-evaluation-grid-kpi">
             <oxd-text
-              class="orangehrm-evaluation-grid-kpi-header"
+              class="XHRM-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
               {{ $t('performance.kpi') }}
@@ -84,20 +84,20 @@
             <oxd-text
               :title="kpi.title"
               tag="p"
-              class="orangehrm-evaluation-grid-kpi-label"
+              class="XHRM-evaluation-grid-kpi-label"
             >
               {{ kpi.title }}
             </oxd-text>
-            <oxd-text class="orangehrm-evaluation-grid-kpi-minmax" tag="p">
+            <oxd-text class="XHRM-evaluation-grid-kpi-minmax" tag="p">
               {{ $t('performance.min') }}: {{ kpi.minRating }}
             </oxd-text>
-            <oxd-text class="orangehrm-evaluation-grid-kpi-minmax" tag="p">
+            <oxd-text class="XHRM-evaluation-grid-kpi-minmax" tag="p">
               {{ $t('performance.max') }}: {{ kpi.maxRating }}
             </oxd-text>
           </oxd-grid-item>
           <oxd-grid-item>
             <oxd-text
-              class="orangehrm-evaluation-grid-kpi-header"
+              class="XHRM-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
               {{ $t('performance.rating') }}
@@ -112,13 +112,13 @@
           </oxd-grid-item>
           <oxd-grid-item>
             <oxd-text
-              class="orangehrm-evaluation-grid-kpi-header"
+              class="XHRM-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
               {{ $t('general.comment') }}
             </oxd-text>
             <oxd-input-field
-              class="orangehrm-evaluation-grid-comment"
+              class="XHRM-evaluation-grid-comment"
               rows="2"
               type="textarea"
               :disabled="!editable"
@@ -128,21 +128,21 @@
             />
           </oxd-grid-item>
           <oxd-grid-item
-            class="orangehrm-evaluation-grid-spacer-md"
+            class="XHRM-evaluation-grid-spacer-md"
           ></oxd-grid-item>
         </template>
       </oxd-grid>
 
       <oxd-divider />
-      <oxd-grid :cols="3" class="orangehrm-evaluation-grid">
-        <oxd-grid-item class="orangehrm-evaluation-grid-general">
-          <oxd-text tag="p" class="orangehrm-evaluation-grid-general-label">
+      <oxd-grid :cols="3" class="XHRM-evaluation-grid">
+        <oxd-grid-item class="XHRM-evaluation-grid-general">
+          <oxd-text tag="p" class="XHRM-evaluation-grid-general-label">
             {{ $t('performance.general_comment') }}
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item class="--span-column-2">
           <oxd-input-field
-            class="orangehrm-evaluation-grid-comment"
+            class="XHRM-evaluation-grid-comment"
             rows="2"
             type="textarea"
             :disabled="!editable"
@@ -294,3 +294,4 @@ export default {
 </script>
 
 <style src="./evaluation-form.scss" lang="scss" scoped></style>
+

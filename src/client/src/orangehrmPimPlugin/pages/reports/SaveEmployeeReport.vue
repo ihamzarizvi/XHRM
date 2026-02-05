@@ -1,33 +1,33 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">{{
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">{{
         $t('pim.add_report')
       }}</oxd-text>
       <oxd-divider />
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="report.name"
@@ -42,11 +42,11 @@
 
         <oxd-divider />
         <oxd-form-row>
-          <oxd-text class="orangehrm-sub-title" tag="h6">
+          <oxd-text class="XHRM-sub-title" tag="h6">
             {{ $t('pim.selection_criteria') }}
           </oxd-text>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
-            <oxd-grid-item class="orangehrm-report-criteria --span-column-2">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
+            <oxd-grid-item class="XHRM-report-criteria --span-column-2">
               <oxd-input-field
                 v-model="report.criterion"
                 type="select"
@@ -55,7 +55,7 @@
               />
               <oxd-input-group>
                 <oxd-icon-button
-                  class="orangehrm-report-icon"
+                  class="XHRM-report-icon"
                   name="plus"
                   @click="addCriterion"
                 />
@@ -89,10 +89,10 @@
 
         <oxd-divider />
         <oxd-form-row>
-          <oxd-text class="orangehrm-sub-title" tag="h6">
+          <oxd-text class="XHRM-sub-title" tag="h6">
             {{ $t('pim.display_fields') }}
           </oxd-text>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="report.fieldGroup"
@@ -101,7 +101,7 @@
                 :options="availableFieldGroups"
               />
             </oxd-grid-item>
-            <oxd-grid-item class="orangehrm-report-criteria --span-column-2">
+            <oxd-grid-item class="XHRM-report-criteria --span-column-2">
               <oxd-input-field
                 v-model="report.displayField"
                 type="select"
@@ -110,7 +110,7 @@
               />
               <oxd-input-group>
                 <oxd-icon-button
-                  class="orangehrm-report-icon"
+                  class="XHRM-report-icon"
                   name="plus"
                   @click="addDisplayField"
                 />
@@ -159,9 +159,9 @@ import {
   shouldNotExceedCharLength,
 } from '@ohrm/core/util/validation/rules';
 import {APIService} from '@ohrm/core/util/services/api.service';
-import ReportCriterion from '@/orangehrmPimPlugin/components/ReportCriterion';
-import ReportDisplayField from '@/orangehrmPimPlugin/components/ReportDisplayField';
-import useEmployeeReport from '@/orangehrmPimPlugin/util/composable/useEmployeeReport';
+import ReportCriterion from '@/XHRMPimPlugin/components/ReportCriterion';
+import ReportDisplayField from '@/XHRMPimPlugin/components/ReportDisplayField';
+import useEmployeeReport from '@/XHRMPimPlugin/util/composable/useEmployeeReport';
 
 export default {
   components: {
@@ -292,3 +292,4 @@ export default {
 </script>
 
 <style src="./employee-report.scss" lang="scss" scoped></style>
+

@@ -1,78 +1,78 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Util;
+namespace XHRM\Installer\Util;
 
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Exception;
 use InvalidArgumentException;
-use OrangeHRM\Config\Config;
-use OrangeHRM\Core\Exception\KeyHandlerException;
-use OrangeHRM\Core\Utility\KeyHandler;
-use OrangeHRM\Core\Utility\PasswordHash;
-use OrangeHRM\Framework\Filesystem\Filesystem;
-use OrangeHRM\Installer\Exception\MigrationException;
-use OrangeHRM\Installer\Migration\V3_3_3\Migration;
-use OrangeHRM\Installer\Util\Dto\DatabaseConnectionWrapper;
-use OrangeHRM\Installer\Util\SystemConfig\SystemConfiguration;
-use OrangeHRM\Installer\Util\V1\AbstractMigration;
+use XHRM\Config\Config;
+use XHRM\Core\Exception\KeyHandlerException;
+use XHRM\Core\Utility\KeyHandler;
+use XHRM\Core\Utility\PasswordHash;
+use XHRM\Framework\Filesystem\Filesystem;
+use XHRM\Installer\Exception\MigrationException;
+use XHRM\Installer\Migration\V3_3_3\Migration;
+use XHRM\Installer\Util\Dto\DatabaseConnectionWrapper;
+use XHRM\Installer\Util\SystemConfig\SystemConfiguration;
+use XHRM\Installer\Util\V1\AbstractMigration;
 
 class AppSetupUtility
 {
     public const MIGRATIONS_MAP = [
         '3.3.3' => Migration::class, // From beginning to `3.3.3`
-        '4.0' => \OrangeHRM\Installer\Migration\V4_0\Migration::class,
-        '4.1' => \OrangeHRM\Installer\Migration\V4_1\Migration::class,
-        '4.1.1' => \OrangeHRM\Installer\Migration\V4_1_1\Migration::class,
-        '4.1.2' => \OrangeHRM\Installer\Migration\V4_1_2\Migration::class,
-        '4.1.2.1' => \OrangeHRM\Installer\Migration\V4_1_2_1\Migration::class,
-        '4.2' => \OrangeHRM\Installer\Migration\V4_2\Migration::class,
-        '4.2.0.1' => \OrangeHRM\Installer\Migration\V4_2_0_1\Migration::class,
-        '4.3' => \OrangeHRM\Installer\Migration\V4_3\Migration::class,
-        '4.3.1' => \OrangeHRM\Installer\Migration\V4_3_1\Migration::class,
-        '4.3.2' => \OrangeHRM\Installer\Migration\V4_3_2\Migration::class,
-        '4.3.3' => \OrangeHRM\Installer\Migration\V4_3_3\Migration::class,
-        '4.3.4' => \OrangeHRM\Installer\Migration\V4_3_4\Migration::class,
-        '4.3.5' => \OrangeHRM\Installer\Migration\V4_3_5\Migration::class,
-        '4.4' => \OrangeHRM\Installer\Migration\V4_4_0\Migration::class,
-        '4.5' => \OrangeHRM\Installer\Migration\V4_5_0\Migration::class,
-        '4.6' => \OrangeHRM\Installer\Migration\V4_6_0\Migration::class,
-        '4.6.0.1' => \OrangeHRM\Installer\Migration\V4_6_0_1\Migration::class,
-        '4.7' => \OrangeHRM\Installer\Migration\V4_7_0\Migration::class,
-        '4.8' => \OrangeHRM\Installer\Migration\V4_8_0\Migration::class,
-        '4.9' => \OrangeHRM\Installer\Migration\V4_9_0\Migration::class,
-        '4.10' => \OrangeHRM\Installer\Migration\V4_10_0\Migration::class,
-        '4.10.1' => \OrangeHRM\Installer\Migration\V4_10_1\Migration::class,
+        '4.0' => \XHRM\Installer\Migration\V4_0\Migration::class,
+        '4.1' => \XHRM\Installer\Migration\V4_1\Migration::class,
+        '4.1.1' => \XHRM\Installer\Migration\V4_1_1\Migration::class,
+        '4.1.2' => \XHRM\Installer\Migration\V4_1_2\Migration::class,
+        '4.1.2.1' => \XHRM\Installer\Migration\V4_1_2_1\Migration::class,
+        '4.2' => \XHRM\Installer\Migration\V4_2\Migration::class,
+        '4.2.0.1' => \XHRM\Installer\Migration\V4_2_0_1\Migration::class,
+        '4.3' => \XHRM\Installer\Migration\V4_3\Migration::class,
+        '4.3.1' => \XHRM\Installer\Migration\V4_3_1\Migration::class,
+        '4.3.2' => \XHRM\Installer\Migration\V4_3_2\Migration::class,
+        '4.3.3' => \XHRM\Installer\Migration\V4_3_3\Migration::class,
+        '4.3.4' => \XHRM\Installer\Migration\V4_3_4\Migration::class,
+        '4.3.5' => \XHRM\Installer\Migration\V4_3_5\Migration::class,
+        '4.4' => \XHRM\Installer\Migration\V4_4_0\Migration::class,
+        '4.5' => \XHRM\Installer\Migration\V4_5_0\Migration::class,
+        '4.6' => \XHRM\Installer\Migration\V4_6_0\Migration::class,
+        '4.6.0.1' => \XHRM\Installer\Migration\V4_6_0_1\Migration::class,
+        '4.7' => \XHRM\Installer\Migration\V4_7_0\Migration::class,
+        '4.8' => \XHRM\Installer\Migration\V4_8_0\Migration::class,
+        '4.9' => \XHRM\Installer\Migration\V4_9_0\Migration::class,
+        '4.10' => \XHRM\Installer\Migration\V4_10_0\Migration::class,
+        '4.10.1' => \XHRM\Installer\Migration\V4_10_1\Migration::class,
         '5.0' => [
-            \OrangeHRM\Installer\Migration\V5_0_0_beta\Migration::class,
-            \OrangeHRM\Installer\Migration\V5_0_0\Migration::class,
+            \XHRM\Installer\Migration\V5_0_0_beta\Migration::class,
+            \XHRM\Installer\Migration\V5_0_0\Migration::class,
         ],
-        '5.1' => \OrangeHRM\Installer\Migration\V5_1_0\Migration::class,
-        '5.2' => \OrangeHRM\Installer\Migration\V5_2_0\Migration::class,
-        '5.3' => \OrangeHRM\Installer\Migration\V5_3_0\Migration::class,
-        '5.4' => \OrangeHRM\Installer\Migration\V5_4_0\Migration::class,
-        '5.5' => \OrangeHRM\Installer\Migration\V5_5_0\Migration::class,
-        '5.6' => \OrangeHRM\Installer\Migration\V5_6_0\Migration::class,
-        '5.6.1' => \OrangeHRM\Installer\Migration\V5_6_1\Migration::class,
-        '5.7' => \OrangeHRM\Installer\Migration\V5_7_0\Migration::class,
-        '5.8' => \OrangeHRM\Installer\Migration\V5_8_0\Migration::class,
+        '5.1' => \XHRM\Installer\Migration\V5_1_0\Migration::class,
+        '5.2' => \XHRM\Installer\Migration\V5_2_0\Migration::class,
+        '5.3' => \XHRM\Installer\Migration\V5_3_0\Migration::class,
+        '5.4' => \XHRM\Installer\Migration\V5_4_0\Migration::class,
+        '5.5' => \XHRM\Installer\Migration\V5_5_0\Migration::class,
+        '5.6' => \XHRM\Installer\Migration\V5_6_0\Migration::class,
+        '5.6.1' => \XHRM\Installer\Migration\V5_6_1\Migration::class,
+        '5.7' => \XHRM\Installer\Migration\V5_7_0\Migration::class,
+        '5.8' => \XHRM\Installer\Migration\V5_8_0\Migration::class,
     ];
 
     public const INSTALLATION_DB_TYPE_NEW = 'new';
@@ -401,11 +401,11 @@ class AppSetupUtility
             $dbInfo = StateContainer::getInstance()->getDbInfo();
             $dbName = $dbInfo[StateContainer::DB_NAME];
             $dbUser = $dbInfo[StateContainer::DB_USER];
-            $ohrmDbUser = $dbInfo[StateContainer::ORANGEHRM_DB_USER];
+            $ohrmDbUser = $dbInfo[StateContainer::XHRM_DB_USER];
             if ($ohrmDbUser === null || $dbUser === $ohrmDbUser) {
                 return;
             }
-            $ohrmDbPassword = $dbInfo[StateContainer::ORANGEHRM_DB_PASSWORD];
+            $ohrmDbPassword = $dbInfo[StateContainer::XHRM_DB_PASSWORD];
             $queries = [
                 ...$this->getUserCreationQueries($dbName, $ohrmDbUser, $ohrmDbPassword, 'localhost'),
                 ...$this->getUserCreationQueries($dbName, $ohrmDbUser, $ohrmDbPassword, '%'),
@@ -443,8 +443,8 @@ class AppSetupUtility
             $dbInfo[StateContainer::DB_HOST],
             $dbInfo[StateContainer::DB_PORT],
             $dbInfo[StateContainer::DB_NAME],
-            $dbInfo[StateContainer::ORANGEHRM_DB_USER] ?? $dbInfo[StateContainer::DB_USER],
-            $dbInfo[StateContainer::ORANGEHRM_DB_PASSWORD] ?? $dbInfo[StateContainer::DB_PASSWORD],
+            $dbInfo[StateContainer::XHRM_DB_USER] ?? $dbInfo[StateContainer::DB_USER],
+            $dbInfo[StateContainer::XHRM_DB_PASSWORD] ?? $dbInfo[StateContainer::DB_PASSWORD],
         ];
 
         $fs = new Filesystem();

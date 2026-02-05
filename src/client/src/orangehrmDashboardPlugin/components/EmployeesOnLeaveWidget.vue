@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -32,32 +32,32 @@
       #action
     >
       <oxd-icon
-        class="orangehrm-leave-card-icon"
+        class="XHRM-leave-card-icon"
         name="gear-fill"
         @click="onClickConfig"
       />
     </template>
-    <div v-for="leave in leaveList" :key="leave" class="orangehrm-leave-card">
-      <div class="orangehrm-leave-card-profile-image">
+    <div v-for="leave in leaveList" :key="leave" class="XHRM-leave-card">
+      <div class="XHRM-leave-card-profile-image">
         <img
           alt="profile picture"
           class="employee-image"
           :src="`../pim/viewPhoto/empNumber/${leave.empNumber}`"
         />
       </div>
-      <div class="orangehrm-leave-card-details">
-        <oxd-text tag="p" class="orangehrm-leave-card-emp-name">
+      <div class="XHRM-leave-card-details">
+        <oxd-text tag="p" class="XHRM-leave-card-emp-name">
           {{ leave.empName }}
         </oxd-text>
         <oxd-text
           v-if="leave.leaveType"
           tag="p"
-          class="orangehrm-leave-card-leave-details"
+          class="XHRM-leave-card-leave-details"
         >
           {{ leave.leaveType }}
         </oxd-text>
       </div>
-      <oxd-text tag="p" class="orangehrm-leave-card-emp-id">
+      <oxd-text tag="p" class="XHRM-leave-card-emp-id">
         {{ leave.employeeId }}
       </oxd-text>
     </div>
@@ -71,9 +71,9 @@
 <script>
 import {APIService} from '@/core/util/services/api.service';
 import {freshDate, formatDate} from '@ohrm/core/util/helper/datefns';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import BaseWidget from '@/XHRMDashboardPlugin/components/BaseWidget.vue';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import EmployeesOnLeaveConfigModal from '@/orangehrmDashboardPlugin/components/EmployeesOnLeaveConfigModal.vue';
+import EmployeesOnLeaveConfigModal from '@/XHRMDashboardPlugin/components/EmployeesOnLeaveConfigModal.vue';
 import {OxdIcon} from '@ohrm/oxd';
 
 export default {
@@ -167,3 +167,4 @@ export default {
 </script>
 
 <style src="./employee-on-leave-widget.scss" lang="scss" scoped></style>
+

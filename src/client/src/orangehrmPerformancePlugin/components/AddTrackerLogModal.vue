@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -22,7 +22,7 @@
     :style="{width: '90%', maxWidth: '650px'}"
     @update:show="onCancel"
   >
-    <div class="orangehrm-modal-header">
+    <div class="XHRM-modal-header">
       <oxd-text type="card-title">
         {{ $t('performance.add_tracker_log') }}
       </oxd-text>
@@ -39,7 +39,7 @@
         />
       </oxd-form-row>
       <oxd-form-row>
-        <div class="orangehrm-add-tracker-log-ratings-container">
+        <div class="XHRM-add-tracker-log-ratings-container">
           <tracker-log-rating-button
             :label="$t('performance.positive')"
             :selected="rating"
@@ -65,7 +65,7 @@
         />
       </oxd-form-row>
       <oxd-divider />
-      <oxd-form-actions class="orangehrm-form-action">
+      <oxd-form-actions class="XHRM-form-action">
         <required-text />
         <oxd-button
           display-type="ghost"
@@ -89,7 +89,7 @@ import {
   shouldNotExceedCharLength,
 } from '@/core/util/validation/rules';
 import {APIService} from '@/core/util/services/api.service';
-import TrackerLogRatingButton from '@/orangehrmPerformancePlugin/components/TrackerLogRatingButton';
+import TrackerLogRatingButton from '@/XHRMPerformancePlugin/components/TrackerLogRatingButton';
 
 const trackerLogModel = {
   log: '',
@@ -158,3 +158,4 @@ export default {
 </script>
 
 <style src="./tracker-log-modal.scss" lang="scss" scoped></style>
+

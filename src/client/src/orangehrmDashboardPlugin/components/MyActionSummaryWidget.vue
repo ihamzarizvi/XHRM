@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -25,10 +25,10 @@
     :loading="isLoading"
     :title="$t('dashboard.my_actions')"
   >
-    <div v-if="myActions.length > 0" class="orangehrm-todo-list">
-      <div v-if="leaveRequestCount > 0" class="orangehrm-todo-list-item">
+    <div v-if="myActions.length > 0" class="XHRM-todo-list">
+      <div v-if="leaveRequestCount > 0" class="XHRM-todo-list-item">
         <oxd-icon-button
-          class="orangehrm-report-icon"
+          class="XHRM-report-icon"
           name="attendanceAlt"
           icon-type="svg"
           display-type="success"
@@ -42,9 +42,9 @@
           }}
         </oxd-text>
       </div>
-      <div v-if="timeSheetCount > 0" class="orangehrm-todo-list-item">
+      <div v-if="timeSheetCount > 0" class="XHRM-todo-list-item">
         <oxd-icon-button
-          class="orangehrm-report-icon"
+          class="XHRM-report-icon"
           name="timeAlt"
           icon-type="svg"
           display-type="warn"
@@ -58,9 +58,9 @@
           }}
         </oxd-text>
       </div>
-      <div v-if="reviewCount > 0" class="orangehrm-todo-list-item">
+      <div v-if="reviewCount > 0" class="XHRM-todo-list-item">
         <oxd-icon-button
-          class="orangehrm-report-icon"
+          class="XHRM-report-icon"
           name="appraisals"
           icon-type="svg"
           display-type="danger"
@@ -74,9 +74,9 @@
           }}
         </oxd-text>
       </div>
-      <div v-if="selfReviewCount > 0" class="orangehrm-todo-list-item">
+      <div v-if="selfReviewCount > 0" class="XHRM-todo-list-item">
         <oxd-icon-button
-          class="orangehrm-report-icon"
+          class="XHRM-report-icon"
           name="appraisals"
           icon-type="svg"
           display-type="danger"
@@ -90,9 +90,9 @@
           }}
         </oxd-text>
       </div>
-      <div v-if="interviewCount > 0" class="orangehrm-todo-list-item">
+      <div v-if="interviewCount > 0" class="XHRM-todo-list-item">
         <oxd-icon-button
-          class="orangehrm-report-icon"
+          class="XHRM-report-icon"
           name="interview"
           icon-type="svg"
           display-type="info"
@@ -112,7 +112,7 @@
 <script>
 import {navigate} from '@ohrm/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import BaseWidget from '@/XHRMDashboardPlugin/components/BaseWidget.vue';
 
 export default {
   name: 'MyActionSummaryWidget',
@@ -204,3 +204,4 @@ export default {
 };
 </script>
 <style src="./my-action-summary-widget.scss" lang="scss" scoped></style>
+

@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-container">
+  <div class="XHRM-container">
     <vacancy-card
       v-for="vacancy in vacancies?.data"
       :key="vacancy"
@@ -26,26 +26,26 @@
       :vacancy-title="vacancy.vacancyTitle"
       :vacancy-description="vacancy.vacancyDescription"
     ></vacancy-card>
-    <oxd-loading-spinner v-if="isLoading" class="orangehrm-container-loader" />
-    <div v-if="showPaginator" class="orangehrm-bottom-container">
+    <oxd-loading-spinner v-if="isLoading" class="XHRM-container-loader" />
+    <div v-if="showPaginator" class="XHRM-bottom-container">
       <oxd-pagination v-model:current="currentPage" :length="pages" />
     </div>
   </div>
-  <div class="orangehrm-paper-container">
-    <oxd-text tag="p" class="orangehrm-vacancy-list-poweredby">
+  <div class="XHRM-paper-container">
+    <oxd-text tag="p" class="XHRM-vacancy-list-poweredby">
       {{ $t('recruitment.powered_by') }}
     </oxd-text>
     <img
       :src="defaultPic"
-      alt="OrangeHRM Picture"
-      class="orangehrm-container-img"
+      alt="XHRM Picture"
+      class="XHRM-container-img"
     />
     <slot name="footer"></slot>
   </div>
 </template>
 
 <script>
-import VacancyCard from '@/orangehrmRecruitmentPlugin/components/VacancyCard';
+import VacancyCard from '@/XHRMRecruitmentPlugin/components/VacancyCard';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@/core/util/composable/usePaginate';
 import {OxdSpinner} from '@ohrm/oxd';
@@ -90,3 +90,4 @@ export default {
 </script>
 
 <style src="./public-job-vacancy.scss" lang="scss" scoped></style>
+

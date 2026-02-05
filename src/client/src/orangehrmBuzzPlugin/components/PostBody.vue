@@ -1,31 +1,31 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-buzz-post-body">
+  <div class="XHRM-buzz-post-body">
     <oxd-text v-if="post.text" tag="p" :class="postClasses">
       {{ post.text }}
     </oxd-text>
     <oxd-text
       v-show="!readMore"
       tag="p"
-      class="orangehrm-buzz-post-body-readmore"
+      class="XHRM-buzz-post-body-readmore"
       @click="onClickReadMore"
     >
       {{ $t('buzz.read_more') }}
@@ -37,31 +37,31 @@
       <template #content="{index}">
         <div
           v-if="index === 3 && post.photoIds.length === 5"
-          class="orangehrm-buzz-post-body-picture --more"
+          class="XHRM-buzz-post-body-picture --more"
           @click="onClickPicture(index)"
         >
-          <oxd-text tag="p" class="orangehrm-buzz-post-body-more">+1</oxd-text>
-          <oxd-icon class="orangehrm-buzz-post-body-more" name="images" />
+          <oxd-text tag="p" class="XHRM-buzz-post-body-more">+1</oxd-text>
+          <oxd-icon class="XHRM-buzz-post-body-more" name="images" />
         </div>
         <div
           v-else
-          class="orangehrm-buzz-post-body-picture"
+          class="XHRM-buzz-post-body-picture"
           @click="onClickPicture(index)"
         ></div>
       </template>
     </photo-frame>
     <template v-if="originalPost">
       <br v-if="post.text || post.type === 'video' || post.type === 'photo'" />
-      <oxd-text tag="p" class="orangehrm-buzz-post-body-employee">
+      <oxd-text tag="p" class="XHRM-buzz-post-body-employee">
         {{ originalPost.employee }}
       </oxd-text>
-      <oxd-text tag="p" class="orangehrm-buzz-post-body-date">
+      <oxd-text tag="p" class="XHRM-buzz-post-body-date">
         {{ originalPost.dateTime }}
       </oxd-text>
       <oxd-text
         v-if="originalPost.text"
         tag="p"
-        class="orangehrm-buzz-post-body-original-text"
+        class="XHRM-buzz-post-body-original-text"
       >
         {{ originalPost.text }}
       </oxd-text>
@@ -74,8 +74,8 @@ import {computed, reactive, toRefs} from 'vue';
 import useLocale from '@/core/util/composable/useLocale';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
+import PhotoFrame from '@/XHRMBuzzPlugin/components/PhotoFrame';
+import VideoFrame from '@/XHRMBuzzPlugin/components/VideoFrame';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
 import {OxdIcon} from '@ohrm/oxd';
 
@@ -106,7 +106,7 @@ export default {
     });
 
     const postClasses = computed(() => ({
-      'orangehrm-buzz-post-body-text': true,
+      'XHRM-buzz-post-body-text': true,
       '--truncate': state.readMore === false,
     }));
 
@@ -151,3 +151,4 @@ export default {
 </script>
 
 <style src="./post-body.scss" lang="scss" scoped></style>
+

@@ -1,41 +1,41 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
-    <div class="orangehrm-modal-header">
+  <oxd-dialog class="XHRM-dialog-modal" @update:show="onCancel">
+    <div class="XHRM-modal-header">
       <oxd-text type="card-title">
         {{ $t('admin.connection_status') }}
       </oxd-text>
     </div>
     <oxd-divider />
 
-    <div v-for="item in data" :key="item" class="orangehrm-ldap-test">
-      <oxd-text tag="p" class="orangehrm-ldap-test-title">
+    <div v-for="item in data" :key="item" class="XHRM-ldap-test">
+      <oxd-text tag="p" class="XHRM-ldap-test-title">
         {{ item.category }}
       </oxd-text>
       <div
         v-for="(check, index) in item.checks"
         :key="index"
-        class="orangehrm-ldap-test-row"
+        class="XHRM-ldap-test-row"
       >
-        <oxd-text class="orangehrm-ldap-test-content">
+        <oxd-text class="XHRM-ldap-test-content">
           {{ check.label }}
         </oxd-text>
         <oxd-text :class="getClass(check.value.status)">
@@ -64,8 +64,8 @@ export default {
   methods: {
     getClass(id) {
       return id === 1
-        ? 'orangehrm-ldap-test-value --success'
-        : 'orangehrm-ldap-test-value --error';
+        ? 'XHRM-ldap-test-value --success'
+        : 'XHRM-ldap-test-value --error';
     },
     onCancel() {
       this.$emit('close');
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-ldap-test {
+.XHRM-ldap-test {
   margin-bottom: 0.75rem;
   &-title {
     font-size: 14px;
@@ -101,3 +101,4 @@ export default {
   }
 }
 </style>
+

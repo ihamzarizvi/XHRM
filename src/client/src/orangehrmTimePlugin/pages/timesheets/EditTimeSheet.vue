@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <timesheet
       v-model:records="timesheetRecords"
       :editable="true"
@@ -28,7 +28,7 @@
       @submit-valid="onSave"
     >
       <template #header-title>
-        <oxd-text tag="h6" class="orangehrm-main-title">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ title }}
         </oxd-text>
       </template>
@@ -36,11 +36,11 @@
         <oxd-text
           v-if="timesheetDateRange"
           tag="p"
-          class="orangehrm-timeperiod-title"
+          class="XHRM-timeperiod-title"
         >
           {{ $t('time.timesheet_period') }}
         </oxd-text>
-        <oxd-text tag="h6" class="orangehrm-main-title">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ timesheetDateRange }}
         </oxd-text>
       </template>
@@ -75,8 +75,8 @@ import {onBeforeMount, toRefs} from 'vue';
 import useToast from '@/core/util/composable/useToast';
 import {navigate} from '@ohrm/core/util/helper/navigation';
 import {APIService} from '@/core/util/services/api.service';
-import Timesheet from '@/orangehrmTimePlugin/components/Timesheet.vue';
-import useTimesheetAPIs from '@/orangehrmTimePlugin/util/composable/useTimesheetAPIs';
+import Timesheet from '@/XHRMTimePlugin/components/Timesheet.vue';
+import useTimesheetAPIs from '@/XHRMTimePlugin/util/composable/useTimesheetAPIs';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useLocale from '@/core/util/composable/useLocale';
@@ -261,11 +261,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-timeperiod-title {
+.XHRM-timeperiod-title {
   font-size: 12px;
   margin-right: 10px;
 }
-.orangehrm-form-hint {
+.XHRM-form-hint {
   margin-right: auto;
   font-weight: 600;
   font-size: 0.75rem;
@@ -273,3 +273,4 @@ export default {
   overflow: hidden;
 }
 </style>
+

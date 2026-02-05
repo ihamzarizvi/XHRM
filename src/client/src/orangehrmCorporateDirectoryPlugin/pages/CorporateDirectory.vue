@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-table-filter :filter-title="$t('general.directory')">
       <oxd-form @submit-valid="onSearch" @reset="onReset">
         <oxd-form-row>
@@ -64,15 +64,15 @@
 
     <br />
 
-    <div class="orangehrm-corporate-directory">
-      <div class="orangehrm-paper-container">
+    <div class="XHRM-corporate-directory">
+      <div class="XHRM-paper-container">
         <table-header
           :selected="0"
           :total="total"
           :loading="false"
           :show-divider="false"
         ></table-header>
-        <div ref="scrollerRef" class="orangehrm-container">
+        <div ref="scrollerRef" class="XHRM-container">
           <oxd-grid :cols="colSize">
             <oxd-grid-item
               v-for="(employee, index) in employees"
@@ -107,15 +107,15 @@
           </oxd-grid>
           <oxd-loading-spinner
             v-if="isLoading"
-            class="orangehrm-container-loader"
+            class="XHRM-container-loader"
           />
         </div>
-        <div class="orangehrm-bottom-container"></div>
+        <div class="XHRM-bottom-container"></div>
       </div>
 
       <div
         v-if="isEmployeeSelected && isMobile === false"
-        class="orangehrm-corporate-directory-sidebar"
+        class="XHRM-corporate-directory-sidebar"
       >
         <oxd-grid-item>
           <summary-card-details
@@ -143,9 +143,9 @@ import {
 } from '@/core/util/validation/rules';
 import useInfiniteScroll from '@ohrm/core/util/composable/useInfiniteScroll';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import SummaryCard from '@/orangehrmCorporateDirectoryPlugin/components/SummaryCard';
-import EmployeeDetails from '@/orangehrmCorporateDirectoryPlugin/components/EmployeeDetails';
-import SummaryCardDetails from '@/orangehrmCorporateDirectoryPlugin/components/SummaryCardDetails';
+import SummaryCard from '@/XHRMCorporateDirectoryPlugin/components/SummaryCard';
+import EmployeeDetails from '@/XHRMCorporateDirectoryPlugin/components/EmployeeDetails';
+import SummaryCardDetails from '@/XHRMCorporateDirectoryPlugin/components/SummaryCardDetails';
 import {OxdSpinner, useResponsive} from '@ohrm/oxd';
 
 const defaultFilters = {
@@ -269,8 +269,8 @@ export default {
     },
     oxdGridClasses() {
       return {
-        'orangehrm-container': true,
-        'orangehrm-container-min-display': this.isEmployeeSelected,
+        'XHRM-container': true,
+        'XHRM-container-min-display': this.isEmployeeSelected,
       };
     },
     colSize() {
@@ -314,3 +314,4 @@ export default {
 </script>
 
 <style src="./corporate-directory.scss" lang="scss" scoped></style>
+

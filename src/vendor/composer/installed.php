@@ -1,6 +1,6 @@
-<?php return array(
+﻿<?php return array(
     'root' => array(
-        'name' => 'orangehrm/orangehrm',
+        'name' => 'XHRM/XHRM',
         'pretty_version' => '5.8.x-dev',
         'version' => '5.8.9999999.9999999-dev',
         'reference' => '3dd2fcb0b109917f72a6b8507ca3cdc4771a81ae',
@@ -307,7 +307,7 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'orangehrm/orangehrm' => array(
+        'XHRM/XHRM' => array(
             'pretty_version' => '5.8.x-dev',
             'version' => '5.8.9999999.9999999-dev',
             'reference' => '3dd2fcb0b109917f72a6b8507ca3cdc4771a81ae',
@@ -901,3 +901,4 @@
         ),
     ),
 );
+

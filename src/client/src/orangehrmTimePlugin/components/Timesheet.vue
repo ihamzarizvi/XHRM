@@ -1,39 +1,39 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-form class="orangehrm-paper-container">
-    <div class="orangehrm-timesheet-header">
-      <div class="orangehrm-timesheet-header--title">
+  <oxd-form class="XHRM-paper-container">
+    <div class="XHRM-timesheet-header">
+      <div class="XHRM-timesheet-header--title">
         <slot name="header-title"></slot>
       </div>
-      <div class="orangehrm-timesheet-header--options">
+      <div class="XHRM-timesheet-header--options">
         <slot name="header-options"></slot>
       </div>
     </div>
 
-    <div v-if="loading" class="orangehrm-timesheet-loader">
+    <div v-if="loading" class="XHRM-timesheet-loader">
       <oxd-loading-spinner />
     </div>
     <div
       v-else-if="!loading && !columns"
-      class="orangehrm-timesheet-body-message"
+      class="XHRM-timesheet-body-message"
     >
       <oxd-alert
         type="warn"
@@ -42,14 +42,14 @@
       ></oxd-alert>
     </div>
 
-    <div v-else class="orangehrm-timesheet-body">
+    <div v-else class="XHRM-timesheet-body">
       <table :class="tableClasses">
-        <thead class="orangehrm-timesheet-table-header">
-          <tr class="orangehrm-timesheet-table-header-row">
+        <thead class="XHRM-timesheet-table-header">
+          <tr class="XHRM-timesheet-table-header-row">
             <th :class="fixedColumnClasses">
               {{ $t('time.project') }}
             </th>
-            <th class="orangehrm-timesheet-table-header-cell">
+            <th class="XHRM-timesheet-table-header-cell">
               {{ $t('time.activity') }}
             </th>
 
@@ -57,7 +57,7 @@
             <th
               v-for="day in daysOfWeek"
               :key="day.id"
-              class="orangehrm-timesheet-table-header-cell --center"
+              class="XHRM-timesheet-table-header-cell --center"
             >
               <span class="--day">
                 {{ day.day }}
@@ -70,19 +70,19 @@
 
             <th
               v-if="!editable"
-              class="orangehrm-timesheet-table-header-cell --center --freeze-right"
+              class="XHRM-timesheet-table-header-cell --center --freeze-right"
             >
               {{ $t('general.total') }}
             </th>
           </tr>
         </thead>
 
-        <tbody class="orangehrm-timesheet-table-body">
+        <tbody class="XHRM-timesheet-table-body">
           <!-- timesheet activities -->
           <tr
             v-for="(record, i) in records"
             :key="record"
-            class="orangehrm-timesheet-table-body-row"
+            class="XHRM-timesheet-table-body-row"
           >
             <td :class="fixedCellClasses">
               <project-autocomplete
@@ -100,7 +100,7 @@
                 }}
               </span>
             </td>
-            <td class="orangehrm-timesheet-table-body-cell">
+            <td class="XHRM-timesheet-table-body-cell">
               <activity-dropdown
                 v-if="editable"
                 :rules="rules.activity"
@@ -114,7 +114,7 @@
               v-for="(column, date) in columns"
               :key="`${record.project}_${record.activity}_${date}`"
               :class="{
-                'orangehrm-timesheet-table-body-cell': true,
+                'XHRM-timesheet-table-body-cell': true,
                 '--center': true,
                 '--duration-input': editable,
                 '--highlight-3': !editable && column.workday,
@@ -123,7 +123,7 @@
               <oxd-icon-button
                 v-show="isCommentVisible(record.dates[date], i, date)"
                 display-type="secondary"
-                class="orangehrm-timesheet-icon-comment"
+                class="XHRM-timesheet-icon-comment"
                 :name="getCommentIcon(record.dates[date])"
                 @mousedown="viewComment(record, record.dates[date], i, date)"
               />
@@ -142,17 +142,17 @@
             </td>
             <td
               v-if="!editable"
-              class="orangehrm-timesheet-table-body-cell --center --freeze-right --highlight"
+              class="XHRM-timesheet-table-body-cell --center --freeze-right --highlight"
             >
               {{ record.total.label }}
             </td>
             <td
               v-if="editable"
-              class="orangehrm-timesheet-table-body-cell --flex"
+              class="XHRM-timesheet-table-body-cell --flex"
             >
               <oxd-icon-button
                 name="trash"
-                class="orangehrm-timesheet-icon"
+                class="XHRM-timesheet-icon"
                 @click="deleteRow(i)"
               />
             </td>
@@ -162,10 +162,10 @@
           <!-- totals -->
           <tr
             v-if="!editable && records.length > 0"
-            class="orangehrm-timesheet-table-body-row --total"
+            class="XHRM-timesheet-table-body-row --total"
           >
             <td
-              class="orangehrm-timesheet-table-body-cell --freeze-left --highlight"
+              class="XHRM-timesheet-table-body-cell --freeze-left --highlight"
             >
               {{ $t('general.total') }}
             </td>
@@ -174,13 +174,13 @@
             <td
               v-for="date in columns"
               :key="`total-${date}`"
-              class="orangehrm-timesheet-table-body-cell --center"
+              class="XHRM-timesheet-table-body-cell --center"
             >
               {{ date.total.label }}
             </td>
             <!-- total per day -->
             <td
-              class="orangehrm-timesheet-table-body-cell --center --freeze-right --highlight-2"
+              class="XHRM-timesheet-table-body-cell --center --freeze-right --highlight-2"
             >
               {{ subtotal }}
             </td>
@@ -188,11 +188,11 @@
           <!-- totals -->
 
           <!-- add row -->
-          <tr v-if="editable" class="orangehrm-timesheet-table-body-row">
-            <td class="orangehrm-timesheet-table-body-cell --flex">
+          <tr v-if="editable" class="XHRM-timesheet-table-body-row">
+            <td class="XHRM-timesheet-table-body-cell --flex">
               <oxd-icon-button
                 name="plus"
-                class="orangehrm-timesheet-icon"
+                class="XHRM-timesheet-icon"
                 @click="addRow"
               />
               <oxd-text type="subtitle-2">
@@ -204,9 +204,9 @@
 
           <tr
             v-if="records.length === 0"
-            class="orangehrm-timesheet-table-body-row"
+            class="XHRM-timesheet-table-body-row"
           >
-            <td colspan="9" class="orangehrm-timesheet-table-body-cell">
+            <td colspan="9" class="XHRM-timesheet-table-body-cell">
               {{ $t('general.no_records_found') }}
             </td>
           </tr>
@@ -214,11 +214,11 @@
       </table>
     </div>
 
-    <div class="orangehrm-timesheet-footer">
-      <div class="orangehrm-timesheet-footer--title">
+    <div class="XHRM-timesheet-footer">
+      <div class="XHRM-timesheet-footer--title">
         <slot name="footer-title"></slot>
       </div>
-      <div class="orangehrm-timesheet-footer--options">
+      <div class="XHRM-timesheet-footer--options">
         <slot name="footer-options"></slot>
       </div>
     </div>
@@ -236,9 +236,9 @@
 <script>
 import {validSelection} from '@/core/util/validation/rules';
 import {parseDate, parseTimeInSeconds} from '@ohrm/core/util/helper/datefns';
-import ActivityDropdown from '@/orangehrmTimePlugin/components/ActivityDropdown.vue';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import TimesheetCommentModal from '@/orangehrmTimePlugin/components/TimesheetCommentModal.vue';
+import ActivityDropdown from '@/XHRMTimePlugin/components/ActivityDropdown.vue';
+import ProjectAutocomplete from '@/XHRMTimePlugin/components/ProjectAutocomplete.vue';
+import TimesheetCommentModal from '@/XHRMTimePlugin/components/TimesheetCommentModal.vue';
 import {OxdAlert, OxdSpinner} from '@ohrm/oxd';
 
 export default {
@@ -338,19 +338,19 @@ export default {
     },
     tableClasses() {
       return {
-        'orangehrm-timesheet-table': true,
+        'XHRM-timesheet-table': true,
         '--editable': this.editable,
       };
     },
     fixedColumnClasses() {
       return {
-        'orangehrm-timesheet-table-header-cell': true,
+        'XHRM-timesheet-table-header-cell': true,
         '--freeze-left': !this.editable,
       };
     },
     fixedCellClasses() {
       return {
-        'orangehrm-timesheet-table-body-cell': true,
+        'XHRM-timesheet-table-body-cell': true,
         '--freeze-left': !this.editable,
       };
     },
@@ -523,3 +523,4 @@ export default {
 </script>
 
 <style src="./timesheet.scss" lang="scss" scoped></style>
+

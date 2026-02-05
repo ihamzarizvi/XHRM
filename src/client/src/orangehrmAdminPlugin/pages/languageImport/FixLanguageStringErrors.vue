@@ -1,38 +1,38 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-alert
       :show="!isLoading && showPaginator && itemsModified"
       type="info"
       :message="$t('admin.please_save_before_pagination')"
     ></oxd-alert>
-    <div class="orangehrm-paper-container">
+    <div class="XHRM-paper-container">
       <oxd-form
         v-if="total > 0"
         :loading="isLoading"
         @submit-valid="onSubmitLangString"
         @reset="onReset"
       >
-        <div class="orangehrm-header-container">
-          <oxd-text tag="h6" class="orangehrm-main-title">
+        <div class="XHRM-header-container">
+          <oxd-text tag="h6" class="XHRM-main-title">
             {{ $t('admin.errors_in_import_language_packages') }}
           </oxd-text>
           <oxd-pagination
@@ -54,7 +54,7 @@
           @update:langstrings="checkItemsModified"
         ></edit-translations>
         <oxd-form-actions>
-          <div class="orangehrm-bottom-container">
+          <div class="XHRM-bottom-container">
             <div>
               <oxd-button
                 display-type="ghost"
@@ -62,7 +62,7 @@
                 type="reset"
               />
               <oxd-button
-                class="orangehrm-left-space"
+                class="XHRM-left-space"
                 display-type="secondary"
                 :label="$t('general.save')"
                 type="submit"
@@ -80,7 +80,7 @@
 <script>
 import useToast from '@/core/util/composable/useToast';
 import {APIService} from '@/core/util/services/api.service';
-import FixLanguageStringErrorTable from '@/orangehrmAdminPlugin/components/FixLanguageStringErrorTable.vue';
+import FixLanguageStringErrorTable from '@/XHRMAdminPlugin/components/FixLanguageStringErrorTable.vue';
 import usePaginate from '@/core/util/composable/usePaginate';
 import {navigate} from '@/core/util/helper/navigation';
 import {ref} from 'vue';
@@ -197,12 +197,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-header-container {
+.XHRM-header-container {
   display: flex;
   align-items: center;
 }
 
-.orangehrm-main-title {
+.XHRM-main-title {
   text-align: left;
 }
 
@@ -210,3 +210,4 @@ export default {
   margin-left: auto;
 }
 </style>
+

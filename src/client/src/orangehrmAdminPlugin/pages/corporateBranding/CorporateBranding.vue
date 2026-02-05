@@ -1,26 +1,26 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('general.corporate_branding') }}
       </oxd-text>
 
@@ -28,7 +28,7 @@
 
       <oxd-form ref="formRef" :loading="isLoading" @submit-valid="onFormSubmit">
         <oxd-form-row>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <inline-color-input
                 v-model="colors.primaryColor"
@@ -84,7 +84,7 @@
         <oxd-divider />
         <br />
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <file-upload-input
                 v-model:newFile="clientLogo.newAttachment"
@@ -146,10 +146,10 @@
         </oxd-form-row>
 
         <oxd-form-row>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
-              <div class="orangehrm-sm-field">
-                <oxd-text tag="p" class="orangehrm-sm-field-label">
+              <div class="XHRM-sm-field">
+                <oxd-text tag="p" class="XHRM-sm-field-label">
                   {{ $t('admin.social_media_images') }}
                 </oxd-text>
                 <oxd-switch-input v-model="showSocialMediaImages" />
@@ -162,7 +162,7 @@
 
         <oxd-form-actions>
           <required-text />
-          <div class="orangehrm-actions-group">
+          <div class="XHRM-actions-group">
             <oxd-button
               type="button"
               display-type="ghost"
@@ -201,7 +201,7 @@ import useToast from '@/core/util/composable/useToast';
 import {APIService} from '@/core/util/services/api.service';
 import {reloadPage} from '@ohrm/core/util/helper/navigation';
 import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import InlineColorInput from '@/orangehrmAdminPlugin/components/InlineColorInput';
+import InlineColorInput from '@/XHRMAdminPlugin/components/InlineColorInput';
 import {OxdSwitchInput} from '@ohrm/oxd';
 
 const colorModel = {
@@ -424,3 +424,4 @@ export default {
 </script>
 
 <style src="./corporate-branding.scss" lang="scss" scoped></style>
+

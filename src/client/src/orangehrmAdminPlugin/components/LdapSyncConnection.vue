@@ -1,45 +1,45 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-paper-container">
-    <div class="orangehrm-header-container">
-      <div class="orangehrm-ldap-sync">
-        <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-paper-container">
+    <div class="XHRM-header-container">
+      <div class="XHRM-ldap-sync">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ $t('admin.sync_connection') }}
         </oxd-text>
         <oxd-text
           v-show="lastSync"
           type="card-body"
-          class="orangehrm-ldap-sync-time"
+          class="XHRM-ldap-sync-time"
         >
           ({{ lastSync }})
         </oxd-text>
       </div>
       <oxd-loading-spinner
         v-if="isLoading"
-        class="orangehrm-ldap-sync-loader"
+        class="XHRM-ldap-sync-loader"
       />
       <oxd-button
         v-else
         display-type="secondary"
-        class="orangehrm-ldap-sync-button"
+        class="XHRM-ldap-sync-button"
         :label="$t('admin.sync_now')"
         @click="onClickSync"
       />
@@ -154,3 +154,4 @@ export default {
 </script>
 
 <style src="./ldap-sync-connection.scss" lang="scss" scoped></style>
+

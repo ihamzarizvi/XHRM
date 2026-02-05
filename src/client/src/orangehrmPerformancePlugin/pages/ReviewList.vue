@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-table-filter :filter-title="$t('performance.employee_reviews')">
       <oxd-form @submit-valid="filterItems" @reset="filterItems">
-        <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="4" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <employee-autocomplete
               v-model="filters.employee"
@@ -68,7 +68,7 @@
             type="reset"
           />
           <oxd-button
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             :label="$t('general.search')"
             type="submit"
@@ -77,13 +77,13 @@
       </oxd-form>
     </oxd-table-filter>
     <br />
-    <div class="orangehrm-paper-container">
+    <div class="XHRM-paper-container">
       <table-header
         :selected="0"
         :total="total"
         :loading="isLoading"
       ></table-header>
-      <div class="orangehrm-container">
+      <div class="XHRM-container">
         <oxd-card-table
           v-model:order="sortDefinition"
           :headers="headers"
@@ -94,7 +94,7 @@
           row-decorator="oxd-table-decorator-card"
         />
       </div>
-      <div class="orangehrm-bottom-container">
+      <div class="XHRM-bottom-container">
         <oxd-pagination
           v-if="showPaginator"
           v-model:current="currentPage"
@@ -120,20 +120,20 @@ import {
   evaluateIcon,
   viewLabel,
   evaluateLabel,
-} from '@/orangehrmPerformancePlugin/util/composable/useReviewActions';
+} from '@/XHRMPerformancePlugin/util/composable/useReviewActions';
 import useSort from '@ohrm/core/util/composable/useSort';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
 import {APIService} from '@/core/util/services/api.service';
 import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import SubunitDropdown from '@/orangehrmPimPlugin/components/SubunitDropdown';
-import ReviewStatusDropdown from '@/orangehrmPerformancePlugin/components/ReviewStatusDropdown';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown';
+import SubunitDropdown from '@/XHRMPimPlugin/components/SubunitDropdown';
+import ReviewStatusDropdown from '@/XHRMPerformancePlugin/components/ReviewStatusDropdown';
 import usei18n from '@/core/util/composable/usei18n';
 import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import useLocale from '@/core/util/composable/useLocale';
 import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
-import ReviewPeriodCell from '@/orangehrmPerformancePlugin/components/ReviewPeriodCell';
+import ReviewPeriodCell from '@/XHRMPerformancePlugin/components/ReviewPeriodCell';
 import {tableScreenStateKey} from '@ohrm/oxd';
 
 const defaultSortOrder = {
@@ -402,3 +402,4 @@ export default {
   }
 }
 </style>
+

@@ -1,39 +1,39 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-translation-container">
+  <div class="XHRM-translation-container">
     <oxd-divider />
-    <oxd-grid :cols="3" class="orangehrm-translation-grid">
-      <oxd-grid-item class="orangehrm-translation-grid-header">
+    <oxd-grid :cols="3" class="XHRM-translation-grid">
+      <oxd-grid-item class="XHRM-translation-grid-header">
         <oxd-text type="card-title">{{ $t('admin.source_text') }}</oxd-text>
       </oxd-grid-item>
-      <oxd-grid-item class="orangehrm-translation-grid-header">
+      <oxd-grid-item class="XHRM-translation-grid-header">
         <oxd-text type="card-title">{{ $t('admin.source_note') }}</oxd-text>
       </oxd-grid-item>
-      <oxd-grid-item class="orangehrm-translation-grid-header">
+      <oxd-grid-item class="XHRM-translation-grid-header">
         <oxd-text type="card-title">{{ $t('admin.translated_text') }}</oxd-text>
       </oxd-grid-item>
       <template v-for="(langstring, index) in langstrings" :key="index">
-        <oxd-grid-item class="orangehrm-translation-grid-text">
+        <oxd-grid-item class="XHRM-translation-grid-text">
           <oxd-text
-            class="orangehrm-translation-grid-langstring-header"
+            class="XHRM-translation-grid-langstring-header"
             type="card-title"
           >
             {{ $t('admin.source_text') }}
@@ -42,23 +42,23 @@
             {{ langstring.source }}
           </oxd-text>
         </oxd-grid-item>
-        <oxd-grid-item class="orangehrm-translation-grid-text">
+        <oxd-grid-item class="XHRM-translation-grid-text">
           <oxd-text
-            class="orangehrm-translation-grid-langstring-header-note"
+            class="XHRM-translation-grid-langstring-header-note"
             type="card-title"
           >
             {{ $t('admin.source_note') }}
           </oxd-text>
           <oxd-text
             :title="langstring.note"
-            class="orangehrm-translation-grid-header"
+            class="XHRM-translation-grid-header"
           >
             {{ langstring.note }}
           </oxd-text>
         </oxd-grid-item>
-        <oxd-grid-item class="orangehrm-translation-grid-text">
+        <oxd-grid-item class="XHRM-translation-grid-text">
           <oxd-text
-            class="orangehrm-translation-grid-langstring-header"
+            class="XHRM-translation-grid-langstring-header"
             type="card-title"
           >
             {{ $t('admin.translated_text') }}
@@ -69,7 +69,7 @@
             :model-value="langstring.target"
             @update:model-value="onUpdateTranslation($event, index)"
           />
-          <oxd-divider class="orangehrm-translation-grid-langstring-header" />
+          <oxd-divider class="XHRM-translation-grid-langstring-header" />
         </oxd-grid-item>
       </template>
     </oxd-grid>
@@ -77,7 +77,7 @@
   </div>
 </template>
 <script>
-import LangStringTargetInput from '@/orangehrmAdminPlugin/components/LangStringTargetInput.vue';
+import LangStringTargetInput from '@/XHRMAdminPlugin/components/LangStringTargetInput.vue';
 
 export default {
   components: {
@@ -118,3 +118,4 @@ export default {
 };
 </script>
 <style src="./edit-translation-table.scss" lang="scss" scoped></style>
+

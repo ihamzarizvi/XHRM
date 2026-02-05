@@ -1,18 +1,18 @@
 <!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.orangehrm.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -78,10 +78,10 @@
         class="--offset-row-2 orangehrm-database-info-check"
       >
         <oxd-input-field
-          v-model="database.useSameDbUserForOrangeHRM"
+          v-model="database.useSameDbUserForXHRM"
           label="&nbsp;"
           type="checkbox"
-          option-label="Use the same Database User for OrangeHRM"
+          option-label="Use the same Database User for XHRM"
         />
       </oxd-grid-item>
     </oxd-grid>
@@ -114,9 +114,9 @@
           :key="disableOHRMDBfield"
           v-model="database.ohrmDbUser"
           v-tooltip="
-            'OrangeHRM database user should have the rights to insert data into table, update data in a table, delete data in a table.'
+            'XHRM database user should have the rights to insert data into table, update data in a table, delete data in a table.'
           "
-          label="OrangeHRM Database Username"
+          label="XHRM Database Username"
           :rules="rules.ohrmDbUser"
           :disabled="disableOHRMDBfield"
           :required="!disableOHRMDBfield"
@@ -126,7 +126,7 @@
         <oxd-input-field
           v-model="database.ohrmDbPassword"
           :disabled="disableOHRMDBfield"
-          label="OrangeHRM Database User Password"
+          label="XHRM Database User Password"
           type="password"
         />
       </oxd-grid-item>
@@ -224,7 +224,7 @@ export default {
         dbPassword: null,
         ohrmDbUser: null,
         ohrmDbPassword: null,
-        useSameDbUserForOrangeHRM: true,
+        useSameDbUserForXHRM: true,
         enableDataEncryption: false,
       },
       errorMessage: '',
@@ -236,7 +236,7 @@ export default {
     },
     disableOHRMDBfield() {
       if (!this.isNewDB) return false;
-      return this.database.useSameDbUserForOrangeHRM;
+      return this.database.useSameDbUserForXHRM;
     },
   },
   beforeMount() {
@@ -266,9 +266,9 @@ export default {
             dbPassword: payload.ohrmDbPassword,
             ohrmDbUser: undefined,
             ohrmDbPassword: undefined,
-            useSameDbUserForOrangeHRM: undefined,
+            useSameDbUserForXHRM: undefined,
           }),
-          ...(payload.useSameDbUserForOrangeHRM && {
+          ...(payload.useSameDbUserForXHRM && {
             ohrmDbUser: undefined,
             ohrmDbPassword: undefined,
           }),

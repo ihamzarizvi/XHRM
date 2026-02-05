@@ -1,33 +1,33 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <oxd-text class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <oxd-text class="XHRM-main-title">
         {{ $t('performance.edit_key_performance_indicator') }}
       </oxd-text>
       <oxd-divider />
 
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="2" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="2" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="kpi.title"
@@ -48,7 +48,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="4" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="4" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model.number="kpi.minRating"
@@ -70,8 +70,8 @@
               />
             </oxd-grid-item>
             <oxd-grid-item>
-              <div class="orangehrm-module-field-row">
-                <oxd-text tag="p" class="orangehrm-module-field-label">
+              <div class="XHRM-module-field-row">
+                <oxd-text tag="p" class="XHRM-module-field-label">
                   {{ $t('performance.make_default_scale') }}
                 </oxd-text>
                 <oxd-switch-input v-model="kpi.isDefault" />
@@ -107,7 +107,7 @@ import {
   numberShouldBeBetweenMinAndMaxValue,
 } from '@ohrm/core/util/validation/rules';
 import {APIService} from '@/core/util/services/api.service';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown.vue';
+import JobtitleDropdown from '@/XHRMPimPlugin/components/JobtitleDropdown.vue';
 import {OxdSwitchInput} from '@ohrm/oxd';
 
 const initialKpi = {
@@ -217,3 +217,4 @@ export default {
 </script>
 
 <style src="./kpi.scss" lang="scss" scoped></style>
+

@@ -1,4 +1,4 @@
-import {h, defineComponent, Transition, App, reactive, toRefs} from 'vue';
+﻿import {h, defineComponent, Transition, App, reactive, toRefs} from 'vue';
 import {OxdOverlay, OxdSpinner} from '@ohrm/oxd';
 
 export interface LoaderAPI {
@@ -21,13 +21,13 @@ const Loader = defineComponent({
   render() {
     return h(
       Transition,
-      {name: 'orangehrm-loader-fade', tag: 'div'},
+      {name: 'XHRM-loader-fade', tag: 'div'},
       {
         default: () => {
           if (this.show) {
             return h(
               OxdOverlay,
-              {show: true, centered: true, class: 'orangehrm-loader'},
+              {show: true, centered: true, class: 'XHRM-loader'},
               h(OxdSpinner, {withContainer: false}),
             );
           }
@@ -65,3 +65,4 @@ export default {
     app.config.globalProperties.$loader = loaderAPI;
   },
 };
+

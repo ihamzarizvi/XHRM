@@ -1,24 +1,24 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <candidate-action-layout
       :loading="isLoading"
       :candidate-id="candidateId"
@@ -26,7 +26,7 @@
       @submit-valid="onSave"
     >
       <oxd-form-row>
-        <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+        <oxd-grid :cols="3" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <oxd-input-field
               :label="$t('recruitment.performed_action')"
@@ -79,7 +79,7 @@
               v-if="interviewers.length < 5 && editable"
               icon-name="plus"
               display-type="text"
-              class="orangehrm-input-field-bottom-space"
+              class="XHRM-input-field-bottom-space"
               :label="$t('general.add_another')"
               @click="onAddAnother"
             />
@@ -144,8 +144,8 @@ import {APIService} from '@/core/util/services/api.service';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
 import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import CandidateActionLayout from '@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue';
-import InterviewerAutocomplete from '@/orangehrmRecruitmentPlugin/components/InterviewerAutocomplete.vue';
+import CandidateActionLayout from '@/XHRMRecruitmentPlugin/components/CandidateActionLayout.vue';
+import InterviewerAutocomplete from '@/XHRMRecruitmentPlugin/components/InterviewerAutocomplete.vue';
 
 const actionHistoryModel = {
   id: null,
@@ -357,3 +357,4 @@ export default {
   },
 };
 </script>
+

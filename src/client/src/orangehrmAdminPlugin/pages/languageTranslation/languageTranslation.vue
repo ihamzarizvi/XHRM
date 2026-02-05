@@ -1,28 +1,28 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
+  <div class="XHRM-background-container">
     <oxd-table-filter :filter-title="$t('admin.translate_language_package')">
       <oxd-form @submit-valid="onSubmit" @reset="onReset">
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 :value="languagePackage"
@@ -38,7 +38,7 @@
               />
             </oxd-grid-item>
           </oxd-grid>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <language-group-list-dropdown v-model="filters.groupId" />
             </oxd-grid-item>
@@ -80,7 +80,7 @@
             type="reset"
           />
           <oxd-button
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             :label="$t('general.search')"
             type="submit"
@@ -94,14 +94,14 @@
       type="info"
       :message="$t('admin.please_save_before_pagination')"
     ></oxd-alert>
-    <div class="orangehrm-paper-container">
+    <div class="XHRM-paper-container">
       <oxd-form
         v-if="total > 0"
         :loading="isLoading"
         @submit-valid="onSubmitLangString"
         @reset="onReset"
       >
-        <div class="orangehrm-header-container">
+        <div class="XHRM-header-container">
           <oxd-pagination
             v-if="showPaginator && !itemsModified"
             :key="currentPage"
@@ -120,7 +120,7 @@
           @update:langstrings="checkItemsModified"
         ></edit-translations>
         <oxd-form-actions>
-          <div class="orangehrm-bottom-container">
+          <div class="XHRM-bottom-container">
             <div>
               <oxd-button
                 display-type="ghost"
@@ -128,7 +128,7 @@
                 type="reset"
               />
               <oxd-button
-                class="orangehrm-left-space"
+                class="XHRM-left-space"
                 display-type="secondary"
                 :label="$t('general.save')"
                 type="submit"
@@ -147,8 +147,8 @@ import usei18n from '@/core/util/composable/usei18n';
 import useToast from '@/core/util/composable/useToast';
 import {APIService} from '@/core/util/services/api.service';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import EditTranslationTable from '@/orangehrmAdminPlugin/components/EditTranslationTable.vue';
-import GroupListDropdown from '@/orangehrmAdminPlugin/components/LanguageGroupListDropdown.vue';
+import EditTranslationTable from '@/XHRMAdminPlugin/components/EditTranslationTable.vue';
+import GroupListDropdown from '@/XHRMAdminPlugin/components/LanguageGroupListDropdown.vue';
 import {OxdAlert} from '@ohrm/oxd';
 
 const defaultFilters = {
@@ -299,7 +299,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.orangehrm-header-container {
+.XHRM-header-container {
   justify-content: end;
 }
 </style>
+

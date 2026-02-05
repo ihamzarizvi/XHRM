@@ -1,31 +1,31 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 <template>
-  <div class="orangehrm-background-container orangehrm-save-candidate-page">
-    <div class="orangehrm-card-container">
-      <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container XHRM-save-candidate-page">
+    <div class="XHRM-card-container">
+      <oxd-text tag="h6" class="XHRM-main-title">
         {{ $t('recruitment.add_candidate') }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
-          <oxd-grid :cols="1" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="1" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <full-name-input
                 v-model:first-name="candidate.firstName"
@@ -39,7 +39,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <vacancy-dropdown
                 v-model="candidate.vacancyId"
@@ -50,7 +50,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="candidate.email"
@@ -71,7 +71,7 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <file-upload-input
                 v-model:newFile="resume.newAttachment"
@@ -92,8 +92,8 @@
         </oxd-form-row>
 
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <oxd-grid-item class="orangehrm-save-candidate-page-full-width">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <oxd-grid-item class="XHRM-save-candidate-page-full-width">
               <oxd-input-field
                 v-model="candidate.keywords"
                 :label="$t('recruitment.keywords')"
@@ -113,8 +113,8 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <oxd-grid-item class="orangehrm-save-candidate-page-full-width">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <oxd-grid-item class="XHRM-save-candidate-page-full-width">
               <oxd-input-field
                 v-model="candidate.comment"
                 :label="$t('general.notes')"
@@ -126,9 +126,9 @@
           </oxd-grid>
         </oxd-form-row>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item
-              class="orangehrm-save-candidate-page-full-width orangehrm-save-candidate-page-grid-checkbox"
+              class="XHRM-save-candidate-page-full-width XHRM-save-candidate-page-grid-checkbox"
             >
               <oxd-input-field
                 v-model="candidate.consentToKeepData"
@@ -169,8 +169,8 @@ import {APIService} from '@ohrm/core/util/services/api.service';
 import SubmitButton from '@/core/components/buttons/SubmitButton';
 import {freshDate, formatDate} from '@ohrm/core/util/helper/datefns';
 import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import VacancyDropdown from '@/orangehrmRecruitmentPlugin/components/VacancyDropdown';
+import FullNameInput from '@/XHRMPimPlugin/components/FullNameInput';
+import VacancyDropdown from '@/XHRMRecruitmentPlugin/components/VacancyDropdown';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 
 export default {
@@ -281,7 +281,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.orangehrm-save-candidate-page {
+.XHRM-save-candidate-page {
   &-full-width {
     grid-column: 1 / span 2;
   }
@@ -294,3 +294,4 @@ export default {
   }
 }
 </style>
+

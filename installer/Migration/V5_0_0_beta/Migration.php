@@ -1,27 +1,27 @@
 <?php
 
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OrangeHRM\Installer\Migration\V5_0_0_beta;
+namespace XHRM\Installer\Migration\V5_0_0_beta;
 
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
-use OrangeHRM\Installer\Util\V1\AbstractMigration;
+use XHRM\Installer\Util\V1\AbstractMigration;
 
 class Migration extends AbstractMigration
 {
@@ -131,58 +131,58 @@ class Migration extends AbstractMigration
 
         $this->updateReportDisplayFieldByGroup(
             'Personal',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
         );
         $this->updateReportDisplayFieldByGroup(
             'Contact Details',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
         );
         $this->updateReportDisplayFieldByGroup(
             'Emergency Contacts',
-            'OrangeHRM\\Core\\Report\\DisplayField\\EmergencyContact\\EmergencyContact'
+            'XHRM\\Core\\Report\\DisplayField\\EmergencyContact\\EmergencyContact'
         );
         $this->updateReportDisplayFieldByGroup(
             'Dependents',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Dependent\\Dependent'
+            'XHRM\\Core\\Report\\DisplayField\\Dependent\\Dependent'
         );
         $this->updateReportDisplayFieldByGroup(
             'Immigration',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Immigration\\Immigration'
+            'XHRM\\Core\\Report\\DisplayField\\Immigration\\Immigration'
         );
         $this->updateReportDisplayFieldByGroup(
             'Job',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
         );
-        $this->updateReportDisplayFieldByGroup('Salary', 'OrangeHRM\\Core\\Report\\DisplayField\\Salary\\Salary');
+        $this->updateReportDisplayFieldByGroup('Salary', 'XHRM\\Core\\Report\\DisplayField\\Salary\\Salary');
         $this->updateReportDisplayFieldByGroup(
             'Subordinates',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Subordinate\\Subordinate'
+            'XHRM\\Core\\Report\\DisplayField\\Subordinate\\Subordinate'
         );
         $this->updateReportDisplayFieldByGroup(
             'Supervisors',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Supervisor\\Supervisor'
+            'XHRM\\Core\\Report\\DisplayField\\Supervisor\\Supervisor'
         );
         $this->updateReportDisplayFieldByGroup(
             'Work Experience',
-            'OrangeHRM\\Core\\Report\\DisplayField\\WorkExperience\\WorkExperience'
+            'XHRM\\Core\\Report\\DisplayField\\WorkExperience\\WorkExperience'
         );
         $this->updateReportDisplayFieldByGroup(
             'Education',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Education\\Education'
+            'XHRM\\Core\\Report\\DisplayField\\Education\\Education'
         );
-        $this->updateReportDisplayFieldByGroup('Skills', 'OrangeHRM\\Core\\Report\\DisplayField\\Skill\\Skill');
+        $this->updateReportDisplayFieldByGroup('Skills', 'XHRM\\Core\\Report\\DisplayField\\Skill\\Skill');
         $this->updateReportDisplayFieldByGroup(
             'Languages',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Language\\Language'
+            'XHRM\\Core\\Report\\DisplayField\\Language\\Language'
         );
-        $this->updateReportDisplayFieldByGroup('License', 'OrangeHRM\\Core\\Report\\DisplayField\\License\\License');
+        $this->updateReportDisplayFieldByGroup('License', 'XHRM\\Core\\Report\\DisplayField\\License\\License');
         $this->updateReportDisplayFieldByGroup(
             'Memberships',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Membership\\Membership'
+            'XHRM\\Core\\Report\\DisplayField\\Membership\\Membership'
         );
         $this->updateReportDisplayFieldByGroup(
             'Custom Fields',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericBasicDisplayField'
         );
 
         $this->createQueryBuilder()
@@ -194,35 +194,35 @@ class Migration extends AbstractMigration
             ->executeQuery();
         $this->updateReportDisplayFieldByFieldAlias(
             'empBirthday',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'licenseExpiryDate',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'empGender',
-            'OrangeHRM\\Core\\Report\\DisplayField\\Personal\\EmployeeGender'
+            'XHRM\\Core\\Report\\DisplayField\\Personal\\EmployeeGender'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'address',
-            'OrangeHRM\\Core\\Report\\DisplayField\\ContactDetail\\EmployeeAddress'
+            'XHRM\\Core\\Report\\DisplayField\\ContactDetail\\EmployeeAddress'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'empContStartDate',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'empContEndDate',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'empJoinedDate',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
         $this->updateReportDisplayFieldByFieldAlias(
             'terminationDate',
-            'OrangeHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
+            'XHRM\\Core\\Report\\DisplayField\\GenericDateDisplayField'
         );
 
         $this->renameReportDisplayFieldAlias('nationality', 'employeeNationality');
@@ -232,30 +232,30 @@ class Migration extends AbstractMigration
 
         $this->updateReportFilterFieldByFieldName(
             'employee_name',
-            'OrangeHRM\\Core\\Report\\FilterField\\EmployeeNumber'
+            'XHRM\\Core\\Report\\FilterField\\EmployeeNumber'
         );
-        $this->updateReportFilterFieldByFieldName('pay_grade', 'OrangeHRM\\Core\\Report\\FilterField\\PayGrade');
+        $this->updateReportFilterFieldByFieldName('pay_grade', 'XHRM\\Core\\Report\\FilterField\\PayGrade');
         $this->updateReportFilterFieldByFieldName(
             'education',
-            'OrangeHRM\\Core\\Report\\FilterField\\EmployeeEducation'
+            'XHRM\\Core\\Report\\FilterField\\EmployeeEducation'
         );
         $this->updateReportFilterFieldByFieldName(
             'employment_status',
-            'OrangeHRM\\Core\\Report\\FilterField\\EmploymentStatus'
+            'XHRM\\Core\\Report\\FilterField\\EmploymentStatus'
         );
         $this->updateReportFilterFieldByFieldName(
             'service_period',
-            'OrangeHRM\\Core\\Report\\FilterField\\ServicePeriod'
+            'XHRM\\Core\\Report\\FilterField\\ServicePeriod'
         );
-        $this->updateReportFilterFieldByFieldName('joined_date', 'OrangeHRM\\Core\\Report\\FilterField\\JoinedDate');
-        $this->updateReportFilterFieldByFieldName('job_title', 'OrangeHRM\\Core\\Report\\FilterField\\JobTitle');
-        $this->updateReportFilterFieldByFieldName('language', 'OrangeHRM\\Core\\Report\\FilterField\\EmployeeLanguage');
-        $this->updateReportFilterFieldByFieldName('skill', 'OrangeHRM\\Core\\Report\\FilterField\\EmployeeSkill');
-        $this->updateReportFilterFieldByFieldName('age_group', 'OrangeHRM\\Core\\Report\\FilterField\\AgeGroup');
-        $this->updateReportFilterFieldByFieldName('sub_unit', 'OrangeHRM\\Core\\Report\\FilterField\\Subunit');
-        $this->updateReportFilterFieldByFieldName('gender', 'OrangeHRM\\Core\\Report\\FilterField\\EmployeeGender');
-        $this->updateReportFilterFieldByFieldName('location', 'OrangeHRM\\Core\\Report\\FilterField\\Location');
-        $this->updateReportFilterFieldByFieldName('include', 'OrangeHRM\\Core\\Report\\FilterField\\IncludeEmployee');
+        $this->updateReportFilterFieldByFieldName('joined_date', 'XHRM\\Core\\Report\\FilterField\\JoinedDate');
+        $this->updateReportFilterFieldByFieldName('job_title', 'XHRM\\Core\\Report\\FilterField\\JobTitle');
+        $this->updateReportFilterFieldByFieldName('language', 'XHRM\\Core\\Report\\FilterField\\EmployeeLanguage');
+        $this->updateReportFilterFieldByFieldName('skill', 'XHRM\\Core\\Report\\FilterField\\EmployeeSkill');
+        $this->updateReportFilterFieldByFieldName('age_group', 'XHRM\\Core\\Report\\FilterField\\AgeGroup');
+        $this->updateReportFilterFieldByFieldName('sub_unit', 'XHRM\\Core\\Report\\FilterField\\Subunit');
+        $this->updateReportFilterFieldByFieldName('gender', 'XHRM\\Core\\Report\\FilterField\\EmployeeGender');
+        $this->updateReportFilterFieldByFieldName('location', 'XHRM\\Core\\Report\\FilterField\\Location');
+        $this->updateReportFilterFieldByFieldName('include', 'XHRM\\Core\\Report\\FilterField\\IncludeEmployee');
 
         $this->renameSelectedReportFilterFieldWhereCondition('=', 'eq');
         $this->renameSelectedReportFilterFieldWhereCondition('<>', 'neq');
@@ -268,102 +268,102 @@ class Migration extends AbstractMigration
 
         $this->updateEmailProcessorClassByEmailName(
             'leave.apply',
-            'OrangeHRM\\Leave\\Mail\\Processor\\LeaveAllocateEmailProcessor'
+            'XHRM\\Leave\\Mail\\Processor\\LeaveAllocateEmailProcessor'
         );
         $this->updateEmailProcessorClassByEmailName(
             'leave.assign',
-            'OrangeHRM\\Leave\\Mail\\Processor\\LeaveAllocateEmailProcessor'
+            'XHRM\\Leave\\Mail\\Processor\\LeaveAllocateEmailProcessor'
         );
         $this->updateEmailProcessorClassByEmailName(
             'leave.approve',
-            'OrangeHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
+            'XHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
         );
         $this->updateEmailProcessorClassByEmailName(
             'leave.cancel',
-            'OrangeHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
+            'XHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
         );
         $this->updateEmailProcessorClassByEmailName(
             'leave.reject',
-            'OrangeHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
+            'XHRM\\Leave\\Mail\\Processor\\LeaveStatusChangeEmailProcessor'
         );
 
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.apply',
             'supervisor',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/apply/leaveApplicationBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/apply/leaveApplicationBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.apply',
             'subscriber',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubscriberBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/apply/leaveApplicationSubscriberBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.assign',
             'ess',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.assign',
             'supervisor',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubjectForSupervisors.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentBodyForSupervisors.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubjectForSupervisors.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentBodyForSupervisors.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.assign',
             'subscriber',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubscriberSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubscriberBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubscriberSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/assign/leaveAssignmentSubscriberBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.approve',
             'ess',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/approve/leaveApprovalBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/approve/leaveApprovalBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.approve',
             'subscriber',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubscriberSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubscriberBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubscriberSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/approve/leaveApprovalSubscriberBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.reject',
             'ess',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/reject/leaveRejectionBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/reject/leaveRejectionBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.reject',
             'subscriber',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubscriberSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubscriberBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubscriberSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/reject/leaveRejectionSubscriberBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.cancel',
             'supervisor',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationBody.html.twig'
         );
         $this->updateEmailTemplateSubjectAndBodyByEmailNameAndRecipientRole(
             'leave.cancel',
             'ess',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubject.txt.twig',
-            '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationBody.html.twig'
+            '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubject.txt.twig',
+            '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationBody.html.twig'
         );
         $this->createQueryBuilder()
             ->update('ohrm_email_template', 'emailTemplate')
             ->set('emailTemplate.subject', ':subject')
             ->setParameter(
                 'subject',
-                '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubscriberSubject.txt.twig'
+                '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubscriberSubject.txt.twig'
             )
             ->set('emailTemplate.body', ':body')
             ->setParameter(
                 'body',
-                '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubscriberBody.html.twig'
+                '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveEmployeeCancellationSubscriberBody.html.twig'
             )
             ->andWhere('emailTemplate.email_id = :emailId')
             ->setParameter('emailId', $this->getEmailIdByName('leave.cancel'))
@@ -377,12 +377,12 @@ class Migration extends AbstractMigration
             ->set('emailTemplate.subject', ':subject')
             ->setParameter(
                 'subject',
-                '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubscriberSubject.txt.twig'
+                '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubscriberSubject.txt.twig'
             )
             ->set('emailTemplate.body', ':body')
             ->setParameter(
                 'body',
-                '/orangehrmLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubscriberBody.html.twig'
+                '/XHRMLeavePlugin/Mail/templates/en_US/cancel/leaveCancellationSubscriberBody.html.twig'
             )
             ->andWhere('emailTemplate.email_id = :emailId')
             ->setParameter('emailId', $this->getEmailIdByName('leave.cancel'))

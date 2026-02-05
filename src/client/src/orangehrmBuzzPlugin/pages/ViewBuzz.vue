@@ -1,18 +1,18 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
@@ -40,7 +40,7 @@
   </template>
 
   <!-- Medium Res -->
-  <oxd-grid v-else-if="width < 1920" :cols="2" class="orangehrm-buzz-layout">
+  <oxd-grid v-else-if="width < 1920" :cols="2" class="XHRM-buzz-layout">
     <oxd-grid-item>
       <news-feed :employee="employee" :sort-field="sortField">
         <post-filters
@@ -55,7 +55,7 @@
   </oxd-grid>
 
   <!-- High Res -->
-  <oxd-grid v-else :cols="3" class="orangehrm-buzz-layout">
+  <oxd-grid v-else :cols="3" class="XHRM-buzz-layout">
     <oxd-grid-item>
       <post-filters
         :filter="sortField"
@@ -81,9 +81,9 @@ import {
 import {computed, ref} from 'vue';
 import usei18n from '@/core/util/composable/usei18n';
 import useSwipe from '@/core/util/composable/useSwipe';
-import NewsFeed from '@/orangehrmBuzzPlugin/components/NewsFeed.vue';
-import PostFilters from '@/orangehrmBuzzPlugin/components/PostFilters.vue';
-import UpcomingAnniversaries from '@/orangehrmBuzzPlugin/components/UpcomingAnniversaries.vue';
+import NewsFeed from '@/XHRMBuzzPlugin/components/NewsFeed.vue';
+import PostFilters from '@/XHRMBuzzPlugin/components/PostFilters.vue';
+import UpcomingAnniversaries from '@/XHRMBuzzPlugin/components/UpcomingAnniversaries.vue';
 
 export default {
   components: {
@@ -146,3 +146,4 @@ export default {
 </script>
 
 <style src="./view-buzz.scss" lang="scss" scoped></style>
+

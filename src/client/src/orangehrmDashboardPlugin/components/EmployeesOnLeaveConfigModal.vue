@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
-    <div class="orangehrm-modal-header">
+  <oxd-dialog class="XHRM-dialog-modal" @update:show="onCancel">
+    <div class="XHRM-modal-header">
       <oxd-icon type="svg" name="leaveAlt" />
-      <div class="orangehrm-config-title">
+      <div class="XHRM-config-title">
         <oxd-text type="card-body">
           {{ $t('dashboard.employees_on_leave_today') }}
         </oxd-text>
@@ -32,7 +32,7 @@
     </div>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
-      <oxd-form-row class="orangehrm-config-checkbox">
+      <oxd-form-row class="XHRM-config-checkbox">
         <oxd-input-field
           v-model="showAccessibleEmployeesOnly"
           type="switch"
@@ -118,14 +118,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-modal-header {
+.XHRM-modal-header {
   display: flex;
   align-items: center;
 }
-.orangehrm-config-title {
+.XHRM-config-title {
   margin-left: 1rem;
 }
-.orangehrm-config-checkbox {
+.XHRM-config-checkbox {
   & .oxd-input-group {
     margin: 0;
     padding: 1rem 0;
@@ -137,3 +137,4 @@ export default {
   }
 }
 </style>
+

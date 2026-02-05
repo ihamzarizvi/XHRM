@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-paper-container">
-      <div class="orangehrm-header-container">
-        <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-paper-container">
+      <div class="XHRM-header-container">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{
             myLeaveRequest
               ? $t('leave.my_leave_request_details')
@@ -30,21 +30,21 @@
         </oxd-text>
       </div>
       <oxd-divider
-        class="orangehrm-horizontal-margin orangehrm-clear-margins"
+        class="XHRM-horizontal-margin XHRM-clear-margins"
       />
       <br />
-      <div class="orangehrm-horizontal-padding">
+      <div class="XHRM-horizontal-padding">
         <oxd-grid :cols="3">
           <oxd-grid-item>
             <oxd-input-group :label="$t('general.employee_name')">
-              <oxd-text class="orangehrm-request-details-text" tag="p">
+              <oxd-text class="XHRM-request-details-text" tag="p">
                 {{ employeeName }}
               </oxd-text>
             </oxd-input-group>
           </oxd-grid-item>
           <oxd-grid-item>
             <oxd-input-group :label="$t('leave.requested_for')">
-              <oxd-text class="orangehrm-request-details-text" tag="p">
+              <oxd-text class="XHRM-request-details-text" tag="p">
                 {{ leavePeriod }}
               </oxd-text>
             </oxd-input-group>
@@ -57,7 +57,7 @@
         :total="total"
         :loading="isLoading"
       ></table-header>
-      <div class="orangehrm-container">
+      <div class="XHRM-container">
         <oxd-card-table
           :headers="headers"
           :items="response && response.data"
@@ -67,7 +67,7 @@
           row-decorator="oxd-table-decorator-card"
         />
       </div>
-      <div class="orangehrm-bottom-container">
+      <div class="XHRM-bottom-container">
         <span>
           <oxd-button
             display-type="ghost"
@@ -75,7 +75,7 @@
             @click="onClickBack"
           />
           <oxd-button
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             icon-name="chat-right-text-fill"
             :label="$t('general.comments')"
@@ -104,8 +104,8 @@ import {APIService} from '@/core/util/services/api.service';
 import {navigate} from '@ohrm/core/util/helper/navigation';
 import {truncate} from '@ohrm/core/util/helper/truncate';
 import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useLeaveActions from '@/orangehrmLeavePlugin/util/composable/useLeaveActions';
-import LeaveCommentsModal from '@/orangehrmLeavePlugin/components/LeaveCommentsModal';
+import useLeaveActions from '@/XHRMLeavePlugin/util/composable/useLeaveActions';
+import LeaveCommentsModal from '@/XHRMLeavePlugin/components/LeaveCommentsModal';
 import usei18n from '@/core/util/composable/usei18n';
 import useDateFormat from '@/core/util/composable/useDateFormat';
 import {formatDate, parseDate} from '@/core/util/helper/datefns';
@@ -375,11 +375,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-bottom-container {
+.XHRM-bottom-container {
   align-items: center;
   justify-content: space-between;
 }
-.orangehrm-request-details-text {
+.XHRM-request-details-text {
   font-size: $oxd-input-control-font-size;
 }
 ::v-deep(.card-footer-slot) {
@@ -391,3 +391,4 @@ export default {
   }
 }
 </style>
+

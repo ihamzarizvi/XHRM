@@ -1,27 +1,27 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 
 <template>
-  <div class="orangehrm-background-container">
-    <div class="orangehrm-card-container">
-      <div class="orangehrm-header-container">
-        <oxd-text tag="h6" class="orangehrm-main-title">
+  <div class="XHRM-background-container">
+    <div class="XHRM-card-container">
+      <div class="XHRM-header-container">
+        <oxd-text tag="h6" class="XHRM-main-title">
           {{ $t('general.ldap_configuration') }}
         </oxd-text>
         <oxd-switch-input
@@ -33,11 +33,11 @@
       <oxd-divider />
 
       <oxd-form ref="formRef" :loading="isLoading">
-        <oxd-text tag="p" class="orangehrm-subtitle">
+        <oxd-text tag="p" class="XHRM-subtitle">
           {{ $t('admin.server_settings') }}
         </oxd-text>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="configuration.hostname"
@@ -45,18 +45,18 @@
                 :rules="rules.hostname"
                 required
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.ldap_host_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
-            <oxd-grid-item class="orangehrm-column-half">
+            <oxd-grid-item class="XHRM-column-half">
               <oxd-input-field
                 v-model="configuration.port"
                 :label="$t('admin.port')"
                 :rules="rules.port"
                 required
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.port_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
@@ -80,16 +80,16 @@
           </oxd-grid>
         </oxd-form-row>
 
-        <oxd-divider class="orangehrm-form-divider" />
+        <oxd-divider class="XHRM-form-divider" />
 
-        <oxd-text tag="p" class="orangehrm-subtitle">
+        <oxd-text tag="p" class="XHRM-subtitle">
           {{ $t('admin.bind_settings') }}
         </oxd-text>
 
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <oxd-grid-item class="orangehrm-ldap-switch">
-              <oxd-text tag="p" class="orangehrm-ldap-switch-text">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <oxd-grid-item class="XHRM-ldap-switch">
+              <oxd-text tag="p" class="XHRM-ldap-switch-text">
                 {{ $t('admin.bind_anonymously') }}
               </oxd-text>
               <oxd-switch-input v-model="configuration.bindAnonymously" />
@@ -98,7 +98,7 @@
         </oxd-form-row>
 
         <oxd-form-row v-if="!configuration.bindAnonymously">
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="configuration.bindUserDN"
@@ -120,13 +120,13 @@
           </oxd-grid>
         </oxd-form-row>
 
-        <oxd-divider class="orangehrm-form-divider" />
+        <oxd-divider class="XHRM-form-divider" />
 
-        <oxd-text tag="p" class="orangehrm-subtitle">
+        <oxd-text tag="p" class="XHRM-subtitle">
           {{ $t('admin.user_lookup_settings') }}
         </oxd-text>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <oxd-input-field
                 v-model="configuration.baseDistinguishedName"
@@ -143,7 +143,7 @@
                 :options="searchScopeOptions"
                 :label="$t('admin.search_scope')"
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.search_scope_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
@@ -154,7 +154,7 @@
                 :rules="rules.userNameAttribute"
                 required
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.user_name_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
@@ -165,7 +165,7 @@
                 :rules="rules.userSearchFilter"
                 required
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.user_search_filter_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
@@ -175,31 +175,31 @@
                 :label="$t('admin.user_unique_id_attribute')"
                 :rules="rules.userUniqueIdAttribute"
               />
-              <oxd-text class="orangehrm-input-hint" tag="p">
+              <oxd-text class="XHRM-input-hint" tag="p">
                 {{ $t('admin.user_unique_attribute_input_hint') }}
               </oxd-text>
             </oxd-grid-item>
           </oxd-grid>
         </oxd-form-row>
 
-        <oxd-divider class="orangehrm-form-divider" />
+        <oxd-divider class="XHRM-form-divider" />
 
-        <oxd-text tag="p" class="orangehrm-subtitle">
+        <oxd-text tag="p" class="XHRM-subtitle">
           {{ $t('admin.data_mapping') }}
         </oxd-text>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-ldap-grid">
-            <oxd-grid-item class="orangehrm-ldap-grid-header">
+          <oxd-grid :cols="3" class="XHRM-ldap-grid">
+            <oxd-grid-item class="XHRM-ldap-grid-header">
               <oxd-text tag="p">
-                {{ $t('admin.field_in_orangehrm') }}
+                {{ $t('admin.field_in_XHRM') }}
               </oxd-text>
             </oxd-grid-item>
-            <oxd-grid-item class="orangehrm-ldap-grid-header">
+            <oxd-grid-item class="XHRM-ldap-grid-header">
               <oxd-text tag="p">
                 {{ $t('admin.field_in_ldap_directory') }}
               </oxd-text>
             </oxd-grid-item>
-            <oxd-grid-item class="orangehrm-ldap-grid-header">
+            <oxd-grid-item class="XHRM-ldap-grid-header">
               <oxd-text tag="p">
                 {{
                   $t('admin.use_this_field_as_the_employee_user_mapping_field')
@@ -207,11 +207,11 @@
               </oxd-text>
             </oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p" class="oxd-input-field-required">
                 {{ $t('general.first_name') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -222,11 +222,11 @@
             </oxd-grid-item>
             <oxd-grid-item></oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p">
                 {{ $t('general.middle_name') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -236,11 +236,11 @@
             </oxd-grid-item>
             <oxd-grid-item></oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p" class="oxd-input-field-required">
                 {{ $t('general.last_name') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -250,11 +250,11 @@
             </oxd-grid-item>
             <oxd-grid-item></oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p">
                 {{ $t('general.user_status') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -264,11 +264,11 @@
             </oxd-grid-item>
             <oxd-grid-item></oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p" :class="workEmailLabelClasses">
                 {{ $t('general.work_email') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -284,11 +284,11 @@
               />
             </oxd-grid-item>
 
-            <oxd-grid-item class="orangehrm-ldap-grid-content">
+            <oxd-grid-item class="XHRM-ldap-grid-content">
               <oxd-text tag="p" :class="employeeIdLabelClasses">
                 {{ $t('general.employee_id') }}
               </oxd-text>
-              <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
+              <oxd-icon class="XHRM-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
             <oxd-grid-item>
               <oxd-input-field
@@ -306,15 +306,15 @@
           </oxd-grid>
         </oxd-form-row>
 
-        <oxd-divider class="orangehrm-form-divider" />
+        <oxd-divider class="XHRM-form-divider" />
 
-        <oxd-text tag="p" class="orangehrm-subtitle">
+        <oxd-text tag="p" class="XHRM-subtitle">
           {{ $t('admin.additional_settings') }}
         </oxd-text>
         <oxd-form-row>
-          <oxd-grid :cols="3" class="orangehrm-full-width-grid">
-            <oxd-grid-item class="orangehrm-ldap-switch --offset-row-1">
-              <oxd-text tag="p" class="orangehrm-ldap-switch-text">
+          <oxd-grid :cols="3" class="XHRM-full-width-grid">
+            <oxd-grid-item class="XHRM-ldap-switch --offset-row-1">
+              <oxd-text tag="p" class="XHRM-ldap-switch-text">
                 {{ $t('admin.merge_ldap_users_with_existing_system_users') }}
               </oxd-text>
               <oxd-switch-input
@@ -349,7 +349,7 @@
           />
           <oxd-button
             type="button"
-            class="orangehrm-left-space"
+            class="XHRM-left-space"
             display-type="secondary"
             :label="$t('general.save')"
             @click="onClickSave"
@@ -382,8 +382,8 @@ import {
 import useForm from '@/core/util/composable/useForm';
 import {reloadPage} from '@/core/util/helper/navigation';
 import {APIService} from '@ohrm/core/util/services/api.service';
-import LdapSyncConnection from '@/orangehrmAdminPlugin/components/LdapSyncConnection';
-import LdapTestConnectionModal from '@/orangehrmAdminPlugin/components/LdapTestConnectionModal';
+import LdapSyncConnection from '@/XHRMAdminPlugin/components/LdapSyncConnection';
+import LdapTestConnectionModal from '@/XHRMAdminPlugin/components/LdapTestConnectionModal';
 import {OxdAlert, OxdIcon, OxdSwitchInput} from '@ohrm/oxd';
 
 const configurationModel = {
@@ -681,3 +681,4 @@ export default {
 </script>
 
 <style src="./ldap-configuration.scss" lang="scss" scoped></style>
+

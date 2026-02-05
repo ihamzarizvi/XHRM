@@ -1,28 +1,28 @@
-<!--
+﻿<!--
 /**
- * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
- * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ * Copyright (C) 2006 XHRM Inc., http://www.XHRM.com
  *
- * OrangeHRM is free software: you can redistribute it and/or modify it under the terms of
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
  *
- * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with OrangeHRM.
+ * You should have received a copy of the GNU General Public License along with XHRM.
  * If not, see <https://www.gnu.org/licenses/>.
  */
  -->
 <template>
   <div>
-    <oxd-text tag="p" class="orangehrm-social-auth-header">
+    <oxd-text tag="p" class="XHRM-social-auth-header">
       {{ $t('general.or_login_with') }}
     </oxd-text>
   </div>
-  <div class="orangehrm-social-auth">
+  <div class="XHRM-social-auth">
     <auth-button
       v-for="authenticator in socialAuthenticators"
       :key="authenticator.id"
@@ -42,7 +42,7 @@
 <script>
 import {computed} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
-import AuthButton from '@/orangehrmAuthenticationPlugin/components/AuthButton.vue';
+import AuthButton from '@/XHRMAuthenticationPlugin/components/AuthButton.vue';
 import {navigate} from '@ohrm/core/util/helper/navigation';
 
 export default {
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.orangehrm-social-auth {
+.XHRM-social-auth {
   gap: 5px;
   margin: 0 auto;
   display: flex;
@@ -120,3 +120,4 @@ export default {
   }
 }
 </style>
+
