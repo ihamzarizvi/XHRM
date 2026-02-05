@@ -1,4 +1,4 @@
-﻿apiv2_admin_job_title:
+apiv2_admin_job_title:
   path: /api/v2/admin/job-titles/{id}
   controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
   methods: [ GET, PUT ]
@@ -356,10 +356,7 @@ apiv2_admin_i18n_language_translation_errors:
   defaults:
     _api: XHRM\Admin\Api\I18NImportErrorAPI
 
-##########################
 #        Files
-##########################
-
 admin_job_specification_attachment:
   path: /admin/viewJobSpecification/attachId/{attachId}
   controller: XHRM\Admin\Controller\File\JobSpecification::handle
@@ -370,10 +367,7 @@ admin_language_package_attachment:
   controller: XHRM\Admin\Controller\File\LanguagePackage::handle
   methods: [ GET ]
 
-##########################
 #        Screens
-##########################
-
 admin_module:
   path: /admin/viewAdminModule
   controller: XHRM\Admin\Controller\AdminModuleController::handle

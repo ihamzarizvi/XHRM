@@ -139,10 +139,7 @@ apiv2_performance_reviews_final_evaluation:
     _api: XHRM\Performance\Api\PerformanceReviewFinalEvaluationAPI
     _key: reviewId
 
-##########################
 #        Screens
-##########################
-
 performance_module:
   path: /performance/viewPerformanceModule
   controller: XHRM\Performance\Controller\PerformanceModuleController::handle

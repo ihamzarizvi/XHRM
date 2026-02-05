@@ -109,10 +109,7 @@ apiv2_claim_claim_request_action:
   defaults:
     _api: XHRM\Claim\Api\ClaimRequestActionAPI
 
-##########################
 #        Screens
-##########################
-
 claim_module:
   path: /claim/viewClaimModule
   controller: XHRM\Claim\Controller\ClaimModuleController::handle
@@ -178,10 +175,7 @@ claim_employee_claim:
   controller: XHRM\Claim\Controller\ViewAssignClaimController::handle
   methods: [ GET ]
 
-##########################
 #        Files
-##########################
-
 claim_attachment:
   path: /claim/requests/{requestId}/attachId/{attachId}
   controller: XHRM\Claim\Controller\ClaimAttachmentController::handle

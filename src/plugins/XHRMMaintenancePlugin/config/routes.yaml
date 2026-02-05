@@ -24,10 +24,7 @@ maintainence_employee_json:
   controller: XHRM\Maintenance\Controller\File\AccessEmployeeFileController::handle
   methods: [GET]
 
-##########################
 #        Screens
-##########################
-
 maintainence_module:
   path: /maintenance/viewMaintenanceModule
   controller: XHRM\Maintenance\Controller\MaintenanceModuleController::handle

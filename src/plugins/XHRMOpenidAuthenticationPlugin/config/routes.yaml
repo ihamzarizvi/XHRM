@@ -12,9 +12,7 @@ apiv2_auth_openid_provider:
   defaults:
     _api: XHRM\OpenidAuthentication\Api\ProviderAPI
 
-##########################
 #        Screens
-##########################
 admin_add_auth_provider:
   path: admin/addAuthProvider
   controller: XHRM\OpenidAuthentication\Controller\SaveSocialMediaAuthProviderController::handle

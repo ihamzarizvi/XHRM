@@ -189,10 +189,7 @@ apiv2_recruitment_interviewers:
   defaults:
     _api: XHRM\Recruitment\Api\EmployeeListAPI
 
-##########################
 #     Public APIs
-##########################
-
 apiv2_recruitment_public_vacancies:
   path: /api/v2/recruitment/public/vacancies
   controller: XHRM\Recruitment\Controller\PublicController\VacancyListRestController::handle
@@ -203,10 +200,7 @@ apiv2_recruitment_public_vacancy:
   controller: XHRM\Recruitment\Controller\PublicController\VacancyRestController::handle
   methods: [ GET ]
 
-##########################
 #        Files
-##########################
-
 recruitment_vacancy_attachment:
   path: /recruitment/viewVacancyAttachment/attachId/{attachId}
   controller: XHRM\Recruitment\Controller\File\VacancyAttachment::handle
@@ -222,10 +216,7 @@ recruitment_interview_attachment:
   controller: XHRM\Recruitment\Controller\File\InterviewAttachment::handle
   methods: [ GET ]
 
-##########################
 #        Screens
-##########################
-
 recruitment_module:
   path: /recruitment/viewRecruitmentModule
   controller: XHRM\Recruitment\Controller\RecruitmentModuleController::handle
@@ -276,10 +267,7 @@ recruitment_view_interview_attachments:
   controller: XHRM\Recruitment\Controller\InterviewAttachmentsController::handle
   methods: [ GET ]
 
-##########################
 #  External Vacancy List
-##########################
-
 recruitment_view_vacancy_list:
   path: /recruitmentApply/jobs.html
   controller: XHRM\Recruitment\Controller\PublicController\VacancyListViewController::handle
@@ -295,10 +283,7 @@ recruitment_public_applicants:
   controller: XHRM\Recruitment\Controller\PublicController\ApplicantController::handle
   methods: [ POST ]
 
-##########################
 #        RSS Feed
-##########################
-
 recruitment_rss_feed:
   path: /recruitmentApply/jobs.rss
   controller: XHRM\Recruitment\Controller\PublicController\VacancyListRSSController::handle

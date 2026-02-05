@@ -196,10 +196,7 @@ apiv2_time_project_admins:
   defaults:
     _api: XHRM\Time\Api\ProjectAdminAPI
 
-##########################
 #        Screens
-##########################
-
 time_module:
   path: /time/viewTimeModule
   controller: XHRM\Time\Controller\TimeModuleController::handle

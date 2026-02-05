@@ -15,10 +15,7 @@ apiv2_corporate_directory_employees:
   defaults:
     _api: XHRM\CorporateDirectory\Api\EmployeeDirectoryAPI
 
-##########################
 #        Screens
-##########################
-
 corporate_directory_module:
   path: /directory/viewDirectory
   controller: XHRM\CorporateDirectory\Controller\CorporateDirectoryModuleController::handle

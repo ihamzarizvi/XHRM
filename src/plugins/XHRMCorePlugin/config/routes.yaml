@@ -18,10 +18,7 @@ push_events:
   controller: XHRM\Core\Registration\Controller\PushEventController::handle
   methods: [ POST ]
 
-##########################
 #     Public APIs
-##########################
-
 apiv2_core_public_api_version:
   path: /api/v2/core/public/version
   controller: XHRM\Core\Controller\Rest\V2\GenericPublicRestController::handle

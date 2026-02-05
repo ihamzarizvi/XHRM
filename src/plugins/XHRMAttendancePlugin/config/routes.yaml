@@ -1,4 +1,4 @@
-﻿apiv2_attendance_configuration:
+apiv2_attendance_configuration:
   path: /api/v2/attendance/configs
   controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
   methods: [ GET, PUT ]
@@ -91,10 +91,7 @@ apiv2_attendance_employee_attendance_record:
   requirements:
     id: '\d+'
 
-##########################
 #        Screens
-##########################
-
 attendance_punch_in:
   path: /attendance/punchIn
   controller: XHRM\Attendance\Controller\PunchInController::handle

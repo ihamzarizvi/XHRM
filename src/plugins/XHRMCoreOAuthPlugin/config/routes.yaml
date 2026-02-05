@@ -12,10 +12,7 @@ apiv2_admin_oauth_clients:
   defaults:
     _api: XHRM\OAuth\Api\OAuthClientAPI
 
-##########################
 #        Screens
-##########################
-
 admin_view_oauth_client:
   path: /admin/registerOAuthClient
   controller: XHRM\OAuth\Controller\OAuthClientController::handle

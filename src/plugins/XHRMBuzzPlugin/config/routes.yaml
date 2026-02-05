@@ -93,19 +93,13 @@ apiv2_buzz_post_share:
     _api: XHRM\Buzz\Api\BuzzPostShareAPI
 
 
-##########################
 #        Files
-##########################
-
 buzz_photo:
   path: /buzz/photo/{id}
   controller: XHRM\Buzz\Controller\File\BuzzPhotoController::handle
   methods: [ GET ]
 
-##########################
 #        Screens
-##########################
-
 buzz_module:
   path: /buzz/viewBuzz
   controller: XHRM\Buzz\Controller\BuzzController::handle

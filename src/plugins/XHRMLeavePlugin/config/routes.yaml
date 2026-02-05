@@ -221,10 +221,7 @@ apiv2_leave_employee_leave:
   defaults:
     _api: XHRM\Leave\Api\EmployeeLeaveAPI
 
-##########################
 #        Screens
-##########################
-
 leave_module:
   path: /leave/viewLeaveModule
   controller: XHRM\Leave\Controller\LeaveModuleController::handle

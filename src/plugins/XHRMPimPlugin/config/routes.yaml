@@ -516,10 +516,7 @@ apiv2_pim_my_info:
     id: 0
     _api: XHRM\Pim\Api\MyInfoAPI
 
-##########################
 #        Files
-##########################
-
 pim_employee_picture:
   path: /pim/viewPhoto/empNumber/{empNumber}
   controller: XHRM\Pim\Controller\File\EmployeePictureController::handle
@@ -535,10 +532,7 @@ pim_employee_csv_import_sample_attachment:
   controller: XHRM\Pim\Controller\File\EmployeeCsvImportSampleAttachmentController::handle
   methods: [ GET ]
 
-##########################
 #        Screens
-##########################
-
 pim_module:
   path: /pim/viewPimModule
   controller: XHRM\Pim\Controller\PimModuleController::handle

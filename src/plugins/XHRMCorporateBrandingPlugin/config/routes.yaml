@@ -13,10 +13,7 @@ apiv2_corporate_branding_theme_preview:
   defaults:
     _api: XHRM\CorporateBranding\Api\PreviewThemeAPI
 
-##########################
 #        Files
-##########################
-
 corporate_branding_images:
   path: /admin/theme/image/{imageName}
   controller: XHRM\CorporateBranding\Controller\File\ImageController::handle
@@ -27,10 +24,7 @@ corporate_branding_attachments_image:
   controller: XHRM\CorporateBranding\Controller\File\ImageAttachmentController::handle
   methods: [ GET ]
 
-##########################
 #        Screens
-##########################
-
 admin_corporate_branding:
   path: /admin/addTheme
   controller: XHRM\CorporateBranding\Controller\CorporateBrandingController::handle

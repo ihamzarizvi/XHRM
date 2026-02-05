@@ -73,10 +73,7 @@ installer_complete:
   controller: XHRM\Installer\Controller\Installer\InstallerCompleteController::handle
   methods: [ GET ]
 
-#####################################
 #        APIs - Upgrader
-#####################################
-
 api_upgrader_database_config:
   path: /upgrader/api/database-config
   controller: XHRM\Installer\Controller\Upgrader\Api\DatabaseConfigAPI::handle
@@ -117,10 +114,7 @@ api_upgrader_start_registration:
   controller: XHRM\Installer\Controller\Upgrader\Api\UpgraderDataRegistrationAPI::handle
   methods: [ POST ]
 
-#####################################
 #        APIs - Installer
-#####################################
-
 api_installer_database_config:
   path: /installer/api/database-config
   controller: XHRM\Installer\Controller\Installer\Api\DatabaseConfigAPI::handle
