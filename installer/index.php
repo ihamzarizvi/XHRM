@@ -52,7 +52,7 @@ function isInSupportedPHPRange()
 
 isInSupportedPHPRange();
 
-require realpath(__DIR__ . '/../src/vendor/autoload.php');
+require realpath(__DIR__ . '/../vendor/autoload.php');
 
 $env = 'prod';
 $debug = 'prod' !== $env;
@@ -71,3 +71,4 @@ try {
 } catch (SessionStorageNotWritable $e) {
     die($e->getMessage());
 }
+

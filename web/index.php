@@ -25,7 +25,7 @@ use XHRM\Framework\Http\RedirectResponse;
 use XHRM\Framework\Http\Request;
 use Symfony\Component\ErrorHandler\Debug;
 
-require realpath(__DIR__ . '/../src/vendor/autoload.php');
+require realpath(__DIR__ . '/../vendor/autoload.php');
 
 $env = 'prod';
 $debug = 'prod' !== $env;
@@ -46,3 +46,4 @@ if (Config::isInstalled()) {
 
 $response->send();
 $kernel->terminate($request, $response);
+
