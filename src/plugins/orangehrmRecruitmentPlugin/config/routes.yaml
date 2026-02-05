@@ -1,0 +1,305 @@
+apiv2_recruitment_vacancy:
+  path: /api/v2/recruitment/vacancies/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\VacancyAPI
+    _key: id
+
+apiv2_recruitment_vacancies:
+  path: /api/v2/recruitment/vacancies
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Recruitment\Api\VacancyAPI
+
+apiv2_recruitment_vacancies_attachments:
+  path: /api/v2/recruitment/vacancies/{vacancyId}/attachments
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\VacancyAttachmentAPI
+    _key: vacancyId
+
+apiv2_recruitment_vacancies_attachment:
+  path: /api/v2/recruitment/vacancies/{vacancyId}/attachments/{attachmentId}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\VacancyAttachmentAPI
+
+apiv2_recruitment_vacancy_attachments:
+  path: /api/v2/recruitment/vacancy/attachments
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ POST, DELETE ]
+  defaults:
+    _api: XHRM\Recruitment\Api\VacancyAttachmentAPI
+
+apiv2_recruitment_candidates:
+  path: /api/v2/recruitment/candidates
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateAPI
+
+apiv2_recruitment_candidate:
+  path: /api/v2/recruitment/candidates/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateAPI
+    _key: id
+  requirements:
+    id: '\d+'
+
+apiv2_recruitment_candidate_attachment:
+  path: /api/v2/recruitment/candidate/{candidateId}/attachment
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateAttachmentAPI
+    _key: candidateId
+
+apiv2_recruitment_candidate_attachments:
+  path: /api/v2/recruitment/candidate/attachments
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ POST ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateAttachmentAPI
+
+apiv2_recruitment_candidate_status:
+  path: /api/v2/recruitment/candidates/statuses
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateStatusAPI
+
+apiv2_recruitment_hiring_managers:
+  path: /api/v2/recruitment/hiring-managers
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\HiringManagerAPI
+
+apiv2_recruitment_candidates_allowed_actions:
+  path: /api/v2/recruitment/candidates/{candidateId}/actions/allowed
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateAllowedActionAPI
+
+apiv2_recruitment_candidates_reject:
+  path: /api/v2/recruitment/candidates/{candidateId}/reject
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateRejectionAPI
+
+apiv2_recruitment_candidates_shortlist:
+  path: /api/v2/recruitment/candidates/{candidateId}/shortlist
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateShortlistingAPI
+
+apiv2_recruitment_candidates_schedule_interview:
+  path: /api/v2/recruitment/candidates/{candidateId}/shedule-interview
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ POST ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateInterviewSchedulingAPI
+
+apiv2_recruitment_candidates_interviews:
+  path: /api/v2/recruitment/candidates/{candidateId}/interviews/{interviewId}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateInterviewSchedulingAPI
+    _key: candidateId
+
+apiv2_recruitment_interviews_attachment:
+  path: /api/v2/recruitment/interviews/{interviewId}/attachments/{attachmentId}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\InterviewAttachmentAPI
+    _key: attachmentId
+
+apiv2_recruitment_interview_attachments:
+  path: /api/v2/recruitment/interviews/{interviewId}/attachments
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Recruitment\Api\InterviewAttachmentAPI
+
+apiv2_recruitment_candidates_mark_interview_passed:
+  path: /api/v2/recruitment/candidates/{candidateId}/interviews/{interviewId}/pass
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateMarkingInterviewPassAPI
+
+apiv2_recruitment_candidates_mark_interview_failed:
+  path: /api/v2/recruitment/candidates/{candidateId}/interviews/{interviewId}/fail
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateMarkingInterviewFailAPI
+
+apiv2_recruitment_candidates_offer_job:
+  path: /api/v2/recruitment/candidates/{candidateId}/job/offer
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateJobOfferingAPI
+
+apiv2_recruitment_candidates_offer_decline:
+  path: /api/v2/recruitment/candidates/{candidateId}/job/decline
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateOfferDecliningAPI
+
+apiv2_recruitment_candidates_hire:
+  path: /api/v2/recruitment/candidates/{candidateId}/hire
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateHiringAPI
+
+apiv2_recruitment_candidates_history:
+  path: /api/v2/recruitment/candidates/{candidateId}/history
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateHistoryAPI
+
+apiv2_recruitment_candidate_history:
+  path: /api/v2/recruitment/candidates/{candidateId}/history/{historyId}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Recruitment\Api\CandidateHistoryAPI
+    _key: historyId
+
+apiv2_recruitment_interviewers:
+  path: /api/v2/recruitment/interviewers
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Recruitment\Api\EmployeeListAPI
+
+##########################
+#     Public APIs
+##########################
+
+apiv2_recruitment_public_vacancies:
+  path: /api/v2/recruitment/public/vacancies
+  controller: XHRM\Recruitment\Controller\PublicController\VacancyListRestController::handle
+  methods: [ GET ]
+
+apiv2_recruitment_public_vacancy:
+  path: /api/v2/recruitment/public/vacancies/{id}
+  controller: XHRM\Recruitment\Controller\PublicController\VacancyRestController::handle
+  methods: [ GET ]
+
+##########################
+#        Files
+##########################
+
+recruitment_vacancy_attachment:
+  path: /recruitment/viewVacancyAttachment/attachId/{attachId}
+  controller: XHRM\Recruitment\Controller\File\VacancyAttachment::handle
+  methods: [ GET ]
+
+recruitment_candidate_attachment:
+  path: /recruitment/viewCandidateAttachment/candidateId/{candidateId}
+  controller: XHRM\Recruitment\Controller\File\CandidateAttachment::handle
+  methods: [ GET ]
+
+recruitment_interview_attachment:
+  path: /recruitment/viewInterviewAttachment/interview/{interviewId}/attachment/{attachmentId}
+  controller: XHRM\Recruitment\Controller\File\InterviewAttachment::handle
+  methods: [ GET ]
+
+##########################
+#        Screens
+##########################
+
+recruitment_module:
+  path: /recruitment/viewRecruitmentModule
+  controller: XHRM\Recruitment\Controller\RecruitmentModuleController::handle
+  methods: [ GET ]
+
+recruitment_view_job_vacancy:
+  path: /recruitment/viewJobVacancy
+  controller: XHRM\Recruitment\Controller\ViewJobVacancyController::handle
+  methods: [ GET ]
+
+recruitment_add_job_vacancy:
+  path: /recruitment/addJobVacancy
+  controller: XHRM\Recruitment\Controller\AddJobVacancyController::handle
+  methods: [ GET ]
+
+recruitment_edit_job_vacancy:
+  path: /recruitment/addJobVacancy/{id}
+  controller: XHRM\Recruitment\Controller\EditJobVacancyController::handle
+  methods: [ GET ]
+
+recruitment_view_candidates:
+  path: /recruitment/viewCandidates
+  controller: XHRM\Recruitment\Controller\ViewCandidateController::handle
+  methods: [ GET ]
+
+recruitment_save_candidates:
+  path: /recruitment/addCandidate
+  controller: XHRM\Recruitment\Controller\SaveCandidateController::handle
+  methods: [ GET ]
+
+recruitment_view_candidate_profile:
+  path: /recruitment/addCandidate/{id}
+  controller: XHRM\Recruitment\Controller\SaveCandidateController::handle
+  methods: [ GET ]
+
+recruitment_candidate_action:
+  path: /recruitment/changeCandidateVacancyStatus
+  controller: XHRM\Recruitment\Controller\CandidateActionController::handle
+  methods: [ GET ]
+
+recruitment_view_action_history:
+  path: /recruitment/candidateHistory/{candidateId}/{historyId}
+  controller: XHRM\Recruitment\Controller\WorkflowActionHistoryController::handle
+  methods: [ GET ]
+
+recruitment_view_interview_attachments:
+  path: /recruitment/interviewAttachments/{interviewId}
+  controller: XHRM\Recruitment\Controller\InterviewAttachmentsController::handle
+  methods: [ GET ]
+
+##########################
+#  External Vacancy List
+##########################
+
+recruitment_view_vacancy_list:
+  path: /recruitmentApply/jobs.html
+  controller: XHRM\Recruitment\Controller\PublicController\VacancyListViewController::handle
+  methods: [ GET ]
+
+recruitment_apply_job_vacancy:
+  path: /recruitmentApply/applyVacancy/id/{id}
+  controller: XHRM\Recruitment\Controller\PublicController\ApplyJobVacancyViewController::handle
+  methods: [ GET ]
+
+recruitment_public_applicants:
+  path: /recruitment/public/applicants
+  controller: XHRM\Recruitment\Controller\PublicController\ApplicantController::handle
+  methods: [ POST ]
+
+##########################
+#        RSS Feed
+##########################
+
+recruitment_rss_feed:
+  path: /recruitmentApply/jobs.rss
+  controller: XHRM\Recruitment\Controller\PublicController\VacancyListRSSController::handle
+  methods: [ GET ]

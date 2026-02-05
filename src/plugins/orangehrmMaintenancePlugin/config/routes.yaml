@@ -1,0 +1,49 @@
+apiv2_maintenance_purge:
+  path: /api/v2/maintenance/purge
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [DELETE]
+  defaults:
+    _api: XHRM\Maintenance\Api\PurgeEmployeeAPI
+
+apiv2_maintenance_purge_candidate:
+  path: /api/v2/maintenance/candidates/purge
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ DELETE ]
+  defaults:
+    _api: XHRM\Maintenance\Api\PurgeCandidateAPI
+
+apiv2_maintenance_candidates:
+  path: /api/v2/maintenance/candidates
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Maintenance\Api\PurgeCandidateAPI
+
+maintainence_employee_json:
+  path: /maintenance/accessEmployeeData/{empNumber}
+  controller: XHRM\Maintenance\Controller\File\AccessEmployeeFileController::handle
+  methods: [GET]
+
+##########################
+#        Screens
+##########################
+
+maintainence_module:
+  path: /maintenance/viewMaintenanceModule
+  controller: XHRM\Maintenance\Controller\MaintenanceModuleController::handle
+  methods: [ GET ]
+
+maintainence_access_employee_screen:
+  path: /maintenance/accessEmployeeData
+  controller: XHRM\Maintenance\Controller\AccessEmployeeController::handle
+  methods: [GET]
+
+maintainence_purge_employee:
+  path: /maintenance/purgeEmployee
+  controller: XHRM\Maintenance\Controller\PurgeEmployeeController::handle
+  methods: [GET]
+
+maintainence_candidate_records:
+  path: /maintenance/purgeCandidateData
+  controller: XHRM\Maintenance\Controller\PurgeCandidateController::handle
+  methods: [ GET ]

@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * XHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 XHRM Inc., http://www.orangehrm.com
+ *
+ * XHRM is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * XHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with XHRM.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace XHRM\Leave\Mail;
+
+use XHRM\Core\Mail\AbstractRecipient;
+
+class Recipient extends AbstractRecipient
+{
+    private string $emailAddress;
+    private string $name;
+    private string $firstName;
+
+    /**
+     * @param string $emailAddress
+     * @param string $name
+     * @param string $firstName
+     */
+    public function __construct(string $emailAddress, string $name, string $firstName)
+    {
+        $this->emailAddress = $emailAddress;
+        $this->name = $name;
+        $this->firstName = $firstName;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getEmailAddress(): string
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+}

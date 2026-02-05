@@ -1,0 +1,32 @@
+{% extends 'orangehrmAttendancePlugin:attendance:attendanceLayout.html.twig' %}
+
+{% block content %}
+<div class="box" id="import-attendance-container">
+    <div class="head">
+        <h1>{{ 'Import Attendance Data'|trans }}</h1>
+    </div>
+    <div class="inner">
+        {% include 'orangehrmCorePlugin:flash_messages:flash_messages.html.twig' %}
+        
+        <form action="{{ url('attendance_import_attendance_data') }}" method="post" enctype="multipart/form-data" id="importAttendanceForm">
+            {{ csrf_token() }}
+            
+            <fieldset>
+                <ol>
+                    <li>
+                        <label for="attendance_file">{{ 'Select File'|trans }} <em>*</em></label>
+                        <input type="file" name="attendance_file" id="attendance_file" accept=".csv, .xls, .xlsx"/>
+                    </li>
+                    <li class="required">
+                        <em>*</em> {{ 'Required field'|trans }}
+                    </li>
+                </ol>
+            </fieldset>
+            
+            <p>
+                <input type="submit" class="" id="btnSave" value="{{ 'Upload'|trans }}" />
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

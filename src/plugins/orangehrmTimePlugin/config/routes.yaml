@@ -1,0 +1,276 @@
+apiv2_time_project:
+  path: /api/v2/time/projects/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Time\Api\ProjectAPI
+    _key: id
+
+apiv2_time_projects:
+  path: /api/v2/time/projects
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Time\Api\ProjectAPI
+
+apiv2_time_validate_project_name:
+  path: /api/v2/time/validation/project-name
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _key: projectName
+    _api: XHRM\Time\Api\ValidateProjectNameAPI
+
+apiv2_time_time_sheet_period_config:
+  path: /api/v2/time/time-sheet-period
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    id: 0
+    _api: XHRM\Time\Api\TimeConfigPeriodAPI
+
+apiv2_time_customer:
+  path: /api/v2/time/customers/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Time\Api\CustomerAPI
+
+apiv2_time_customers:
+  path: /api/v2/time/customers
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Time\Api\CustomerAPI
+
+apiv2_time_validate_customer_name:
+  path: /api/v2/time/validation/customer-name
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _key: customerName
+    _api: XHRM\Time\Api\ValidationCustomerNameAPI
+
+apiv2_time_project_activities:
+  path: /api/v2/time/project/{projectId}/activities
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\Time\Api\ProjectActivityAPI
+
+apiv2_time_project_activity:
+  path: /api/v2/time/project/{projectId}/activities/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Time\Api\ProjectActivityAPI
+
+apiv2_time_validate_project_activity_name:
+  path: /api/v2/time/validation/activity-name/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _key: activityName
+    _api: XHRM\Time\Api\ValidationProjectActivityNameAPI
+
+apiv2_time_my_time_sheets:
+  path: /api/v2/time/timesheets
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Time\Api\MyTimesheetAPI
+
+apiv2_time_my_time_sheet:
+  path: /api/v2/time/timesheets/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Time\Api\MyTimesheetAPI
+
+apiv2_time_employee_time_sheets:
+  path: /api/v2/time/employees/{empNumber}/timesheets
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Time\Api\EmployeeTimesheetAPI
+
+apiv2_time_employee_time_sheet:
+  path: /api/v2/time/employees/{empNumber}/timesheets/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Time\Api\EmployeeTimesheetAPI
+
+apiv2_time_default_time_sheet:
+  path: /api/v2/time/timesheets/default
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    id: 0
+    _api: XHRM\Time\Api\DefaultTimesheetAPI
+
+apiv2_time_my_timesheets_entries:
+  path: /api/v2/time/timesheets/{timesheetId}/entries
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Time\Api\MyTimesheetItemAPI
+
+apiv2_time_employees_timesheets_entries:
+  path: /api/v2/time/employees/timesheets/{timesheetId}/entries
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\Time\Api\EmployeeTimesheetItemAPI
+
+apiv2_time_timesheet_action_log:
+  path: /api/v2/time/timesheets/{timesheetId}/action-logs
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\TimesheetActionLogAPI
+
+apiv2_time_timesheet_project_activity_unique_validation:
+  path: /api/v2/time/validation/{timesheetId}/project-activity
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _key: activityId
+    _api: XHRM\Time\Api\TimesheetProjectActivityUniqueValidationAPI
+
+apiv2_time_my_timesheet_entries_comments:
+  path: /api/v2/time/timesheets/{timesheetId}/entries/comment
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Time\Api\TimesheetCommentAPI
+
+apiv2_time_my_timesheet_entries_comment:
+  path: /api/v2/time/timesheets/{timesheetId}/entries/{id}/comment
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\TimesheetCommentAPI
+
+apiv2_time_my_timesheet_time_format_config:
+  path: /api/v2/time/config/time-format
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    id: 0
+    _api: XHRM\Time\Api\TimesheetTimeFormatAPI
+
+apiv2_time_copy_activity:
+  path: /api/v2/time/projects/{toProjectId}/activities/copy/{fromProjectId}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Time\Api\CopyProjectActivityAPI
+
+apiv2_time_employee_timesheets_list:
+  path: /api/v2/time/employees/timesheets/list
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\EmployeeTimesheetListAPI
+
+apiv2_time_reports:
+  path: /api/v2/time/reports
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\TimeReportAPI
+    _key: name
+
+apiv2_time_reports_data:
+  path: /api/v2/time/reports/data
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\TimeReportDataAPI
+
+apiv2_time_project_admins:
+  path: /api/v2/time/project-admins
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Time\Api\ProjectAdminAPI
+
+##########################
+#        Screens
+##########################
+
+time_module:
+  path: /time/viewTimeModule
+  controller: XHRM\Time\Controller\TimeModuleController::handle
+  methods: [ GET ]
+
+view_time_sheet_config:
+  path: /time/defineTimesheetPeriod
+  controller: XHRM\Time\Controller\TimesheetPeriodConfigController::handle
+  methods: [ GET ]
+
+view_customers:
+  path: /time/viewCustomers
+  controller: XHRM\Time\Controller\CustomerController::handle
+  methods: [ GET ]
+
+save_customer:
+  path: /time/addCustomer
+  controller: XHRM\Time\Controller\SaveCustomerController::handle
+  methods: [ GET ]
+
+edit_customer:
+  path: /time/addCustomer/{id}
+  controller: XHRM\Time\Controller\SaveCustomerController::handle
+  methods: [ GET ]
+
+time_my_timesheet:
+  path: /time/viewMyTimesheet
+  controller: XHRM\Time\Controller\MyTimesheetController::handle
+  methods: [ GET ]
+
+time_edit_timesheet:
+  path: /time/editTimesheet/{id}
+  controller: XHRM\Time\Controller\EditTimesheetController::handle
+  methods: [ GET ]
+
+time_view_projects:
+  path: /time/viewProjects
+  controller: XHRM\Time\Controller\ProjectController::handle
+  methods: [ GET ]
+
+time_save_project:
+  path: /time/saveProject
+  controller: XHRM\Time\Controller\SaveProjectController::handle
+  methods: [ GET ]
+
+time_edit_project:
+  path: /time/saveProject/{id}
+  controller: XHRM\Time\Controller\SaveProjectController::handle
+  methods: [ GET ]
+
+time_employee_timesheet:
+  path: /time/viewEmployeeTimesheet
+  controller: XHRM\Time\Controller\EmployeeTimesheetController::handle
+  methods: [ GET ]
+
+time_employee_view_timesheet:
+  path: /time/viewTimesheet/employeeId/{id}
+  controller: XHRM\Time\Controller\EmployeeTimesheetController::handle
+  methods: [ GET ]
+
+time_employee_report:
+  path: /time/displayEmployeeReportCriteria
+  controller: XHRM\Time\Controller\EmployeeTimeReportController::handle
+  methods: [ GET ]
+
+time_project_activity_report:
+  path: /time/displayProjectReportCriteria
+  controller: XHRM\Time\Controller\ProjectActivityReportController::handle
+  methods: [ GET ]
+
+time_activity_details_report:
+  path: /time/displayProjectActivityDetailsReport
+  controller: XHRM\Time\Controller\ActivityDetailsReportController::handle
+  methods: [ GET ]
