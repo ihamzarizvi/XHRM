@@ -2,30 +2,47 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>XHRM Advanced Diagnostic</h1>";
+echo "<h1>XHRM Deep Diagnostic</h1>";
 
 try {
-    $autoloader = __DIR__ . '/vendor/autoload.php';
-    if (!file_exists($autoloader)) {
-        throw new Exception("Autoloader NOT found at: $autoloader");
-    }
+    require 'vendor/autoload.php';
+    echo "<p style='color:green'>✅ Autoloader loaded.</p>";
+    
+    use XHRM\Config\Config;
+    use XHRM\Framework\Framework;
+    use XHRM\Framework\Http\Request;
 
-    require $autoloader;
-    echo "<p style='color:green'>✅ Autoloader loaded successfully.</p>";
+    echo "<h3>1. Application State</h3>";
+    $installed = Config::isInstalled();
+    echo "<p>Config::isInstalled(): " . ($installed ? "<b style='color:blue'>TRUE (Application thinks it is installed)</b>" : "FALSE") . "</p>";
 
-    // Testing specific class existence without using 'use' (to avoid parse errors if class missing)
-    if (class_exists('XHRM\Config\Config')) {
-        echo "<p style='color:green'>✅ XHRM Core Class found.</p>";
-        echo "<p>Config::isInstalled(): " . (XHRM\Config\Config::isInstalled() ? "TRUE" : "FALSE") . "</p>";
-    } else {
-        echo "<p style='color:red'>❌ XHRM Core Class NOT found. Autoloader mappings might be wrong.</p>";
-    }
+    echo "<h3>2. Testing Framework Boot</h3>";
+    echo "<p>Attempting to initialize XHRM Framework...</p>";
+    
+    // This is what web/index.php does
+    $env = 'prod';
+    $debug = false;
+    $kernel = new Framework($env, $debug);
+    echo "<p style='color:green'>✅ Framework object created.</p>";
 
-    echo "<h3>System Info</h3>";
+    echo "<h3>3. Testing Request Handling (Dry Run)</h3>";
+    $request = Request::createFromGlobals();
+    echo "<p style='color:green'>✅ Request object created.</p>";
+    
+    echo "<p><i>If the page stops here or goes blank, the crash is inside the handleRequest() call.</i></p>";
+    
+    // We won't call handleRequest yet as it might redirect/exit
+    // But we can check for common missing extensions again
+    $required_extensions = ['pdo', 'mysqlnd', 'curl', 'gd', 'mbstring', 'xml', 'zip', 'openssl'];
+    echo "<h3>4. Extension Check</h3>";
     echo "<ul>";
-    echo "<li><b>PHP Version:</b> " . phpversion() . "</li>";
-    echo "<li><b>Document Root:</b> " . $_SERVER['DOCUMENT_ROOT'] . "</li>";
-    echo "<li><b>Current Path:</b> " . __DIR__ . "</li>";
+    foreach ($required_extensions as $ext) {
+        if (extension_loaded($ext)) {
+            echo "<li>✅ $ext</li>";
+        } else {
+            echo "<li style='color:red'>❌ $ext (MISSING)</li>";
+        }
+    }
     echo "</ul>";
 
 } catch (Throwable $e) {
@@ -33,7 +50,6 @@ try {
     echo "<h3>🔥 Fatal Error Caught:</h3>";
     echo "<p><b>Message:</b> " . $e->getMessage() . "</p>";
     echo "<p><b>File:</b> " . $e->getFile() . " on line " . $e->getLine() . "</p>";
-    echo "<pre>" . $e->getTraceAsString() . "</pre>";
     echo "</div>";
 }
 ?>
