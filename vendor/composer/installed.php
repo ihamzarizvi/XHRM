@@ -3,7 +3,7 @@
         'name' => 'xhrm/xhrm',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6d86cc5b4ded9ab031eb8282b1f85bb621f20629',
+        'reference' => 'e6ec6dfe15ee7802831090cc367b483ff1b02a6e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1145,7 +1145,7 @@
         'xhrm/xhrm' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6d86cc5b4ded9ab031eb8282b1f85bb621f20629',
+            'reference' => 'e6ec6dfe15ee7802831090cc367b483ff1b02a6e',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
