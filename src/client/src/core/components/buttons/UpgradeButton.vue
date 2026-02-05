@@ -54,4 +54,3 @@ export default {
 </script>
 
 <style src="./upgrade-button.scss" scoped lang="scss"></style>
-

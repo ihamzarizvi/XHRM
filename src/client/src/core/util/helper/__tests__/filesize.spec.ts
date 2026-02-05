@@ -83,4 +83,3 @@ describe('core/util/helper/filesize', () => {
     expect(result).toBe('1.00 GB');
   });
 });
-

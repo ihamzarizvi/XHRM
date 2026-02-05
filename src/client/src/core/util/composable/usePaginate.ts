@@ -150,4 +150,3 @@ export default function usePaginate(
     execQuery,
   };
 }
-

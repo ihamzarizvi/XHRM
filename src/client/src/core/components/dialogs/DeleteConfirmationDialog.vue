@@ -19,11 +19,7 @@
 
 <template>
   <teleport to="#app">
-    <oxd-dialog
-      v-if="show"
-      class="XHRM-dialog-popup"
-      @update:show="onCancel"
-    >
+    <oxd-dialog v-if="show" class="XHRM-dialog-popup" @update:show="onCancel">
       <div class="XHRM-modal-header">
         <oxd-text type="card-title">{{ $t('general.are_you_sure') }}</oxd-text>
       </div>
@@ -93,4 +89,3 @@ export default {
 </script>
 
 <style src="./dialog.scss" lang="scss" scoped></style>
-

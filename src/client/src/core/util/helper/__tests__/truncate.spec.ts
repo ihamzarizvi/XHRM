@@ -63,4 +63,3 @@ describe('core/util/helper/truncate', () => {
     expect(result.length).toStrictEqual(23);
   });
 });
-

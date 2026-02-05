@@ -78,4 +78,3 @@ export const urlFor = function (
   // @ts-expect-error: appGlobal is not in window object by default
   return window.appGlobal.baseUrl + prepare(endpoint, params, query);
 };
-

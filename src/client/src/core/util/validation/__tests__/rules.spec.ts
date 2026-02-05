@@ -1109,4 +1109,3 @@ describe('core/util/validation/rules::digitsOnlyWithTwoDecimalPoints', () => {
     expect(result).toEqual('Should be a valid number (xxx.xx)');
   });
 });
-

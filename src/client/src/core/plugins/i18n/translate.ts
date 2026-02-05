@@ -126,4 +126,3 @@ function createI18n(options: LanguageOptions) {
 }
 
 export default createI18n;
-

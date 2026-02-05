@@ -704,4 +704,3 @@ export const digitsOnlyWithTwoDecimalPoints = function (
     translate('claim.should_be_a_valid_number')
   );
 };
-

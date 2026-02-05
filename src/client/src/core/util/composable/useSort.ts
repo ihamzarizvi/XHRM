@@ -52,4 +52,3 @@ export default function useSort(sortParams: SortParams) {
     onSort,
   };
 }
-

@@ -54,4 +54,3 @@ export const convertFilesizeToString = function (
     (filesize / divisor).toFixed(digits) + (withSuffix ? ' ' + suffix : '')
   );
 };
-

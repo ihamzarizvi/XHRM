@@ -68,4 +68,3 @@ export default function useEmployeeNameTranslate() {
     $tEmpName: translateEmployeeName,
   };
 }
-

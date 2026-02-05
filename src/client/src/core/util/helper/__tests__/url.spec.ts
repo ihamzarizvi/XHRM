@@ -56,4 +56,3 @@ describe('core/util/helper/url', () => {
     );
   });
 });
-

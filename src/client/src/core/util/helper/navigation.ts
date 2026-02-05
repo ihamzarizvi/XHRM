@@ -33,4 +33,3 @@ export const navigate = function (
 export const reloadPage = function (): void {
   window.location.reload();
 };
-

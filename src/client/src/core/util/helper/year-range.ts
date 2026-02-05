@@ -25,4 +25,3 @@ export const yearRange = function (
   }
   return numberOfYears;
 };
-

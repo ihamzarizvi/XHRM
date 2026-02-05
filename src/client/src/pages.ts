@@ -54,4 +54,3 @@ export default {
   ...systemCheckPages,
   ...claimPages,
 };
-

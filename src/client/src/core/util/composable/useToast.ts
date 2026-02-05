@@ -52,4 +52,3 @@ export default function useToast() {
     noRecordsFound: wrap($toast?.noRecordsFound),
   };
 }
-

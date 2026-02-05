@@ -47,4 +47,3 @@ describe('core/util/helper/datefns', () => {
     expect(result).toBe('-05:30');
   });
 });
-

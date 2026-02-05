@@ -30,4 +30,3 @@ describe('core/util/helper/year-range', () => {
     expect(result).toStrictEqual(value);
   });
 });
-

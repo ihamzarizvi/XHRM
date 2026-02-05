@@ -72,4 +72,3 @@ export default {
     app.mixin(defineMixin());
   },
 };
-

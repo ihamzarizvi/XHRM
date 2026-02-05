@@ -21,9 +21,7 @@
   <div class="XHRM-background-container">
     <div class="XHRM-card-container">
       <div class="XHRM-module-disabled">
-        <oxd-text tag="h1" class="XHRM-module-disabled-heading">
-          403
-        </oxd-text>
+        <oxd-text tag="h1" class="XHRM-module-disabled-heading"> 403 </oxd-text>
         <oxd-text tag="h4" class="XHRM-module-disabled-sub-heading">
           {{ $t('general.module_forbidden') }}
         </oxd-text>
@@ -52,4 +50,3 @@
   }
 }
 </style>
-

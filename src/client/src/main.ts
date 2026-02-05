@@ -68,4 +68,3 @@ app.config.globalProperties.global = {
 };
 
 init().then(() => app.mount('#app'));
-

@@ -42,4 +42,3 @@ export default function useSwipe(executor: ($event: HammerInput) => void) {
     swipeContainer,
   };
 }
-

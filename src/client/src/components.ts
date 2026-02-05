@@ -64,4 +64,3 @@ export default {
     app.component('TimeInput', TimeInput);
   },
 };
-

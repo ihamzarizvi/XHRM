@@ -28,4 +28,3 @@ export default {
   'disabled-module': Disabled,
   'time-sheet-period-not-defined': TimeSheetPeriodNotDefined,
 };
-

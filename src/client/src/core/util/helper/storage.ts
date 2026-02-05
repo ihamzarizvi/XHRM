@@ -99,4 +99,3 @@ export class WebStorage {
     this._storage.setItem(name, value);
   }
 }
-

@@ -24,4 +24,3 @@ export default function usei18n() {
     $t: translate,
   };
 }
-
