@@ -1,70 +1,59 @@
 <?php
-// VERSION: 2026-02-06 02:00
+// VERSION: 2026-02-06 02:05
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>XHRM Final-Cycle Diagnostic (v1.3)</h1>";
+echo "<h1>XHRM Page Simulation (v1.4)</h1>";
 
-function log_step($msg)
-{
-    echo "<li>$msg</li>";
-    flush();
-}
-
-echo "<ul>";
 try {
-    log_step("Step 1: Loading Autoloader...");
+    log_msg("Step 1: Loading environment...");
     require 'vendor/autoload.php';
-    log_step("✅ Autoloader loaded.");
+    include_once 'src/config/log_settings.php';
+    log_msg("✅ Autoloader and logs ready.");
 
-    log_step("Step 2: Loading log_settings.php...");
-    if (file_exists('src/config/log_settings.php')) {
-        include_once 'src/config/log_settings.php';
-        log_step("✅ log_settings.php loaded.");
-    } else {
-        log_step("⚠️ log_settings.php NOT found (continuing anyway).");
-    }
+    log_msg("Step 2: Mocking Login Request...");
+    // Force the request URI to /auth/login
+    $_SERVER['REQUEST_URI'] = '/web/index.php/auth/login';
+    $_SERVER['SCRIPT_NAME'] = '/web/index.php';
 
-    log_step("Step 3: Initializing Framework Kernel...");
-    $kernel = new \XHRM\Framework\Framework('prod', false);
-    log_step("✅ Framework instantiated.");
-
-    log_step("Step 4: Creating Request Object...");
+    $kernel = new \XHRM\Framework\Framework('prod', true); // Enable debug to see more errors
     $request = \XHRM\Framework\Http\Request::createFromGlobals();
-    log_step("✅ Request object created.");
+    log_msg("✅ Mock Request created for: " . $request->getPathInfo());
 
-    log_step("Step 5: Testing Route Configuration (Critical)...");
-    try {
-        // We use Reflection to call the protected method for testing
-        $method = new ReflectionMethod(get_class($kernel), 'configureRouter');
-        $method->setAccessible(true);
-        $method->invoke($kernel, $request);
-        log_step("✅ Router configured successfully.");
-    } catch (Throwable $routeErr) {
-        throw new Exception("Router Configuration Failed: " . $routeErr->getMessage());
+    log_msg("Step 3: Handling Request (Actual page logic)...");
+    echo "<div style='background:#f0f0f0; padding:10px; border:1px dashed #666;'>";
+    echo "<b>--- START OF PAGE OUTPUT ---</b><br>";
+
+    // We wrap this in an output buffer to catch any stray echo's
+    ob_start();
+    $response = $kernel->handleRequest($request);
+    $response->send();
+    $output = ob_get_clean();
+
+    echo "<b>--- END OF PAGE OUTPUT ---</b>";
+    echo "</div>";
+
+    if (empty($output)) {
+        log_msg("⚠️ THE PAGE OUTPUT IS COMPLETELY EMPTY.", 'red');
+    } else {
+        log_msg("✅ RECEIVED OUTPUT (" . strlen($output) . " bytes).", 'green');
+        echo "<h3>First 500 characters of HTML:</h3>";
+        echo "<pre style='background:#f9f9f9; border:1px solid #ccc; padding:5px;'>" . htmlspecialchars(substr($output, 0, 500)) . "</pre>";
     }
-
-    log_step("Step 6: Testing Plugin Configuration (Critical)...");
-    try {
-        $method = new ReflectionMethod(get_class($kernel), 'configurePlugins');
-        $method->setAccessible(true);
-        $method->invoke($kernel, $request);
-        log_step("✅ Plugins configured successfully (all " . count(\XHRM\Config\Config::get(\XHRM\Config\Config::PLUGIN_CONFIGS)) . " plugins).");
-    } catch (Throwable $pluginErr) {
-        throw new Exception("Plugin Configuration Failed: " . $pluginErr->getMessage() . " in file " . $pluginErr->getFile() . " on line " . $pluginErr->getLine());
-    }
-
-    log_step("Step 7: Testing Kernel Handle (Final)...");
-    echo "</ul><p style='color:blue'><b>SUCCESS:</b> The entire bootstrap process completed! If your site still shows 500, it's either an .htaccess issue or a 0-byte file causing a silent crash.</p>";
 
 } catch (Throwable $e) {
-    echo "</ul>";
+    if (ob_get_level() > 0)
+        ob_end_clean();
     echo "<div style='background:#fee; padding:15px; border:4px solid red; margin-top:20px;'>";
-    echo "<h2>🔥 BOOTSTRAP FAILURE</h2>";
+    echo "<h2>🔥 PAGE CRASH DETECTED</h2>";
     echo "<p><b>Message:</b> " . htmlspecialchars($e->getMessage()) . "</p>";
     echo "<p><b>File:</b> " . $e->getFile() . " on line " . $e->getLine() . "</p>";
-    echo "<h3>Stack Trace:</h3>";
-    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "<h3>Trace:</h3><pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
     echo "</div>";
+}
+
+function log_msg($msg, $color = 'black')
+{
+    echo "<p style='color:$color'>$msg</p>";
 }
 ?>
