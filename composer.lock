@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d202a4055c2baf125a8b3e4ac2cb1422",
+    "content-hash": "7bb6c2805e8ea653d22f91d67d9da0fc",
     "packages": [
         {
             "name": "bjeavons/zxcvbn-php",
@@ -8495,5 +8495,18 @@
         "ext-openssl": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "ext-ldap": "8.0",
+        "ext-gd": "8.0",
+        "ext-zip": "8.0",
+        "ext-curl": "8.0",
+        "ext-openssl": "8.0",
+        "ext-sodium": "8.0",
+        "ext-mbstring": "8.0",
+        "ext-pdo": "8.0",
+        "ext-xml": "8.0",
+        "ext-simplexml": "8.0",
+        "ext-dom": "8.0"
+    },
     "plugin-api-version": "2.6.0"
 }
