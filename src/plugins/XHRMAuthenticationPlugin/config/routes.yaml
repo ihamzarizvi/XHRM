@@ -1,4 +1,3 @@
-#     Public APIs
 apiv2_auth_public_validation_password:
   path: /api/v2/auth/public/validation/password
   controller: XHRM\Core\Controller\Rest\V2\GenericPublicRestController::handle
@@ -6,7 +5,6 @@ apiv2_auth_public_validation_password:
   defaults:
     _api: XHRM\Authentication\PublicApi\PasswordStrengthValidationAPI
 
-#        Screens
 root:
   path: /
   controller: XHRM\Authentication\Controller\RootController::handle
@@ -71,4 +69,3 @@ auth_request_enforce_password:
   path: /auth/resetWeakPassword
   controller: XHRM\Authentication\Controller\RequestResetWeakPasswordController::handle
   methods: [ POST ]
-
