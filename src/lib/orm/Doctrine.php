@@ -54,6 +54,9 @@ class Doctrine
 
         $isDevMode = $this->isDevMode();
         $proxyDir = Config::get(Config::DOCTRINE_PROXY_DIR);
+        if (!$proxyDir || !is_dir($proxyDir)) {
+            $proxyDir = realpath(Config::get(Config::SRC_DIR) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'proxy');
+        }
         $cache = new ArrayAdapter();
         $paths = $this->getPaths();
         $config = ORMSetup::createAnnotationMetadataConfiguration(
@@ -71,8 +74,8 @@ class Doctrine
 
         $config->setAutoGenerateProxyClasses(
             $isDevMode
-                ? AbstractProxyFactory::AUTOGENERATE_ALWAYS
-                : AbstractProxyFactory::AUTOGENERATE_NEVER
+            ? AbstractProxyFactory::AUTOGENERATE_ALWAYS
+            : AbstractProxyFactory::AUTOGENERATE_NEVER
         );
         $config->addCustomStringFunction('TIME_DIFF', TimeDiff::class);
 
