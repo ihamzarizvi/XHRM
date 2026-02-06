@@ -3,8 +3,12 @@
     <button
       type="button"
       class="oxd-icon-button"
+      :title="
+        isDarkMode
+          ? $t('general.switch_to_light_mode')
+          : $t('general.switch_to_dark_mode')
+      "
       @click="toggleDarkMode"
-      :title="isDarkMode ? $t('general.switch_to_light_mode') : $t('general.switch_to_dark_mode')"
     >
       <oxd-icon
         type="svg"
@@ -44,7 +48,11 @@ export default {
 
     onMounted(() => {
       const savedTheme = localStorage.getItem('xhrm-theme');
-      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      if (
+        savedTheme === 'dark' ||
+        (!savedTheme &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
         applyTheme(true);
       }
     });
@@ -67,7 +75,7 @@ export default {
   .oxd-icon-button {
     color: var(--oxd-text-primary);
     transition: transform 0.3s ease;
-    
+
     &:hover {
       transform: rotate(15deg) scale(1.1);
     }

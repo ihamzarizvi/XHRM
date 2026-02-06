@@ -15,12 +15,12 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 import components from './components';
 import pages from './pages';
-import acl, { AclAPI } from './core/plugins/acl/acl';
-import toaster, { ToasterAPI } from './core/plugins/toaster/toaster';
-import createI18n, { TranslateAPI } from './core/plugins/i18n/translate';
+import acl, {AclAPI} from './core/plugins/acl/acl';
+import toaster, {ToasterAPI} from './core/plugins/toaster/toaster';
+import createI18n, {TranslateAPI} from './core/plugins/i18n/translate';
 import '@ohrm/oxd/fonts.css';
 import '@ohrm/oxd/icons.css';
 import '@ohrm/oxd/style.css';
@@ -32,7 +32,10 @@ import './core/styles/theme.scss';
 // Apply theme immediately to prevent flashing
 (() => {
   const savedTheme = localStorage.getItem('xhrm-theme');
-  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (
+    savedTheme === 'dark' ||
+    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
     document.documentElement.setAttribute('data-theme', 'dark');
   }
 })();
@@ -55,7 +58,7 @@ app.use(toaster, {
 // @ts-expect-error: appGlobal is not in window object by default
 const baseUrl = window.appGlobal.baseUrl;
 
-const { i18n, init } = createI18n({
+const {i18n, init} = createI18n({
   baseUrl: baseUrl,
   resourceUrl: '/core/i18n/messages',
 });
