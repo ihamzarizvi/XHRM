@@ -17,16 +17,33 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
+include_once('./src/config/log_settings.php');
+
 use XHRM\Config\Config;
+use XHRM\Framework\Framework;
+use XHRM\Framework\Http\RedirectResponse;
+use XHRM\Framework\Http\Request;
+use Symfony\Component\ErrorHandler\Debug;
 
 require realpath(__DIR__ . '/vendor/autoload.php');
 
-/* For logging PHP errors */
-include_once('./src/config/log_settings.php');
+$env = 'prod';
+$debug = 'prod' !== $env;
 
-if (!Config::isInstalled()) {
-    header('Location: ./installer/index.php');
-} else {
-    header("Location: ./web/index.php/");
+if ($debug) {
+    umask(0000);
+    Debug::enable();
 }
+
+$kernel = new Framework($env, $debug);
+$request = Request::createFromGlobals();
+
+if (Config::isInstalled()) {
+    $response = $kernel->handleRequest($request);
+} else {
+    $response = new RedirectResponse('./installer/index.php');
+}
+
+$response->send();
+$kernel->terminate($request, $response);
 

@@ -31,5 +31,17 @@ deny from all
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Internal rewrite for assets (dist, images, fonts)
+  # Prioritize web/ if it exists, but the user reported public/ issues, 
+  # so we'll route to web/ where our build outputs are.
+  RewriteRule ^dist/(.*)$ web/dist/$1 [L,NC]
+  RewriteRule ^images/(.*)$ web/images/$1 [L,NC]
+
+  # For any other resource that doesn't exist, route to index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . index.php [L]
+
+  # Security: Deny access to sensitive directories
   RewriteRule (/)?(build|lib|license|tests|test|apps|cache|config|data|log|plugins)(/.*)?$ - [F,NC]
 </IfModule>
