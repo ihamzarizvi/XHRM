@@ -40,7 +40,7 @@ deny from all
   # For any other resource that doesn't exist, route to index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . index.php [L]
+  RewriteRule ^ index.php [L]
 
   # Security: Deny access to sensitive directories
   RewriteRule (/)?(build|lib|license|tests|test|apps|cache|config|data|log|plugins)(/.*)?$ - [F,NC]

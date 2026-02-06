@@ -38,7 +38,7 @@ class ConfigHelper
             Config::BASE_DIR => $pathToProjectBase,
             Config::SRC_DIR => $pathToSrcDir,
             Config::PLUGINS_DIR => realpath($pathToSrcDir . '/plugins'),
-            Config::PUBLIC_DIR => (realpath($pathToProjectBase . '/public') ?: realpath($pathToProjectBase . '/web')),
+            Config::PUBLIC_DIR => realpath($pathToProjectBase . '/web'),
             Config::DOCTRINE_PROXY_DIR => realpath($pathToSrcDir . '/config/proxy'),
             Config::TEST_DIR => realpath($pathToSrcDir . '/test'),
             Config::LOG_DIR => $pathToSrcDir . DIRECTORY_SEPARATOR . 'log',
@@ -116,7 +116,7 @@ class ConfigHelper
     {
         $pathToProjectBase = $this->get(Config::BASE_DIR);
         $pathToSrcDir = $this->get(Config::SRC_DIR);
-        $pathToVueBuildDir = (realpath($pathToProjectBase . '/public/dist') ?: realpath($pathToProjectBase . '/web/dist'));
+        $pathToVueBuildDir = realpath($pathToProjectBase . '/web/dist');
         $pathToBuildTimestampFile = realpath($pathToVueBuildDir . '/build');
         return [
             'ohrm_client_dir' => realpath($pathToSrcDir . '/client'),

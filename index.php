@@ -35,6 +35,9 @@ if ($debug) {
     Debug::enable();
 }
 
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+$_SERVER['PHP_SELF'] = '/index.php';
+
 $kernel = new Framework($env, $debug);
 $request = Request::createFromGlobals();
 
