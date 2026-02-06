@@ -58,6 +58,11 @@ apiv2_dashboard_employee_on_leave_today_configuration:
 #   controller: XHRM\Dashboard\Controller\DashboardController::handle
 #   methods: [ GET ]
 
+dashboard:
+  path: /dashboard
+  controller: XHRM\Dashboard\Controller\DashboardController::handle
+  methods: [ GET ]
+
 dashboard_index:
   path: /dashboard/index
   controller: XHRM\Dashboard\Controller\DashboardController::handle
