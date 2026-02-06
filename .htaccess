@@ -35,6 +35,10 @@ deny from all
   RewriteCond %{REQUEST_URI} ^/$
   RewriteRule ^$ /auth/login [L,R=302]
 
+  # Direct redirect: /login to /auth/login (fix incorrect redirects)
+  RewriteCond %{REQUEST_URI} ^/login$
+  RewriteRule ^login$ /auth/login [L,R=302]
+
   # Direct redirect: /dashboard to /dashboard/index for cleaner URLs
   RewriteCond %{REQUEST_URI} ^/dashboard$
   RewriteRule ^dashboard$ /dashboard/index [L,R=302]
