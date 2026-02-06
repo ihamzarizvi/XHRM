@@ -52,6 +52,6 @@ apiv2_dashboard_employee_on_leave_today_configuration:
 
 #        Screens
 dashboard_widget:
-  path: /dashboard/index
+  path: /
   controller: XHRM\Dashboard\Controller\DashboardController::handle
   methods: [ GET ]
