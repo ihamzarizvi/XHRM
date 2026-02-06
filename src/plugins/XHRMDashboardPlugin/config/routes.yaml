@@ -51,7 +51,9 @@ apiv2_dashboard_employee_on_leave_today_configuration:
     id: 0
 
 #        Screens
-dashboard_widget:
-  path: /
-  controller: XHRM\Dashboard\Controller\DashboardController::handle
-  methods: [ GET ]
+# Commented out to prevent conflict with root route in Authentication plugin
+# Authenticated users access dashboard via /dashboard/index (configured in ohrm_home_page table)
+# dashboard_widget:
+#   path: /
+#   controller: XHRM\Dashboard\Controller\DashboardController::handle
+#   methods: [ GET ]
