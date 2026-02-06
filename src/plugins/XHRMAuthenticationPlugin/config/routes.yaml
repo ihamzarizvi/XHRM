@@ -5,10 +5,10 @@ apiv2_auth_public_validation_password:
   defaults:
     _api: XHRM\Authentication\PublicApi\PasswordStrengthValidationAPI
 
-# root:
-#   path: /
-#   controller: XHRM\Authentication\Controller\RootController::handle
-#   methods: [ GET ]
+root:
+  path: /
+  controller: XHRM\Authentication\Controller\RootController::handle
+  methods: [ GET ]
 
 auth_login:
   path: /auth/login
