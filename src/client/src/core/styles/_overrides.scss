@@ -35,3 +35,10 @@ $oxd-secondary-four-darken-5-color: var(--oxd-secondary-four-darken-5-color);
 $oxd-secondary-four-alpha-10-color: var(--oxd-secondary-four-alpha-10-color);
 $oxd-secondary-four-alpha-15-color: var(--oxd-secondary-four-alpha-15-color);
 $oxd-secondary-four-alpha-20-color: var(--oxd-secondary-four-alpha-20-color);
+
+// Dark Mode Overrides
+$oxd-white-color: var(--oxd-white-color, #ffffff);
+$oxd-background-white-color: var(--oxd-background-white-color, #fafafa);
+$oxd-background-light-gray-color: var(--oxd-background-light-gray-color, #f1f2f5);
+$oxd-interface-gray-lighten-2-color: var(--oxd-interface-gray-lighten-2-color, #e8eaef);
+$oxd-interface-gray-darken-2-color: var(--oxd-interface-gray-darken-2-color, #38455d);

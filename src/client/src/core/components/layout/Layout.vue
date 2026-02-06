@@ -5,6 +5,9 @@
     <template v-for="(_, name) in $slots" #[name]="slotData">
       <slot :name="name" v-bind="slotData" />
     </template>
+    <template #topbar-header-right-area>
+      <dark-mode-toggle />
+    </template>
     <template #user-actions>
       <li>
         <a
@@ -52,11 +55,13 @@ import {provide, readonly, ref} from 'vue';
 import About from '@/core/pages/About.vue';
 import {OxdLayout} from '@ohrm/oxd';
 import {dateFormatKey} from '@/core/util/composable/useDateFormat';
+import DarkModeToggle from '@/core/components/layout/DarkModeToggle.vue';
 
 export default {
   components: {
     about: About,
     'oxd-layout': OxdLayout,
+    'dark-mode-toggle': DarkModeToggle,
   },
   inheritAttrs: false,
   props: {

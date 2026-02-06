@@ -1,0 +1,31 @@
+:root {
+    --oxd-background-base: #f1f2f5;
+    --oxd-surface-base: #ffffff;
+    --oxd-text-primary: #38455d;
+    --oxd-text-secondary: #64728c;
+    --oxd-border-color: #e8eaef;
+    --oxd-card-bg: #ffffff;
+    --oxd-input-bg: #ffffff;
+    --oxd-sidepanel-bg: #ffffff;
+    --oxd-topbar-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+    --oxd-background-base: #121212;
+    --oxd-surface-base: #1e1e1e;
+    --oxd-text-primary: #e0e0e0;
+    --oxd-text-secondary: #b0b0b0;
+    --oxd-border-color: #333333;
+    --oxd-card-bg: #1e1e1e;
+    --oxd-input-bg: #2d2d2d;
+    --oxd-sidepanel-bg: #1e1e1e;
+    --oxd-topbar-bg: #1e1e1e;
+
+    // Component specific overrides for OXD library
+    --oxd-primary-font-color: #ffffff;
+    --oxd-white-color: #1e1e1e;
+    --oxd-background-white-color: #1e1e1e;
+    --oxd-background-light-gray-color: #121212;
+    --oxd-interface-gray-lighten-2-color: #2d2d2d;
+    --oxd-interface-gray-darken-2-color: #e0e0e0;
+}

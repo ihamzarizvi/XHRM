@@ -135,11 +135,12 @@
 .XHRM-copyright {
   font-size: 0.75rem;
   text-align: center;
-  color: $oxd-interface-gray-darken-2-color;
+  color: var(--oxd-interface-gray-darken-2-color);
   opacity: 0.8;
+  transition: color 0.3s ease;
 
   & a {
-    color: $oxd-interface-gray-darken-2-color;
+    color: var(--oxd-interface-gray-darken-2-color);
     text-decoration: none;
     font-weight: 600;
 
