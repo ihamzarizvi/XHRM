@@ -1,0 +1,38 @@
+xhrm_password_manager_api_items:
+  path: /api/v2/password-manager/items
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultItemAPI
+
+xhrm_password_manager_api_item:
+  path: /api/v2/password-manager/items/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultItemAPI
+    _key: id
+  requirements:
+    id: '\d+'
+
+xhrm_password_manager_api_categories:
+  path: /api/v2/password-manager/categories
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultCategoryAPI
+
+xhrm_password_manager_api_category:
+  path: /api/v2/password-manager/categories/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultCategoryAPI
+    _key: id
+  requirements:
+    id: '\d+'
+
+xhrm_password_manager_view:
+    path: /password-manager
+    controller: XHRM\PasswordManager\Controller\VaultController::handle
+    methods: [GET]

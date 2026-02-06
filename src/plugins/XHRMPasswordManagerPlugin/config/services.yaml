@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $entityManager: '@doctrine.orm.entity_manager'
+
+    XHRM\PasswordManager\:
+        resource: '../*'
+        exclude: '../{DependencyInjection,Entity,Migration,Tests}'
+
+    XHRM\PasswordManager\Controller\:
+        resource: '../Controller'
+        tags: ['controller.service_arguments']
