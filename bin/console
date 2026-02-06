@@ -22,7 +22,7 @@ if (php_sapi_name() !== 'cli') {
     exit(1);
 }
 
-$pathToAutoload = realpath(__DIR__ . '/../src/vendor/autoload.php');
+$pathToAutoload = realpath(__DIR__ . '/../vendor/autoload.php');
 
 $errorMessage = "
 Cannot find composer dependencies.
