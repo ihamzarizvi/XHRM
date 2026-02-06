@@ -75,7 +75,7 @@ class Doctrine
         $config->setAutoGenerateProxyClasses(
             $isDevMode
             ? AbstractProxyFactory::AUTOGENERATE_ALWAYS
-            : AbstractProxyFactory::AUTOGENERATE_NEVER
+            : AbstractProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS
         );
         $config->addCustomStringFunction('TIME_DIFF', TimeDiff::class);
 

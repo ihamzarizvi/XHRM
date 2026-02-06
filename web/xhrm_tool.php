@@ -1,6 +1,6 @@
 <?php
 /**
- * XHRM Diagnostic & Password Reset Tool (v4)
+ * XHRM Diagnostic & Password Reset Tool (v5)
  * 
  * IMPORTANT: DELETE THIS FILE AFTER USE!
  */
@@ -8,20 +8,40 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>XHRM Diagnostic Tool v4</h1>";
+echo "<h1>XHRM Diagnostic Tool v5</h1>";
 
 $confFile = __DIR__ . '/../lib/confs/Conf.php';
 $logFile = __DIR__ . '/../src/log/XHRM.log';
+$proxyDir = __DIR__ . '/../src/config/proxy';
 
 // Action: Clear Logs
-if (isset($_GET['clear_logs']) && file_exists($logFile)) {
-    file_put_contents($logFile, "");
-    header("Location: xhrm_tool.php?logs_cleared=1");
+if (isset($_GET['clear_logs'])) {
+    if (file_exists($logFile))
+        file_put_contents($logFile, "");
+    header("Location: xhrm_tool.php?status=logs_cleared");
     exit;
 }
 
-if (isset($_GET['logs_cleared'])) {
-    echo "<p style='color:blue'>Logs have been cleared.</p>";
+// Action: Generate Proxies (Manual Trigger)
+if (isset($_GET['generate_proxies'])) {
+    try {
+        require_once __DIR__ . '/../vendor/autoload.php';
+        require_once $confFile;
+        // The simple way is to just boot the entity manager
+        include_once(__DIR__ . '/../src/config/log_settings.php');
+        $kernel = new XHRM\Framework\Framework('prod', false);
+        $em = XHRM\ORM\Doctrine::getEntityManager();
+        $metadatas = $em->getMetadataFactory()->getAllMetadata();
+        $em->getProxyFactory()->generateProxyClasses($metadatas, $proxyDir);
+        header("Location: xhrm_tool.php?status=proxies_generated");
+    } catch (Throwable $e) {
+        die("Error generating proxies: " . $e->getMessage());
+    }
+    exit;
+}
+
+if (isset($_GET['status'])) {
+    echo "<p style='color:blue'>Action completed: " . htmlspecialchars($_GET['status']) . "</p>";
 }
 
 echo "Checking for config file: <code>$confFile</code>... ";
@@ -33,7 +53,7 @@ if (file_exists($confFile)) {
 
     echo "<h2>Database Connection Test</h2>";
     try {
-        $host = method_exists($conf, 'getDbHost') ? $conf->getDbHost() : ($conf->dbhost ?? 'localhost');
+        $host = method_exists($conf, 'getDbHost') ? $conf->getDbHost() : ($conf->dbhost ?? '127.0.0.1');
         $port = method_exists($conf, 'getDbPort') ? $conf->getDbPort() : ($conf->dbport ?? '3306');
         $name = method_exists($conf, 'getDbName') ? $conf->getDbName() : ($conf->dbname ?? '');
         $user = method_exists($conf, 'getDbUser') ? $conf->getDbUser() : ($conf->dbuser ?? '');
@@ -65,15 +85,14 @@ if (file_exists($confFile)) {
     }
 }
 
-echo "<h2>Proxy Directory Check</h2>";
-$proxyDir = __DIR__ . '/../src/config/proxy';
+echo "<h2>Proxy Management</h2>";
 if (is_dir($proxyDir)) {
-    $isWritable = is_writable($proxyDir) ? "Writable" : "NOT Writable";
-    echo "Directory: <code>$proxyDir</code> - <span style='color:green'>Exists</span> ($isWritable)<br>";
-    $files = scandir($proxyDir);
-    echo "Files in proxy dir: " . count($files) . "<br>";
+    $files = array_diff(scandir($proxyDir), array('.', '..', '.gitkeep'));
+    echo "Proxy Directory: <code>$proxyDir</code> - <span style='color:green'>Exists</span><br>";
+    echo "Generated Files: " . count($files) . "<br>";
+    echo "<a href='xhrm_tool.php?generate_proxies=1'>[ Force Generate Proxy Classes ]</a><br>";
 } else {
-    echo "Directory: <code>$proxyDir</code> - <span style='color:red'>MISSING</span><br>";
+    echo "Proxy Directory: <code>$proxyDir</code> - <span style='color:red'>MISSING</span><br>";
 }
 
 echo "<h2>Server Logs</h2>";
@@ -90,8 +109,6 @@ if (file_exists($logFile)) {
         }
     }
     echo "</pre>";
-} else {
-    echo "No log file found.<br>";
 }
 
 echo "<hr><p style='color:red'><b>REMINDER: Delete this script!</b></p>";
