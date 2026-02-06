@@ -15,11 +15,6 @@ auth_login:
   controller: XHRM\Authentication\Controller\LoginController::handle
   methods: [ GET ]
 
-login:
-  path: /login
-  controller: XHRM\Authentication\Controller\LoginController::handle
-  methods: [ GET ]
-
 auth_validate:
   path: /auth/validate
   controller: XHRM\Authentication\Controller\ValidateController::handle
