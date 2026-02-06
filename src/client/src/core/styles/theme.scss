@@ -19,7 +19,8 @@
     --oxd-card-bg: #1e1e1e;
     --oxd-input-bg: #2d2d2d;
     --oxd-sidepanel-bg: #1e1e1e;
-    --oxd-topbar-bg: #1e1e1e;
+    --oxd-topbar-bg: #212121;
+    --oxd-primary-one-color: #cc5200; // Softer orange for dark mode header
 
     // Component specific overrides for OXD library
     --oxd-primary-font-color: #ffffff;
@@ -28,4 +29,70 @@
     --oxd-background-light-gray-color: #121212;
     --oxd-interface-gray-lighten-2-color: #2d2d2d;
     --oxd-interface-gray-darken-2-color: #e0e0e0;
+}
+
+// Global background overrides
+html[data-theme="dark"],
+body[data-theme="dark"],
+[data-theme="dark"] #app,
+[data-theme="dark"] .oxd-layout,
+[data-theme="dark"] .oxd-layout-container,
+[data-theme="dark"] .oxd-layout-context,
+[data-theme="dark"] .oxd-sidepanel,
+[data-theme="dark"] .XHRM-container,
+[data-theme="dark"] .XHRM-background-container {
+    background-color: var(--oxd-background-base) !important;
+    color: var(--oxd-text-primary) !important;
+}
+
+[data-theme="dark"] .oxd-topbar,
+[data-theme="dark"] .oxd-topbar-header {
+    background-color: var(--oxd-topbar-bg) !important;
+}
+
+// Ensure the header itself is darkened
+[data-theme="dark"] .oxd-topbar-header {
+    background-color: var(--oxd-primary-one-color) !important;
+}
+
+// Cards and Containers
+[data-theme="dark"] .XHRM-card-container,
+[data-theme="dark"] .XHRM-paper-container,
+[data-theme="dark"] .XHRM-dashboard-widget,
+[data-theme="dark"] .oxd-sheet,
+[data-theme="dark"] .oxd-card-flex-container {
+    background-color: var(--oxd-card-bg) !important;
+    color: var(--oxd-text-primary) !important;
+    border-color: var(--oxd-border-color) !important;
+}
+
+// Data grid and Tables
+[data-theme="dark"] .oxd-table-card,
+[data-theme="dark"] .oxd-table-row {
+    background-color: var(--oxd-surface-base) !important;
+    color: var(--oxd-text-primary) !important;
+}
+
+[data-theme="dark"] .oxd-table-header {
+    background-color: var(--oxd-background-base) !important;
+}
+
+// Fix for harsh white illustrations/placeholders in dark mode
+[data-theme="dark"] img {
+
+    &[src*="illustration"],
+    &[src*="watermark"],
+    &[src*="empty"],
+    &[src*="not-available"] {
+        filter: invert(0.85) hue-rotate(180deg) brightness(0.8) !important;
+    }
+}
+
+// Text colors that might be hardcoded in library
+[data-theme="dark"] .oxd-text,
+[data-theme="dark"] .oxd-label,
+[data-theme="dark"] .oxd-input,
+[data-theme="dark"] .oxd-select-text,
+[data-theme="dark"] .oxd-userdropdown-name {
+    color: var(--oxd-text-primary) !important;
 }
