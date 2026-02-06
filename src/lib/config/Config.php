@@ -51,7 +51,7 @@ class Config
     public const MODE_DEMO = 'demo';
 
     public const PRODUCT_NAME = 'XHRM OS';
-    public const PRODUCT_VERSION = '5.8';
+    public const PRODUCT_VERSION = '1.0';
     public const XHRM_API_VERSION = '2.7.0';
     public const PRODUCT_MODE = self::MODE_PROD;
     public const REGISTRATION_URL = 'https://ospenguin.XHRM.com';
