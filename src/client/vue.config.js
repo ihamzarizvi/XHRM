@@ -1,4 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const DumpBuildTimestampPlugin = require('./scripts/plugins/DumpBuildTimestampPlugin');
 
 module.exports = {
@@ -15,6 +17,7 @@ module.exports = {
       alias: {
         '@ohrm/core': '@/core',
         '@ohrm/components': '@/core/components',
+        '@ohrm/oxd$': path.resolve(__dirname, 'node_modules/@ohrm/oxd/index.es.js'),
       },
     },
     plugins: [new DumpBuildTimestampPlugin()],
