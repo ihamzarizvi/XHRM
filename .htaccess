@@ -35,6 +35,10 @@ deny from all
   RewriteCond %{REQUEST_URI} ^/$
   RewriteRule ^$ /auth/login [L,R=302]
 
+  # Direct redirect: /dashboard to /dashboard/index for cleaner URLs
+  RewriteCond %{REQUEST_URI} ^/dashboard$
+  RewriteRule ^dashboard$ /dashboard/index [L,R=302]
+
   # External Redirect: Force clean URLs by stripping /web/index.php/ or /public/index.php/
   # We use %{THE_REQUEST} to avoid matching internal rewrites and causing loops.
   RewriteCond %{THE_REQUEST} \s/(?:web|public)/index\.php/([^\?\s]*) [NC]
