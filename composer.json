@@ -82,6 +82,7 @@
             "XHRM\\SystemCheck\\": "./src/plugins/XHRMSystemCheckPlugin",
             "XHRM\\Mobile\\": "./src/plugins/XHRMMobilePlugin",
             "XHRM\\Claim\\": "./src/plugins/XHRMClaimPlugin",
+            "XHRM\\PasswordManager\\": "./src/plugins/XHRMPasswordManagerPlugin",
             "XHRM\\Installer\\": "./installer",
             "XHRM\\Entity\\": [
                 "./src/plugins/XHRMAdminPlugin/entity",
