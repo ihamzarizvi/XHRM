@@ -33,6 +33,6 @@ xhrm_password_manager_api_category:
     id: '\d+'
 
 xhrm_password_manager_view:
-    path: /password-manager
+    path: /passwordManager/viewPasswordManager
     controller: XHRM\PasswordManager\Controller\VaultController::handle
     methods: [GET]
