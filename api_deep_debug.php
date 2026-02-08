@@ -61,12 +61,23 @@ try {
     echo "<h2>API Class Check</h2>";
     try {
         echo "<p>Attempting to instantiate VaultItemAPI...</p>";
-        $api = new VaultItemAPI($request);
+        // Correctly wrap the request for API V2
+        $apiV2Request = new \XHRM\Core\Api\V2\Request($request);
+        $api = new VaultItemAPI($apiV2Request);
         echo "<p style='color:green'>Instantiated VaultItemAPI!</p>";
 
         echo "<p>Checking Service Dependency...</p>";
         $service = $api->getPasswordManagerService();
         echo "<p style='color:green'>Service obtained within API class!</p>";
+
+        echo "<p>Checking User Identity...</p>";
+        $userRoleManager = $container->get(Services::USER_ROLE_MANAGER);
+        $user = $userRoleManager->getUser();
+        if ($user) {
+            echo "<p style='color:green'>Logged in as: " . $user->getUserName() . " (ID: " . $user->getId() . ")</p>";
+        } else {
+            echo "<p style='color:orange'>No user logged in (expected in debug script if no session).</p>";
+        }
 
     } catch (\Throwable $e) {
         echo "<div style='background:#fee; padding:15px; border:1px solid red;'>";
