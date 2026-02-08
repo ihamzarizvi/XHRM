@@ -170,12 +170,19 @@ export default defineComponent({
       } catch (e: any) {
         console.error('Save failed', e);
         let errorMsg = e.message;
-        if (e.response?.data?.errors) {
-          errorMsg = JSON.stringify(e.response.data.errors);
-        } else if (e.response?.data?.message) {
-          errorMsg = e.response.data.message;
+        const responseData = e.response?.data;
+
+        if (responseData?.error) {
+          errorMsg = responseData.error.message || errorMsg;
+          if (responseData.error.data) {
+            errorMsg +=
+              '\nDetails: ' + JSON.stringify(responseData.error.data, null, 2);
+          }
+        } else if (responseData?.message) {
+          errorMsg = responseData.message;
         }
-        alert('Failed to save item: ' + errorMsg);
+
+        alert('Failed to save item:\n' + errorMsg);
       } finally {
         isSavingItem.value = false;
       }

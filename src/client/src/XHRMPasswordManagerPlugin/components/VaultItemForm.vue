@@ -216,8 +216,9 @@ export default defineComponent({
       }
 
       try {
-        const output = {
-          ...form.value,
+        const output: any = {
+          name: form.value.name,
+          itemType: form.value.itemType,
           usernameEncrypted: SecurityService.encrypt(form.value.username || ''),
           passwordEncrypted: SecurityService.encrypt(form.value.password || ''),
           urlEncrypted: SecurityService.encrypt(form.value.url || ''),
@@ -226,6 +227,10 @@ export default defineComponent({
             form.value.totpSecret || '',
           ),
         };
+
+        if (form.value.id) {
+          output.id = form.value.id;
+        }
 
         console.log('VaultItemForm: emitting save event', output);
         emit('save', output);
