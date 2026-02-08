@@ -143,8 +143,11 @@ export default defineComponent({
       try {
         const response = await itemService.getAll();
         items.value = response.data.data;
-      } catch (e) {
+      } catch (e: any) {
         console.error('Failed to fetch items', e);
+        if (e.response?.data?.error) {
+          console.error('Fetch error details:', e.response.data.error);
+        }
       }
     };
 
@@ -173,6 +176,7 @@ export default defineComponent({
         const responseData = e.response?.data;
 
         if (responseData?.error) {
+          console.error('Server side error details:', responseData.error);
           errorMsg = responseData.error.message || errorMsg;
           if (responseData.error.data) {
             errorMsg +=
