@@ -18,10 +18,11 @@
  */
 
 use XHRM\Framework\PluginConfigurationInterface;
+use XHRM\Framework\Http\Request;
 
 class PasswordManagerPluginConfiguration implements PluginConfigurationInterface
 {
-    public function initialize(): void
+    public function initialize(Request $request): void
     {
         // Plugin initialization logic
     }
