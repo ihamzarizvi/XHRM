@@ -1,99 +1,90 @@
 <template>
-  <oxd-dialog :is-open="isOpen" @close="$emit('close')">
-    <template #header>
-      <h3 class="oxd-text oxd-text--h3">
-        {{ isEdit ? 'Edit Item' : 'Add Item' }}
-      </h3>
-    </template>
-
-    <div class="oxd-form-row">
-      <div class="oxd-input-group oxd-input-field-bottom-space">
-        <label class="oxd-label oxd-label--active">Name</label>
-        <input
-          v-model="form.name"
-          class="oxd-input oxd-input--active"
-          required
-        />
-        <span
-          v-if="errors.name"
-          class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"
-          >{{ errors.name }}</span
-        >
+  <div v-if="isOpen" class="modal-overlay" @click.self="$emit('close')">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          {{ isEdit ? 'Edit Item' : 'New Vault Entry' }}
+        </h3>
+        <button class="modal-close" @click="$emit('close')">&times;</button>
       </div>
-    </div>
 
-    <div class="oxd-form-row">
-      <div class="oxd-input-group oxd-input-field-bottom-space">
-        <label class="oxd-label oxd-label--active">Type</label>
-        <select v-model="form.itemType" class="oxd-select-wrapper">
-          <option value="login">Login</option>
-          <option value="card">Card</option>
-          <option value="identity">Identity</option>
-          <option value="note">Secure Note</option>
-        </select>
-      </div>
-    </div>
+      <div class="modal-body">
+        <!-- Name & Type -->
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label>Name</label>
+            <input
+              v-model="form.name"
+              placeholder="e.g. GitHub, Work Email"
+              class="custom-input"
+            />
+            <span v-if="errors.name" class="error-text">{{ errors.name }}</span>
+          </div>
+          <div class="form-group flex-1">
+            <label>Type</label>
+            <select v-model="form.itemType" class="custom-select">
+              <option value="login">Login</option>
+              <option value="card">Card</option>
+              <option value="identity">Identity</option>
+              <option value="note">Secure Note</option>
+            </select>
+          </div>
+        </div>
 
-    <div v-if="form.itemType === 'login'">
-      <div class="oxd-form-row">
-        <div class="oxd-input-group oxd-input-field-bottom-space">
-          <label class="oxd-label">Username</label>
-          <input v-model="form.username" class="oxd-input oxd-input--active" />
+        <!-- Login Specific -->
+        <div v-if="form.itemType === 'login'" class="form-section">
+          <div class="form-group">
+            <label>Username / Email</label>
+            <input v-model="form.username" class="custom-input" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-with-action">
+              <input
+                v-model="form.password"
+                type="password"
+                class="custom-input"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Website URL</label>
+              <input
+                v-model="form.url"
+                placeholder="https://..."
+                class="custom-input"
+              />
+            </div>
+            <div class="form-group flex-1">
+              <label>TOTP Secret (2FA Key)</label>
+              <input
+                v-model="form.totpSecret"
+                placeholder="Optional"
+                class="custom-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea
+            v-model="form.notes"
+            rows="4"
+            class="custom-textarea"
+            placeholder="Additional details..."
+          ></textarea>
         </div>
       </div>
-      <div class="oxd-form-row">
-        <div class="oxd-input-group oxd-input-field-bottom-space">
-          <label class="oxd-label">Password</label>
-          <input
-            v-model="form.password"
-            type="password"
-            class="oxd-input oxd-input--active"
-          />
-        </div>
-      </div>
-      <div class="oxd-form-row">
-        <div class="oxd-input-group oxd-input-field-bottom-space">
-          <label class="oxd-label">URL</label>
-          <input v-model="form.url" class="oxd-input oxd-input--active" />
-        </div>
-      </div>
-      <div class="oxd-form-row">
-        <div class="oxd-input-group oxd-input-field-bottom-space">
-          <label class="oxd-label">TOTP Secret (Key)</label>
-          <input
-            v-model="form.totpSecret"
-            class="oxd-input oxd-input--active"
-          />
-        </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" @click="$emit('close')">Cancel</button>
+        <button class="btn-primary" @click="save">Save to Vault</button>
       </div>
     </div>
-
-    <div class="oxd-form-row">
-      <div class="oxd-input-group oxd-input-field-bottom-space">
-        <label class="oxd-label">Notes</label>
-        <textarea
-          v-model="form.notes"
-          class="oxd-input oxd-input--active"
-          rows="3"
-        ></textarea>
-      </div>
-    </div>
-
-    <template #footer>
-      <button
-        class="oxd-button oxd-button--medium oxd-button--ghost"
-        @click="$emit('close')"
-      >
-        Cancel
-      </button>
-      <button
-        class="oxd-button oxd-button--medium oxd-button--main"
-        @click="save"
-      >
-        Save
-      </button>
-    </template>
-  </oxd-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -193,3 +184,159 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 650px;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 25px 30px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+  &:hover {
+    color: #ff5500;
+  }
+}
+
+.modal-body {
+  padding: 30px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+  }
+}
+
+.custom-input,
+.custom-select,
+.custom-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background: #fdfdfd;
+
+  &:focus {
+    outline: none;
+    border-color: #ff5500;
+    box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.1);
+  }
+}
+
+.modal-footer {
+  padding: 20px 30px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-primary {
+  background: #ff5500;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: #e64a00;
+  }
+}
+
+.btn-secondary {
+  background: white;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    background: #f8f8f8;
+  }
+}
+
+.error-text {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+</style>
