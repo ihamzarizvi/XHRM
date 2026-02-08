@@ -90,6 +90,55 @@ try {
         } else {
             echo "<p style='color:orange'>No user logged in (expected in debug script if no session).</p>";
         }
+        echo "<h2>Permission Check Test</h2>";
+        try {
+            echo "<p>Checking permissions for VaultItemAPI via UserRoleManager...</p>";
+            $userRoleManager = $container->get(Services::USER_ROLE_MANAGER);
+            $permissions = $userRoleManager->getApiPermissions(VaultItemAPI::class);
+            echo "<p style='color:green'>Permissions retrieved!</p>";
+            echo "<ul>";
+            echo "<li>Can Read: " . ($permissions->canRead() ? 'YES' : 'NO') . "</li>";
+            echo "<li>Can Create: " . ($permissions->canCreate() ? 'YES' : 'NO') . "</li>";
+            echo "<li>Can Update: " . ($permissions->canUpdate() ? 'YES' : 'NO') . "</li>";
+            echo "<li>Can Delete: " . ($permissions->canDelete() ? 'YES' : 'NO') . "</li>";
+            echo "</ul>";
+
+            if (!$permissions->canRead()) {
+                echo "<p style='color:red'>WARNING: Current user does NOT have READ permission for this API. This would cause a 403, but if the permission system is broken, it might cause a 500.</p>";
+            }
+
+        } catch (\Throwable $e) {
+            echo "<div style='background:#fee; padding:15px; border:1px solid red;'>";
+            echo "<h3>PERMISSION SYSTEM CRASH:</h3>";
+            echo "<p><b>Message:</b> " . $e->getMessage() . "</p>";
+            echo "<p><b>File:</b> " . $e->getFile() . " (Line " . $e->getLine() . ")</p>";
+            echo "</div>";
+        }
+
+        echo "<h2>API Execution Simulation</h2>";
+        try {
+            echo "<p>Simulating 'getAll' call via API class...</p>";
+            $apiV2Request = new \XHRM\Core\Api\V2\Request($request);
+            $api = new VaultItemAPI($apiV2Request);
+
+            // This will trigger the actual getAll logic
+            $result = $api->getAll();
+            echo "<p style='color:green'>Successfully executed API getAll!</p>";
+
+            echo "<p>Normalizing result...</p>";
+            $normalized = $result->normalize();
+            echo "<p style='color:green'>Normalization successful!</p>";
+            echo "<p>Item count: " . count($normalized) . "</p>";
+
+        } catch (\Throwable $e) {
+            echo "<div style='background:#fee; padding:15px; border:1px solid red;'>";
+            echo "<h3>API CALL CRASH:</h3>";
+            echo "<p><b>Message:</b> " . $e->getMessage() . "</p>";
+            echo "<p><b>File:</b> " . $e->getFile() . " (Line " . $e->getLine() . ")</p>";
+            echo "<h4>Stack Trace:</h4>";
+            echo "<pre>" . $e->getTraceAsString() . "</pre>";
+            echo "</div>";
+        }
 
     } catch (\Throwable $e) {
         echo "<div style='background:#fee; padding:15px; border:1px solid red;'>";
