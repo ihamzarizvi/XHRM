@@ -1,62 +1,93 @@
 <template>
   <div class="password-generator">
     <div class="pg-display">
-       <input type="text" readonly :value="generatedPassword" />
-       <oxd-button @click="copyPassword" ghost><i class="oxd-icon bi-clipboard"></i></oxd-button>
-       <oxd-button @click="generate" ghost><i class="oxd-icon bi-arrow-repeat"></i></oxd-button>
+      <input type="text" readonly :value="generatedPassword" />
+      <oxd-button ghost @click="copyPassword"
+        ><i class="oxd-icon bi-clipboard"></i
+      ></oxd-button>
+      <oxd-button ghost @click="generate"
+        ><i class="oxd-icon bi-arrow-repeat"></i
+      ></oxd-button>
     </div>
     <div class="pg-options">
-       <label>Length: {{ length }}</label>
-       <input type="range" min="6" max="64" v-model.number="length" @input="generate" />
-       
-       <div class="pg-checkboxes">
-          <label><input type="checkbox" v-model="useUpper" @change="generate" /> A-Z</label>
-          <label><input type="checkbox" v-model="useLower" @change="generate" /> a-z</label>
-          <label><input type="checkbox" v-model="useNumbers" @change="generate" /> 0-9</label>
-          <label><input type="checkbox" v-model="useSymbols" @change="generate" /> !@#</label>
-       </div>
+      <label>Length: {{ length }}</label>
+      <input
+        v-model.number="length"
+        type="range"
+        min="6"
+        max="64"
+        @input="generate"
+      />
+
+      <div class="pg-checkboxes">
+        <label
+          ><input v-model="useUpper" type="checkbox" @change="generate" />
+          A-Z</label
+        >
+        <label
+          ><input v-model="useLower" type="checkbox" @change="generate" />
+          a-z</label
+        >
+        <label
+          ><input v-model="useNumbers" type="checkbox" @change="generate" />
+          0-9</label
+        >
+        <label
+          ><input v-model="useSymbols" type="checkbox" @change="generate" />
+          !@#</label
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import {defineComponent, ref, onMounted} from 'vue';
 
 export default defineComponent({
   name: 'PasswordGenerator',
   setup() {
-     const generatedPassword = ref('');
-     const length = ref(16);
-     const useUpper = ref(true);
-     const useLower = ref(true);
-     const useNumbers = ref(true);
-     const useSymbols = ref(true);
+    const generatedPassword = ref('');
+    const length = ref(16);
+    const useUpper = ref(true);
+    const useLower = ref(true);
+    const useNumbers = ref(true);
+    const useSymbols = ref(true);
 
-     const generate = () => {
-        let chars = '';
-        if (useLower.value) chars += 'abcdefghijklmnopqrstuvwxyz';
-        if (useUpper.value) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if (useNumbers.value) chars += '0123456789';
-        if (useSymbols.value) chars += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+    const generate = () => {
+      let chars = '';
+      if (useLower.value) chars += 'abcdefghijklmnopqrstuvwxyz';
+      if (useUpper.value) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if (useNumbers.value) chars += '0123456789';
+      if (useSymbols.value) chars += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
 
-        if (chars === '') return;
+      if (chars === '') return;
 
-        let result = '';
-        for (let i = 0; i < length.value; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        generatedPassword.value = result;
-     };
+      let result = '';
+      for (let i = 0; i < length.value; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      generatedPassword.value = result;
+    };
 
-     const copyPassword = () => {
-         navigator.clipboard.writeText(generatedPassword.value);
-         // Toast success
-     };
+    const copyPassword = () => {
+      navigator.clipboard.writeText(generatedPassword.value);
+      // Toast success
+    };
 
-     onMounted(generate);
+    onMounted(generate);
 
-     return { generatedPassword, length, useUpper, useLower, useNumbers, useSymbols, generate, copyPassword };
-  }
+    return {
+      generatedPassword,
+      length,
+      useUpper,
+      useLower,
+      useNumbers,
+      useSymbols,
+      generate,
+      copyPassword,
+    };
+  },
 });
 </script>
 

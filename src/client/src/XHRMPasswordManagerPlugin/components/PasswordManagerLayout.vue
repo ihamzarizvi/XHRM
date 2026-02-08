@@ -4,60 +4,82 @@
       <div class="pm-sidebar-header">
         <h3>Vault</h3>
         <oxd-button @click="showAddItemModal = true">
-           <i class="oxd-icon bi-plus"></i> New Item
+          <i class="oxd-icon bi-plus"></i> New Item
         </oxd-button>
       </div>
       <ul class="pm-nav">
-        <li :class="{ active: currentFilter === 'all' }" @click="currentFilter = 'all'">
+        <li
+          :class="{active: currentFilter === 'all'}"
+          @click="currentFilter = 'all'"
+        >
           <i class="oxd-icon bi-shield-lock"></i> All Items
         </li>
-        <li :class="{ active: currentFilter === 'favorites' }" @click="currentFilter = 'favorites'">
+        <li
+          :class="{active: currentFilter === 'favorites'}"
+          @click="currentFilter = 'favorites'"
+        >
           <i class="oxd-icon bi-star"></i> Favorites
         </li>
         <div class="pm-nav-divider"></div>
         <li class="pm-nav-header">Categories</li>
-        <li v-for="category in categories" :key="category.id" @click="currentFilter = category.id">
-           <i class="oxd-icon bi-folder"></i> {{ category.name }}
+        <li
+          v-for="category in categories"
+          :key="category.id"
+          @click="currentFilter = category.id"
+        >
+          <i class="oxd-icon bi-folder"></i> {{ category.name }}
         </li>
       </ul>
     </div>
-    
+
     <div class="pm-main">
       <div class="pm-toolbar">
-         <div class="pm-search">
-           <oxd-input-field v-model="searchQuery" placeholder="Search vault..." />
-         </div>
+        <div class="pm-search">
+          <oxd-input-field
+            v-model="searchQuery"
+            placeholder="Search vault..."
+          />
+        </div>
       </div>
-      
+
       <div class="pm-item-list">
         <oxd-card-table v-if="items.length > 0">
-           <div v-for="item in items" :key="item.id" class="pm-item-row" @click="editItem(item)">
-              <div class="pm-item-icon">
-                 <i :class="getItemIcon(item.itemType)"></i>
-              </div>
-              <div class="pm-item-details">
-                 <strong>{{ item.name }}</strong>
-                 <span class="pm-item-subtitle">{{ item.usernameEncrypted || 'No username' }}</span>
-              </div>
-              <div class="pm-item-actions">
-                 <oxd-icon-button @click.stop="openShareModal(item)"><i class="oxd-icon bi-share"></i></oxd-icon-button>
-              </div>
-           </div>
+          <div
+            v-for="item in items"
+            :key="item.id"
+            class="pm-item-row"
+            @click="editItem(item)"
+          >
+            <div class="pm-item-icon">
+              <i :class="getItemIcon(item.itemType)"></i>
+            </div>
+            <div class="pm-item-details">
+              <strong>{{ item.name }}</strong>
+              <span class="pm-item-subtitle">{{
+                item.usernameEncrypted || 'No username'
+              }}</span>
+            </div>
+            <div class="pm-item-actions">
+              <oxd-icon-button @click.stop="openShareModal(item)"
+                ><i class="oxd-icon bi-share"></i
+              ></oxd-icon-button>
+            </div>
+          </div>
         </oxd-card-table>
         <div v-else class="pm-empty-state">
-           <p>No items found.</p>
+          <p>No items found.</p>
         </div>
       </div>
     </div>
-    
-    <vault-item-form 
-      v-if="showAddItemModal" 
-      :is-open="showAddItemModal" 
+
+    <vault-item-form
+      v-if="showAddItemModal"
+      :is-open="showAddItemModal"
       :item="selectedItem"
       @close="closeModal"
       @save="handleSaveItem"
     />
-    
+
     <share-modal
       v-if="showShareModal"
       :is-open="showShareModal"
@@ -68,8 +90,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from 'vue';
-import { APIService } from '@/core/util/services/api.service';
+import {defineComponent, ref, onMounted, computed} from 'vue';
+import {APIService} from '@/core/util/services/api.service';
 import VaultItemForm from './VaultItemForm.vue';
 import ShareModal from './ShareModal.vue';
 
@@ -77,9 +99,9 @@ declare const window: any;
 
 export default defineComponent({
   name: 'PasswordManagerLayout',
-  components: { VaultItemForm, ShareModal },
+  components: {VaultItemForm, ShareModal},
   setup() {
-    const items = ref<any[]>([]); 
+    const items = ref<any[]>([]);
     const categories = ref<any[]>([]);
     const currentFilter = ref<string | number>('all');
     const searchQuery = ref('');
@@ -88,89 +110,99 @@ export default defineComponent({
     const selectedItem = ref<any>(null);
 
     // Initialize Services
-    const itemService = new APIService(window.appGlobal.baseUrl, '/api/v2/password-manager/items');
-    const categoryService = new APIService(window.appGlobal.baseUrl, '/api/v2/password-manager/categories');
+    const itemService = new APIService(
+      window.appGlobal.baseUrl,
+      '/api/v2/password-manager/items',
+    );
+    const categoryService = new APIService(
+      window.appGlobal.baseUrl,
+      '/api/v2/password-manager/categories',
+    );
 
     const fetchItems = async () => {
-       try {
-         const response = await itemService.getAll();
-         items.value = response.data.data;
-       } catch (e) {
-         console.error('Failed to fetch items', e);
-       }
+      try {
+        const response = await itemService.getAll();
+        items.value = response.data.data;
+      } catch (e) {
+        console.error('Failed to fetch items', e);
+      }
     };
 
     const fetchCategories = async () => {
-        try {
-            const response = await categoryService.getAll();
-            categories.value = response.data.data;
-        } catch (e) {
-            console.error('Failed to fetch categories', e);
-        }
+      try {
+        const response = await categoryService.getAll();
+        categories.value = response.data.data;
+      } catch (e) {
+        console.error('Failed to fetch categories', e);
+      }
     };
 
     const handleSaveItem = async (itemData: any) => {
-        try {
-           if (itemData.id) {
-               await itemService.update(itemData.id, itemData);
-           } else {
-               await itemService.create(itemData);
-           }
-           closeModal();
-           await fetchItems();
-        } catch (e) {
-           console.error('Save failed', e);
+      try {
+        if (itemData.id) {
+          await itemService.update(itemData.id, itemData);
+        } else {
+          await itemService.create(itemData);
         }
+        closeModal();
+        await fetchItems();
+      } catch (e) {
+        console.error('Save failed', e);
+      }
     };
-    
+
     const editItem = (item: any) => {
-        selectedItem.value = item;
-        showAddItemModal.value = true;
+      selectedItem.value = item;
+      showAddItemModal.value = true;
     };
-    
+
     const closeModal = () => {
-        selectedItem.value = null;
-        showAddItemModal.value = false;
+      selectedItem.value = null;
+      showAddItemModal.value = false;
     };
-    
+
     const openShareModal = (item: any) => {
-        selectedItem.value = item;
-        showShareModal.value = true;
+      selectedItem.value = item;
+      showShareModal.value = true;
     };
-    
+
     const closeShareModal = () => {
-        showShareModal.value = false;
-        // Don't nullify selectedItem immediately if it's used elsewhere, but for now it's fine
+      showShareModal.value = false;
+      // Don't nullify selectedItem immediately if it's used elsewhere, but for now it's fine
     };
 
     const getItemIcon = (type: string) => {
-        switch(type) {
-            case 'login': return 'oxd-icon bi-key';
-            case 'card': return 'oxd-icon bi-credit-card';
-            case 'note': return 'oxd-icon bi-journal-text';
-            default: return 'oxd-icon bi-shield-lock';
-        }
-    }
+      switch (type) {
+        case 'login':
+          return 'oxd-icon bi-key';
+        case 'card':
+          return 'oxd-icon bi-credit-card';
+        case 'note':
+          return 'oxd-icon bi-journal-text';
+        default:
+          return 'oxd-icon bi-shield-lock';
+      }
+    };
 
     const filteredItems = computed(() => {
-        let result = items.value;
-        
-        if (currentFilter.value === 'favorites') {
-             result = result.filter(i => i.favorite);
-        } else if (typeof currentFilter.value === 'number') {
-             result = result.filter(i => i.categoryId === currentFilter.value);
-        }
+      let result = items.value;
 
-        if (searchQuery.value) {
-            const query = searchQuery.value.toLowerCase();
-            result = result.filter(i => i.name.toLowerCase().includes(query));
-        }
-        
-        return result;
+      if (currentFilter.value === 'favorites') {
+        result = result.filter((i) => i.favorite);
+      } else if (typeof currentFilter.value === 'number') {
+        result = result.filter((i) => i.categoryId === currentFilter.value);
+      }
+
+      if (searchQuery.value) {
+        const query = searchQuery.value.toLowerCase();
+        result = result.filter((i) => i.name.toLowerCase().includes(query));
+      }
+
+      return result;
     });
 
     onMounted(async () => {
-       await Promise.all([fetchItems(), fetchCategories()]);
+      await Promise.all([fetchItems(), fetchCategories()]);
     });
 
     return {
@@ -186,9 +218,9 @@ export default defineComponent({
       showShareModal,
       openShareModal,
       closeShareModal,
-      getItemIcon
+      getItemIcon,
     };
-  }
+  },
 });
 </script>
 
@@ -223,7 +255,7 @@ export default defineComponent({
   list-style: none;
   padding: 0;
   margin: 0;
-  
+
   li {
     padding: 10px 15px;
     cursor: pointer;
@@ -233,16 +265,16 @@ export default defineComponent({
     align-items: center;
     gap: 10px;
     transition: background 0.2s;
-    
+
     &:hover {
       background: #e9ecef;
     }
-    
+
     &.active {
       background: #e3f2fd;
       color: #0d6efd;
     }
-    
+
     i {
       font-size: 1.1rem;
     }
@@ -258,7 +290,9 @@ export default defineComponent({
   margin-bottom: 10px;
   padding-left: 15px;
   cursor: default !important;
-  &:hover { background: none !important; }
+  &:hover {
+    background: none !important;
+  }
 }
 
 .pm-main {
@@ -275,6 +309,8 @@ export default defineComponent({
 .pm-item-row {
   padding: 15px;
   border-bottom: 1px solid #eee;
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 </style>
