@@ -115,24 +115,6 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
             ),
             $this->getValidationDecorator()->requiredParamRule(
                 new ParamRule(self::PARAMETER_ITEM_TYPE, new Rule(Rules::STRING_TYPE))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_USERNAME_ENCRYPTED, new Rule(Rules::ALWAYS_VALID))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_PASSWORD_ENCRYPTED, new Rule(Rules::ALWAYS_VALID))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_URL_ENCRYPTED, new Rule(Rules::ALWAYS_VALID))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_NOTES_ENCRYPTED, new Rule(Rules::ALWAYS_VALID))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_TOTP_SECRET_ENCRYPTED, new Rule(Rules::ALWAYS_VALID))
-            ),
-            $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_CATEGORY_ID, new Rule(Rules::ALWAYS_VALID))
             )
         );
 
