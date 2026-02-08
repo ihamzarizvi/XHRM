@@ -7,12 +7,11 @@
     </template>
 
     <div class="oxd-form-row">
-      <oxd-input-field
-        v-model="form.name"
-        label="Name"
-        :error-message="errors.name"
-        required
-      />
+      <div class="oxd-input-group oxd-input-field-bottom-space">
+        <label class="oxd-label oxd-label--active">Name</label>
+        <input v-model="form.name" class="oxd-input oxd-input--active" required />
+        <span v-if="errors.name" class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message">{{ errors.name }}</span>
+      </div>
     </div>
 
     <div class="oxd-form-row">
@@ -28,25 +27,36 @@
 
     <div v-if="form.itemType === 'login'">
       <div class="oxd-form-row">
-        <oxd-input-field v-model="form.username" label="Username" />
+        <div class="oxd-input-group oxd-input-field-bottom-space">
+          <label class="oxd-label">Username</label>
+          <input v-model="form.username" class="oxd-input oxd-input--active" />
+        </div>
       </div>
       <div class="oxd-form-row">
-        <oxd-input-field
-          v-model="form.password"
-          label="Password"
-          type="password"
-        />
+        <div class="oxd-input-group oxd-input-field-bottom-space">
+          <label class="oxd-label">Password</label>
+          <input v-model="form.password" type="password" class="oxd-input oxd-input--active" />
+        </div>
       </div>
       <div class="oxd-form-row">
-        <oxd-input-field v-model="form.url" label="URL" />
+        <div class="oxd-input-group oxd-input-field-bottom-space">
+          <label class="oxd-label">URL</label>
+          <input v-model="form.url" class="oxd-input oxd-input--active" />
+        </div>
       </div>
       <div class="oxd-form-row">
-        <oxd-input-field v-model="form.totpSecret" label="TOTP Secret (Key)" />
+        <div class="oxd-input-group oxd-input-field-bottom-space">
+          <label class="oxd-label">TOTP Secret (Key)</label>
+          <input v-model="form.totpSecret" class="oxd-input oxd-input--active" />
+        </div>
       </div>
     </div>
 
     <div class="oxd-form-row">
-      <oxd-input-field v-model="form.notes" label="Notes" type="textarea" />
+      <div class="oxd-input-group oxd-input-field-bottom-space">
+        <label class="oxd-label">Notes</label>
+        <textarea v-model="form.notes" class="oxd-input oxd-input--active" rows="3"></textarea>
+      </div>
     </div>
 
     <template #footer>

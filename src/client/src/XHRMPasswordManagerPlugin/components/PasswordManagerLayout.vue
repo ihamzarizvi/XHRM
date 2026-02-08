@@ -35,8 +35,9 @@
     <div class="pm-main">
       <div class="pm-toolbar">
         <div class="pm-search">
-          <oxd-input-field
+          <input
             v-model="searchQuery"
+            class="oxd-input oxd-input--active"
             placeholder="Search vault..."
           />
         </div>
