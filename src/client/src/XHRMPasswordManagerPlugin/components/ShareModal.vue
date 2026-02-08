@@ -5,25 +5,39 @@
     </template>
 
     <div class="oxd-form-row">
-      <oxd-input-field
-        v-model="email"
-        label="User Email"
-        placeholder="Enter email to share with"
-      />
+      <div class="oxd-input-group oxd-input-field-bottom-space">
+        <label class="oxd-label">User Email</label>
+        <input
+          v-model="email"
+          class="oxd-input oxd-input--active"
+          placeholder="Enter email to share with"
+        />
+      </div>
     </div>
 
     <div class="oxd-form-row">
-      <oxd-input-group label="Permission">
+      <div class="oxd-input-group oxd-input-field-bottom-space">
+        <label class="oxd-label">Permission</label>
         <select v-model="permission" class="oxd-select-wrapper">
           <option value="read">Read Only</option>
           <option value="write">Read/Write</option>
         </select>
-      </oxd-input-group>
+      </div>
     </div>
 
     <template #footer>
-      <oxd-button ghost label="Cancel" @click="$emit('close')" />
-      <oxd-button label="Share" @click="share" />
+      <button
+        class="oxd-button oxd-button--medium oxd-button--ghost"
+        @click="$emit('close')"
+      >
+        Cancel
+      </button>
+      <button
+        class="oxd-button oxd-button--medium oxd-button--main"
+        @click="share"
+      >
+        Share
+      </button>
     </template>
   </oxd-dialog>
 </template>

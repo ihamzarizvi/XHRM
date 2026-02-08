@@ -9,20 +9,29 @@
     <div class="oxd-form-row">
       <div class="oxd-input-group oxd-input-field-bottom-space">
         <label class="oxd-label oxd-label--active">Name</label>
-        <input v-model="form.name" class="oxd-input oxd-input--active" required />
-        <span v-if="errors.name" class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message">{{ errors.name }}</span>
+        <input
+          v-model="form.name"
+          class="oxd-input oxd-input--active"
+          required
+        />
+        <span
+          v-if="errors.name"
+          class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"
+          >{{ errors.name }}</span
+        >
       </div>
     </div>
 
     <div class="oxd-form-row">
-      <oxd-input-group label="Type" required>
+      <div class="oxd-input-group oxd-input-field-bottom-space">
+        <label class="oxd-label oxd-label--active">Type</label>
         <select v-model="form.itemType" class="oxd-select-wrapper">
           <option value="login">Login</option>
           <option value="card">Card</option>
           <option value="identity">Identity</option>
           <option value="note">Secure Note</option>
         </select>
-      </oxd-input-group>
+      </div>
     </div>
 
     <div v-if="form.itemType === 'login'">
@@ -35,7 +44,11 @@
       <div class="oxd-form-row">
         <div class="oxd-input-group oxd-input-field-bottom-space">
           <label class="oxd-label">Password</label>
-          <input v-model="form.password" type="password" class="oxd-input oxd-input--active" />
+          <input
+            v-model="form.password"
+            type="password"
+            class="oxd-input oxd-input--active"
+          />
         </div>
       </div>
       <div class="oxd-form-row">
@@ -47,7 +60,10 @@
       <div class="oxd-form-row">
         <div class="oxd-input-group oxd-input-field-bottom-space">
           <label class="oxd-label">TOTP Secret (Key)</label>
-          <input v-model="form.totpSecret" class="oxd-input oxd-input--active" />
+          <input
+            v-model="form.totpSecret"
+            class="oxd-input oxd-input--active"
+          />
         </div>
       </div>
     </div>
@@ -55,13 +71,27 @@
     <div class="oxd-form-row">
       <div class="oxd-input-group oxd-input-field-bottom-space">
         <label class="oxd-label">Notes</label>
-        <textarea v-model="form.notes" class="oxd-input oxd-input--active" rows="3"></textarea>
+        <textarea
+          v-model="form.notes"
+          class="oxd-input oxd-input--active"
+          rows="3"
+        ></textarea>
       </div>
     </div>
 
     <template #footer>
-      <oxd-button label="Cancel" ghost @click="$emit('close')" />
-      <oxd-button label="Save" @click="save" />
+      <button
+        class="oxd-button oxd-button--medium oxd-button--ghost"
+        @click="$emit('close')"
+      >
+        Cancel
+      </button>
+      <button
+        class="oxd-button oxd-button--medium oxd-button--main"
+        @click="save"
+      >
+        Save
+      </button>
     </template>
   </oxd-dialog>
 </template>

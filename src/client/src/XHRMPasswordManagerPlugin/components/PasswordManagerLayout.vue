@@ -3,9 +3,12 @@
     <div class="pm-sidebar">
       <div class="pm-sidebar-header">
         <h3>Vault</h3>
-        <oxd-button @click="showAddItemModal = true">
+        <button
+          class="oxd-button oxd-button--medium oxd-button--main"
+          @click="showAddItemModal = true"
+        >
           <i class="oxd-icon bi-plus"></i> New Item
-        </oxd-button>
+        </button>
       </div>
       <ul class="pm-nav">
         <li
@@ -44,7 +47,7 @@
       </div>
 
       <div class="pm-item-list">
-        <oxd-card-table v-if="items.length > 0">
+        <div v-if="items.length > 0" class="oxd-table-card">
           <div
             v-for="item in items"
             :key="item.id"
@@ -61,12 +64,15 @@
               }}</span>
             </div>
             <div class="pm-item-actions">
-              <oxd-icon-button @click.stop="openShareModal(item)"
-                ><i class="oxd-icon bi-share"></i
-              ></oxd-icon-button>
+              <button
+                class="oxd-icon-button"
+                @click.stop="openShareModal(item)"
+              >
+                <i class="oxd-icon bi-share"></i>
+              </button>
             </div>
           </div>
-        </oxd-card-table>
+        </div>
         <div v-else class="pm-empty-state">
           <p>No items found.</p>
         </div>
