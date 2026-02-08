@@ -36,6 +36,7 @@ return array(
     'XHRM\\Recruitment\\' => array($baseDir . '/src/plugins/XHRMRecruitmentPlugin'),
     'XHRM\\Pim\\' => array($baseDir . '/src/plugins/XHRMPimPlugin'),
     'XHRM\\Performance\\' => array($baseDir . '/src/plugins/XHRMPerformancePlugin'),
+    'XHRM\\PasswordManager\\' => array($baseDir . '/src/plugins/XHRMPasswordManagerPlugin'),
     'XHRM\\OpenidAuthentication\\' => array($baseDir . '/src/plugins/XHRMOpenidAuthenticationPlugin'),
     'XHRM\\ORM\\' => array($baseDir . '/src/lib/orm'),
     'XHRM\\OAuth\\' => array($baseDir . '/src/plugins/XHRMCoreOAuthPlugin'),

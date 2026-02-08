@@ -75,6 +75,7 @@ class ComposerStaticInitb9f6a66eae6951ea8e908515b703d2a1
             'XHRM\\Recruitment\\' => 17,
             'XHRM\\Pim\\' => 9,
             'XHRM\\Performance\\' => 17,
+            'XHRM\\PasswordManager\\' => 21,
             'XHRM\\OpenidAuthentication\\' => 26,
             'XHRM\\ORM\\' => 9,
             'XHRM\\OAuth\\' => 11,
@@ -340,6 +341,10 @@ class ComposerStaticInitb9f6a66eae6951ea8e908515b703d2a1
         'XHRM\\Performance\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/plugins/XHRMPerformancePlugin',
+        ),
+        'XHRM\\PasswordManager\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/plugins/XHRMPasswordManagerPlugin',
         ),
         'XHRM\\OpenidAuthentication\\' => 
         array (
