@@ -164,8 +164,11 @@ export default defineComponent({
         }
         closeModal();
         await fetchItems();
-      } catch (e) {
+      } catch (e: any) {
         console.error('Save failed', e);
+        alert(
+          'Failed to save item: ' + (e.response?.data?.message || e.message),
+        );
       }
     };
 

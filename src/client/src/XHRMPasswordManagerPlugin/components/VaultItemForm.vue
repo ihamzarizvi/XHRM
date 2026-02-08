@@ -117,9 +117,13 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-cancel" @click="$emit('close')">Cancel</button>
-        <button class="btn-save" @click="save">
-          <i class="bi bi-check2-circle"></i> Save to Vault
+        <button class="btn-cancel" :disabled="isSaving" @click="$emit('close')">
+          Cancel
+        </button>
+        <button class="btn-save" :disabled="isSaving" @click="save">
+          <i v-if="isSaving" class="bi bi-arrow-repeat spin"></i>
+          <i v-else class="bi bi-check2-circle"></i>
+          {{ isSaving ? 'Saving...' : 'Save to Vault' }}
         </button>
       </div>
     </div>
@@ -160,6 +164,7 @@ export default defineComponent({
 
     const errors = ref<Record<string, string>>({});
     const isEdit = ref(false);
+    const isSaving = ref(false);
 
     watch(
       () => props.item,
@@ -200,26 +205,35 @@ export default defineComponent({
     );
 
     const save = () => {
+      console.log('VaultItemForm: save() called', form.value);
       if (!form.value.name) {
         errors.value = {name: 'Name is required'};
         return;
       }
 
-      const output = {
-        ...form.value,
-        usernameEncrypted: SecurityService.encrypt(form.value.username || ''),
-        passwordEncrypted: SecurityService.encrypt(form.value.password || ''),
-        urlEncrypted: SecurityService.encrypt(form.value.url || ''),
-        notesEncrypted: SecurityService.encrypt(form.value.notes || ''),
-        totpSecretEncrypted: SecurityService.encrypt(
-          form.value.totpSecret || '',
-        ),
-      };
+      isSaving.value = true;
+      try {
+        const output = {
+          ...form.value,
+          usernameEncrypted: SecurityService.encrypt(form.value.username || ''),
+          passwordEncrypted: SecurityService.encrypt(form.value.password || ''),
+          urlEncrypted: SecurityService.encrypt(form.value.url || ''),
+          notesEncrypted: SecurityService.encrypt(form.value.notes || ''),
+          totpSecretEncrypted: SecurityService.encrypt(
+            form.value.totpSecret || '',
+          ),
+        };
 
-      emit('save', output);
+        console.log('VaultItemForm: emitting save event', output);
+        emit('save', output);
+      } catch (e) {
+        console.error('VaultItemForm: encryption failed', e);
+        alert('Encryption failed. Please check for special characters.');
+        isSaving.value = false;
+      }
     };
 
-    return {form, errors, isEdit, save};
+    return {form, errors, isEdit, isSaving, save};
   },
 });
 </script>
@@ -460,6 +474,19 @@ export default defineComponent({
   &:hover {
     background: #f1f5f9;
     color: #0f172a;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
