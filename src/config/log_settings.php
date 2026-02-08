@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-$logFilePath = realpath(__DIR__ . '/../log') . DIRECTORY_SEPARATOR . 'XHRM.log';
+$logFilePath = realpath(__DIR__ . '/../../log') . DIRECTORY_SEPARATOR . 'ohrm.log';
 
 ini_set('log_errors', true);
 ini_set('error_log', $logFilePath);
