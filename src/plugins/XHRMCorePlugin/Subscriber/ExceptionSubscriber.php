@@ -53,6 +53,15 @@ class ExceptionSubscriber extends AbstractEventSubscriber
             $response->headers->replace($exception->getHeaders());
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setContent(json_encode([
+                'error' => [
+                    'message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'trace' => $exception->getTraceAsString()
+                ]
+            ]));
+            $response->headers->set('Content-Type', 'application/json');
         }
 
         $event->setResponse($response);
