@@ -64,13 +64,18 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function getAll(): EndpointCollectionResult
     {
-        $userId = $this->getUserRoleManager()->getUser()->getId();
-        $items = $this->getPasswordManagerService()->getVaultItems($userId);
+        try {
+            $userId = $this->getUserRoleManager()->getUser()->getId();
+            $items = $this->getPasswordManagerService()->getVaultItems($userId);
 
-        return new EndpointCollectionResult(
-            VaultItemModel::class,
-            $items
-        );
+            return new EndpointCollectionResult(
+                VaultItemModel::class,
+                $items
+            );
+        } catch (\Throwable $e) {
+            // Force error visibility to frontend
+            throw new \Exception("DEEP_DEBUG_ERROR: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        }
     }
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
@@ -80,14 +85,18 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function create(): EndpointResourceResult
     {
-        $item = new VaultItem();
-        $item->setUser($this->getUserRoleManager()->getUser());
+        try {
+            $item = new VaultItem();
+            $item->setUser($this->getUserRoleManager()->getUser());
 
-        $this->setParamsToItem($item);
+            $this->setParamsToItem($item);
 
-        $this->getPasswordManagerService()->saveVaultItem($item);
+            $this->getPasswordManagerService()->saveVaultItem($item);
 
-        return new EndpointResourceResult(VaultItemModel::class, $item);
+            return new EndpointResourceResult(VaultItemModel::class, $item);
+        } catch (\Throwable $e) {
+            throw new \Exception("DEEP_DEBUG_ERROR: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        }
     }
 
     private function setParamsToItem(VaultItem $item): void
