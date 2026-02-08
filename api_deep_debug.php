@@ -22,6 +22,18 @@ try {
     $kernel = new Framework('prod', false);
     $request = Request::createFromGlobals();
 
+    // Use reflection to call protected configuration methods
+    echo "<p>Configuring Router and Plugins...</p>";
+    $refl = new \ReflectionClass($kernel);
+
+    $confRouter = $refl->getMethod('configureRouter');
+    $confRouter->setAccessible(true);
+    $confRouter->invoke($kernel, $request);
+
+    $confPlugins = $refl->getMethod('configurePlugins');
+    $confPlugins->setAccessible(true);
+    $confPlugins->invoke($kernel, $request);
+
     echo "<p>Accessing Container...</p>";
     $container = ServiceContainer::getContainer();
     echo "<p>Container accessed.</p>";
