@@ -182,6 +182,15 @@ class VaultItem
         return $this->favorite;
     }
 
+    /**
+     * @return bool
+     * @internal Added for API Model normalization compatibility
+     */
+    public function getFavorite(): bool
+    {
+        return $this->isFavorite();
+    }
+
     public function setFavorite(bool $favorite): void
     {
         $this->favorite = $favorite;
@@ -270,6 +279,15 @@ class VaultItem
     public function isBreachDetected(): bool
     {
         return $this->breachDetected;
+    }
+
+    /**
+     * @return bool
+     * @internal Added for API Model normalization compatibility
+     */
+    public function getBreachDetected(): bool
+    {
+        return $this->isBreachDetected();
     }
 
     public function setBreachDetected(bool $breachDetected): void
