@@ -41,7 +41,7 @@ class ConfigHelper
             Config::PUBLIC_DIR => realpath($pathToProjectBase . '/web'),
             Config::DOCTRINE_PROXY_DIR => realpath($pathToSrcDir . '/config/proxy'),
             Config::TEST_DIR => realpath($pathToSrcDir . '/test'),
-            Config::LOG_DIR => $pathToSrcDir . DIRECTORY_SEPARATOR . 'log',
+            Config::LOG_DIR => $pathToProjectBase . DIRECTORY_SEPARATOR . 'log',
             Config::CACHE_DIR => $pathToSrcDir . DIRECTORY_SEPARATOR . 'cache',
             Config::CONFIG_DIR => $pathToConfigDir,
             Config::CRYPTO_KEY_DIR => $pathToConfigDir . DIRECTORY_SEPARATOR . 'cryptokeys',
