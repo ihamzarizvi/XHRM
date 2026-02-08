@@ -17,13 +17,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0); // Hide from users
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/emergency_error.log');
+ini_set('error_log', __DIR__ . '/log/emergency_error.log');
+error_reporting(E_ALL);
 
-include_once('./src/config/log_settings.php');
+try {
+    include_once('./src/config/log_settings.php');
+} catch (\Throwable $t) {
+    error_log("FATAL STARTUP: " . $t->getMessage());
+}
 
 use XHRM\Config\Config;
 use XHRM\Framework\Framework;
