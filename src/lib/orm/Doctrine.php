@@ -117,9 +117,11 @@ class Doctrine
         $paths = [];
         $pluginPaths = Config::get('ohrm_plugin_paths');
         foreach ($pluginPaths as $pluginPath) {
-            $entityPath = realpath($pluginPath . '/entity');
-            if ($entityPath) {
-                $paths[] = $entityPath;
+            foreach (['/entity', '/Entity'] as $folder) {
+                $entityPath = realpath($pluginPath . $folder);
+                if ($entityPath) {
+                    $paths[] = $entityPath;
+                }
             }
         }
         return $paths;
