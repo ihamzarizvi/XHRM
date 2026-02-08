@@ -40,7 +40,7 @@ class VaultItemModel implements Normalizable
             'name',
             'itemType',
             'favorite',
-            ['getCategory', 'getId'],
+            ['getCategory', 'getId', true],
             'usernameEncrypted',
             'passwordEncrypted',
             'urlEncrypted',

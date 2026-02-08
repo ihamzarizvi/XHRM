@@ -127,6 +127,7 @@ class VaultItem
     public function __construct()
     {
         $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     // Getters and Setters
