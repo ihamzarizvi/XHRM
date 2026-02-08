@@ -117,13 +117,17 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-cancel" :disabled="isSaving" @click="$emit('close')">
+        <button
+          class="btn-cancel"
+          :disabled="isLoading"
+          @click="$emit('close')"
+        >
           Cancel
         </button>
-        <button class="btn-save" :disabled="isSaving" @click="save">
-          <i v-if="isSaving" class="bi bi-arrow-repeat spin"></i>
+        <button class="btn-save" :disabled="isLoading" @click="save">
+          <i v-if="isLoading" class="bi bi-arrow-repeat spin"></i>
           <i v-else class="bi bi-check2-circle"></i>
-          {{ isSaving ? 'Saving...' : 'Save to Vault' }}
+          {{ isLoading ? 'Saving...' : 'Save to Vault' }}
         </button>
       </div>
     </div>
@@ -149,6 +153,7 @@ export default defineComponent({
   name: 'VaultItemForm',
   props: {
     isOpen: {type: Boolean, required: true},
+    isLoading: {type: Boolean, default: false},
     item: {type: Object as PropType<any>, default: null},
   },
   emits: ['close', 'save'],
@@ -164,7 +169,6 @@ export default defineComponent({
 
     const errors = ref<Record<string, string>>({});
     const isEdit = ref(false);
-    const isSaving = ref(false);
 
     watch(
       () => props.item,
@@ -211,7 +215,6 @@ export default defineComponent({
         return;
       }
 
-      isSaving.value = true;
       try {
         const output = {
           ...form.value,
@@ -229,11 +232,10 @@ export default defineComponent({
       } catch (e) {
         console.error('VaultItemForm: encryption failed', e);
         alert('Encryption failed. Please check for special characters.');
-        isSaving.value = false;
       }
     };
 
-    return {form, errors, isEdit, isSaving, save};
+    return {form, errors, isEdit, save};
   },
 });
 </script>

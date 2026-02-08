@@ -93,6 +93,7 @@
     <vault-item-form
       v-if="showAddItemModal"
       :is-open="showAddItemModal"
+      :is-loading="isSavingItem"
       :item="selectedItem"
       @close="closeModal"
       @save="handleSaveItem"
@@ -126,6 +127,7 @@ export default defineComponent({
     const showAddItemModal = ref(false);
     const showShareModal = ref(false);
     const selectedItem = ref<any>(null);
+    const isSavingItem = ref(false);
 
     // Initialize Services
     const itemService = new APIService(
@@ -156,6 +158,7 @@ export default defineComponent({
     };
 
     const handleSaveItem = async (itemData: any) => {
+      isSavingItem.value = true;
       try {
         if (itemData.id) {
           await itemService.update(itemData.id, itemData);
@@ -166,9 +169,15 @@ export default defineComponent({
         await fetchItems();
       } catch (e: any) {
         console.error('Save failed', e);
-        alert(
-          'Failed to save item: ' + (e.response?.data?.message || e.message),
-        );
+        let errorMsg = e.message;
+        if (e.response?.data?.errors) {
+          errorMsg = JSON.stringify(e.response.data.errors);
+        } else if (e.response?.data?.message) {
+          errorMsg = e.response.data.message;
+        }
+        alert('Failed to save item: ' + errorMsg);
+      } finally {
+        isSavingItem.value = false;
       }
     };
 
@@ -240,6 +249,7 @@ export default defineComponent({
       openShareModal,
       closeShareModal,
       getItemIcon,
+      isSavingItem,
     };
   },
 });
