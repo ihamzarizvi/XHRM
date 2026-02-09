@@ -282,7 +282,13 @@ export default defineComponent({
 
     const formatDate = (dateString: string) => {
       if (!dateString) return 'Unknown';
-      return format(new Date(dateString), 'MMM d, yyyy, h:mm a');
+      try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Unknown';
+        return format(date, 'MMM d, yyyy, h:mm a');
+      } catch (e) {
+        return 'Unknown';
+      }
     };
 
     const confirmDelete = () => {
