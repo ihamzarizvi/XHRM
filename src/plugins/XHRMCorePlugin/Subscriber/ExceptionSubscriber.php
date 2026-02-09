@@ -56,9 +56,6 @@ class ExceptionSubscriber extends AbstractEventSubscriber
             $response->setContent(json_encode([
                 'error' => [
                     'message' => $exception->getMessage(),
-                    'file' => $exception->getFile(),
-                    'line' => $exception->getLine(),
-                    'trace' => $exception->getTraceAsString()
                 ]
             ]));
             $response->headers->set('Content-Type', 'application/json');
