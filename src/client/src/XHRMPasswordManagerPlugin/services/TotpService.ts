@@ -1,73 +1,85 @@
+/* eslint-disable no-console */
+import * as OTPAuth from 'otpauth';
+
 /**
- * TOTP Service for generating Time-based One-Time Passwords
- * Implements HMAC-SHA1 algorithm.
+ * Service for handling Time-based One-Time Passwords (TOTP).
+ * Wraps the 'otpauth' library to provide simple generation and verification methods.
  */
-export class TotpService {
-  static async generate(secret: string): Promise<string> {
-    if (!secret) return '';
+export class TOTPService {
+  /**
+   * Generates a TOTP code for the given secret at the current time.
+   * @param secret The base32 encoded secret key
+   * @returns The generated 6-digit code or null if secret is invalid
+   */
+  static generateCode(secret: string): string | null {
+    if (!secret) return null;
 
-    // Clean secret
-    const key = this.base32ToBuf(secret.toUpperCase().replace(/ /g, ''));
-    if (!key) return 'Invalid Key';
+    try {
+      // Remove spaces/dashes and handle potential padding
+      const cleanSecret = secret.replace(/[\s-]/g, '').toUpperCase();
 
-    const epoch = Math.round(new Date().getTime() / 1000.0);
-    const time = new Uint8Array(8);
+      const totp = new OTPAuth.TOTP({
+        issuer: 'XHRM Vault',
+        label: 'User',
+        algorithm: 'SHA1',
+        digits: 6,
+        period: 30,
+        secret: cleanSecret, // otpauth handles base32 decoding
+      });
 
-    // Write time in big-endian (counter)
-    const counter = Math.floor(epoch / 30);
-    // JS max integer support is tricky for 64-bit writing without BigInt,
-    // but for current epoch 32-bit fits in the lower bytes.
-    // Simplified writing for typical timeframe:
-    new DataView(time.buffer).setBigUint64(0, BigInt(counter), false); // Big-endian
-
-    // HMAC-SHA1
-    const cryptoKey = await window.crypto.subtle.importKey(
-      'raw',
-      key,
-      {name: 'HMAC', hash: 'SHA-1'},
-      false,
-      ['sign'],
-    );
-
-    const signature = await window.crypto.subtle.sign('HMAC', cryptoKey, time);
-
-    const hmac = new Uint8Array(signature);
-    const offset = hmac[hmac.length - 1] & 0xf;
-
-    const binary =
-      ((hmac[offset] & 0x7f) << 24) |
-      ((hmac[offset + 1] & 0xff) << 16) |
-      ((hmac[offset + 2] & 0xff) << 8) |
-      (hmac[offset + 3] & 0xff);
-
-    let otp = (binary % 1000000).toString();
-    while (otp.length < 6) {
-      otp = '0' + otp;
+      return totp.generate();
+    } catch (e) {
+      console.error('Failed to generate TOTP code:', e);
+      return null;
     }
-
-    return otp;
   }
 
-  private static base32ToBuf(str: string): Uint8Array | null {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-    let bits = 0;
-    let value = 0;
-    let index = 0; // write index
-    const output = new Uint8Array(Math.ceil((str.length * 5) / 8));
+  /**
+   * Validates a TOTP code against a secret.
+   * Allows for a 1-period variance (window of 1).
+   */
+  static validate(secret: string, token: string): boolean {
+    if (!secret || !token) return false;
 
-    for (let i = 0; i < str.length; i++) {
-      const char = str[i];
-      const idx = alphabet.indexOf(char);
-      if (idx === -1) return null;
+    try {
+      const cleanSecret = secret.replace(/[\s-]/g, '').toUpperCase();
+      const totp = new OTPAuth.TOTP({
+        algorithm: 'SHA1',
+        digits: 6,
+        period: 30,
+        secret: cleanSecret,
+      });
 
-      value = (value << 5) | idx;
-      bits += 5;
-
-      if (bits >= 8) {
-        output[index++] = (value >>> (bits - 8)) & 255;
-        bits -= 8;
-      }
+      const delta = totp.validate({token, window: 1});
+      return delta !== null;
+    } catch (e) {
+      console.error('Failed to validate TOTP code:', e);
+      return false;
     }
-    return output;
+  }
+
+  /**
+   * Returns the remaining seconds in the current 30-second epoch.
+   * Useful for UI countdown timers.
+   */
+  static getRemainingSeconds(): number {
+    const epoch = Math.floor(Date.now() / 1000);
+    return 30 - (epoch % 30);
+  }
+
+  /**
+   * Generates a random Base32 secret key for new TOTP setups.
+   * (Simple implementation for client-side generation)
+   */
+  static generateSecret(length = 20): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    let secret = '';
+    const randomValues = new Uint8Array(length);
+    window.crypto.getRandomValues(randomValues);
+
+    for (let i = 0; i < length; i++) {
+      secret += chars[randomValues[i] % chars.length];
+    }
+    return secret;
   }
 }

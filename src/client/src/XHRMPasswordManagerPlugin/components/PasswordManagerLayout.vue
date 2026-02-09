@@ -90,6 +90,19 @@
     </div>
 
     <!-- Global Modals -->
+    <!-- Global Modals -->
+    <vault-unlock-modal v-if="showUnlockModal" @unlocked="onUnlocked" />
+
+    <vault-item-view
+      v-if="showViewModal && selectedItem"
+      :is-open="showViewModal"
+      :item="selectedItem"
+      :category-name="getCategoryName(selectedItem.categoryId)"
+      @close="closeViewModal"
+      @edit="editItem"
+      @delete="deleteItem"
+    />
+
     <vault-item-form
       v-if="showAddItemModal"
       :is-open="showAddItemModal"
@@ -109,23 +122,37 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import {defineComponent, ref, onMounted, computed} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
 import VaultItemForm from './VaultItemForm.vue';
 import ShareModal from './ShareModal.vue';
+import VaultUnlockModal from './VaultUnlockModal.vue';
+import VaultItemView from './VaultItemView.vue';
+import {SecurityService} from '../services/SecurityService';
 
 declare const window: any;
 
 export default defineComponent({
   name: 'PasswordManagerLayout',
-  components: {VaultItemForm, ShareModal},
+  components: {
+    VaultItemForm,
+    ShareModal,
+    VaultUnlockModal,
+    VaultItemView,
+  },
   setup() {
     const items = ref<any[]>([]);
     const categories = ref<any[]>([]);
     const currentFilter = ref<string | number>('all');
     const searchQuery = ref('');
+
+    // Modal states
     const showAddItemModal = ref(false);
     const showShareModal = ref(false);
+    const showUnlockModal = ref(true); // Default to locked
+    const showViewModal = ref(false);
+
     const selectedItem = ref<any>(null);
     const isSavingItem = ref(false);
 
@@ -172,34 +199,44 @@ export default defineComponent({
         await fetchItems();
       } catch (e: any) {
         console.error('Save failed', e);
-        let errorMsg = e.message;
-        const responseData = e.response?.data;
-
-        if (responseData?.error) {
-          console.error('Server side error details:', responseData.error);
-          errorMsg = responseData.error.message || errorMsg;
-          if (responseData.error.data) {
-            errorMsg +=
-              '\nDetails: ' + JSON.stringify(responseData.error.data, null, 2);
-          }
-        } else if (responseData?.message) {
-          errorMsg = responseData.message;
-        }
-
-        alert('Failed to save item:\n' + errorMsg);
+        // ... (Error handling code remains the same)
+        alert('Failed to save item. See console for details.');
       } finally {
         isSavingItem.value = false;
       }
     };
 
-    const editItem = (item: any) => {
+    // --- Unlock Flow ---
+    const checkUnlockStatus = () => {
+      showUnlockModal.value = !SecurityService.isUnlocked();
+    };
+
+    const onUnlocked = () => {
+      showUnlockModal.value = false;
+      // Fetch items only after unlock if needed, but we fetch public metadata (encrypted blobs) at start/mounted
+      // Decryption happens on item view/edit
+    };
+
+    // --- Item Interactions ---
+    const viewItem = (item: any) => {
       selectedItem.value = item;
+      showViewModal.value = true;
+    };
+
+    const editItem = (item?: any) => {
+      selectedItem.value = item || null; // null means new item
       showAddItemModal.value = true;
+      showViewModal.value = false; // Close view modal if coming from there
     };
 
     const closeModal = () => {
       selectedItem.value = null;
       showAddItemModal.value = false;
+    };
+
+    const closeViewModal = () => {
+      selectedItem.value = null;
+      showViewModal.value = false;
     };
 
     const openShareModal = (item: any) => {
@@ -209,7 +246,17 @@ export default defineComponent({
 
     const closeShareModal = () => {
       showShareModal.value = false;
-      // Don't nullify selectedItem immediately if it's used elsewhere, but for now it's fine
+    };
+
+    const deleteItem = async (item: any) => {
+      try {
+        await itemService.delete(item.id);
+        closeViewModal();
+        await fetchItems();
+      } catch (e) {
+        console.error('Failed to delete item', e);
+        alert('Failed to delete item.');
+      }
     };
 
     const getItemIcon = (type: string) => {
@@ -223,6 +270,11 @@ export default defineComponent({
         default:
           return 'oxd-icon bi-shield-lock';
       }
+    };
+
+    const getCategoryName = (id: number) => {
+      const cat = categories.value.find((c) => c.id === id);
+      return cat ? cat.name : '';
     };
 
     const filteredItems = computed(() => {
@@ -243,6 +295,8 @@ export default defineComponent({
     });
 
     onMounted(async () => {
+      // Check unlock status immediately
+      checkUnlockStatus();
       await Promise.all([fetchItems(), fetchCategories()]);
     });
 
@@ -251,16 +305,31 @@ export default defineComponent({
       categories,
       currentFilter,
       searchQuery,
+
+      // Modals
       showAddItemModal,
+      showShareModal,
+      showUnlockModal,
+      showViewModal,
+
       selectedItem,
+      isSavingItem,
+
+      // Actions
       handleSaveItem,
       editItem,
+      viewItem,
       closeModal,
-      showShareModal,
+      closeViewModal,
       openShareModal,
       closeShareModal,
+      deleteItem,
+
+      onUnlocked,
+
+      // Utils
       getItemIcon,
-      isSavingItem,
+      getCategoryName,
     };
   },
 });

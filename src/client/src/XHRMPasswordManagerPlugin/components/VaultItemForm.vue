@@ -135,8 +135,10 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import {defineComponent, ref, watch, PropType} from 'vue';
 import {SecurityService} from '../services/SecurityService';
+import {TOTPService} from '../services/TOTPService';
 
 interface VaultItemFormData {
   id?: number;
@@ -165,33 +167,49 @@ export default defineComponent({
       password: '',
       url: '',
       notes: '',
+      totpSecret: '',
     });
 
     const errors = ref<Record<string, string>>({});
     const isEdit = ref(false);
+    const totpPreview = ref<string | null>(null);
 
     watch(
       () => props.item,
-      (newItem) => {
+      async (newItem) => {
         if (newItem) {
-          form.value = {...newItem};
-          if (newItem.usernameEncrypted)
-            form.value.username = SecurityService.decrypt(
-              newItem.usernameEncrypted,
-            );
-          if (newItem.passwordEncrypted)
-            form.value.password = SecurityService.decrypt(
-              newItem.passwordEncrypted,
-            );
-          if (newItem.urlEncrypted)
-            form.value.url = SecurityService.decrypt(newItem.urlEncrypted);
-          if (newItem.notesEncrypted)
-            form.value.notes = SecurityService.decrypt(newItem.notesEncrypted);
-          if (newItem.totpSecretEncrypted)
-            form.value.totpSecret = SecurityService.decrypt(
-              newItem.totpSecretEncrypted,
-            );
-          isEdit.value = true;
+          try {
+            const [username, password, url, notes, secret] = await Promise.all([
+              newItem.usernameEncrypted
+                ? SecurityService.decrypt(newItem.usernameEncrypted)
+                : '',
+              newItem.passwordEncrypted
+                ? SecurityService.decrypt(newItem.passwordEncrypted)
+                : '',
+              newItem.urlEncrypted
+                ? SecurityService.decrypt(newItem.urlEncrypted)
+                : '',
+              newItem.notesEncrypted
+                ? SecurityService.decrypt(newItem.notesEncrypted)
+                : '',
+              newItem.totpSecretEncrypted
+                ? SecurityService.decrypt(newItem.totpSecretEncrypted)
+                : '',
+            ]);
+
+            form.value = {
+              ...newItem,
+              username,
+              password,
+              url,
+              notes,
+              totpSecret: secret,
+            };
+            isEdit.value = true;
+          } catch (e) {
+            console.error('Failed to decrypt item for editing', e);
+            alert('Failed to decrypt item. Ensure your vault is unlocked.');
+          }
         } else {
           form.value = {
             name: '',
@@ -208,39 +226,58 @@ export default defineComponent({
       {immediate: true},
     );
 
-    const save = () => {
-      console.log('VaultItemForm: save() called', form.value);
+    // Watch for TOTP secret changes to show preview
+    watch(
+      () => form.value.totpSecret,
+      (newSecret) => {
+        if (newSecret && newSecret.length >= 16) {
+          totpPreview.value = TOTPService.generateCode(newSecret);
+        } else {
+          totpPreview.value = null;
+        }
+      },
+    );
+
+    const save = async () => {
       if (!form.value.name) {
         errors.value = {name: 'Name is required'};
         return;
       }
 
       try {
+        const [usernameEnc, passwordEnc, urlEnc, notesEnc, totpSecretEnc] =
+          await Promise.all([
+            SecurityService.encrypt(form.value.username || ''),
+            SecurityService.encrypt(form.value.password || ''),
+            SecurityService.encrypt(form.value.url || ''),
+            SecurityService.encrypt(form.value.notes || ''),
+            SecurityService.encrypt(form.value.totpSecret || ''),
+          ]);
+
         const output: any = {
           name: form.value.name,
           itemType: form.value.itemType,
-          usernameEncrypted: SecurityService.encrypt(form.value.username || ''),
-          passwordEncrypted: SecurityService.encrypt(form.value.password || ''),
-          urlEncrypted: SecurityService.encrypt(form.value.url || ''),
-          notesEncrypted: SecurityService.encrypt(form.value.notes || ''),
-          totpSecretEncrypted: SecurityService.encrypt(
-            form.value.totpSecret || '',
-          ),
+          usernameEncrypted: usernameEnc,
+          passwordEncrypted: passwordEnc,
+          urlEncrypted: urlEnc,
+          notesEncrypted: notesEnc,
+          totpSecretEncrypted: totpSecretEnc,
         };
 
         if (form.value.id) {
           output.id = form.value.id;
         }
 
-        console.log('VaultItemForm: emitting save event', output);
         emit('save', output);
       } catch (e) {
         console.error('VaultItemForm: encryption failed', e);
-        alert('Encryption failed. Please check for special characters.');
+        alert(
+          'Encryption failed. Please check for special characters or ensure vault is unlocked.',
+        );
       }
     };
 
-    return {form, errors, isEdit, save};
+    return {form, errors, isEdit, save, totpPreview};
   },
 });
 </script>
