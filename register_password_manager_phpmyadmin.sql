@@ -14,7 +14,7 @@ SELECT 'Password Manager',
 WHERE NOT EXISTS (SELECT 1 FROM `ohrm_screen` WHERE `name` = 'Password Manager');
 
 -- 3. Insert Menu Item (if not exists)
-INSERT INTO `ohrm_menu_item` (`menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`)
+INSERT INTO `ohrm_menu_item` (`menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `additional_params`, `status`)
 SELECT 'Password Manager', 
        (SELECT `id` FROM `ohrm_screen` WHERE `name` = 'Password Manager'), 
        NULL, 1, 1100, NULL, 1

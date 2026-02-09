@@ -61,7 +61,7 @@
             v-for="item in items"
             :key="item.id"
             class="pm-card"
-            @click="editItem(item)"
+            @click="viewItem(item)"
           >
             <div class="pm-card-icon" :class="item.itemType">
               <i :class="getItemIcon(item.itemType)"></i>
