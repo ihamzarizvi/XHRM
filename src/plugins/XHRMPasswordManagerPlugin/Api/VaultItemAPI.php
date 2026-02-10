@@ -170,6 +170,21 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForDelete(): ParamRuleCollection
     {
-        return new ParamRuleCollection();
+        // For single item delete via route parameter (/items/{id}), no body validation needed
+        // For bulk delete via collection endpoint, validate ids array
+        $paramRules = new ParamRuleCollection();
+
+        // Only validate ids if this is a bulk delete (no id in route)
+        $id = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_ATTRIBUTE, 'id');
+        if (!$id) {
+            $paramRules->addParamValidation(
+                new ParamRule(
+                    CommonParams::PARAMETER_IDS,
+                    new Rule(Rules::INT_ARRAY)
+                )
+            );
+        }
+
+        return $paramRules;
     }
 }
