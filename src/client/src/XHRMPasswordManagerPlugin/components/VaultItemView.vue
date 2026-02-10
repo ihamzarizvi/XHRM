@@ -296,8 +296,17 @@ export default defineComponent({
     const formatDate = (dateString: string) => {
       if (!dateString) return 'Unknown';
       try {
-        // Handle potential different date formats from API
-        const date = new Date(dateString);
+        // Handle potential different date formats from API (Doctrine object vs string)
+        let dateVal = dateString;
+        if (
+          typeof dateString === 'object' &&
+          dateString !== null &&
+          (dateString as any).date
+        ) {
+          dateVal = (dateString as any).date;
+        }
+
+        const date = new Date(dateVal);
         if (isNaN(date.getTime())) {
           console.warn('Invalid date:', dateString);
           return 'Invalid Date';

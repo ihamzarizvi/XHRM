@@ -129,7 +129,13 @@ export class SecurityService {
       );
 
       const dec = new TextDecoder();
-      return dec.decode(decryptedContent);
+      const result = dec.decode(decryptedContent);
+      console.log('Decryption SUCCESS:', {
+        resultSample:
+          result.substring(0, 20) + (result.length > 20 ? '...' : ''),
+        isLiteralEncryptedData: result === '[Encrypted Data]',
+      });
+      return result;
     } catch (e) {
       console.error('Decryption failed', e);
       return '[Encrypted Data]';
