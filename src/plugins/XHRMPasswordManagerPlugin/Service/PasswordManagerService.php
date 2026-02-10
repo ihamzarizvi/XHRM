@@ -103,6 +103,20 @@ class PasswordManagerService
     }
 
     /**
+     * @param int[] $ids
+     */
+    public function deleteVaultItems(array $ids): void
+    {
+        foreach ($ids as $id) {
+            $item = $this->getVaultItemById($id);
+            if ($item) {
+                $this->deleteVaultItem($item);
+            }
+        }
+    }
+
+
+    /**
      * @param VaultCategory $category
      */
     public function deleteCategory(VaultCategory $category): void

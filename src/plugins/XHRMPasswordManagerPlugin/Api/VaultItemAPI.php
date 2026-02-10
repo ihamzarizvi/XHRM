@@ -149,10 +149,23 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function delete(): EndpointResourceResult
     {
-        $ids = $this->getRequestParams()->getArray(RequestParams::PARAM_TYPE_BODY, CommonParams::PARAMETER_IDS);
-        // Implement bulk delete or single delete logic
-        // For simplicity
-        return new EndpointResourceResult(ArrayModel::class, []);
+        // Check if this is a single item delete (from route parameter) or bulk delete (from body)
+        $id = $this->getRequestParams()->getInt(RequestParams::PARAM_TYPE_ATTRIBUTE, 'id');
+
+        if ($id) {
+            // Single item delete
+            $item = $this->getPasswordManagerService()->getVaultItemById($id);
+            if (!$item) {
+                throw $this->getRecordNotFoundException();
+            }
+            $this->getPasswordManagerService()->deleteVaultItem($item);
+            return new EndpointResourceResult(ArrayModel::class, [$id]);
+        } else {
+            // Bulk delete
+            $ids = $this->getRequestParams()->getArray(RequestParams::PARAM_TYPE_BODY, CommonParams::PARAMETER_IDS);
+            $this->getPasswordManagerService()->deleteVaultItems($ids);
+            return new EndpointResourceResult(ArrayModel::class, $ids);
+        }
     }
 
     public function getValidationRuleForDelete(): ParamRuleCollection

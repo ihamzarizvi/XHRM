@@ -8,7 +8,7 @@ xhrm_password_manager_api_items:
 xhrm_password_manager_api_item:
   path: /api/v2/password-manager/items/{id}
   controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
-  methods: [ GET, PUT ]
+  methods: [ GET, PUT, DELETE ]
   defaults:
     _api: XHRM\PasswordManager\Api\VaultItemAPI
     _key: id
