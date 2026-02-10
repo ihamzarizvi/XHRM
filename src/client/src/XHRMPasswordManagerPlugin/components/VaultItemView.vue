@@ -256,7 +256,10 @@ export default defineComponent({
 
     const startTotpTimer = () => {
       const update = () => {
-        if (decryptedData.value.totpSecret) {
+        if (
+          decryptedData.value.totpSecret &&
+          decryptedData.value.totpSecret !== '[Encrypted Data]'
+        ) {
           const secret = decryptedData.value.totpSecret;
           const code = TOTPService.generateCode(secret);
           if (code) currentTotp.value = code;

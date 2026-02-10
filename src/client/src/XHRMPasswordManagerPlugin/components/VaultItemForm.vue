@@ -231,7 +231,11 @@ export default defineComponent({
     watch(
       () => form.value.totpSecret,
       (newSecret) => {
-        if (newSecret && newSecret.length >= 16) {
+        if (
+          newSecret &&
+          newSecret.length >= 16 &&
+          newSecret !== '[Encrypted Data]'
+        ) {
           totpPreview.value = TOTPService.generateCode(newSecret);
         } else {
           totpPreview.value = null;
