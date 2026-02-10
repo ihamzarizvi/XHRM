@@ -170,9 +170,13 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForDelete(): ParamRuleCollection
     {
-        // No body validation needed for single item delete via route parameter
-        // The {id} parameter is validated by Symfony routing (requirements: id: '\d+')
-        // Bulk delete is handled by the collection endpoint with ids validation
-        return new ParamRuleCollection();
+        // XHRM uses bulk delete pattern on collection endpoint
+        // Expects {ids: []} array in request body
+        return new ParamRuleCollection(
+            new ParamRule(
+                CommonParams::PARAMETER_IDS,
+                new Rule(Rules::INT_ARRAY)
+            )
+        );
     }
 }

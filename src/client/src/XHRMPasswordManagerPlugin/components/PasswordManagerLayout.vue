@@ -264,7 +264,8 @@ export default defineComponent({
 
     const deleteItem = async (item: any) => {
       try {
-        await itemService.delete(item.id);
+        // XHRM uses bulk delete pattern: DELETE /items with {ids: []} body
+        await itemService.deleteAll({ids: [item.id]});
         closeViewModal();
         await fetchItems();
       } catch (e) {
