@@ -78,7 +78,11 @@
               <label>Verification Code (TOTP)</label>
               <div class="field-value-container">
                 <div class="totp-value">
-                  <span class="code">{{ currentTotp || 'Generating...' }}</span>
+                  <span class="code">{{
+                    decryptedData.totpSecret === '[Encrypted Data]'
+                      ? 'Unavailable'
+                      : currentTotp || 'Generating...'
+                  }}</span>
                   <div
                     class="totp-timer"
                     :style="{width: timerWidth + '%'}"
