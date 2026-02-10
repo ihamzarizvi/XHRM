@@ -89,7 +89,7 @@ export class SecurityService {
       enc.encode(data) as any,
     );
 
-    const ivBase64 = this.arrayBufferToBase64(iv);
+    const ivBase64 = this.arrayBufferToBase64(iv.buffer);
     const contentBase64 = this.arrayBufferToBase64(encryptedContent);
 
     return `${ivBase64}::${contentBase64}`;
@@ -105,8 +105,12 @@ export class SecurityService {
 
     try {
       const [ivBase64, contentBase64] = encryptedData.split('::');
-      const iv = this.base64ToArrayBuffer(ivBase64);
-      const content = this.base64ToArrayBuffer(contentBase64);
+      // Fix potential space-to-plus corruption from server/transport
+      const safeIv = ivBase64.replace(/ /g, '+');
+      const safeContent = contentBase64.replace(/ /g, '+');
+
+      const iv = this.base64ToArrayBuffer(safeIv);
+      const content = this.base64ToArrayBuffer(safeContent);
 
       const decryptedContent = await window.crypto.subtle.decrypt(
         {
