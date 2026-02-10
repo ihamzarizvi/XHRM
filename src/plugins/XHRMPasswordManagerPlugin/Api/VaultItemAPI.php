@@ -150,7 +150,7 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
     public function delete(): EndpointResourceResult
     {
         // Check if this is a single item delete (from route parameter) or bulk delete (from body)
-        $id = $this->getRequestParams()->getInt(RequestParams::PARAM_TYPE_ATTRIBUTE, 'id');
+        $id = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_ATTRIBUTE, 'id');
 
         if ($id) {
             // Single item delete
