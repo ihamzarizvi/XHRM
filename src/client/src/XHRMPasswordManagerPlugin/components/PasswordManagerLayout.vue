@@ -53,6 +53,9 @@
             placeholder="Search your secure vault..."
           />
         </div>
+        <button class="pm-lock-btn" title="Lock Vault" @click="lockVault">
+          <i class="bi bi-lock-fill"></i>
+        </button>
       </div>
 
       <div class="pm-content">
@@ -208,13 +211,24 @@ export default defineComponent({
 
     // --- Unlock Flow ---
     const checkUnlockStatus = () => {
-      showUnlockModal.value = !SecurityService.isUnlocked();
+      const unlocked = SecurityService.isVaultUnlocked();
+      showUnlockModal.value = !unlocked;
+      if (unlocked) {
+        fetchItems();
+        fetchCategories();
+      }
     };
 
     const onUnlocked = () => {
       showUnlockModal.value = false;
-      // Fetch items only after unlock if needed, but we fetch public metadata (encrypted blobs) at start/mounted
-      // Decryption happens on item view/edit
+      fetchItems();
+      fetchCategories();
+    };
+
+    const lockVault = () => {
+      SecurityService.lockVault();
+      items.value = []; // Clear data from memory
+      showUnlockModal.value = true;
     };
 
     // --- Item Interactions ---
@@ -326,6 +340,7 @@ export default defineComponent({
       deleteItem,
 
       onUnlocked,
+      lockVault,
 
       // Utils
       getItemIcon,
@@ -454,6 +469,31 @@ export default defineComponent({
   padding: 20px 40px;
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pm-lock-btn {
+  background: none;
+  border: 1px solid #e0e0e0;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+  margin-left: 16px;
+
+  &:hover {
+    background: #ffeee6;
+    border-color: #ff5500;
+    color: #ff5500;
+  }
 }
 
 .pm-search-container {

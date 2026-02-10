@@ -85,6 +85,7 @@
                   v-model="form.url"
                   placeholder="https://github.com"
                   class="premium-input"
+                  @blur="normalizeUrl"
                 />
               </div>
             </div>
@@ -238,11 +239,19 @@ export default defineComponent({
       },
     );
 
+    const normalizeUrl = () => {
+      if (form.value.url && !form.value.url.match(/^https?:\/\//i)) {
+        form.value.url = 'https://' + form.value.url;
+      }
+    };
+
     const save = async () => {
       if (!form.value.name) {
         errors.value = {name: 'Name is required'};
         return;
       }
+
+      normalizeUrl();
 
       try {
         const [usernameEnc, passwordEnc, urlEnc, notesEnc, totpSecretEnc] =
@@ -277,7 +286,7 @@ export default defineComponent({
       }
     };
 
-    return {form, errors, isEdit, save, totpPreview};
+    return {form, errors, isEdit, save, totpPreview, normalizeUrl};
   },
 });
 </script>

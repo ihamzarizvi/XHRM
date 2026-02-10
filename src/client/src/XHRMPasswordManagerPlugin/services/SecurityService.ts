@@ -53,12 +53,15 @@ export class SecurityService {
    * @param password - The user's master password
    * @param saltHex - The user's unique salt (hex string)
    */
-  static async unlockVault(password: string, saltHex: string): Promise<void> {
-    const salt = this.hexToBytes(saltHex);
+  static async unlockVault(password: string): Promise<void> {
+    // In a real app, salt should be unique per user and stored in DB
+    // For MVP, we use a deterministic app-wide salt
+    const enc = new TextEncoder();
+    const salt = enc.encode('XHRM_VAULT_SALT_V1');
     this.masterKey = await this.deriveKey(password, salt);
   }
 
-  static isUnlocked(): boolean {
+  static isVaultUnlocked(): boolean {
     return this.masterKey !== null;
   }
 

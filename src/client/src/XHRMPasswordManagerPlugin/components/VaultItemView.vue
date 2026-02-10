@@ -114,7 +114,7 @@
                 </div>
                 <div v-if="decryptedData.url" class="field-actions">
                   <a
-                    :href="decryptedData.url"
+                    :href="normalizeUrl(decryptedData.url)"
                     target="_blank"
                     class="action-btn"
                     title="Open Website"
@@ -280,6 +280,12 @@ export default defineComponent({
       }
     };
 
+    const normalizeUrl = (url: string) => {
+      if (!url) return '';
+      if (url.match(/^https?:\/\//i)) return url;
+      return 'https://' + url;
+    };
+
     const formatDate = (dateString: string) => {
       if (!dateString) return 'Unknown';
       try {
@@ -316,6 +322,7 @@ export default defineComponent({
       currentTotp,
       timerWidth,
       copyToClipboard,
+      normalizeUrl,
       formatDate,
       confirmDelete,
       getItemIcon,
@@ -331,7 +338,7 @@ export default defineComponent({
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -340,16 +347,17 @@ export default defineComponent({
 }
 
 .modal-content {
-  background: #0f172a; /* Dark theme base from reference */
+  background: #ffffff;
   width: 100%;
   max-width: 500px;
-  border-radius: 12px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  color: #e2e8f0;
-  border: 1px solid #1e293b;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
 }
 
 .modal-header {
@@ -357,25 +365,26 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
 
   .modal-title {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    color: #f8fafc;
+    color: #111827;
   }
 
   .modal-close {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: #9ca3af;
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
     &:hover {
-      background: #334155;
-      color: #fff;
+      background: #e5e7eb;
+      color: #374151;
     }
   }
 }
@@ -384,18 +393,19 @@ export default defineComponent({
   padding: 20px;
   overflow-y: auto;
   max-height: 80vh;
+  background: #ffffff;
 }
 
 /* Header Card */
 .item-header-card {
-  background: #1e293b;
+  background: #f9fafb;
   border-radius: 8px;
   padding: 16px;
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
-  border: 1px solid #334155;
+  border: 1px solid #e5e7eb;
 
   .item-icon- {
     width: 48px;
@@ -405,20 +415,21 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    background: #0f172a;
-    color: #cbd5e1;
+    background: #ffffff;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
   }
 
   .item-header-info {
     .item-name {
       font-size: 1.1rem;
       font-weight: 600;
-      color: #fff;
+      color: #111827;
       margin-bottom: 4px;
     }
     .item-category {
       font-size: 0.85rem;
-      color: #94a3b8;
+      color: #6b7280;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -433,7 +444,7 @@ export default defineComponent({
   .section-title {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #cbd5e1;
+    color: #6b7280;
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -441,15 +452,15 @@ export default defineComponent({
 }
 
 .fields-group {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
 }
 
 .field-row {
   padding: 12px 16px;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -465,7 +476,7 @@ export default defineComponent({
 
   label {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #6b7280;
     font-weight: 500;
   }
 
@@ -478,7 +489,7 @@ export default defineComponent({
 
   .field-value {
     font-size: 0.95rem;
-    color: #f1f5f9;
+    color: #1f2937;
     font-weight: 500;
     word-break: break-all;
     flex: 1;
@@ -489,13 +500,13 @@ export default defineComponent({
     }
 
     &.url {
-      color: #38bdf8;
+      color: #2563eb;
     }
 
     &.note-text {
       white-space: pre-wrap;
       font-size: 0.9rem;
-      color: #cbd5e1;
+      color: #4b5563;
       padding-right: 40px;
     }
   }
@@ -509,15 +520,15 @@ export default defineComponent({
   .action-btn {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: #9ca3af;
     cursor: pointer;
     padding: 6px;
     border-radius: 4px;
     transition: all 0.2s;
 
     &:hover {
-      background: #334155;
-      color: #fff;
+      background: #f3f4f6;
+      color: #ff7b1d; /* XHRM Orange */
     }
 
     &.top-right {
@@ -529,7 +540,7 @@ export default defineComponent({
 
   .setup-totp {
     font-size: 0.9rem;
-    color: #64748b;
+    color: #6b7280;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -548,13 +559,13 @@ export default defineComponent({
     font-family: monospace;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #a5b4fc;
+    color: #ff7b1d; /* XHRM Orange */
     letter-spacing: 2px;
   }
 
   .totp-timer {
     height: 3px;
-    background: #6366f1;
+    background: #ff7b1d; /* XHRM Orange */
     border-radius: 2px;
     transition: width 1s linear;
   }
@@ -562,15 +573,15 @@ export default defineComponent({
 
 /* History */
 .history-box {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 12px 16px;
 }
 
 .history-item {
   font-size: 0.8rem;
-  color: #64748b;
+  color: #6b7280;
   margin-bottom: 4px;
 
   &:last-child {
@@ -581,16 +592,16 @@ export default defineComponent({
 /* Footer */
 .modal-footer {
   padding: 16px 20px;
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0f172a;
+  background: #f9fafb;
 }
 
 .footer-btn {
   border: none;
-  border-radius: 20px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.9rem;
@@ -598,23 +609,23 @@ export default defineComponent({
   transition: all 0.2s;
 
   &.edit-btn {
-    background: #3b82f6; /* Blue action */
+    background: #ff7b1d; /* XHRM Orange */
     color: white;
     padding: 8px 24px;
 
     &:hover {
-      background: #2563eb;
+      background: #e66000;
     }
   }
 
   &.delete-btn {
     background: transparent;
-    color: #ef4444; /* Red danger */
+    color: #dc2626; /* Red danger */
     font-size: 1.1rem;
     padding: 8px;
 
     &:hover {
-      background: rgba(239, 68, 68, 0.1);
+      background: #fee2e2;
     }
   }
 }
