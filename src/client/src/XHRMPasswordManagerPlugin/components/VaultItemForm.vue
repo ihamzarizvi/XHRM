@@ -285,8 +285,9 @@ export default defineComponent({
       } catch (e) {
         console.error('VaultItemForm: encryption failed', e);
         alert(
-          'Encryption failed. Please check for special characters or ensure vault is unlocked.',
+          'Encryption failed. Please unlock your vault first before saving items.',
         );
+        return; // CRITICAL: Abort save to prevent corrupted data
       }
     };
 
