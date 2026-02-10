@@ -109,6 +109,13 @@ export class SecurityService {
       const safeIv = ivBase64.replace(/ /g, '+');
       const safeContent = contentBase64.replace(/ /g, '+');
 
+      // Debug logging for troubleshooting
+      console.log('Decrypting:', {
+        originalIv: ivBase64,
+        safeIv,
+        safeContentLen: safeContent.length,
+      });
+
       const iv = this.base64ToArrayBuffer(safeIv);
       const content = this.base64ToArrayBuffer(safeContent);
 

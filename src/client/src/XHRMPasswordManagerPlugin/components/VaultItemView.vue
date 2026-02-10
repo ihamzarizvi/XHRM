@@ -296,11 +296,16 @@ export default defineComponent({
     const formatDate = (dateString: string) => {
       if (!dateString) return 'Unknown';
       try {
+        // Handle potential different date formats from API
         const date = new Date(dateString);
-        if (isNaN(date.getTime())) return 'Unknown';
+        if (isNaN(date.getTime())) {
+          console.warn('Invalid date:', dateString);
+          return 'Invalid Date';
+        }
         return format(date, 'MMM d, yyyy, h:mm a');
       } catch (e) {
-        return 'Unknown';
+        console.error('Date parse error', e);
+        return 'Error';
       }
     };
 
