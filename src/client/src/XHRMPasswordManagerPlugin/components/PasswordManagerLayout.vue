@@ -120,6 +120,15 @@
                 class="pm-favicon"
               />
               <i v-else :class="getItemIcon(item.itemType)"></i>
+
+              <!-- Shared Indicator Badge -->
+              <div
+                v-if="item._isShared"
+                class="pm-shared-badge"
+                title="Shared with me"
+              >
+                <i class="bi bi-people-fill"></i>
+              </div>
             </div>
             <div class="pm-card-info">
               <div class="pm-card-name">{{ item.name }}</div>
@@ -150,14 +159,20 @@
               >
                 <i class="bi bi-box-arrow-up-right"></i>
               </button>
+
+              <!-- Only show Edit if owner or has write permission -->
               <button
+                v-if="!item._isShared || item._sharePermission === 'write'"
                 class="pm-icon-btn"
                 title="Edit"
                 @click.stop="editItem(item)"
               >
                 <i class="bi bi-pencil"></i>
               </button>
+
+              <!-- Only show Delete if owner -->
               <button
+                v-if="!item._isShared"
                 class="pm-icon-btn delete"
                 title="Delete"
                 @click.stop="deleteItem(item)"
@@ -920,7 +935,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  overflow: hidden;
+  /* overflow: hidden; */ /* Remove to allow badge to show */
   position: relative;
   background: #f5f5f5;
 
@@ -941,7 +956,26 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 12px;
   }
+}
+
+.pm-shared-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: #ff5500;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 .pm-card-info {

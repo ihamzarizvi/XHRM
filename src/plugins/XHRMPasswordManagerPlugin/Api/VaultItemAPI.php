@@ -141,7 +141,11 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $this->throwRecordNotFoundExceptionIfNotExist($item, VaultItem::class);
 
         if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
-            // Access denied logic
+            // Check if user has "write" share permission
+            $share = $this->getPasswordManagerService()->getVaultShareDao()->findShare($id, $this->getUserRoleManager()->getUser()->getId());
+            if (!$share || $share->getPermission() !== 'write') {
+                throw new \Exception("Access denied: You do not have permission to edit this item.");
+            }
         }
 
         $this->setParamsToItem($item);
@@ -166,6 +170,12 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
             if (!$item) {
                 throw $this->getRecordNotFoundException();
             }
+
+            // Only owner can delete the item
+            if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
+                throw new \Exception("Access denied: You cannot delete this item.");
+            }
+
             $this->getPasswordManagerService()->deleteVaultItem($item);
             return new EndpointResourceResult(ArrayModel::class, [$id]);
         } else {
