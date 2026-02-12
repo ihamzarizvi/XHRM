@@ -54,6 +54,12 @@ class VaultItem
 
     /**
      * @var string|null
+     * @ORM\Column(name="encrypted_item_key", type="text", nullable=true)
+     */
+    private ?string $encryptedItemKey = null;
+
+    /**
+     * @var string|null
      * @ORM\Column(name="username_encrypted", type="text", nullable=true)
      */
     private ?string $usernameEncrypted = null;
@@ -194,6 +200,16 @@ class VaultItem
     public function setFavorite(bool $favorite): void
     {
         $this->favorite = $favorite;
+    }
+
+    public function getEncryptedItemKey(): ?string
+    {
+        return $this->encryptedItemKey;
+    }
+
+    public function setEncryptedItemKey(?string $encryptedItemKey): void
+    {
+        $this->encryptedItemKey = $encryptedItemKey;
     }
 
     public function getUsernameEncrypted(): ?string

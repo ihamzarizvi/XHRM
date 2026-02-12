@@ -9,6 +9,7 @@ use XHRM\Core\Traits\UserRoleManagerTrait;
 use XHRM\PasswordManager\Dao\VaultCategoryDao;
 use XHRM\PasswordManager\Dao\VaultItemDao;
 use XHRM\PasswordManager\Dao\VaultShareDao;
+use XHRM\PasswordManager\Dao\VaultUserKeyDao;
 use XHRM\PasswordManager\Entity\VaultCategory;
 use XHRM\PasswordManager\Entity\VaultItem;
 
@@ -22,6 +23,7 @@ class PasswordManagerService
     protected ?VaultItemDao $vaultItemDao = null;
     protected ?VaultCategoryDao $vaultCategoryDao = null;
     protected ?VaultShareDao $vaultShareDao = null;
+    protected ?VaultUserKeyDao $vaultUserKeyDao = null;
 
     public function getVaultItemDao(): VaultItemDao
     {
@@ -45,6 +47,14 @@ class PasswordManagerService
             $this->vaultShareDao = new VaultShareDao();
         }
         return $this->vaultShareDao;
+    }
+
+    public function getVaultUserKeyDao(): VaultUserKeyDao
+    {
+        if (is_null($this->vaultUserKeyDao)) {
+            $this->vaultUserKeyDao = new VaultUserKeyDao();
+        }
+        return $this->vaultUserKeyDao;
     }
 
     /**
@@ -131,5 +141,14 @@ class PasswordManagerService
     public function deleteCategory(VaultCategory $category): void
     {
         $this->getVaultCategoryDao()->delete($category);
+    }
+
+    /**
+     * @param int $userId
+     * @return \XHRM\Entity\User|null
+     */
+    public function getUserById(int $userId): ?\XHRM\Entity\User
+    {
+        return $this->getVaultUserKeyDao()->findUser($userId);
     }
 }

@@ -36,3 +36,10 @@ xhrm_password_manager_view:
     path: /passwordManager/viewPasswordManager
     controller: XHRM\PasswordManager\Controller\VaultController::handle
     methods: [GET]
+
+xhrm_password_manager_api_user_keys:
+    path: /api/v2/password-manager/user-keys
+    controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+    methods: [ GET, POST ]
+    defaults:
+      _api: XHRM\PasswordManager\Api\VaultUserKeyAPI

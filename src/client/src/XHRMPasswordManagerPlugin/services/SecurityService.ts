@@ -8,6 +8,7 @@
  */
 export class SecurityService {
   private static masterKey: CryptoKey | null = null;
+  private static privateKey: CryptoKey | null = null;
   private static readonly SALT_LENGTH = 16;
   private static readonly IV_LENGTH = 12; // Standard for GCM
   private static readonly ITERATIONS = 100000;
@@ -67,14 +68,24 @@ export class SecurityService {
 
   static lockVault(): void {
     this.masterKey = null;
+    this.privateKey = null;
+  }
+
+  static setPrivateKey(key: CryptoKey): void {
+    this.privateKey = key;
+  }
+
+  static getPrivateKey(): CryptoKey | null {
+    return this.privateKey;
   }
 
   /**
    * Encrypts data using AES-256-GCM.
    * Returns format: `IV::CIPHERTEXT` (both base64 encoded)
    */
-  static async encrypt(data: string): Promise<string> {
-    if (!this.masterKey) throw new Error('Vault is locked');
+  static async encrypt(data: string, key?: CryptoKey): Promise<string> {
+    const useKey = key || this.masterKey;
+    if (!useKey) throw new Error('Vault is locked and no key provided');
     if (!data) return '';
 
     const iv = window.crypto.getRandomValues(new Uint8Array(this.IV_LENGTH));
@@ -85,7 +96,7 @@ export class SecurityService {
         name: 'AES-GCM',
         iv: iv as any,
       },
-      this.masterKey,
+      useKey,
       enc.encode(data) as any,
     );
 
@@ -99,8 +110,12 @@ export class SecurityService {
    * Decrypts data.
    * Expects format: `IV::CIPHERTEXT`
    */
-  static async decrypt(encryptedData: string): Promise<string> {
-    if (!this.masterKey) throw new Error('Vault is locked');
+  static async decrypt(
+    encryptedData: string,
+    key?: CryptoKey,
+  ): Promise<string> {
+    const useKey = key || this.masterKey;
+    if (!useKey) throw new Error('Vault is locked and no key provided');
     if (!encryptedData || !encryptedData.includes('::')) return '';
 
     try {
@@ -108,13 +123,6 @@ export class SecurityService {
       // Fix potential space-to-plus corruption from server/transport
       const safeIv = ivBase64.replace(/ /g, '+');
       const safeContent = contentBase64.replace(/ /g, '+');
-
-      // Debug logging for troubleshooting
-      console.log('Decrypting:', {
-        originalIv: ivBase64,
-        safeIv,
-        safeContentLen: safeContent.length,
-      });
 
       const iv = this.base64ToArrayBuffer(safeIv);
       const content = this.base64ToArrayBuffer(safeContent);
@@ -124,22 +132,105 @@ export class SecurityService {
           name: 'AES-GCM',
           iv: iv as any,
         },
-        this.masterKey,
+        useKey,
         content as any,
       );
 
       const dec = new TextDecoder();
-      const result = dec.decode(decryptedContent);
-      console.log('Decryption SUCCESS:', {
-        resultSample:
-          result.substring(0, 20) + (result.length > 20 ? '...' : ''),
-        isLiteralEncryptedData: result === '[Encrypted Data]',
-      });
-      return result;
+      return dec.decode(decryptedContent);
     } catch (e) {
       console.error('Decryption failed', e);
       return '[Encrypted Data]';
     }
+  }
+
+  // --- AES Key Management (Item Keys) ---
+
+  static async generateAESKey(): Promise<CryptoKey> {
+    return window.crypto.subtle.generateKey(
+      {
+        name: 'AES-GCM',
+        length: 256,
+      },
+      true,
+      ['encrypt', 'decrypt'],
+    );
+  }
+
+  static async exportAESKey(key: CryptoKey): Promise<string> {
+    const exported = await window.crypto.subtle.exportKey('raw', key);
+    return this.arrayBufferToBase64(exported);
+  }
+
+  static async importAESKey(keyData: string): Promise<CryptoKey> {
+    const raw = this.base64ToArrayBuffer(keyData);
+    return window.crypto.subtle.importKey('raw', raw as any, 'AES-GCM', true, [
+      'encrypt',
+      'decrypt',
+    ]);
+  }
+
+  // --- RSA-OAEP (Public Key Infrastructure) ---
+
+  static async generateKeyPair(): Promise<CryptoKeyPair> {
+    return window.crypto.subtle.generateKey(
+      {
+        name: 'RSA-OAEP',
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: 'SHA-256',
+      },
+      true,
+      ['encrypt', 'decrypt'],
+    );
+  }
+
+  static async exportKey(key: CryptoKey): Promise<string> {
+    const format = key.type === 'public' ? 'spki' : 'pkcs8';
+    const exported = await window.crypto.subtle.exportKey(format, key);
+    return this.arrayBufferToBase64(exported);
+  }
+
+  static async importKey(
+    keyData: string,
+    type: 'public' | 'private',
+  ): Promise<CryptoKey> {
+    const format = type === 'public' ? 'spki' : 'pkcs8';
+    const binary = this.base64ToArrayBuffer(keyData);
+    return window.crypto.subtle.importKey(
+      format,
+      binary as any,
+      {
+        name: 'RSA-OAEP',
+        hash: 'SHA-256',
+      },
+      true,
+      [type === 'public' ? 'encrypt' : 'decrypt'],
+    );
+  }
+
+  static async encryptRSA(data: string, publicKey: CryptoKey): Promise<string> {
+    const enc = new TextEncoder();
+    const encrypted = await window.crypto.subtle.encrypt(
+      {name: 'RSA-OAEP'},
+      publicKey,
+      enc.encode(data) as any,
+    );
+    return this.arrayBufferToBase64(encrypted);
+  }
+
+  static async decryptRSA(
+    encryptedData: string,
+    privateKey: CryptoKey,
+  ): Promise<string> {
+    const data = this.base64ToArrayBuffer(encryptedData);
+    const decrypted = await window.crypto.subtle.decrypt(
+      {name: 'RSA-OAEP'},
+      privateKey,
+      data as any,
+    );
+    const dec = new TextDecoder();
+    return dec.decode(decrypted);
   }
 
   // --- Utilities ---

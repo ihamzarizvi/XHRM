@@ -26,6 +26,17 @@
           <i class="oxd-icon bi-star"></i>
           <span>Favorites</span>
         </div>
+        <div
+          class="pm-nav-item"
+          :class="{active: currentFilter === 'shared'}"
+          @click="
+            currentFilter = 'shared';
+            fetchSharedWithMe();
+          "
+        >
+          <i class="oxd-icon bi-people"></i>
+          <span>Shared with Me</span>
+        </div>
 
         <div class="pm-nav-divider"></div>
         <div
@@ -190,9 +201,9 @@
     />
 
     <share-modal
-      v-if="showShareModal"
+      v-if="showShareModal && selectedItem"
       :is-open="showShareModal"
-      :item-id="selectedItem?.id"
+      :item="selectedItem"
       @close="closeShareModal"
     />
   </div>
@@ -242,6 +253,100 @@ export default defineComponent({
       window.appGlobal.baseUrl,
       '/api/v2/password-manager/categories',
     );
+    const shareService = new APIService(
+      window.appGlobal.baseUrl,
+      '/api/v2/password-manager/shares',
+    );
+
+    const sharedItems = ref<any[]>([]);
+
+    const fetchSharedWithMe = async () => {
+      if (!SecurityService.isVaultUnlocked()) return;
+      try {
+        const response = await shareService.getAll();
+        const rawShares = response.data.data;
+
+        const privKey = SecurityService.getPrivateKey();
+        if (!privKey) {
+          console.warn(
+            'No private key available. Shared items cannot be decrypted.',
+          );
+          sharedItems.value = rawShares.map((s: any) => ({
+            ...s,
+            _isShared: true,
+            username: '[Keys not loaded]',
+            password: '',
+            url: '',
+            notes: '',
+          }));
+          return;
+        }
+
+        sharedItems.value = await Promise.all(
+          rawShares.map(async (share: any) => {
+            try {
+              // Decrypt the item key using your RSA private key
+              const itemKeyRaw = await SecurityService.decryptRSA(
+                share.encryptedKeyForRecipient,
+                privKey,
+              );
+              const itemKey = await SecurityService.importAESKey(itemKeyRaw);
+
+              // Now fetch the actual item data
+              const itemResponse = await itemService.get(share.vaultItemId);
+              const item = itemResponse.data.data;
+
+              return {
+                ...item,
+                _isShared: true,
+                _sharedBy: share.sharedByUserId,
+                _sharePermission: share.permission,
+                _decryptedItemKey: itemKey,
+                username: item.usernameEncrypted
+                  ? await SecurityService.decrypt(
+                      item.usernameEncrypted,
+                      itemKey,
+                    )
+                  : '',
+                password: item.passwordEncrypted
+                  ? await SecurityService.decrypt(
+                      item.passwordEncrypted,
+                      itemKey,
+                    )
+                  : '',
+                url: item.urlEncrypted
+                  ? await SecurityService.decrypt(item.urlEncrypted, itemKey)
+                  : '',
+                notes: item.notesEncrypted
+                  ? await SecurityService.decrypt(item.notesEncrypted, itemKey)
+                  : '',
+                totpSecret: item.totpSecretEncrypted
+                  ? await SecurityService.decrypt(
+                      item.totpSecretEncrypted,
+                      itemKey,
+                    )
+                  : '',
+              };
+            } catch (e) {
+              console.error(
+                'Failed to decrypt shared item',
+                share.vaultItemId,
+                e,
+              );
+              return {
+                ...share,
+                _isShared: true,
+                name: `Shared Item #${share.vaultItemId}`,
+                itemType: 'login',
+                username: '[Decryption Failed]',
+              };
+            }
+          }),
+        );
+      } catch (e: any) {
+        console.error('Failed to fetch shared items', e);
+      }
+    };
 
     const fetchItems = async () => {
       try {
@@ -252,22 +357,52 @@ export default defineComponent({
           items.value = await Promise.all(
             rawItems.map(async (item: any) => {
               try {
+                let itemKey: CryptoKey | undefined = undefined;
+
+                if (item.encryptedItemKey) {
+                  try {
+                    const itemKeyStr = await SecurityService.decrypt(
+                      item.encryptedItemKey,
+                    );
+                    if (itemKeyStr && itemKeyStr !== '[Encrypted Data]') {
+                      itemKey = await SecurityService.importAESKey(itemKeyStr);
+                    }
+                  } catch (e) {
+                    console.error('Failed to decrypt item key', e);
+                  }
+                }
+
+                // Decrypt fields using Item Key (or Master Key if undefined)
                 return {
                   ...item,
+                  _decryptedItemKey: itemKey, // Store for reuse (Edit/Share)
+
                   username: item.usernameEncrypted
-                    ? await SecurityService.decrypt(item.usernameEncrypted)
+                    ? await SecurityService.decrypt(
+                        item.usernameEncrypted,
+                        itemKey,
+                      )
                     : '',
                   password: item.passwordEncrypted
-                    ? await SecurityService.decrypt(item.passwordEncrypted)
+                    ? await SecurityService.decrypt(
+                        item.passwordEncrypted,
+                        itemKey,
+                      )
                     : '',
                   url: item.urlEncrypted
-                    ? await SecurityService.decrypt(item.urlEncrypted)
+                    ? await SecurityService.decrypt(item.urlEncrypted, itemKey)
                     : '',
                   notes: item.notesEncrypted
-                    ? await SecurityService.decrypt(item.notesEncrypted)
+                    ? await SecurityService.decrypt(
+                        item.notesEncrypted,
+                        itemKey,
+                      )
                     : '',
                   totpSecret: item.totpSecretEncrypted
-                    ? await SecurityService.decrypt(item.totpSecretEncrypted)
+                    ? await SecurityService.decrypt(
+                        item.totpSecretEncrypted,
+                        itemKey,
+                      )
                     : '',
                 };
               } catch (e) {
@@ -444,6 +579,16 @@ export default defineComponent({
 
     // --- Computed ---
     const filteredItems = computed(() => {
+      // If viewing shared items, return those instead
+      if (currentFilter.value === 'shared') {
+        let result = sharedItems.value;
+        if (searchQuery.value) {
+          const query = searchQuery.value.toLowerCase();
+          result = result.filter((i) => i.name?.toLowerCase().includes(query));
+        }
+        return result;
+      }
+
       let result = items.value;
 
       if (currentFilter.value === 'favorites') {
@@ -522,6 +667,9 @@ export default defineComponent({
       getItemIcon,
       getFaviconUrl,
       getCategoryName,
+
+      // Sharing
+      fetchSharedWithMe,
     };
   },
 });

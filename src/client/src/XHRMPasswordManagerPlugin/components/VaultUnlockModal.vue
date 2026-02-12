@@ -36,6 +36,9 @@
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import {defineComponent, ref} from 'vue';
 import {SecurityService} from '../services/SecurityService';
+import {APIService} from '@/core/util/services/api.service';
+
+declare const window: any;
 
 export default defineComponent({
   name: 'VaultUnlockModal',
@@ -53,6 +56,54 @@ export default defineComponent({
       try {
         // This derives the key in memory.
         await SecurityService.unlockVault(password.value);
+
+        // --- Check/Generate User Keys for Sharing ---
+        try {
+          const userKeyService = new APIService(
+            window.appGlobal.baseUrl,
+            '/api/v2/password-manager/user-keys',
+          );
+
+          // Fetch existing keys
+          const response = await userKeyService.getAll({userId: 'me'});
+          const keys = response.data.data;
+
+          if (keys && keys.length > 0) {
+            // Existing User: Decrypt private key
+            const myKey = keys[0];
+            const privKeyStr = await SecurityService.decrypt(
+              myKey.encryptedPrivateKey,
+            );
+
+            if (privKeyStr !== '[Encrypted Data]') {
+              const privKey = await SecurityService.importKey(
+                privKeyStr,
+                'private',
+              );
+              SecurityService.setPrivateKey(privKey);
+            } else {
+              console.error('Failed to decrypt private key. Sharing disabled.');
+            }
+          } else {
+            // New User: Generate keys
+            console.log('Generating new RSA Key Pair for sharing...');
+            const keyPair = await SecurityService.generateKeyPair();
+            const pubKey = keyPair.publicKey as CryptoKey;
+            const privKey = keyPair.privateKey as CryptoKey;
+            const pubPem = await SecurityService.exportKey(pubKey);
+            const privPem = await SecurityService.exportKey(privKey);
+            const encPriv = await SecurityService.encrypt(privPem);
+
+            await userKeyService.create({
+              publicKey: pubPem,
+              encryptedPrivateKey: encPriv,
+            });
+            SecurityService.setPrivateKey(privKey);
+          }
+        } catch (keyErr) {
+          console.error('PKI Setup failed', keyErr);
+          // Allow unlock to proceed even if sharing setup fails
+        }
 
         emit('unlocked');
       } catch (e: any) {

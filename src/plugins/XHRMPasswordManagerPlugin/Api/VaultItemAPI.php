@@ -96,6 +96,7 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
     {
         $item->setName($this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_NAME));
         $item->setItemType($this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_ITEM_TYPE));
+        $item->setEncryptedItemKey($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, 'encryptedItemKey'));
 
         $item->setUsernameEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_USERNAME_ENCRYPTED));
         $item->setPasswordEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_PASSWORD_ENCRYPTED));

@@ -48,9 +48,12 @@ class VaultShareAPI extends Endpoint implements CrudEndpoint
 
     public function getAll(): EndpointCollectionResult
     {
-        // Typically list shares for a specific item, or shares involving the user
-        // For simplicity, returning empty or could implement "getSharesByItem" logic
-        return new EndpointCollectionResult(VaultShareModel::class, []);
+        $currentUser = $this->getUserRoleManager()->getUser();
+
+        // Return items shared with the current user
+        $shares = $this->getPasswordManagerService()->getVaultShareDao()->getSharesByRecipient($currentUser->getId());
+
+        return new EndpointCollectionResult(VaultShareModel::class, $shares);
     }
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
@@ -58,21 +61,39 @@ class VaultShareAPI extends Endpoint implements CrudEndpoint
         return new ParamRuleCollection();
     }
 
+    public const PARAMETER_ENCRYPTED_KEY = 'encryptedKeyForRecipient';
+
     public function create(): EndpointResourceResult
     {
         $vaultItemId = $this->getRequestParams()->getInt(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_VAULT_ITEM_ID);
         $sharedWithUserId = $this->getRequestParams()->getInt(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_SHARED_WITH_USER_ID);
         $permission = $this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_PERMISSION);
+        $encryptedKey = $this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_ENCRYPTED_KEY);
 
         $item = $this->getPasswordManagerService()->getVaultItemDao()->find($vaultItemId);
-        // Validate item ownership...
+        if (!$item) {
+            // Handle not found
+            throw new \Exception("Item not found");
+        }
+
+        // Validate ownership 
+        $currentUser = $this->getUserRoleManager()->getUser();
+        if ($item->getUser()->getId() !== $currentUser->getId()) {
+            // Check if user has admin share permission? For now restrict to owner
+            // TODO: Allow reshare if permitted
+        }
+
+        $sharedWithUser = $this->getPasswordManagerService()->getUserById($sharedWithUserId);
+        if (!$sharedWithUser) {
+            throw new \Exception("User not found");
+        }
 
         $share = new VaultShare();
         $share->setVaultItem($item);
-        $share->setSharedByUser($this->getUserRoleManager()->getUser());
-        // Set sharedWithUser logic (requires User DAO retrieval)
-        // $share->setSharedWithUser(...)
+        $share->setSharedByUser($currentUser);
+        $share->setSharedWithUser($sharedWithUser);
         $share->setPermission($permission);
+        $share->setEncryptedKeyForRecipient($encryptedKey);
 
         $this->getPasswordManagerService()->getVaultShareDao()->save($share);
 
@@ -90,6 +111,9 @@ class VaultShareAPI extends Endpoint implements CrudEndpoint
             ),
             $this->getValidationDecorator()->requiredParamRule(
                 new ParamRule(self::PARAMETER_PERMISSION, new Rule(Rules::STRING_TYPE))
+            ),
+            $this->getValidationDecorator()->requiredParamRule(
+                new ParamRule(self::PARAMETER_ENCRYPTED_KEY, new Rule(Rules::STRING_TYPE))
             )
         );
     }

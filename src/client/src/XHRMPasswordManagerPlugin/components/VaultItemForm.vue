@@ -180,21 +180,25 @@ export default defineComponent({
       async (newItem) => {
         if (newItem) {
           try {
+            // Use the item's decrypted key if available (set during list fetch),
+            // otherwise fall back to master key (legacy items).
+            const itemKey = newItem._decryptedItemKey || undefined;
+
             const [username, password, url, notes, secret] = await Promise.all([
               newItem.usernameEncrypted
-                ? SecurityService.decrypt(newItem.usernameEncrypted)
+                ? SecurityService.decrypt(newItem.usernameEncrypted, itemKey)
                 : '',
               newItem.passwordEncrypted
-                ? SecurityService.decrypt(newItem.passwordEncrypted)
+                ? SecurityService.decrypt(newItem.passwordEncrypted, itemKey)
                 : '',
               newItem.urlEncrypted
-                ? SecurityService.decrypt(newItem.urlEncrypted)
+                ? SecurityService.decrypt(newItem.urlEncrypted, itemKey)
                 : '',
               newItem.notesEncrypted
-                ? SecurityService.decrypt(newItem.notesEncrypted)
+                ? SecurityService.decrypt(newItem.notesEncrypted, itemKey)
                 : '',
               newItem.totpSecretEncrypted
-                ? SecurityService.decrypt(newItem.totpSecretEncrypted)
+                ? SecurityService.decrypt(newItem.totpSecretEncrypted, itemKey)
                 : '',
             ]);
 
@@ -258,18 +262,50 @@ export default defineComponent({
       normalizeUrl();
 
       try {
+        // --- Per-Item Key Management ---
+        // Each item gets its own AES-256-GCM key.
+        // This item key is encrypted with the user's master key and stored.
+        // When sharing, the item key is re-encrypted with the recipient's RSA public key.
+
+        let itemKey: CryptoKey;
+
+        if (isEdit.value && props.item?.encryptedItemKey) {
+          // Existing item: decrypt and reuse its item key
+          const itemKeyRaw = await SecurityService.decrypt(
+            props.item.encryptedItemKey,
+          );
+          if (itemKeyRaw && itemKeyRaw !== '[Encrypted Data]') {
+            itemKey = await SecurityService.importAESKey(itemKeyRaw);
+          } else {
+            // Can't decrypt existing key, generate new one (key rotation)
+            console.warn(
+              'Could not decrypt existing item key, generating new one',
+            );
+            itemKey = await SecurityService.generateAESKey();
+          }
+        } else {
+          // New item or legacy item without key: generate fresh
+          itemKey = await SecurityService.generateAESKey();
+        }
+
+        // Export and encrypt the item key with the master key
+        const itemKeyRaw = await SecurityService.exportAESKey(itemKey);
+        const encryptedItemKey = await SecurityService.encrypt(itemKeyRaw);
+
+        // Encrypt all fields with the item key
         const [usernameEnc, passwordEnc, urlEnc, notesEnc, totpSecretEnc] =
           await Promise.all([
-            SecurityService.encrypt(form.value.username || ''),
-            SecurityService.encrypt(form.value.password || ''),
-            SecurityService.encrypt(form.value.url || ''),
-            SecurityService.encrypt(form.value.notes || ''),
-            SecurityService.encrypt(form.value.totpSecret || ''),
+            SecurityService.encrypt(form.value.username || '', itemKey),
+            SecurityService.encrypt(form.value.password || '', itemKey),
+            SecurityService.encrypt(form.value.url || '', itemKey),
+            SecurityService.encrypt(form.value.notes || '', itemKey),
+            SecurityService.encrypt(form.value.totpSecret || '', itemKey),
           ]);
 
         const output: any = {
           name: form.value.name,
           itemType: form.value.itemType,
+          encryptedItemKey: encryptedItemKey,
           usernameEncrypted: usernameEnc,
           passwordEncrypted: passwordEnc,
           urlEncrypted: urlEnc,
