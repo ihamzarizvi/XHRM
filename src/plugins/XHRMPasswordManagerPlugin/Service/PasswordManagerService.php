@@ -95,6 +95,15 @@ class PasswordManagerService
     }
 
     /**
+     * @param int $categoryId
+     * @return VaultCategory|null
+     */
+    public function getVaultCategoryById(int $categoryId): ?VaultCategory
+    {
+        return $this->getVaultCategoryDao()->find($categoryId);
+    }
+
+    /**
      * @param VaultItem $item
      */
     public function deleteVaultItem(VaultItem $item): void

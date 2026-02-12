@@ -28,7 +28,36 @@
         </div>
 
         <div class="pm-nav-divider"></div>
-        <div class="pm-nav-header">Categories</div>
+        <div
+          class="pm-nav-header"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+          "
+          @click="showAddCategoryInput = !showAddCategoryInput"
+        >
+          Categories
+          <i class="bi bi-plus" style="font-size: 1.2rem"></i>
+        </div>
+
+        <div
+          v-if="showAddCategoryInput"
+          class="pm-nav-item"
+          style="padding: 5px 15px"
+        >
+          <input
+            ref="categoryInput"
+            v-model="newCategoryName"
+            placeholder="New Category..."
+            class="pm-search-input"
+            style="padding: 8px; font-size: 0.9rem"
+            @keyup.enter="createCategory"
+            @blur="showAddCategoryInput = false"
+          />
+        </div>
+
         <div
           v-for="category in categories"
           :key="category.id"
@@ -66,18 +95,63 @@
             class="pm-card"
             @click="viewItem(item)"
           >
+            <button
+              class="pm-favorite-btn"
+              :class="{active: item.favorite}"
+              @click.stop="toggleFavorite(item)"
+            >
+              <i :class="item.favorite ? 'bi-star-fill' : 'bi-star'"></i>
+            </button>
             <div class="pm-card-icon" :class="item.itemType">
-              <i :class="getItemIcon(item.itemType)"></i>
+              <img
+                v-if="getFaviconUrl(item)"
+                :src="getFaviconUrl(item)"
+                class="pm-favicon"
+              />
+              <i v-else :class="getItemIcon(item.itemType)"></i>
             </div>
             <div class="pm-card-info">
               <div class="pm-card-name">{{ item.name }}</div>
               <div class="pm-card-sub">
-                {{ item.usernameEncrypted || 'Secure Entry' }}
+                {{ item.username || 'Secure Entry' }}
               </div>
             </div>
             <div class="pm-card-actions">
-              <button class="pm-icon-btn" @click.stop="openShareModal(item)">
-                <i class="bi bi-share"></i>
+              <button
+                class="pm-icon-btn"
+                title="Copy Username"
+                @click.stop="copyToClipboard(item.username)"
+              >
+                <i class="bi bi-person"></i>
+              </button>
+              <button
+                class="pm-icon-btn"
+                title="Copy Password"
+                @click.stop="copyToClipboard(item.password)"
+              >
+                <i class="bi bi-key"></i>
+              </button>
+              <button
+                v-if="item.url"
+                class="pm-icon-btn"
+                title="Launch"
+                @click.stop="launchUrl(item.url)"
+              >
+                <i class="bi bi-box-arrow-up-right"></i>
+              </button>
+              <button
+                class="pm-icon-btn"
+                title="Edit"
+                @click.stop="editItem(item)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                class="pm-icon-btn delete"
+                title="Delete"
+                @click.stop="deleteItem(item)"
+              >
+                <i class="bi bi-trash"></i>
               </button>
             </div>
           </div>
@@ -172,7 +246,39 @@ export default defineComponent({
     const fetchItems = async () => {
       try {
         const response = await itemService.getAll();
-        items.value = response.data.data;
+        const rawItems = response.data.data;
+
+        if (SecurityService.isVaultUnlocked()) {
+          items.value = await Promise.all(
+            rawItems.map(async (item: any) => {
+              try {
+                return {
+                  ...item,
+                  username: item.usernameEncrypted
+                    ? await SecurityService.decrypt(item.usernameEncrypted)
+                    : '',
+                  password: item.passwordEncrypted
+                    ? await SecurityService.decrypt(item.passwordEncrypted)
+                    : '',
+                  url: item.urlEncrypted
+                    ? await SecurityService.decrypt(item.urlEncrypted)
+                    : '',
+                  notes: item.notesEncrypted
+                    ? await SecurityService.decrypt(item.notesEncrypted)
+                    : '',
+                  totpSecret: item.totpSecretEncrypted
+                    ? await SecurityService.decrypt(item.totpSecretEncrypted)
+                    : '',
+                };
+              } catch (e) {
+                console.error(`Failed to decrypt item ${item.id}`, e);
+                return item; // Keep encrypted if failure
+              }
+            }),
+          );
+        } else {
+          items.value = rawItems;
+        }
       } catch (e: any) {
         console.error('Failed to fetch items', e);
         if (e.response?.data?.error) {
@@ -292,6 +398,51 @@ export default defineComponent({
       return cat ? cat.name : '';
     };
 
+    // Helper functions
+    const normalizeUrl = (url: string) => {
+      if (!url) return '';
+      if (url.match(/^https?:\/\//i)) return url;
+      return 'https://' + url;
+    };
+
+    const getFaviconUrl = (item: any) => {
+      if (!item.url) return undefined;
+      try {
+        const domain = new URL(normalizeUrl(item.url)).hostname;
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      } catch (e) {
+        return undefined;
+      }
+    };
+
+    const copyToClipboard = async (text: string) => {
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    };
+
+    const launchUrl = (url: string) => {
+      if (!url) return;
+      window.open(normalizeUrl(url), '_blank');
+    };
+
+    const toggleFavorite = async (item: any) => {
+      const originalState = item.favorite;
+      item.favorite = !originalState; // Optimistic update
+
+      try {
+        await itemService.update(item.id, item);
+      } catch (e) {
+        console.error('Failed to toggle favorite', e);
+        item.favorite = originalState; // Revert on failure
+        alert('Failed to update favorite status.');
+      }
+    };
+
+    // --- Computed ---
     const filteredItems = computed(() => {
       let result = items.value;
 
@@ -310,10 +461,25 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      // Check unlock status immediately
       checkUnlockStatus();
       await Promise.all([fetchItems(), fetchCategories()]);
     });
+
+    const showAddCategoryInput = ref(false);
+    const newCategoryName = ref('');
+
+    const createCategory = async () => {
+      if (!newCategoryName.value.trim()) return;
+      try {
+        await categoryService.create({name: newCategoryName.value});
+        newCategoryName.value = '';
+        showAddCategoryInput.value = false;
+        await fetchCategories();
+      } catch (e) {
+        console.error('Failed to create category', e);
+        alert('Failed to create category');
+      }
+    };
 
     return {
       items: filteredItems,
@@ -321,12 +487,16 @@ export default defineComponent({
       currentFilter,
       searchQuery,
 
+      // Category Creation
+      showAddCategoryInput,
+      newCategoryName,
+      createCategory,
+
       // Modals
       showAddItemModal,
       showShareModal,
       showUnlockModal,
       showViewModal,
-
       selectedItem,
       isSavingItem,
 
@@ -339,12 +509,18 @@ export default defineComponent({
       openShareModal,
       closeShareModal,
       deleteItem,
-
       onUnlocked,
       lockVault,
 
+      // New Actions
+      toggleFavorite,
+      copyToClipboard,
+      launchUrl,
+      normalizeUrl,
+
       // Utils
       getItemIcon,
+      getFaviconUrl,
       getCategoryName,
     };
   },
@@ -542,6 +718,7 @@ export default defineComponent({
 }
 
 .pm-card {
+  position: relative;
   background: white;
   border-radius: 16px;
   padding: 20px;
@@ -551,11 +728,39 @@ export default defineComponent({
   cursor: pointer;
   border: 1px solid #f0f0f0;
   transition: all 0.3s;
+  overflow: hidden;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     border-color: #ff5500;
+
+    .pm-card-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.pm-favorite-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 2;
+
+  &:hover {
+    color: #ffd700;
+    transform: scale(1.1);
+  }
+
+  &.active {
+    color: #ffd700;
   }
 }
 
@@ -567,6 +772,9 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  background: #f5f5f5;
 
   &.login {
     background: #e3f2fd;
@@ -580,36 +788,69 @@ export default defineComponent({
     background: #fff3e0;
     color: #f57c00;
   }
+
+  .pm-favicon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .pm-card-info {
   flex: 1;
+  min-width: 0;
 }
 
 .pm-card-name {
   font-weight: 600;
   color: #333;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pm-card-sub {
   font-size: 0.85rem;
   color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pm-card-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #f0f0f0;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease-in-out;
 }
 
 .pm-icon-btn {
   background: none;
   border: none;
-  color: #ccc;
-  font-size: 1.2rem;
+  color: #666;
+  font-size: 1.1rem;
   cursor: pointer;
   padding: 8px;
-  border-radius: 50%;
+  border-radius: 8px;
   transition: all 0.2s;
 
   &:hover {
     background: #f0f0f0;
     color: #ff5500;
+  }
+
+  &.delete:hover {
+    background: #ffebee;
+    color: #d32f2f;
   }
 }
 

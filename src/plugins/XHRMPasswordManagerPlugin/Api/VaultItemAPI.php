@@ -90,6 +90,8 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         return new EndpointResourceResult(VaultItemModel::class, $item);
     }
 
+    public const PARAMETER_FAVORITE = 'favorite';
+
     private function setParamsToItem(VaultItem $item): void
     {
         $item->setName($this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_NAME));
@@ -100,10 +102,15 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $item->setUrlEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_URL_ENCRYPTED));
         $item->setNotesEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_NOTES_ENCRYPTED));
         $item->setTotpSecretEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_TOTP_SECRET_ENCRYPTED));
+        $item->setFavorite($this->getRequestParams()->getBoolean(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_FAVORITE, false));
 
         $categoryId = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_CATEGORY_ID);
         if ($categoryId) {
             // Logic to find category and set it
+            $category = $this->getPasswordManagerService()->getVaultCategoryById($categoryId);
+            if ($category) {
+                $item->setCategory($category);
+            }
         }
     }
 
