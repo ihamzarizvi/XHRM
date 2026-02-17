@@ -3,7 +3,7 @@
 namespace XHRM\PasswordManager\Service;
 
 use XHRM\Core\Authorization\Service\ScreenPermissionService;
-use XHRM\Core\Api\V2\Exception\ForbiddenException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use XHRM\Entity\User;
 
 class VaultPermissionService
@@ -17,10 +17,10 @@ class VaultPermissionService
 
     /**
      * Checks if the user has access to the Password Vault.
-     * Throws ForbiddenException if not.
+     * Throws AccessDeniedHttpException if not.
      *
      * @param User $user
-     * @throws ForbiddenException
+     * @throws AccessDeniedHttpException
      */
     public function ensureVaultAccess(User $user): void
     {
@@ -32,16 +32,16 @@ class VaultPermissionService
         );
 
         if (!$permissions->canRead()) {
-            throw new ForbiddenException('You do not have permission to access the Password Vault.');
+            throw new AccessDeniedHttpException('You do not have permission to access the Password Vault.');
         }
     }
 
     /**
      * Checks if the user has Admin access to the Password Manager.
-     * Throws ForbiddenException if not.
+     * Throws AccessDeniedHttpException if not.
      *
      * @param User $user
-     * @throws ForbiddenException
+     * @throws AccessDeniedHttpException
      */
     public function ensureAdminAccess(User $user): void
     {
@@ -53,7 +53,7 @@ class VaultPermissionService
         );
 
         if (!$permissions->canRead()) {
-            throw new ForbiddenException('You do not have permission to access Password Manager settings.');
+            throw new AccessDeniedHttpException('You do not have permission to access Password Manager settings.');
         }
     }
 
@@ -68,7 +68,7 @@ class VaultPermissionService
         try {
             $this->ensureAdminAccess($user);
             return true;
-        } catch (ForbiddenException $e) {
+        } catch (AccessDeniedHttpException $e) {
             return false;
         }
     }
