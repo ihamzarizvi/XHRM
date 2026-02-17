@@ -57,12 +57,20 @@ class VaultShareDao extends BaseDao
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param int $id
-     * @return VaultShare|null
-     */
     public function find(int $id): ?VaultShare
     {
         return $this->getEntityManager()->find(VaultShare::class, $id);
+    }
+
+    /**
+     * @return int
+     */
+    public function countAll(): int
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        return (int) $qb->select('count(s.id)')
+            ->from(VaultShare::class, 's')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

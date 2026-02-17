@@ -74,12 +74,49 @@ class VaultItemDao extends BaseDao
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param int $id
-     * @return VaultItem|null
-     */
     public function find(int $id): ?VaultItem
     {
         return $this->getEntityManager()->find(VaultItem::class, $id);
+    }
+
+    /**
+     * @return array
+     */
+    public function getGlobalStats(): array
+    {
+        $em = $this->getEntityManager();
+
+        $totalItems = $em->createQueryBuilder()
+            ->select('count(i.id)')
+            ->from(VaultItem::class, 'i')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $userCount = $em->createQueryBuilder()
+            ->select('count(DISTINCT IDENTITY(i.user))')
+            ->from(VaultItem::class, 'i')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $avgStrength = $em->createQueryBuilder()
+            ->select('avg(i.passwordStrength)')
+            ->from(VaultItem::class, 'i')
+            ->where('i.passwordStrength IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $breachedCount = $em->createQueryBuilder()
+            ->select('count(i.id)')
+            ->from(VaultItem::class, 'i')
+            ->where('i.breachDetected = true')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return [
+            'totalItems' => (int) $totalItems,
+            'userCount' => (int) $userCount,
+            'avgStrength' => (float) $avgStrength,
+            'breachedCount' => (int) $breachedCount
+        ];
     }
 }

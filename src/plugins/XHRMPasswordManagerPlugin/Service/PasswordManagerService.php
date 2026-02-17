@@ -143,12 +143,24 @@ class PasswordManagerService
         $this->getVaultCategoryDao()->delete($category);
     }
 
-    /**
-     * @param int $userId
-     * @return \XHRM\Entity\User|null
-     */
     public function getUserById(int $userId): ?\XHRM\Entity\User
     {
         return $this->getVaultUserKeyDao()->findUser($userId);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdminStats(): array
+    {
+        $itemStats = $this->getVaultItemDao()->getGlobalStats();
+        $shareCount = $this->getVaultShareDao()->countAll();
+
+        $score = isset($itemStats['avgStrength']) ? $itemStats['avgStrength'] : 0;
+
+        return array_merge($itemStats, [
+            'shareCount' => $shareCount,
+            'securityScore' => round($score)
+        ]);
     }
 }

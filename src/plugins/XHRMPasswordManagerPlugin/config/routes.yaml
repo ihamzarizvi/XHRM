@@ -43,3 +43,10 @@ xhrm_password_manager_api_user_keys:
     methods: [ GET, POST ]
     defaults:
       _api: XHRM\PasswordManager\Api\VaultUserKeyAPI
+
+xhrm_password_manager_api_admin_stats:
+  path: /api/v2/password-manager/admin/stats
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultAdminAPI

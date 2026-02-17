@@ -16,11 +16,18 @@ use XHRM\Core\Traits\UserRoleManagerTrait;
 use XHRM\PasswordManager\Api\Model\VaultCategoryModel;
 use XHRM\PasswordManager\Entity\VaultCategory;
 use XHRM\PasswordManager\Traits\Service\PasswordManagerServiceTrait;
+use XHRM\PasswordManager\Traits\Api\VaultPermissionTrait;
 
 class VaultCategoryAPI extends Endpoint implements CrudEndpoint
 {
     use PasswordManagerServiceTrait;
     use UserRoleManagerTrait;
+    use VaultPermissionTrait;
+
+    protected function init()
+    {
+        $this->checkVaultAccess();
+    }
 
     public const PARAMETER_ID = 'id';
     public const PARAMETER_NAME = 'name';

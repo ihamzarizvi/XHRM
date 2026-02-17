@@ -23,6 +23,12 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 {
     use PasswordManagerServiceTrait;
     use UserRoleManagerTrait;
+    use VaultPermissionTrait;
+
+    protected function init()
+    {
+        $this->checkVaultAccess();
+    }
 
     public const PARAMETER_ID = 'id';
     public const PARAMETER_NAME = 'name';
