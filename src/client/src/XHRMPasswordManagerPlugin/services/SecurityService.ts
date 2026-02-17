@@ -261,4 +261,63 @@ export class SecurityService {
     }
     return bytes;
   }
+
+  // --- Password Analysis & Generation ---
+
+  static generatePassword(
+    length = 16,
+    useUpper = true,
+    useLower = true,
+    useNumbers = true,
+    useSymbols = true,
+  ): string {
+    let charset = '';
+    if (useLower) charset += 'abcdefghijklmnopqrstuvwxyz';
+    if (useUpper) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (useNumbers) charset += '0123456789';
+    if (useSymbols) charset += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+    if (!charset) return '';
+
+    const result = new Uint8Array(length);
+    window.crypto.getRandomValues(result);
+
+    return Array.from(result)
+      .map((x) => charset[x % charset.length])
+      .join('');
+  }
+
+  /**
+   * Returns a score from 0 to 100 based on password strength.
+   * Simple heuristic: length + variety + patterns
+   */
+  static assessPasswordStrength(password: string): number {
+    if (!password) return 0;
+    let score = 0;
+
+    // Length contribution (up to 40 points)
+    score += Math.min(40, password.length * 4);
+
+    // Variety contribution (up to 40 points)
+    let varietyCount = 0;
+    if (/[a-z]/.test(password)) varietyCount++;
+    if (/[A-Z]/.test(password)) varietyCount++;
+    if (/[0-9]/.test(password)) varietyCount++;
+    if (/[^a-zA-Z0-9]/.test(password)) varietyCount++;
+    score += varietyCount * 10;
+
+    // Penalty for repeated characters (e.g. 'aaaa')
+    if (/(.)\1{2,}/.test(password)) score -= 10;
+
+    // Penalty for common patterns (very basic check)
+    if (
+      ['123456', 'password', 'qwerty'].some((p) =>
+        password.toLowerCase().includes(p),
+      )
+    ) {
+      score -= 30;
+    }
+
+    return Math.max(0, Math.min(100, score));
+  }
 }

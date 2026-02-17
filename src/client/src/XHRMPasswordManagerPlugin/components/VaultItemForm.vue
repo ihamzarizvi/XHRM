@@ -70,9 +70,20 @@
               <input
                 v-model="form.password"
                 type="password"
-                class="premium-input"
+                class="premium-input pr-50"
                 placeholder="••••••••••••"
               />
+              <button
+                class="icon-action-btn"
+                title="Generate Password"
+                @click="showGenerator = !showGenerator"
+              >
+                <i class="bi bi-magic"></i>
+              </button>
+            </div>
+
+            <div v-if="showGenerator" class="generator-wrapper">
+              <PasswordGenerator @select="onPasswordSelected" />
             </div>
           </div>
 
@@ -140,6 +151,7 @@
 import {defineComponent, ref, watch, PropType} from 'vue';
 import {SecurityService} from '../services/SecurityService';
 import {TOTPService} from '../services/TOTPService';
+import PasswordGenerator from './PasswordGenerator.vue';
 
 interface VaultItemFormData {
   id?: number;
@@ -154,6 +166,7 @@ interface VaultItemFormData {
 
 export default defineComponent({
   name: 'VaultItemForm',
+  components: {PasswordGenerator},
   props: {
     isOpen: {type: Boolean, required: true},
     isLoading: {type: Boolean, default: false},
@@ -174,6 +187,7 @@ export default defineComponent({
     const errors = ref<Record<string, string>>({});
     const isEdit = ref(false);
     const totpPreview = ref<string | null>(null);
+    const showGenerator = ref(false);
 
     watch(
       () => props.item,
@@ -302,6 +316,13 @@ export default defineComponent({
             SecurityService.encrypt(form.value.totpSecret || '', itemKey),
           ]);
 
+        // Calculate strength and breach status (client-side only for now)
+        const strength = SecurityService.assessPasswordStrength(
+          form.value.password || '',
+        );
+        // For breach detection, we would call HIBP API here, but for now default to false
+        const breachDetected = false;
+
         const output: any = {
           name: form.value.name,
           itemType: form.value.itemType,
@@ -311,6 +332,8 @@ export default defineComponent({
           urlEncrypted: urlEnc,
           notesEncrypted: notesEnc,
           totpSecretEncrypted: totpSecretEnc,
+          passwordStrength: strength,
+          breachDetected: breachDetected,
         };
 
         if (form.value.id) {
@@ -327,7 +350,21 @@ export default defineComponent({
       }
     };
 
-    return {form, errors, isEdit, save, totpPreview, normalizeUrl};
+    const onPasswordSelected = (pwd: string) => {
+      form.value.password = pwd;
+      showGenerator.value = false;
+    };
+
+    return {
+      form,
+      errors,
+      isEdit,
+      save,
+      totpPreview,
+      normalizeUrl,
+      showGenerator,
+      onPasswordSelected,
+    };
   },
 });
 </script>
@@ -483,6 +520,45 @@ export default defineComponent({
     color: #94a3b8;
     font-size: 1rem;
     pointer-events: none;
+  }
+}
+
+.pr-50 {
+  padding-right: 50px;
+}
+
+.icon-action-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #ff5500;
+    transform: scale(1.1);
+  }
+}
+
+.generator-wrapper {
+  margin-top: 10px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

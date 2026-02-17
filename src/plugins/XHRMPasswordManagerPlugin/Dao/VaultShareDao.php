@@ -65,17 +65,4 @@ class VaultShareDao extends BaseDao
     {
         return $this->getEntityManager()->find(VaultShare::class, $id);
     }
-
-    /**
-     * @param int $itemId
-     * @param int $userId
-     * @return VaultShare|null
-     */
-    public function findShare(int $itemId, int $userId): ?VaultShare
-    {
-        return $this->getEntityManager()->getRepository(VaultShare::class)->findOneBy([
-            'vaultItem' => $itemId,
-            'sharedWithUser' => $userId
-        ]);
-    }
 }

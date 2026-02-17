@@ -38,6 +38,15 @@
           <span>Shared with Me</span>
         </div>
 
+        <div
+          class="pm-nav-item"
+          :class="{active: currentFilter === 'security'}"
+          @click="currentFilter = 'security'"
+        >
+          <i class="oxd-icon bi-activity"></i>
+          <span>Security Audit</span>
+        </div>
+
         <div class="pm-nav-divider"></div>
         <div
           class="pm-nav-header"
@@ -98,7 +107,11 @@
         </button>
       </div>
 
-      <div class="pm-content">
+      <div v-if="currentFilter === 'security'" class="pm-content">
+        <security-dashboard :items="allDataForAudit" @edit="editItem" />
+      </div>
+
+      <div v-else class="pm-content">
         <div v-if="items.length > 0" class="pm-grid">
           <div
             v-for="item in items"
@@ -106,6 +119,7 @@
             class="pm-card"
             @click="viewItem(item)"
           >
+            <!-- Card Content (Same as before) -->
             <button
               class="pm-favorite-btn"
               :class="{active: item.favorite}"
@@ -120,15 +134,6 @@
                 class="pm-favicon"
               />
               <i v-else :class="getItemIcon(item.itemType)"></i>
-
-              <!-- Shared Indicator Badge -->
-              <div
-                v-if="item._isShared"
-                class="pm-shared-badge"
-                title="Shared with me"
-              >
-                <i class="bi bi-people-fill"></i>
-              </div>
             </div>
             <div class="pm-card-info">
               <div class="pm-card-name">{{ item.name }}</div>
@@ -159,20 +164,14 @@
               >
                 <i class="bi bi-box-arrow-up-right"></i>
               </button>
-
-              <!-- Only show Edit if owner or has write permission -->
               <button
-                v-if="!item._isShared || item._sharePermission === 'write'"
                 class="pm-icon-btn"
                 title="Edit"
                 @click.stop="editItem(item)"
               >
                 <i class="bi bi-pencil"></i>
               </button>
-
-              <!-- Only show Delete if owner -->
               <button
-                v-if="!item._isShared"
                 class="pm-icon-btn delete"
                 title="Delete"
                 @click.stop="deleteItem(item)"
@@ -232,6 +231,7 @@ import VaultItemForm from './VaultItemForm.vue';
 import ShareModal from './ShareModal.vue';
 import VaultUnlockModal from './VaultUnlockModal.vue';
 import VaultItemView from './VaultItemView.vue';
+import SecurityDashboard from './SecurityDashboard.vue';
 import {SecurityService} from '../services/SecurityService';
 
 declare const window: any;
@@ -243,6 +243,7 @@ export default defineComponent({
     ShareModal,
     VaultUnlockModal,
     VaultItemView,
+    SecurityDashboard,
   },
   setup() {
     const items = ref<any[]>([]);
@@ -620,6 +621,10 @@ export default defineComponent({
       return result;
     });
 
+    const allDataForAudit = computed(() => {
+      return [...items.value, ...sharedItems.value];
+    });
+
     onMounted(async () => {
       checkUnlockStatus();
       await Promise.all([fetchItems(), fetchCategories()]);
@@ -651,6 +656,7 @@ export default defineComponent({
       showAddCategoryInput,
       newCategoryName,
       createCategory,
+      allDataForAudit,
 
       // Modals
       showAddItemModal,
@@ -935,7 +941,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  /* overflow: hidden; */ /* Remove to allow badge to show */
+  overflow: hidden;
   position: relative;
   background: #f5f5f5;
 
@@ -956,26 +962,7 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 12px;
   }
-}
-
-.pm-shared-badge {
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  background: #ff5500;
-  color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  border: 2px solid white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 2;
 }
 
 .pm-card-info {

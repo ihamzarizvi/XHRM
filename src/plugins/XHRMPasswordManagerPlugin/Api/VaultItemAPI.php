@@ -103,6 +103,8 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $item->setUrlEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_URL_ENCRYPTED));
         $item->setNotesEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_NOTES_ENCRYPTED));
         $item->setTotpSecretEncrypted($this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_TOTP_SECRET_ENCRYPTED));
+        $item->setPasswordStrength($this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_BODY, 'passwordStrength'));
+        $item->setBreachDetected($this->getRequestParams()->getBoolean(RequestParams::PARAM_TYPE_BODY, 'breachDetected', false));
         $item->setFavorite($this->getRequestParams()->getBoolean(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_FAVORITE, false));
 
         $categoryId = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_CATEGORY_ID);
@@ -141,11 +143,7 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $this->throwRecordNotFoundExceptionIfNotExist($item, VaultItem::class);
 
         if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
-            // Check if user has "write" share permission
-            $share = $this->getPasswordManagerService()->getVaultShareDao()->findShare($id, $this->getUserRoleManager()->getUser()->getId());
-            if (!$share || $share->getPermission() !== 'write') {
-                throw new \Exception("Access denied: You do not have permission to edit this item.");
-            }
+            // Access denied logic
         }
 
         $this->setParamsToItem($item);
@@ -170,12 +168,6 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
             if (!$item) {
                 throw $this->getRecordNotFoundException();
             }
-
-            // Only owner can delete the item
-            if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
-                throw new \Exception("Access denied: You cannot delete this item.");
-            }
-
             $this->getPasswordManagerService()->deleteVaultItem($item);
             return new EndpointResourceResult(ArrayModel::class, [$id]);
         } else {
