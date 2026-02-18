@@ -166,11 +166,26 @@ export default defineComponent({
         const keys = keyResponse.data.data;
 
         if (keys && keys.length > 0 && keys[0].publicKey) {
+          // publicKey is JSON {salt, rsaPublicKey} — extract the RSA key
+          let rsaPubKey = keys[0].publicKey;
+          try {
+            const parsed = JSON.parse(keys[0].publicKey);
+            if (parsed.rsaPublicKey) {
+              rsaPubKey = parsed.rsaPublicKey;
+            } else {
+              searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up sharing keys yet.`;
+              return;
+            }
+          } catch {
+            // Not JSON — might be a plain salt without RSA key
+            searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up sharing keys yet.`;
+            return;
+          }
           foundUser.value = {
             id: user.id,
             employeeName: `${emp.firstName} ${emp.lastName}`,
             userName: user.userName,
-            publicKey: keys[0].publicKey,
+            publicKey: rsaPubKey,
           };
         } else {
           searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up their vault yet. They need to unlock their vault at least once.`;
