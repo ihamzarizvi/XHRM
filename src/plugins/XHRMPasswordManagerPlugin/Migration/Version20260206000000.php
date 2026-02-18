@@ -28,6 +28,7 @@ class Version20260206000000 extends AbstractMigration
             item_type ENUM('login', 'card', 'identity', 'note', 'totp') NOT NULL,
             name VARCHAR(255) NOT NULL,
             favorite BOOLEAN DEFAULT FALSE,
+            encrypted_item_key TEXT,
             username_encrypted TEXT,
             password_encrypted TEXT,
             url_encrypted TEXT,

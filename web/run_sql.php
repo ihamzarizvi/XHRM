@@ -74,7 +74,10 @@ try {
     echo "✅ Connected to $dbName!\n\n";
 
     $sqls = [
-        "DELETE FROM ohrm_vault_user_key",
+        // 1. Add the missing encrypted_item_key column
+        "ALTER TABLE ohrm_vault_item ADD COLUMN encrypted_item_key TEXT NULL AFTER favorite",
+
+        // 2. Clear old corrupt data (encrypted with wrong/missing key)
         "DELETE FROM ohrm_vault_item",
         "DELETE FROM ohrm_vault_audit_log",
     ];
@@ -82,13 +85,26 @@ try {
     foreach ($sqls as $sql) {
         try {
             $rows = $pdo->exec($sql);
-            echo "$sql\n  → Rows affected: $rows\n";
+            echo "$sql\n  → Rows affected: $rows\n\n";
         } catch (Exception $e) {
-            echo "$sql\n  → Error: " . $e->getMessage() . "\n";
+            $msg = $e->getMessage();
+            // Don't report "Duplicate column" as a real error
+            if (strpos($msg, 'Duplicate column') !== false) {
+                echo "$sql\n  → Column already exists (OK)\n\n";
+            } else {
+                echo "$sql\n  → Error: $msg\n\n";
+            }
         }
     }
 
-    echo "\n✅ Done! Vault keys and items cleared.\n";
+    // 3. Verify the column now exists
+    echo "--- Verifying ohrm_vault_item schema ---\n";
+    $cols = $pdo->query("SHOW COLUMNS FROM ohrm_vault_item")->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($cols as $col) {
+        echo "  " . $col['Field'] . " (" . $col['Type'] . ") " . ($col['Null'] === 'YES' ? 'NULL' : 'NOT NULL') . "\n";
+    }
+
+    echo "\n✅ Done! Column added and old items cleared.\n";
     echo '<a href="/web/index.php/passwordManager/viewPasswordManager">Go to Password Manager →</a>';
 } catch (Exception $e) {
     echo "❌ Connection error: " . $e->getMessage() . "\n";
