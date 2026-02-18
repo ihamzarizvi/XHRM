@@ -100,12 +100,12 @@ class VaultAuditLogAPI extends Endpoint implements CrudEndpoint
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
         return new ParamRuleCollection(
-            new ParamRule(self::PARAMETER_USER_ID, new Rule(Rules::INT_TYPE)),
-            new ParamRule(self::PARAMETER_ACTION, new Rule(Rules::STRING_TYPE)),
-            new ParamRule(self::PARAMETER_FROM, new Rule(Rules::STRING_TYPE)),
-            new ParamRule(self::PARAMETER_TO, new Rule(Rules::STRING_TYPE)),
-            new ParamRule(self::PARAMETER_LIMIT, new Rule(Rules::INT_TYPE)),
-            new ParamRule(self::PARAMETER_OFFSET, new Rule(Rules::INT_TYPE))
+            new ParamRule(self::PARAMETER_USER_ID, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::INT_TYPE)),
+            new ParamRule(self::PARAMETER_ACTION, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::STRING_TYPE)),
+            new ParamRule(self::PARAMETER_FROM, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::STRING_TYPE)),
+            new ParamRule(self::PARAMETER_TO, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::STRING_TYPE)),
+            new ParamRule(self::PARAMETER_LIMIT, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::INT_TYPE)),
+            new ParamRule(self::PARAMETER_OFFSET, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::INT_TYPE))
         );
     }
 
