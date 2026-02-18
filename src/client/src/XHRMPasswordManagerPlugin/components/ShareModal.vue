@@ -121,43 +121,55 @@ export default defineComponent({
       foundUser.value = null;
 
       try {
-        // Search the admin/user API for employees
-        const empService = new APIService(
-          window.appGlobal.baseUrl,
-          '/api/v2/pim/employees',
-        );
-        const response = await empService.getAll({
-          limit: 5,
-          nameOrId: searchQuery.value,
-        });
-
-        const employees = response.data.data;
-        if (!employees || employees.length === 0) {
-          searchError.value = 'No employee found with that name.';
-          return;
-        }
-
-        // Take first match - we'll look up the system user ID
-        const emp = employees[0];
-        const empId = emp.empNumber || emp.id;
-
-        // Now search for the system user for this employee
+        // Search admin users API directly (requires status param)
         const userService = new APIService(
           window.appGlobal.baseUrl,
           '/api/v2/admin/users',
         );
         const userResp = await userService.getAll({
-          limit: 5,
-          empNumber: empId,
+          limit: 10,
+          username: searchQuery.value,
+          status: true,
         });
 
-        const users = userResp.data.data;
+        let users = userResp.data.data;
         if (!users || users.length === 0) {
-          searchError.value = `Employee "${emp.firstName} ${emp.lastName}" has no system user account.`;
-          return;
+          // Try searching by employee name via PIM
+          const empService = new APIService(
+            window.appGlobal.baseUrl,
+            '/api/v2/pim/employees',
+          );
+          const empResp = await empService.getAll({
+            limit: 5,
+            nameOrId: searchQuery.value,
+          });
+
+          const employees = empResp.data.data;
+          if (!employees || employees.length === 0) {
+            searchError.value = 'No user found with that name or username.';
+            return;
+          }
+
+          // Find user account for the first matching employee
+          const emp = employees[0];
+          const empId = emp.empNumber || emp.id;
+          const userByEmp = await userService.getAll({
+            limit: 5,
+            empNumber: empId,
+            status: true,
+          });
+          users = userByEmp.data.data;
+          if (!users || users.length === 0) {
+            searchError.value = `Employee "${emp.firstName} ${emp.lastName}" has no system user account.`;
+            return;
+          }
         }
 
         const user = users[0];
+        const empName =
+          user.employee?.firstName && user.employee?.lastName
+            ? `${user.employee.firstName} ${user.employee.lastName}`
+            : user.userName;
 
         // Check if this user has PKI keys
         const keyResponse = await userKeyService.getAll({
@@ -173,22 +185,21 @@ export default defineComponent({
             if (parsed.rsaPublicKey) {
               rsaPubKey = parsed.rsaPublicKey;
             } else {
-              searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up sharing keys yet.`;
+              searchError.value = `User "${empName}" hasn't set up sharing keys yet.`;
               return;
             }
           } catch {
-            // Not JSON — might be a plain salt without RSA key
-            searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up sharing keys yet.`;
+            searchError.value = `User "${empName}" hasn't set up sharing keys yet.`;
             return;
           }
           foundUser.value = {
             id: user.id,
-            employeeName: `${emp.firstName} ${emp.lastName}`,
+            employeeName: empName,
             userName: user.userName,
             publicKey: rsaPubKey,
           };
         } else {
-          searchError.value = `User "${emp.firstName} ${emp.lastName}" hasn't set up their vault yet. They need to unlock their vault at least once.`;
+          searchError.value = `User "${empName}" hasn't set up their vault yet. They need to unlock their vault at least once.`;
         }
       } catch (e) {
         console.error('Search failed', e);
