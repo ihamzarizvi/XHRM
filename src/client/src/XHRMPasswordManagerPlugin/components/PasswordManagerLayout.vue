@@ -487,6 +487,12 @@ export default defineComponent({
                     const itemKeyStr = await SecurityService.decrypt(
                       item.encryptedItemKey,
                     );
+                    console.log(
+                      '[VAULT DEBUG] Item',
+                      item.id,
+                      'itemKey decrypt result:',
+                      itemKeyStr?.substring(0, 20),
+                    );
                     if (itemKeyStr && itemKeyStr !== '[Encrypted Data]') {
                       itemKey = await SecurityService.importAESKey(itemKeyStr);
                     }
@@ -584,6 +590,11 @@ export default defineComponent({
         if (!keyData)
           throw new Error('Could not retrieve vault key from server.');
 
+        console.log(
+          '[VAULT DEBUG] Raw publicKey from server:',
+          keyData.publicKey?.substring(0, 80),
+        );
+
         // publicKey column stores either a plain hex salt or JSON {salt, rsaPublicKey}
         let salt: string;
         let rsaPublicKeyStr: string | null = null;
@@ -594,13 +605,24 @@ export default defineComponent({
           const parsed = JSON.parse(keyData.publicKey);
           salt = parsed.salt;
           rsaPublicKeyStr = parsed.rsaPublicKey || null;
+          console.log(
+            '[VAULT DEBUG] Parsed JSON — salt:',
+            salt?.substring(0, 20),
+            '... hasRSA:',
+            !!rsaPublicKeyStr,
+          );
         } catch {
           // Plain hex salt (first access before RSA key upload)
           salt = keyData.publicKey;
+          console.log('[VAULT DEBUG] Plain hex salt:', salt?.substring(0, 20));
         }
 
         // 2. Derive AES master key from salt
         await SecurityService.autoUnlock(salt);
+        console.log(
+          '[VAULT DEBUG] Master key derived. Vault unlocked:',
+          SecurityService.isVaultUnlocked(),
+        );
 
         // 3. Handle RSA key pair for sharing
         if (rsaPublicKeyStr && encryptedPrivateKey) {
@@ -640,10 +662,9 @@ export default defineComponent({
             );
             const encPrivKey = await SecurityService.encrypt(privKeyStr);
 
-            // Upload to server — store salt + RSA public key together in JSON
-            // so the salt is preserved for future logins (critical for key derivation)
+            // Upload RSA public key — backend will merge it with the existing salt into JSON
             await userKeyService.create({
-              publicKey: JSON.stringify({salt, rsaPublicKey: pubKeyStr}),
+              publicKey: pubKeyStr,
               encryptedPrivateKey: encPrivKey,
             });
           }
