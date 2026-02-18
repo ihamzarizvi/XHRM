@@ -296,6 +296,7 @@
       @close="closeViewModal"
       @edit="editItem"
       @delete="deleteItem"
+      @share="openShareModal"
     />
 
     <vault-item-form

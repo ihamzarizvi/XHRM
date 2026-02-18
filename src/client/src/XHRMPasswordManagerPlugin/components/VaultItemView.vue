@@ -178,6 +178,13 @@
         <button class="footer-btn edit-btn" @click="$emit('edit', item)">
           Edit
         </button>
+        <button
+          class="footer-btn share-btn"
+          title="Share this item"
+          @click="$emit('share', item)"
+        >
+          <i class="bi bi-person-plus-fill"></i> Share
+        </button>
         <button class="footer-btn delete-btn" @click="confirmDelete">
           <i class="bi bi-trash"></i>
         </button>
@@ -200,7 +207,7 @@ export default defineComponent({
     item: {type: Object as PropType<any>, required: true},
     categoryName: {type: String, default: ''},
   },
-  emits: ['close', 'edit', 'delete'],
+  emits: ['close', 'edit', 'delete', 'share'],
   setup(props, {emit}) {
     const decryptedData = ref({
       username: '',
@@ -658,6 +665,21 @@ export default defineComponent({
 
     &:hover {
       background: #e66000;
+    }
+  }
+
+  &.share-btn {
+    background: #f0f9ff;
+    color: #0369a1;
+    border: 1.5px solid #bae6fd;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
     }
   }
 
