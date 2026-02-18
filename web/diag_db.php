@@ -8,91 +8,36 @@ error_reporting(E_ALL);
 
 echo "<pre>\n";
 
-// Find the conf file using the real server path
 $base = '/home/u118669189/domains/xsofty.com/public_html/mimarhrm';
 $confFile = $base . '/lib/confs/Conf.php';
 
-echo "Looking for config at: $confFile\n";
-
-if (!file_exists($confFile)) {
-    echo "Not found. Searching...\n";
-    // Search for any Conf.php
-    $found = [];
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($base . '/lib')) as $f) {
-        if ($f->getFilename() === 'Conf.php') {
-            $found[] = $f->getPathname();
-        }
-    }
-    echo "Found Conf.php files:\n" . implode("\n", $found) . "\n";
-
-    if (empty($found)) {
-        echo "\nlib/ directory contents:\n";
-        foreach (scandir($base . '/lib') as $item) {
-            echo "  $item\n";
-        }
-    }
-    exit;
-}
-
+// Capture constants defined BEFORE loading Conf.php
+$before = get_defined_constants();
 require_once $confFile;
-echo "✅ Config loaded.\n\n";
+$after = get_defined_constants();
 
-// Connect
-try {
-    $pdo = new PDO(
-        'mysql:host=' . XHRM_CONF_DBHOST . ';dbname=' . XHRM_CONF_DBNAME . ';charset=utf8',
-        XHRM_CONF_DBUSER,
-        XHRM_CONF_DBPASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-    echo "✅ DB Connected: " . XHRM_CONF_DBNAME . "\n\n";
-} catch (Exception $e) {
-    echo "❌ DB failed: " . $e->getMessage() . "\n";
-    exit;
-}
+// Find new constants added by Conf.php
+$new = array_diff_key($after, $before);
+$xhrmConsts = array_filter($new, fn($k) => stripos($k, 'xhrm') !== false || stripos($k, 'db') !== false || stripos($k, 'conf') !== false, ARRAY_FILTER_USE_KEY);
 
-// Check Password Manager tables
-$tables = ['ohrm_vault_item', 'ohrm_vault_category', 'ohrm_vault_share', 'ohrm_vault_user_key'];
-echo "=== Password Manager Tables ===\n";
-foreach ($tables as $table) {
-    $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
-    if ($stmt->fetch()) {
-        $count = $pdo->query("SELECT COUNT(*) FROM `$table`")->fetchColumn();
-        echo "✅ $table (rows: $count)\n";
+echo "=== Constants defined by Conf.php ===\n";
+foreach ($xhrmConsts as $k => $v) {
+    // Mask password
+    if (stripos($k, 'pass') !== false || stripos($k, 'pwd') !== false) {
+        echo "$k = ***\n";
     } else {
-        echo "❌ $table MISSING — migration not run!\n";
+        echo "$k = $v\n";
     }
 }
 
-// Check API permissions
-echo "\n=== API Permissions ===\n";
-$stmt = $pdo->query("
-    SELECT ap.api_name, ap.data_group_id, dg.name as dg_name
-    FROM ohrm_api_permission ap
-    LEFT JOIN ohrm_data_group dg ON ap.data_group_id = dg.id
-    WHERE ap.api_name LIKE '%PasswordManager%'
-");
-foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-    $ok = $row['dg_name'] ? '✅' : '❌ NULL dg';
-    echo "$ok {$row['api_name']} -> {$row['dg_name']}\n";
-}
-
-// Check data group permissions
-echo "\n=== Role Permissions (ohrm_user_role_data_group) ===\n";
-$stmt = $pdo->query("
-    SELECT ur.name as role, dg.name as dg, urd.can_read, urd.can_create, urd.self
-    FROM ohrm_user_role_data_group urd
-    JOIN ohrm_user_role ur ON urd.user_role_id = ur.id
-    JOIN ohrm_data_group dg ON urd.data_group_id = dg.id
-    WHERE dg.name = 'password_manager'
-");
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-if ($rows) {
-    foreach ($rows as $row) {
-        echo "✅ role={$row['role']} self={$row['self']} read={$row['can_read']} create={$row['can_create']}\n";
+echo "\n=== All new constants (non-PHP builtins) ===\n";
+foreach ($new as $k => $v) {
+    if (strpos($k, 'E_') === 0 || strpos($k, 'PHP_') === 0 || strpos($k, 'T_') === 0)
+        continue;
+    if (stripos($k, 'pass') !== false || stripos($k, 'pwd') !== false) {
+        echo "$k = ***\n";
+    } else {
+        echo "$k = $v\n";
     }
-} else {
-    echo "❌ No role permissions for password_manager data group!\n";
 }
-
-echo "\n=== Done ===\n</pre>";
+echo "</pre>";
