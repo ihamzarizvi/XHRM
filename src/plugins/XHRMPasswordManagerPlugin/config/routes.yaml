@@ -48,11 +48,5 @@ xhrm_password_manager_api_admin_stats:
   path: /api/v2/password-manager/admin/stats
   controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
   methods: [ GET ]
-    _api: XHRM\PasswordManager\Api\VaultAdminAPI
-
-xhrm_password_manager_api_shares:
-  path: /api/v2/password-manager/shares
-  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
-  methods: [ GET, POST, DELETE ]
   defaults:
-    _api: XHRM\PasswordManager\Api\VaultShareAPI
+    _api: XHRM\PasswordManager\Api\VaultAdminAPI

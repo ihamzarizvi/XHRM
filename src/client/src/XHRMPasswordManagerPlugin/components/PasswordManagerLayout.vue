@@ -48,17 +48,6 @@
         </div>
 
         <div class="pm-nav-divider"></div>
-
-        <div
-          class="pm-nav-item"
-          :class="{active: currentFilter === 'admin'}"
-          @click="currentFilter = 'admin'"
-        >
-          <i class="oxd-icon bi-speedometer2"></i>
-          <span>Admin Console</span>
-        </div>
-
-        <div class="pm-nav-divider"></div>
         <div
           class="pm-nav-header"
           style="
@@ -120,10 +109,6 @@
 
       <div v-if="currentFilter === 'security'" class="pm-content">
         <security-dashboard :items="allDataForAudit" @edit="editItem" />
-      </div>
-
-      <div v-else-if="currentFilter === 'admin'" class="pm-content">
-        <admin-dashboard />
       </div>
 
       <div v-else class="pm-content">
@@ -247,7 +232,6 @@ import ShareModal from './ShareModal.vue';
 import VaultUnlockModal from './VaultUnlockModal.vue';
 import VaultItemView from './VaultItemView.vue';
 import SecurityDashboard from './SecurityDashboard.vue';
-import AdminDashboard from './AdminDashboard.vue';
 import {SecurityService} from '../services/SecurityService';
 
 declare const window: any;
@@ -260,7 +244,6 @@ export default defineComponent({
     VaultUnlockModal,
     VaultItemView,
     SecurityDashboard,
-    AdminDashboard,
   },
   setup() {
     const items = ref<any[]>([]);
