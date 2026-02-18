@@ -12,6 +12,7 @@ export class SecurityService {
   private static readonly SALT_LENGTH = 16;
   private static readonly IV_LENGTH = 12; // Standard for GCM
   private static readonly ITERATIONS = 100000;
+  private static masterKeyVersion = 0; // increments each time masterKey is set
 
   /**
    * App-level secret combined with the server salt for key derivation.
@@ -69,6 +70,13 @@ export class SecurityService {
   static async autoUnlock(saltHex: string): Promise<void> {
     const salt = this.hexToBytes(saltHex);
     this.masterKey = await this.deriveKey(this.APP_SECRET, salt);
+    this.masterKeyVersion++;
+    console.log(
+      '[VAULT DEBUG] masterKey set, version:',
+      this.masterKeyVersion,
+      'salt prefix:',
+      saltHex.substring(0, 16),
+    );
   }
 
   /**
@@ -108,6 +116,13 @@ export class SecurityService {
     if (!useKey) throw new Error('Vault is locked and no key provided');
     if (!data) return '';
 
+    const usingMaster = !key;
+    if (usingMaster) {
+      console.log(
+        '[VAULT DEBUG] encrypt() using masterKey v' + this.masterKeyVersion,
+      );
+    }
+
     const iv = window.crypto.getRandomValues(new Uint8Array(this.IV_LENGTH));
     const enc = new TextEncoder();
 
@@ -138,8 +153,20 @@ export class SecurityService {
     if (!useKey) throw new Error('Vault is locked and no key provided');
     if (!encryptedData || !encryptedData.includes('::')) return '';
 
+    const usingMaster = !key;
+    if (usingMaster) {
+      console.log(
+        '[VAULT DEBUG] decrypt() using masterKey v' +
+          this.masterKeyVersion +
+          ' data prefix:',
+        encryptedData.substring(0, 20),
+      );
+    }
+
     try {
-      const [ivBase64, contentBase64] = encryptedData.split('::');
+      const parts = encryptedData.split('::');
+      const ivBase64 = parts[0];
+      const contentBase64 = parts.slice(1).join('::'); // rejoin in case base64 somehow had ::
       // Fix potential space-to-plus corruption from server/transport
       const safeIv = ivBase64.replace(/ /g, '+');
       const safeContent = contentBase64.replace(/ /g, '+');
