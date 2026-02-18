@@ -1,85 +1,94 @@
 <?php
 /**
- * Diagnostic: test the user-keys API endpoint directly.
+ * Standalone diagnostic - no app bootstrap needed.
+ * Reads the PHP error log and tests the API via curl with session cookie.
  * DELETE THIS FILE after debugging!
  */
+header('Content-Type: text/html; charset=utf-8');
 
-// Bootstrap the app
-define('ROOT_PATH', dirname(__DIR__));
-require_once ROOT_PATH . '/lib/confs/Conf.php';
+echo "<h2>XHRM API Diagnostic</h2>";
 
-$conf = new Conf();
-$dsn = 'mysql:host=' . $conf->getDbHost() . ';dbname=' . $conf->getDbName() . ';charset=utf8mb4';
+// 1. Find and show recent PHP errors
+$logPaths = [
+    '/var/log/apache2/error.log',
+    '/var/log/nginx/error.log',
+    '/tmp/php_errors.log',
+    ini_get('error_log'),
+    dirname(__DIR__) . '/var/log/dev.log',
+    dirname(__DIR__) . '/var/log/prod.log',
+];
 
-try {
-    $pdo = new PDO($dsn, $conf->getDbUser(), $conf->getDbPass(), [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+echo "<h3>PHP Error Log</h3>";
+$foundLog = false;
+foreach ($logPaths as $path) {
+    if ($path && file_exists($path) && is_readable($path)) {
+        $lines = array_slice(file($path), -50); // last 50 lines
+        $relevant = array_filter($lines, fn($l) => stripos($l, 'password') !== false || stripos($l, 'vault') !== false || stripos($l, 'user-key') !== false || stripos($l, 'InvalidParam') !== false || stripos($l, '422') !== false);
+        if ($relevant) {
+            echo "<p>Found log: <code>$path</code></p>";
+            echo "<pre style='background:#111;color:#0f0;padding:10px;font-size:11px;overflow:auto;max-height:300px'>";
+            echo htmlspecialchars(implode('', array_slice($relevant, -20)));
+            echo "</pre>";
+            $foundLog = true;
+        }
+    }
+}
+if (!$foundLog) {
+    echo "<p>No relevant log entries found. Checked: " . implode(', ', array_filter($logPaths)) . "</p>";
+}
+
+// 2. Direct API call using the current session cookie
+echo "<h3>Direct API Test (user-keys)</h3>";
+
+$sessionCookie = '';
+foreach ($_COOKIE as $k => $v) {
+    $sessionCookie .= "$k=" . urlencode($v) . "; ";
+}
+
+// Try both localhost and 127.0.0.1
+$urls = [
+    'http://127.0.0.1/web/index.php/api/v2/password-manager/user-keys',
+    'http://localhost/web/index.php/api/v2/password-manager/user-keys',
+    'https://mimar.xsofty.com/web/index.php/api/v2/password-manager/user-keys',
+];
+
+foreach ($urls as $url) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_TIMEOUT => 5,
+        CURLOPT_HTTPHEADER => [
+            'Accept: application/json',
+            'X-Requested-With: XMLHttpRequest',
+        ],
+        CURLOPT_COOKIE => $sessionCookie,
     ]);
-
-    echo "<h2>API Permission Check</h2>";
-
-    // 1. Check if the APIs are registered
-    $stmt = $pdo->query("SELECT api_name, module_id, data_group_id FROM ohrm_api_permission WHERE api_name LIKE '%PasswordManager%' ORDER BY api_name");
-    $apis = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    echo "<h3>Registered APIs (" . count($apis) . ")</h3><table border='1' cellpadding='5'>";
-    echo "<tr><th>api_name</th><th>module_id</th><th>data_group_id</th></tr>";
-    foreach ($apis as $api) {
-        $ok = $api['data_group_id'] ? '✅' : '❌ NULL';
-        echo "<tr><td>{$api['api_name']}</td><td>{$api['module_id']}</td><td>{$ok} {$api['data_group_id']}</td></tr>";
-    }
-    echo "</table>";
-
-    // 2. Check data group
-    $stmt = $pdo->query("SELECT * FROM ohrm_data_group WHERE name = 'password_manager'");
-    $dg = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "<h3>Data Group</h3>";
-    if ($dg) {
-        echo "<pre>" . print_r($dg, true) . "</pre>";
-    } else {
-        echo "<p style='color:red'>❌ Data group 'password_manager' NOT FOUND</p>";
-    }
-
-    // 3. Check user role data group permissions
-    $stmt = $pdo->query("
-        SELECT urdg.*, dg.name AS dg_name, ur.name AS role_name
-        FROM ohrm_user_role_data_group urdg
-        JOIN ohrm_data_group dg ON urdg.data_group_id = dg.id
-        JOIN ohrm_user_role ur ON urdg.user_role_id = ur.id
-        WHERE dg.name = 'password_manager'
-    ");
-    $perms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo "<h3>Role Permissions (" . count($perms) . ")</h3><table border='1' cellpadding='5'>";
-    echo "<tr><th>role</th><th>read</th><th>create</th><th>update</th><th>delete</th><th>self</th></tr>";
-    foreach ($perms as $p) {
-        echo "<tr><td>{$p['role_name']}</td><td>{$p['can_read']}</td><td>{$p['can_create']}</td><td>{$p['can_update']}</td><td>{$p['can_delete']}</td><td>{$p['self']}</td></tr>";
-    }
-    echo "</table>";
-
-    // 4. Check module
-    $stmt = $pdo->query("SELECT * FROM ohrm_module WHERE name LIKE '%assword%' OR name LIKE '%vault%'");
-    $modules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo "<h3>Module</h3><pre>" . print_r($modules, true) . "</pre>";
-
-    // 5. Test the actual API via curl (internal)
-    echo "<h3>Direct API Test</h3>";
-    $cookies = [];
-    foreach ($_COOKIE as $k => $v) {
-        $cookies[] = "$k=" . urlencode($v);
-    }
-    $cookieStr = implode('; ', $cookies);
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://localhost/web/index.php/api/v2/password-manager/user-keys');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/json', 'Cookie: ' . $cookieStr]);
-    $result = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $body = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $err = curl_error($ch);
     curl_close($ch);
 
-    echo "<p>HTTP Status: <strong>$httpCode</strong></p>";
-    echo "<pre>" . htmlspecialchars($result) . "</pre>";
+    echo "<p><strong>URL:</strong> $url<br>";
+    echo "<strong>HTTP:</strong> $code<br>";
+    if ($err)
+        echo "<strong>cURL error:</strong> $err<br>";
+    echo "<strong>Response:</strong></p>";
+    echo "<pre style='background:#f0f0f0;padding:8px;overflow:auto'>" . htmlspecialchars(substr($body, 0, 2000)) . "</pre>";
+    echo "<hr>";
+}
 
-} catch (Exception $e) {
-    echo "<p style='color:red'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+// 3. Show PHP version and loaded extensions
+echo "<h3>Environment</h3>";
+echo "<p>PHP: " . PHP_VERSION . " | SAPI: " . PHP_SAPI . "</p>";
+
+// 4. Check if the class exists
+$class = 'XHRM\\PasswordManager\\Api\\VaultUserKeyAPI';
+$autoload = dirname(__DIR__) . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    require_once $autoload;
+    echo "<p>Class exists: " . (class_exists($class) ? '✅ YES' : '❌ NO') . "</p>";
+} else {
+    echo "<p style='color:orange'>vendor/autoload.php not found at expected path</p>";
 }
