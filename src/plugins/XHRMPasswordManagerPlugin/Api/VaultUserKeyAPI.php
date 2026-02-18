@@ -16,18 +16,11 @@ use XHRM\Core\Traits\UserRoleManagerTrait;
 use XHRM\PasswordManager\Api\Model\VaultUserKeyModel;
 use XHRM\PasswordManager\Entity\VaultUserKey;
 use XHRM\PasswordManager\Traits\Service\PasswordManagerServiceTrait;
-use XHRM\PasswordManager\Traits\Api\VaultPermissionTrait;
 
 class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
 {
     use PasswordManagerServiceTrait;
     use UserRoleManagerTrait;
-    use VaultPermissionTrait;
-
-    protected function init()
-    {
-        $this->checkVaultAccess();
-    }
 
     public const PARAMETER_USER_ID = 'userId';
     public const PARAMETER_PUBLIC_KEY = 'publicKey';
