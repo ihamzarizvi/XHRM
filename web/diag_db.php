@@ -1,6 +1,6 @@
 <?php
 /**
- * Diagnostic: Check DB tables for Password Manager
+ * Diagnostic: Simulate VaultUserKeyAPI call to find 500 error
  * DELETE THIS FILE after debugging!
  */
 ini_set('display_errors', 1);
@@ -10,68 +10,61 @@ echo "<pre>\n";
 
 $base = '/home/u118669189/domains/xsofty.com/public_html/mimarhrm';
 
-// Load the Conf class (it's in lib/confs/Conf.php)
-$confFile = $base . '/lib/confs/Conf.php';
-require_once $confFile;
-
+// Load Conf and connect to DB
+require_once $base . '/lib/confs/Conf.php';
 $conf = new Conf();
 
-// Connect using Conf methods
-try {
-    $pdo = new PDO(
-        'mysql:host=' . $conf->getDbHost() . ';dbname=' . $conf->getDbName() . ';charset=utf8',
-        $conf->getDbUser(),
-        $conf->getDbPass(),
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-    echo "✅ DB Connected: " . $conf->getDbName() . "\n\n";
-} catch (Exception $e) {
-    echo "❌ DB failed: " . $e->getMessage() . "\n";
-    exit;
+$pdo = new PDO(
+    'mysql:host=' . $conf->getDbHost() . ';dbname=' . $conf->getDbName() . ';charset=utf8',
+    $conf->getDbUser(),
+    $conf->getDbPass(),
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+);
+
+echo "✅ DB Connected\n\n";
+
+// Check ohrm_vault_user_key structure
+echo "=== ohrm_vault_user_key columns ===\n";
+$stmt = $pdo->query("DESCRIBE ohrm_vault_user_key");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "  {$row['Field']} ({$row['Type']}) null={$row['Null']} default={$row['Default']}\n";
 }
 
-// Check Password Manager tables
-$tables = ['ohrm_vault_item', 'ohrm_vault_category', 'ohrm_vault_share', 'ohrm_vault_user_key'];
-echo "=== Password Manager Tables ===\n";
-foreach ($tables as $table) {
-    $stmt = $pdo->query("SHOW TABLES LIKE '$table'");
-    if ($stmt->fetch()) {
-        $count = $pdo->query("SELECT COUNT(*) FROM `$table`")->fetchColumn();
-        echo "✅ $table (rows: $count)\n";
-    } else {
-        echo "❌ $table MISSING — migration not run!\n";
-    }
+// Check the actual data
+echo "\n=== ohrm_vault_user_key data ===\n";
+$stmt = $pdo->query("SELECT id, user_id, LENGTH(public_key) as pub_len, LENGTH(encrypted_private_key) as priv_len FROM ohrm_vault_user_key LIMIT 5");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "  id={$row['id']} user_id={$row['user_id']} pub_key_len={$row['pub_len']} priv_key_len={$row['priv_len']}\n";
 }
 
-// Check API permissions
-echo "\n=== API Permissions ===\n";
-$stmt = $pdo->query("
-    SELECT ap.api_name, ap.data_group_id, dg.name as dg_name
-    FROM ohrm_api_permission ap
-    LEFT JOIN ohrm_data_group dg ON ap.data_group_id = dg.id
-    WHERE ap.api_name LIKE '%PasswordManager%'
-");
-foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-    $ok = $row['dg_name'] ? '✅' : '❌ NULL dg';
-    echo "$ok {$row['api_name']} -> dg={$row['dg_name']}\n";
-}
-
-// Check data group permissions
-echo "\n=== Role Permissions ===\n";
-$stmt = $pdo->query("
-    SELECT ur.name as role, dg.name as dg, urd.can_read, urd.can_create, urd.self
-    FROM ohrm_user_role_data_group urd
-    JOIN ohrm_user_role ur ON urd.user_role_id = ur.id
-    JOIN ohrm_data_group dg ON urd.data_group_id = dg.id
-    WHERE dg.name = 'password_manager'
-");
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-if ($rows) {
-    foreach ($rows as $row) {
-        echo "✅ role={$row['role']} self={$row['self']} read={$row['can_read']} create={$row['can_create']}\n";
-    }
+// Check VaultUserKeyModel to see what fields it maps
+echo "\n=== VaultUserKeyModel.php ===\n";
+$modelFile = $base . '/src/plugins/XHRMPasswordManagerPlugin/Api/Model/VaultUserKeyModel.php';
+if (file_exists($modelFile)) {
+    echo file_get_contents($modelFile);
 } else {
-    echo "❌ No role permissions for password_manager!\n";
+    echo "NOT FOUND at $modelFile\n";
+}
+
+// Check PHP error log
+echo "\n=== PHP error_log setting ===\n";
+echo "error_log = " . ini_get('error_log') . "\n";
+
+// Check recent app log
+$logFiles = [
+    $base . '/log/xhrm.log',
+    $base . '/var/log/prod.log',
+    $base . '/log/error.log',
+];
+foreach ($logFiles as $log) {
+    if (file_exists($log)) {
+        echo "\n=== Last 20 lines of $log ===\n";
+        $lines = file($log);
+        echo implode('', array_slice($lines, -20));
+        break;
+    } else {
+        echo "No log at: $log\n";
+    }
 }
 
 echo "\n=== Done ===\n</pre>";
