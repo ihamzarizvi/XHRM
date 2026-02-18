@@ -640,9 +640,10 @@ export default defineComponent({
             );
             const encPrivKey = await SecurityService.encrypt(privKeyStr);
 
-            // Upload to server
+            // Upload to server — store salt + RSA public key together in JSON
+            // so the salt is preserved for future logins (critical for key derivation)
             await userKeyService.create({
-              publicKey: pubKeyStr,
+              publicKey: JSON.stringify({salt, rsaPublicKey: pubKeyStr}),
               encryptedPrivateKey: encPrivKey,
             });
           }
