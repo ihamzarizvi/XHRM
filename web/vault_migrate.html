@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vault Migration Tool</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #e05c00;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c04f00;
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        #log {
+            background: #111;
+            color: #0f0;
+            padding: 16px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .warn {
+            color: #ff9800;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔐 Vault Migration Tool</h1>
+    <div class="card">
+        <p><strong>What this does:</strong> Re-encrypts all your vault items from the old master-password key to the new
+            auto-unlock key. Run this once after setting up auto-unlock.</p>
+        <p><strong>Step 1:</strong> Enter your OLD master password (the one you used before auto-unlock).</p>
+        <label>Old Master Password:</label>
+        <input type="password" id="oldPassword" placeholder="Enter your old master password" />
+        <p><strong>Step 2:</strong> The tool will fetch the server salt, derive both keys, re-encrypt all items, and
+            save them.</p>
+        <button id="migrateBtn" onclick="runMigration()">Start Migration</button>
+    </div>
+    <div class="card">
+        <div id="log">Waiting to start...</div>
+    </div>
+
+    <script>
+        const APP_SECRET = 'XHRM_VAULT_APP_SECRET_V1';
+        const ITERATIONS = 100000;
+        const log = (msg, cls = '') => {
+            const el = document.getElementById('log');
+            el.innerHTML += `\n<span class="${cls}">${msg}</span>`;
+            el.scrollTop = el.scrollHeight;
+        };
+
+        function hexToBytes(hex) {
+            const bytes = new Uint8Array(hex.length / 2);
+            for (let i = 0; i < hex.length; i += 2) bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
+            return bytes;
+        }
+
+        function b64ToBuffer(b64) {
+            const bin = atob(b64);
+            const buf = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+            return buf;
+        }
+
+        function bufToB64(buf) {
+            let bin = '';
+            const bytes = new Uint8Array(buf);
+            for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+            return btoa(bin);
+        }
+
+        async function deriveKey(password, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+            return crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: ITERATIONS, hash: 'SHA-256' },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt', 'decrypt']
+            );
+        }
+
+        async function decrypt(encryptedData, key) {
+            if (!encryptedData || !encryptedData.includes('::')) return null;
+            try {
+                const [ivB64, ctB64] = encryptedData.split('::');
+                const iv = b64ToBuffer(ivB64.replace(/ /g, '+'));
+                const ct = b64ToBuffer(ctB64.replace(/ /g, '+'));
+                const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+                return new TextDecoder().decode(dec);
+            } catch (e) {
+                return null; // decryption failed
+            }
+        }
+
+        async function encrypt(data, key) {
+            if (!data) return '';
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const enc = new TextEncoder();
+            const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(data));
+            return `${bufToB64(iv.buffer)}::${bufToB64(ct)}`;
+        }
+
+        async function apiFetch(url, opts = {}) {
+            const res = await fetch(url, { credentials: 'include', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', ...opts.headers }, ...opts });
+            return res.json();
+        }
+
+        async function runMigration() {
+            const oldPassword = document.getElementById('oldPassword').value.trim();
+            if (!oldPassword) { alert('Please enter your old master password'); return; }
+
+            document.getElementById('migrateBtn').disabled = true;
+            document.getElementById('log').innerHTML = '';
+            log('🚀 Starting migration...');
+
+            try {
+                // 1. Fetch server salt
+                log('📡 Fetching server salt...');
+                const keyResp = await apiFetch('/web/index.php/api/v2/password-manager/user-keys');
+                const keyData = keyResp.data?.[0];
+                if (!keyData) throw new Error('Could not fetch user key from server. Are you logged in?');
+
+                let salt;
+                try {
+                    const parsed = JSON.parse(keyData.publicKey);
+                    salt = parsed.salt;
+                    log(`✅ Salt found (JSON format): ${salt.substring(0, 16)}...`);
+                } catch {
+                    salt = keyData.publicKey;
+                    log(`✅ Salt found (plain hex): ${salt.substring(0, 16)}...`);
+                }
+
+                // 2. Derive old key (password-based, fixed salt)
+                log('🔑 Deriving OLD key from master password...');
+                const enc = new TextEncoder();
+                // Try the old fixed salt first (XHRM_VAULT_SALT_V1)
+                const oldSaltBytes = enc.encode('XHRM_VAULT_SALT_V1');
+                const oldKey = await deriveKey(oldPassword, oldSaltBytes);
+                log('✅ Old key derived');
+
+                // 3. Derive new key (APP_SECRET + server salt)
+                log('🔑 Deriving NEW auto-unlock key...');
+                const newSaltBytes = hexToBytes(salt);
+                const newKey = await deriveKey(APP_SECRET, newSaltBytes);
+                log('✅ New key derived');
+
+                // 4. Fetch all vault items
+                log('📦 Fetching vault items...');
+                const itemsResp = await apiFetch('/web/index.php/api/v2/password-manager/items');
+                const items = itemsResp.data || [];
+                log(`📦 Found ${items.length} items`);
+
+                if (items.length === 0) {
+                    log('⚠️ No items found. Nothing to migrate.', 'warn');
+                    document.getElementById('migrateBtn').disabled = false;
+                    return;
+                }
+
+                // 5. Re-encrypt each item
+                let migrated = 0, failed = 0, skipped = 0;
+                for (const item of items) {
+                    log(`\n🔄 Processing: ${item.name} (id=${item.id})`);
+
+                    // Try to decrypt with old key
+                    const username = await decrypt(item.username, oldKey);
+                    const password = await decrypt(item.password, oldKey);
+                    const notes = await decrypt(item.notes, oldKey);
+
+                    if (username === null && password === null && notes === null) {
+                        // Try new key — maybe already migrated
+                        const uNew = await decrypt(item.username, newKey);
+                        if (uNew !== null) {
+                            log(`  ⏭️ Already migrated (decrypts with new key)`, 'warn');
+                            skipped++;
+                            continue;
+                        }
+                        log(`  ❌ Cannot decrypt with old OR new key — skipping`, 'error');
+                        failed++;
+                        continue;
+                    }
+
+                    log(`  ✅ Decrypted: username="${username || ''}", password="${password ? '***' : ''}", notes="${notes ? notes.substring(0, 20) : ''}"`);
+
+                    // Re-encrypt with new key
+                    const newUsername = username ? await encrypt(username, newKey) : item.username;
+                    const newPassword = password ? await encrypt(password, newKey) : item.password;
+                    const newNotes = notes ? await encrypt(notes, newKey) : item.notes;
+
+                    // Save back to server
+                    const saveResp = await apiFetch(`/web/index.php/api/v2/password-manager/items/${item.id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({
+                            name: item.name,
+                            username: newUsername,
+                            password: newPassword,
+                            url: item.url || '',
+                            notes: newNotes,
+                            categoryId: item.categoryId || null,
+                            isFavorite: item.isFavorite || false,
+                        })
+                    });
+
+                    if (saveResp.data) {
+                        log(`  💾 Saved successfully`, 'success');
+                        migrated++;
+                    } else {
+                        log(`  ❌ Save failed: ${JSON.stringify(saveResp)}`, 'error');
+                        failed++;
+                    }
+                }
+
+                log(`\n\n✅ Migration complete!`, 'success');
+                log(`  Migrated: ${migrated}`, 'success');
+                log(`  Skipped (already migrated): ${skipped}`, 'warn');
+                log(`  Failed: ${failed}`, failed > 0 ? 'error' : '');
+                log(`\n🔒 You can now delete this file and use the vault normally.`);
+
+            } catch (e) {
+                log(`\n❌ Migration failed: ${e.message}`, 'error');
+                console.error(e);
+            }
+
+            document.getElementById('migrateBtn').disabled = false;
+        }
+    </script>
+</body>
+
+</html>
