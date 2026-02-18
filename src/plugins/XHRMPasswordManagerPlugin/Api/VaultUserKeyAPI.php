@@ -99,9 +99,8 @@ class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(
-            new ParamRule(self::PARAMETER_USER_ID, new Rule(Rules::NOT_REQUIRED), new Rule(Rules::STRING_TYPE))
-        );
+        // No required params — userId is optional and handled safely in getAll()
+        return new ParamRuleCollection();
     }
 
     /**
