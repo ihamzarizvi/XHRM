@@ -14,6 +14,13 @@ export class SecurityService {
   private static readonly ITERATIONS = 100000;
 
   /**
+   * App-level secret combined with the server salt for key derivation.
+   * This is NOT a user password — it's a fixed constant that makes
+   * the derived key unique to this application.
+   */
+  private static readonly APP_SECRET = 'XHRM_VAULT_APP_SECRET_V1';
+
+  /**
    * Derives an AES-GCM key from a user's master password.
    * This key should be kept in memory and never stored.
    * For the MVP, we derive it fresh or store it in a secure runtime variable.
@@ -54,11 +61,24 @@ export class SecurityService {
    * @param password - The user's master password
    * @param saltHex - The user's unique salt (hex string)
    */
-  static async unlockVault(password: string): Promise<void> {
-    // In a real app, salt should be unique per user and stored in DB
-    // For MVP, we use a deterministic app-wide salt
+  /**
+   * Auto-unlock: derives the master key from a server-provided hex salt.
+   * No user password needed — the salt is unique per user and stored on the server.
+   * Key = PBKDF2(APP_SECRET, serverSalt, 100000 iterations, SHA-256)
+   */
+  static async autoUnlock(saltHex: string): Promise<void> {
+    const salt = this.hexToBytes(saltHex);
+    this.masterKey = await this.deriveKey(this.APP_SECRET, salt);
+  }
+
+  /**
+   * Legacy: unlock with user-provided password (kept for compatibility).
+   */
+  static async unlockVault(password: string, saltHex?: string): Promise<void> {
     const enc = new TextEncoder();
-    const salt = enc.encode('XHRM_VAULT_SALT_V1');
+    const salt = saltHex
+      ? this.hexToBytes(saltHex)
+      : enc.encode('XHRM_VAULT_SALT_V1');
     this.masterKey = await this.deriveKey(password, salt);
   }
 
@@ -254,7 +274,7 @@ export class SecurityService {
     return bytes;
   }
 
-  private static hexToBytes(hex: string): Uint8Array {
+  static hexToBytes(hex: string): Uint8Array {
     const bytes = new Uint8Array(hex.length / 2);
     for (let i = 0; i < hex.length; i += 2) {
       bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);

@@ -47,6 +47,18 @@
           <span>Security Audit</span>
         </div>
 
+        <div
+          class="pm-nav-item"
+          :class="{active: currentFilter === 'activity'}"
+          @click="
+            currentFilter = 'activity';
+            fetchAuditLog();
+          "
+        >
+          <i class="oxd-icon bi-clock-history"></i>
+          <span>Activity Log</span>
+        </div>
+
         <div class="pm-nav-divider"></div>
         <div
           class="pm-nav-header"
@@ -107,8 +119,89 @@
         </button>
       </div>
 
-      <div v-if="currentFilter === 'security'" class="pm-content">
+      <!-- Loading / Error state during auto-unlock -->
+      <div v-if="isUnlocking" class="pm-unlock-loading">
+        <i class="bi bi-shield-lock"></i>
+        <p>Unlocking your vault...</p>
+      </div>
+      <div v-else-if="unlockError" class="pm-unlock-error">
+        <i class="bi bi-exclamation-triangle"></i>
+        <p>{{ unlockError }}</p>
+        <button class="pm-add-btn" @click="initAutoUnlock">Retry</button>
+      </div>
+
+      <div v-else-if="currentFilter === 'security'" class="pm-content">
         <security-dashboard :items="allDataForAudit" @edit="editItem" />
+      </div>
+
+      <!-- Activity Log -->
+      <div v-else-if="currentFilter === 'activity'" class="pm-content">
+        <div class="pm-audit-log">
+          <div class="pm-audit-header">
+            <h3>Activity Log</h3>
+            <div class="pm-audit-filters">
+              <select
+                v-model="auditFilter.action"
+                class="pm-audit-select"
+                @change="fetchAuditLog"
+              >
+                <option value="">All Actions</option>
+                <option value="created">Created</option>
+                <option value="viewed">Viewed</option>
+                <option value="updated">Updated</option>
+                <option value="deleted">Deleted</option>
+                <option value="password_copied">Password Copied</option>
+                <option value="url_launched">URL Launched</option>
+                <option value="shared">Shared</option>
+                <option value="unshared">Unshared</option>
+              </select>
+              <input
+                v-model="auditFilter.from"
+                type="date"
+                class="pm-audit-input"
+                @change="fetchAuditLog"
+              />
+              <input
+                v-model="auditFilter.to"
+                type="date"
+                class="pm-audit-input"
+                @change="fetchAuditLog"
+              />
+            </div>
+          </div>
+          <div v-if="auditLogs.length === 0" class="pm-empty">
+            <i class="bi bi-clock-history"></i>
+            <p>No activity recorded yet.</p>
+          </div>
+          <table v-else class="pm-audit-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Action</th>
+                <th>Item</th>
+                <th>IP Address</th>
+                <th>Browser</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="log in auditLogs" :key="log.id">
+                <td>{{ log.userFullName || log.userName }}</td>
+                <td>
+                  <span :class="'pm-audit-badge pm-audit-' + log.action">{{
+                    formatAction(log.action)
+                  }}</span>
+                </td>
+                <td>{{ log.itemName || '—' }}</td>
+                <td>{{ log.ipAddress || '—' }}</td>
+                <td class="pm-audit-ua">
+                  {{ formatUserAgent(log.userAgent) }}
+                </td>
+                <td>{{ formatDate(log.createdAt) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div v-else class="pm-content">
@@ -152,7 +245,7 @@
               <button
                 class="pm-icon-btn"
                 title="Copy Password"
-                @click.stop="copyToClipboard(item.password)"
+                @click.stop="copyToClipboard(item.password, item.id)"
               >
                 <i class="bi bi-key"></i>
               </button>
@@ -160,7 +253,7 @@
                 v-if="item.url"
                 class="pm-icon-btn"
                 title="Launch"
-                @click.stop="launchUrl(item.url)"
+                @click.stop="launchUrl(item.url, item.id)"
               >
                 <i class="bi bi-box-arrow-up-right"></i>
               </button>
@@ -193,7 +286,7 @@
 
     <!-- Global Modals -->
     <!-- Global Modals -->
-    <vault-unlock-modal v-if="showUnlockModal" @unlocked="onUnlocked" />
+    <!-- No unlock modal — vault auto-unlocks on mount -->
 
     <vault-item-view
       v-if="showViewModal && selectedItem"
@@ -229,7 +322,6 @@ import {defineComponent, ref, onMounted, computed} from 'vue';
 import {APIService} from '@/core/util/services/api.service';
 import VaultItemForm from './VaultItemForm.vue';
 import ShareModal from './ShareModal.vue';
-import VaultUnlockModal from './VaultUnlockModal.vue';
 import VaultItemView from './VaultItemView.vue';
 import SecurityDashboard from './SecurityDashboard.vue';
 import {SecurityService} from '../services/SecurityService';
@@ -241,7 +333,6 @@ export default defineComponent({
   components: {
     VaultItemForm,
     ShareModal,
-    VaultUnlockModal,
     VaultItemView,
     SecurityDashboard,
   },
@@ -251,10 +342,17 @@ export default defineComponent({
     const currentFilter = ref<string | number>('all');
     const searchQuery = ref('');
 
+    // Auto-unlock state
+    const isUnlocking = ref(true);
+    const unlockError = ref<string | null>(null);
+
+    // Audit log state
+    const auditLogs = ref<any[]>([]);
+    const auditFilter = ref({action: '', from: '', to: ''});
+
     // Modal states
     const showAddItemModal = ref(false);
     const showShareModal = ref(false);
-    const showUnlockModal = ref(true); // Default to locked
     const showViewModal = ref(false);
 
     const selectedItem = ref<any>(null);
@@ -272,6 +370,14 @@ export default defineComponent({
     const shareService = new APIService(
       window.appGlobal.baseUrl,
       '/api/v2/password-manager/shares',
+    );
+    const userKeyService = new APIService(
+      window.appGlobal.baseUrl,
+      '/api/v2/password-manager/user-keys',
+    );
+    const auditService = new APIService(
+      window.appGlobal.baseUrl,
+      '/api/v2/password-manager/audit-logs',
     );
 
     const sharedItems = ref<any[]>([]);
@@ -466,26 +572,158 @@ export default defineComponent({
       }
     };
 
-    // --- Unlock Flow ---
-    const checkUnlockStatus = () => {
-      const unlocked = SecurityService.isVaultUnlocked();
-      showUnlockModal.value = !unlocked;
-      if (unlocked) {
-        fetchItems();
-        fetchCategories();
+    // --- Auto-Unlock ---
+    const initAutoUnlock = async () => {
+      isUnlocking.value = true;
+      unlockError.value = null;
+      try {
+        // 1. Fetch (or auto-create) the user's salt from the server
+        const response = await userKeyService.getAll();
+        const keyData = response.data.data?.[0];
+        if (!keyData)
+          throw new Error('Could not retrieve vault key from server.');
+
+        // publicKey column stores either a plain hex salt or JSON {salt, rsaPublicKey}
+        let salt: string;
+        let rsaPublicKeyStr: string | null = null;
+        let encryptedPrivateKey: string | null =
+          keyData.encryptedPrivateKey || null;
+
+        try {
+          const parsed = JSON.parse(keyData.publicKey);
+          salt = parsed.salt;
+          rsaPublicKeyStr = parsed.rsaPublicKey || null;
+        } catch {
+          // Plain hex salt (first access before RSA key upload)
+          salt = keyData.publicKey;
+        }
+
+        // 2. Derive AES master key from salt
+        await SecurityService.autoUnlock(salt);
+
+        // 3. Handle RSA key pair for sharing
+        if (rsaPublicKeyStr && encryptedPrivateKey) {
+          // Decrypt existing RSA private key
+          try {
+            const privKeyRaw = await SecurityService.decrypt(
+              encryptedPrivateKey,
+            );
+            if (privKeyRaw && privKeyRaw !== '[Encrypted Data]') {
+              const privKey = await SecurityService.importKey(
+                privKeyRaw,
+                'private',
+              );
+              SecurityService.setPrivateKey(privKey);
+            } else {
+              console.warn(
+                'Could not decrypt RSA private key — sharing disabled',
+              );
+            }
+          } catch (e) {
+            console.warn('RSA private key decryption failed:', e);
+          }
+        } else {
+          // Generate new RSA key pair
+          console.log('Generating RSA key pair for sharing...');
+          const keyPair = await SecurityService.generateKeyPair();
+          if (!keyPair.privateKey || !keyPair.publicKey) {
+            console.warn('RSA key generation failed — sharing disabled');
+          } else {
+            SecurityService.setPrivateKey(keyPair.privateKey);
+
+            const pubKeyStr = await SecurityService.exportKey(
+              keyPair.publicKey,
+            );
+            const privKeyStr = await SecurityService.exportKey(
+              keyPair.privateKey,
+            );
+            const encPrivKey = await SecurityService.encrypt(privKeyStr);
+
+            // Upload to server
+            await userKeyService.create({
+              publicKey: pubKeyStr,
+              encryptedPrivateKey: encPrivKey,
+            });
+          }
+        }
+
+        // 4. Load vault data
+        await Promise.all([fetchItems(), fetchCategories()]);
+      } catch (e: any) {
+        console.error('Auto-unlock failed:', e);
+        unlockError.value =
+          e?.message || 'Failed to unlock vault. Please refresh the page.';
+      } finally {
+        isUnlocking.value = false;
       }
     };
 
+    // --- Audit Log ---
+    const fetchAuditLog = async () => {
+      try {
+        const params: any = {};
+        if (auditFilter.value.action) params.action = auditFilter.value.action;
+        if (auditFilter.value.from) params.from = auditFilter.value.from;
+        if (auditFilter.value.to) params.to = auditFilter.value.to;
+        const response = await auditService.getAll(params);
+        auditLogs.value = response.data.data || [];
+      } catch (e) {
+        console.error('Failed to fetch audit log', e);
+      }
+    };
+
+    const logAuditEvent = async (action: string, itemId?: number) => {
+      try {
+        await auditService.create({action, vaultItemId: itemId || null});
+      } catch (e) {
+        // Silent fail — never block user action for audit logging
+      }
+    };
+
+    const formatAction = (action: string) => {
+      const map: Record<string, string> = {
+        created: 'Created',
+        viewed: 'Viewed',
+        updated: 'Updated',
+        deleted: 'Deleted',
+        password_copied: 'Copied Password',
+        url_launched: 'Launched URL',
+        shared: 'Shared',
+        unshared: 'Unshared',
+      };
+      return map[action] || action;
+    };
+
+    const formatUserAgent = (ua: string | null) => {
+      if (!ua) return '—';
+      // Extract browser name from UA string
+      if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Chrome';
+      if (ua.includes('Firefox')) return 'Firefox';
+      if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+      if (ua.includes('Edg')) return 'Edge';
+      return ua.substring(0, 30);
+    };
+
+    const formatDate = (iso: string) => {
+      if (!iso) return '—';
+      const d = new Date(iso);
+      return (
+        d.toLocaleDateString() +
+        ' ' +
+        d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+      );
+    };
+
     const onUnlocked = () => {
-      showUnlockModal.value = false;
       fetchItems();
       fetchCategories();
     };
 
     const lockVault = () => {
       SecurityService.lockVault();
-      items.value = []; // Clear data from memory
-      showUnlockModal.value = true;
+      items.value = [];
+      isUnlocking.value = false;
+      unlockError.value = 'Vault locked. Refresh the page to unlock again.';
     };
 
     // --- Item Interactions ---
@@ -566,18 +804,20 @@ export default defineComponent({
       }
     };
 
-    const copyToClipboard = async (text: string) => {
+    const copyToClipboard = async (text: string, itemId?: number) => {
       if (!text) return;
       try {
         await navigator.clipboard.writeText(text);
+        if (itemId) logAuditEvent('password_copied', itemId);
       } catch (err) {
         console.error('Failed to copy', err);
       }
     };
 
-    const launchUrl = (url: string) => {
+    const launchUrl = (url: string, itemId?: number) => {
       if (!url) return;
       window.open(normalizeUrl(url), '_blank');
+      if (itemId) logAuditEvent('url_launched', itemId);
     };
 
     const toggleFavorite = async (item: any) => {
@@ -626,8 +866,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      checkUnlockStatus();
-      await Promise.all([fetchItems(), fetchCategories()]);
+      await initAutoUnlock();
     });
 
     const showAddCategoryInput = ref(false);
@@ -658,10 +897,22 @@ export default defineComponent({
       createCategory,
       allDataForAudit,
 
+      // Auto-unlock state
+      isUnlocking,
+      unlockError,
+      initAutoUnlock,
+
+      // Audit Log
+      auditLogs,
+      auditFilter,
+      fetchAuditLog,
+      formatAction,
+      formatUserAgent,
+      formatDate,
+
       // Modals
       showAddItemModal,
       showShareModal,
-      showUnlockModal,
       showViewModal,
       selectedItem,
       isSavingItem,
@@ -1037,6 +1288,157 @@ export default defineComponent({
   h3 {
     margin-bottom: 10px;
     color: #666;
+  }
+}
+
+// --- Auto-unlock loading/error states ---
+.pm-unlock-loading,
+.pm-unlock-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: #888;
+  font-size: 1rem;
+
+  i {
+    font-size: 3rem;
+    opacity: 0.4;
+  }
+}
+
+.pm-unlock-error {
+  color: #c0392b;
+
+  i {
+    color: #e74c3c;
+    opacity: 0.8;
+  }
+}
+
+// --- Activity Log ---
+.pm-audit-log {
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.pm-audit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+}
+
+.pm-audit-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pm-audit-select,
+.pm-audit-input {
+  padding: 7px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+
+  &:focus {
+    border-color: #ff5500;
+  }
+}
+
+.pm-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    background: #f8f8f8;
+    color: #555;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444;
+    vertical-align: middle;
+  }
+
+  tr:hover td {
+    background: #fafafa;
+  }
+}
+
+.pm-audit-ua {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.pm-audit-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #eee;
+  color: #555;
+
+  &.pm-audit-created {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+  &.pm-audit-viewed {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+  &.pm-audit-updated {
+    background: #fff3e0;
+    color: #e65100;
+  }
+  &.pm-audit-deleted {
+    background: #ffebee;
+    color: #c62828;
+  }
+  &.pm-audit-password_copied {
+    background: #f3e5f5;
+    color: #6a1b9a;
+  }
+  &.pm-audit-url_launched {
+    background: #e0f7fa;
+    color: #00695c;
+  }
+  &.pm-audit-shared {
+    background: #fce4ec;
+    color: #880e4f;
+  }
+  &.pm-audit-unshared {
+    background: #fafafa;
+    color: #757575;
   }
 }
 </style>

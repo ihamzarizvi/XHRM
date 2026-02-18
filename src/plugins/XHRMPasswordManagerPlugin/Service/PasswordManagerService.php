@@ -6,12 +6,15 @@ use XHRM\Core\Traits\EventDispatcherTrait;
 use XHRM\Core\Traits\Service\ConfigServiceTrait;
 use XHRM\Core\Traits\Service\NormalizerServiceTrait;
 use XHRM\Core\Traits\UserRoleManagerTrait;
+use XHRM\PasswordManager\Dao\VaultAuditLogDao;
 use XHRM\PasswordManager\Dao\VaultCategoryDao;
 use XHRM\PasswordManager\Dao\VaultItemDao;
 use XHRM\PasswordManager\Dao\VaultShareDao;
 use XHRM\PasswordManager\Dao\VaultUserKeyDao;
+use XHRM\PasswordManager\Entity\VaultAuditLog;
 use XHRM\PasswordManager\Entity\VaultCategory;
 use XHRM\PasswordManager\Entity\VaultItem;
+use XHRM\Entity\User;
 
 class PasswordManagerService
 {
@@ -24,6 +27,7 @@ class PasswordManagerService
     protected ?VaultCategoryDao $vaultCategoryDao = null;
     protected ?VaultShareDao $vaultShareDao = null;
     protected ?VaultUserKeyDao $vaultUserKeyDao = null;
+    protected ?VaultAuditLogDao $vaultAuditLogDao = null;
 
     public function getVaultItemDao(): VaultItemDao
     {
@@ -55,6 +59,48 @@ class PasswordManagerService
             $this->vaultUserKeyDao = new VaultUserKeyDao();
         }
         return $this->vaultUserKeyDao;
+    }
+
+    public function getVaultAuditLogDao(): VaultAuditLogDao
+    {
+        if (is_null($this->vaultAuditLogDao)) {
+            $this->vaultAuditLogDao = new VaultAuditLogDao();
+        }
+        return $this->vaultAuditLogDao;
+    }
+
+    /**
+     * Log a vault action
+     */
+    public function logAuditEvent(User $user, string $action, ?VaultItem $item = null): void
+    {
+        try {
+            $log = new VaultAuditLog();
+            $log->setUser($user);
+            $log->setAction($action);
+            $log->setVaultItem($item);
+
+            // Capture IP address
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR']
+                ?? $_SERVER['HTTP_X_REAL_IP']
+                ?? $_SERVER['REMOTE_ADDR']
+                ?? null;
+            if ($ip) {
+                // Take first IP if comma-separated (proxy chain)
+                $ip = trim(explode(',', $ip)[0]);
+                $log->setIpAddress(substr($ip, 0, 45));
+            }
+
+            // Capture User Agent
+            $ua = $_SERVER['HTTP_USER_AGENT'] ?? null;
+            if ($ua) {
+                $log->setUserAgent(substr($ua, 0, 500));
+            }
+
+            $this->getVaultAuditLogDao()->save($log);
+        } catch (\Throwable $e) {
+            // Never let audit logging break the main flow
+        }
     }
 
     /**
@@ -134,7 +180,6 @@ class PasswordManagerService
         }
     }
 
-
     /**
      * @param VaultCategory $category
      */
@@ -143,7 +188,7 @@ class PasswordManagerService
         $this->getVaultCategoryDao()->delete($category);
     }
 
-    public function getUserById(int $userId): ?\XHRM\Entity\User
+    public function getUserById(int $userId): ?User
     {
         return $this->getVaultUserKeyDao()->findUser($userId);
     }

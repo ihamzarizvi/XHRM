@@ -33,6 +33,7 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
     public const PARAMETER_TOTP_SECRET_ENCRYPTED = 'totpSecretEncrypted';
     public const PARAMETER_CATEGORY_ID = 'categoryId';
     public const PARAMETER_ITEM_TYPE = 'itemType';
+    public const PARAMETER_FAVORITE = 'favorite';
 
     public function getOne(): EndpointResourceResult
     {
@@ -43,11 +44,9 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $item = $this->getPasswordManagerService()->getVaultItemById($id);
         $this->throwRecordNotFoundExceptionIfNotExist($item, VaultItem::class);
 
-        // Check access permission here if needed (e.g. valid user)
-        if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
-            // For simplicity, just 404 or check sharing (Phase 3)
-            // throw new AccessDeniedException();
-        }
+        // Log view event
+        $currentUser = $this->getUserRoleManager()->getUser();
+        $this->getPasswordManagerService()->logAuditEvent($currentUser, 'viewed', $item);
 
         return new EndpointResourceResult(VaultItemModel::class, $item);
     }
@@ -87,10 +86,15 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
         $this->getPasswordManagerService()->saveVaultItem($item);
 
+        // Log create event
+        $this->getPasswordManagerService()->logAuditEvent(
+            $this->getUserRoleManager()->getUser(),
+            'created',
+            $item
+        );
+
         return new EndpointResourceResult(VaultItemModel::class, $item);
     }
-
-    public const PARAMETER_FAVORITE = 'favorite';
 
     private function setParamsToItem(VaultItem $item): void
     {
@@ -109,7 +113,6 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
         $categoryId = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_CATEGORY_ID);
         if ($categoryId) {
-            // Logic to find category and set it
             $category = $this->getPasswordManagerService()->getVaultCategoryById($categoryId);
             if ($category) {
                 $item->setCategory($category);
@@ -142,12 +145,17 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
         $item = $this->getPasswordManagerService()->getVaultItemById($id);
         $this->throwRecordNotFoundExceptionIfNotExist($item, VaultItem::class);
 
-        if ($item->getUser()->getId() !== $this->getUserRoleManager()->getUser()->getId()) {
-            // Access denied logic
+        $currentUser = $this->getUserRoleManager()->getUser();
+        if ($item->getUser()->getId() !== $currentUser->getId()) {
+            // Only owner can edit
+            throw $this->getRecordNotFoundException();
         }
 
         $this->setParamsToItem($item);
         $this->getPasswordManagerService()->saveVaultItem($item);
+
+        // Log update event
+        $this->getPasswordManagerService()->logAuditEvent($currentUser, 'updated', $item);
 
         return new EndpointResourceResult(VaultItemModel::class, $item);
     }
@@ -159,29 +167,33 @@ class VaultItemAPI extends Endpoint implements CrudEndpoint
 
     public function delete(): EndpointResourceResult
     {
-        // Check if this is a single item delete (from route parameter) or bulk delete (from body)
+        $currentUser = $this->getUserRoleManager()->getUser();
         $id = $this->getRequestParams()->getIntOrNull(RequestParams::PARAM_TYPE_ATTRIBUTE, 'id');
 
         if ($id) {
-            // Single item delete
             $item = $this->getPasswordManagerService()->getVaultItemById($id);
             if (!$item) {
                 throw $this->getRecordNotFoundException();
             }
+            // Log before delete (item reference lost after)
+            $this->getPasswordManagerService()->logAuditEvent($currentUser, 'deleted', null);
             $this->getPasswordManagerService()->deleteVaultItem($item);
             return new EndpointResourceResult(ArrayModel::class, [$id]);
         } else {
-            // Bulk delete
             $ids = $this->getRequestParams()->getArray(RequestParams::PARAM_TYPE_BODY, CommonParams::PARAMETER_IDS);
-            $this->getPasswordManagerService()->deleteVaultItems($ids);
+            foreach ($ids as $delId) {
+                $item = $this->getPasswordManagerService()->getVaultItemById((int) $delId);
+                if ($item) {
+                    $this->getPasswordManagerService()->logAuditEvent($currentUser, 'deleted', null);
+                    $this->getPasswordManagerService()->deleteVaultItem($item);
+                }
+            }
             return new EndpointResourceResult(ArrayModel::class, $ids);
         }
     }
 
     public function getValidationRuleForDelete(): ParamRuleCollection
     {
-        // XHRM uses bulk delete pattern on collection endpoint
-        // Expects {ids: []} array in request body
         return new ParamRuleCollection(
             new ParamRule(
                 CommonParams::PARAMETER_IDS,

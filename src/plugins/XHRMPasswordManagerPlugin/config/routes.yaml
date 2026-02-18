@@ -50,3 +50,27 @@ xhrm_password_manager_api_admin_stats:
   methods: [ GET ]
   defaults:
     _api: XHRM\PasswordManager\Api\VaultAdminAPI
+
+xhrm_password_manager_api_audit_logs:
+  path: /api/v2/password-manager/audit-logs
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultAuditLogAPI
+
+xhrm_password_manager_api_shares:
+  path: /api/v2/password-manager/shares
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST, DELETE ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultShareAPI
+
+xhrm_password_manager_api_share:
+  path: /api/v2/password-manager/shares/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, DELETE ]
+  defaults:
+    _api: XHRM\PasswordManager\Api\VaultShareAPI
+    _key: id
+  requirements:
+    id: '\d+'

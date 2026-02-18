@@ -17,6 +17,21 @@ use XHRM\PasswordManager\Api\Model\VaultUserKeyModel;
 use XHRM\PasswordManager\Entity\VaultUserKey;
 use XHRM\PasswordManager\Traits\Service\PasswordManagerServiceTrait;
 
+/**
+ * VaultUserKeyAPI — manages per-user encryption salt for auto-unlock.
+ *
+ * GET  /api/v2/password-manager/user-keys
+ *   Returns the current user's salt (and RSA public key for sharing).
+ *   If no key row exists, generates a random salt + RSA key pair on the fly.
+ *   The frontend uses the salt to derive the AES master key via PBKDF2.
+ *
+ * POST /api/v2/password-manager/user-keys
+ *   Stores the RSA key pair (public key + encrypted private key).
+ *   The encrypted private key is encrypted client-side with the derived AES master key.
+ *
+ * GET  /api/v2/password-manager/user-keys?userId=<id>
+ *   Returns another user's public key (for sharing). Strips private key.
+ */
 class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
 {
     use PasswordManagerServiceTrait;
@@ -36,29 +51,44 @@ class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
         return new ParamRuleCollection();
     }
 
+    /**
+     * GET /api/v2/password-manager/user-keys
+     * GET /api/v2/password-manager/user-keys?userId=me
+     * GET /api/v2/password-manager/user-keys?userId=<id>   (returns public key only)
+     */
     public function getAll(): EndpointCollectionResult
     {
         $userIdParam = $this->getRequestParams()->getStringOrNull(RequestParams::PARAM_TYPE_QUERY, self::PARAMETER_USER_ID);
         $currentUser = $this->getUserRoleManager()->getUser();
 
-        if ($userIdParam === 'me') {
+        // Determine which user's key to fetch
+        if ($userIdParam === null || $userIdParam === 'me') {
             $userId = $currentUser->getId();
         } else {
             $userId = (int) $userIdParam;
         }
 
-        if (!$userId) {
-            return new EndpointCollectionResult(VaultUserKeyModel::class, []);
-        }
+        $isOwnKey = ($userId === $currentUser->getId());
 
         $key = $this->getPasswordManagerService()->getVaultUserKeyDao()->findByUserId($userId);
+
+        // Auto-provision: if current user has no key row, create one with a random salt
+        if (!$key && $isOwnKey) {
+            $key = new VaultUserKey();
+            $key->setUser($currentUser);
+            // Generate a cryptographically random 32-byte salt stored as hex
+            $salt = bin2hex(random_bytes(32));
+            $key->setPublicKey($salt);           // Repurpose public_key column as salt storage
+            $key->setEncryptedPrivateKey('');    // Will be filled after client generates RSA pair
+            $this->getPasswordManagerService()->getVaultUserKeyDao()->save($key);
+        }
 
         if (!$key) {
             return new EndpointCollectionResult(VaultUserKeyModel::class, []);
         }
 
-        // Security: Strip Encrypted Private Key if not current user
-        if ($key->getUser()->getId() !== $currentUser->getId()) {
+        // Strip encrypted private key when fetching another user's key
+        if (!$isOwnKey) {
             $keyClone = clone $key;
             $keyClone->setEncryptedPrivateKey('');
             $key = $keyClone;
@@ -74,6 +104,10 @@ class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
         );
     }
 
+    /**
+     * POST /api/v2/password-manager/user-keys
+     * Stores RSA public key + encrypted private key after client generates them.
+     */
     public function create(): EndpointResourceResult
     {
         $publicKey = $this->getRequestParams()->getString(RequestParams::PARAM_TYPE_BODY, self::PARAMETER_PUBLIC_KEY);
@@ -81,15 +115,32 @@ class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
 
         $user = $this->getUserRoleManager()->getUser();
 
-        // Upsert logic
         $key = $this->getPasswordManagerService()->getVaultUserKeyDao()->findByUserId($user->getId());
 
         if (!$key) {
             $key = new VaultUserKey();
             $key->setUser($user);
+            // Generate salt if missing
+            $key->setPublicKey(bin2hex(random_bytes(32)));
         }
 
-        $key->setPublicKey($publicKey);
+        // Store RSA public key in a separate field — we need to keep the salt.
+        // Strategy: store as JSON: {"salt":"hex...","rsaPublicKey":"..."}
+        $existing = $key->getPublicKey();
+        $decoded = json_decode($existing, true);
+
+        if (is_array($decoded) && isset($decoded['salt'])) {
+            // Already has JSON format, update RSA key
+            $decoded['rsaPublicKey'] = $publicKey;
+        } else {
+            // Plain salt (first RSA key upload), convert to JSON
+            $decoded = [
+                'salt' => $existing ?: bin2hex(random_bytes(32)),
+                'rsaPublicKey' => $publicKey,
+            ];
+        }
+
+        $key->setPublicKey(json_encode($decoded));
         $key->setEncryptedPrivateKey($encryptedPrivateKey);
 
         $this->getPasswordManagerService()->getVaultUserKeyDao()->save($key);
@@ -113,14 +164,17 @@ class VaultUserKeyAPI extends Endpoint implements CrudEndpoint
     {
         return new EndpointResourceResult(ArrayModel::class, []);
     }
+
     public function getValidationRuleForUpdate(): ParamRuleCollection
     {
         return new ParamRuleCollection();
     }
+
     public function delete(): EndpointResourceResult
     {
         return new EndpointResourceResult(ArrayModel::class, []);
     }
+
     public function getValidationRuleForDelete(): ParamRuleCollection
     {
         return new ParamRuleCollection();
