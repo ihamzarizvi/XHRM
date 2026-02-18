@@ -228,21 +228,43 @@ export default defineComponent({
       if (!props.item) return;
 
       try {
+        // Step 1: resolve the per-item AES key
+        // Items are encrypted with a unique per-item key, which is itself
+        // encrypted with the master key and stored as encryptedItemKey.
+        let itemKey: CryptoKey | undefined = undefined;
+
+        // If the item already has a pre-decrypted key (passed from the list), use it
+        if (props.item._decryptedItemKey) {
+          itemKey = props.item._decryptedItemKey;
+        } else if (props.item.encryptedItemKey) {
+          try {
+            const itemKeyRaw = await SecurityService.decrypt(
+              props.item.encryptedItemKey,
+            );
+            if (itemKeyRaw && itemKeyRaw !== '[Encrypted Data]') {
+              itemKey = await SecurityService.importAESKey(itemKeyRaw);
+            }
+          } catch (e) {
+            console.error('Failed to decrypt item key in view', e);
+          }
+        }
+
+        // Step 2: decrypt all fields using the item key (falls back to master key if undefined)
         const [user, pass, url, notes, secret] = await Promise.all([
           props.item.usernameEncrypted
-            ? SecurityService.decrypt(props.item.usernameEncrypted)
+            ? SecurityService.decrypt(props.item.usernameEncrypted, itemKey)
             : '',
           props.item.passwordEncrypted
-            ? SecurityService.decrypt(props.item.passwordEncrypted)
+            ? SecurityService.decrypt(props.item.passwordEncrypted, itemKey)
             : '',
           props.item.urlEncrypted
-            ? SecurityService.decrypt(props.item.urlEncrypted)
+            ? SecurityService.decrypt(props.item.urlEncrypted, itemKey)
             : '',
           props.item.notesEncrypted
-            ? SecurityService.decrypt(props.item.notesEncrypted)
+            ? SecurityService.decrypt(props.item.notesEncrypted, itemKey)
             : '',
           props.item.totpSecretEncrypted
-            ? SecurityService.decrypt(props.item.totpSecretEncrypted)
+            ? SecurityService.decrypt(props.item.totpSecretEncrypted, itemKey)
             : '',
         ]);
 
