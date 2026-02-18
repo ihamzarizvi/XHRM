@@ -26,7 +26,7 @@ class VaultUserKeyModel implements Normalizable
         $this->setEntity($key);
         $this->setFilters([
             'id',
-            ['getUser', 'getId', true],
+            ['getUser', 'getId'],
             'publicKey',
             'encryptedPrivateKey',
             'createdAt'
