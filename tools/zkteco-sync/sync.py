@@ -58,6 +58,7 @@ except ImportError:
 
 SCRIPT_DIR = Path(__file__).parent
 CONFIG_FILE = SCRIPT_DIR / "config.ini"
+MAPPING_FILE = SCRIPT_DIR / "employee_mapping.ini"
 
 def load_config():
     """Load configuration from config.ini"""
@@ -69,6 +70,35 @@ def load_config():
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
     return config
+
+
+def load_employee_mapping():
+    """Load ZKTeco → XHRM employee ID mapping from employee_mapping.ini.
+    Returns a dict: {zk_user_id: xhrm_emp_number}
+    """
+    mapping = {}
+    if not MAPPING_FILE.exists():
+        logger.warning(f"{Fore.YELLOW}⚠ No employee_mapping.ini found — using ZKTeco IDs as XHRM employee numbers{Style.RESET_ALL}")
+        return mapping
+
+    config = configparser.ConfigParser()
+    config.read(MAPPING_FILE)
+
+    if config.has_section("mapping"):
+        for zk_id_str, xhrm_id_str in config.items("mapping"):
+            try:
+                zk_id = int(zk_id_str.strip())
+                xhrm_id = int(xhrm_id_str.strip())
+                mapping[zk_id] = xhrm_id
+            except ValueError:
+                continue
+
+    if mapping:
+        logger.info(f"  Loaded {len(mapping)} employee mappings from employee_mapping.ini")
+    else:
+        logger.warning(f"{Fore.YELLOW}⚠ employee_mapping.ini has no mappings — using ZKTeco IDs as XHRM employee numbers{Style.RESET_ALL}")
+
+    return mapping
 
 
 # ─── Logging ───────────────────────────────────────────────────────────────────
@@ -317,6 +347,9 @@ def push_to_xhrm_api(conn, config):
 
     endpoint = f"{url}/web/api/attendance_import.php"
 
+    # Load employee ID mapping (ZKTeco ID → XHRM employee number)
+    mapping = load_employee_mapping()
+
     # Group records by employee and date for punch-in/out pairing
     grouped = {}
     record_id_map = {}
@@ -334,10 +367,21 @@ def push_to_xhrm_api(conn, config):
     # Build attendance entries (earliest = in, latest = out)
     entries = []
     all_record_ids = []
-    for (emp_id, date_key), punches in grouped.items():
+    skipped_unmapped = set()
+    for (zk_id, date_key), punches in grouped.items():
+        # Translate ZKTeco ID to XHRM employee number
+        if mapping:
+            xhrm_id = mapping.get(int(zk_id))
+            if xhrm_id is None:
+                skipped_unmapped.add(int(zk_id))
+                all_record_ids.extend(record_id_map[(zk_id, date_key)])
+                continue
+        else:
+            xhrm_id = int(zk_id)  # No mapping file — use ZKTeco ID directly
+
         punches.sort()
         entry = {
-            "empNumber": int(emp_id),
+            "empNumber": xhrm_id,
             "date": date_key,
             "punchIn": punches[0].strftime("%Y-%m-%d %H:%M:%S"),
             "timezoneName": tz_name,
@@ -346,7 +390,16 @@ def push_to_xhrm_api(conn, config):
         if len(punches) > 1:
             entry["punchOut"] = punches[-1].strftime("%Y-%m-%d %H:%M:%S")
         entries.append(entry)
-        all_record_ids.extend(record_id_map[(emp_id, date_key)])
+        all_record_ids.extend(record_id_map[(zk_id, date_key)])
+    if skipped_unmapped:
+        logger.warning(f"  {Fore.YELLOW}⚠ Skipped {len(skipped_unmapped)} unmapped ZKTeco IDs: "
+                        f"{', '.join(str(x) for x in sorted(skipped_unmapped))}{Style.RESET_ALL}")
+        logger.warning(f"    → Edit employee_mapping.ini to map these to XHRM employee numbers")
+
+    if not entries:
+        logger.info(f"{Fore.YELLOW}No mapped records to push. Edit employee_mapping.ini first.{Style.RESET_ALL}")
+        mark_as_synced(conn, all_record_ids, method="api")
+        return 0
 
     payload = {
         "api_key": api_key,
