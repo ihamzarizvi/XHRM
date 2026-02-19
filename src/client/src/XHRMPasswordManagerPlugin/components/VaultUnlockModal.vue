@@ -149,7 +149,7 @@ export default defineComponent({
   width: 64px;
   height: 64px;
   background: #fff7ed;
-  color: #ff7b1d; /* XHRM Orange */
+  color: var(--oxd-primary-one-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -187,13 +187,13 @@ h2 {
   color: #374151;
 
   &:focus {
-    border-color: #ff7b1d;
-    box-shadow: 0 0 0 3px rgba(255, 123, 29, 0.1);
+    border-color: var(--oxd-primary-one-color);
+    box-shadow: 0 0 0 3px var(--oxd-primary-one-alpha-10-color);
   }
 }
 
 .unlock-btn {
-  background: #ff7b1d; /* XHRM Orange */
+  background: var(--oxd-primary-one-color);
   color: white;
   border: none;
   padding: 0 24px;
@@ -203,7 +203,7 @@ h2 {
   transition: background 0.2s;
 
   &:hover:not(:disabled) {
-    background: #e66000;
+    background: var(--oxd-primary-one-darken-5-color);
   }
 
   &:disabled {

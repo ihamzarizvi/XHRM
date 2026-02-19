@@ -751,6 +751,7 @@ export default defineComponent({
     };
 
     const openShareModal = (item: any) => {
+      showViewModal.value = false; // Close view modal first to avoid z-index conflict
       selectedItem.value = item;
       showShareModal.value = true;
     };
@@ -985,7 +986,11 @@ export default defineComponent({
 }
 
 .pm-add-btn {
-  background: linear-gradient(135deg, #ff7b00 0%, #ff5500 100%);
+  background: linear-gradient(
+    135deg,
+    var(--oxd-primary-gradient-start-color) 0%,
+    var(--oxd-primary-gradient-end-color) 100%
+  );
   color: white;
   border: none;
   padding: 12px 20px;
@@ -997,11 +1002,11 @@ export default defineComponent({
   justify-content: center;
   gap: 8px;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+  box-shadow: 0 4px 15px var(--oxd-primary-one-alpha-20-color);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 85, 0, 0.4);
+    box-shadow: 0 6px 20px var(--oxd-primary-one-alpha-20-color);
   }
 
   &:active {
@@ -1036,8 +1041,8 @@ export default defineComponent({
   }
 
   &.active {
-    background: #fff0e6;
-    color: #ff5500;
+    background: var(--oxd-primary-one-alpha-10-color);
+    color: var(--oxd-primary-one-color);
   }
 }
 
@@ -1089,9 +1094,9 @@ export default defineComponent({
   margin-left: 16px;
 
   &:hover {
-    background: #ffeee6;
-    border-color: #ff5500;
-    color: #ff5500;
+    background: var(--oxd-primary-one-alpha-10-color);
+    border-color: var(--oxd-primary-one-color);
+    color: var(--oxd-primary-one-color);
   }
 }
 
@@ -1120,9 +1125,9 @@ export default defineComponent({
 
   &:focus {
     outline: none;
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.1);
+    box-shadow: 0 0 0 4px var(--oxd-primary-one-alpha-10-color);
   }
 }
 
@@ -1155,7 +1160,7 @@ export default defineComponent({
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
 
     .pm-card-actions {
       opacity: 1;
@@ -1267,7 +1272,7 @@ export default defineComponent({
 
   &:hover {
     background: #f0f0f0;
-    color: #ff5500;
+    color: var(--oxd-primary-one-color);
   }
 
   &.delete:hover {
@@ -1361,7 +1366,7 @@ export default defineComponent({
   cursor: pointer;
 
   &:focus {
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
   }
 }
 

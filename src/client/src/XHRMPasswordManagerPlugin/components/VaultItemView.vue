@@ -578,7 +578,7 @@ export default defineComponent({
 
     &:hover {
       background: #f3f4f6;
-      color: #ff7b1d; /* XHRM Orange */
+      color: var(--oxd-primary-one-color);
     }
 
     &.top-right {
@@ -609,13 +609,13 @@ export default defineComponent({
     font-family: monospace;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #ff7b1d; /* XHRM Orange */
+    color: var(--oxd-primary-one-color);
     letter-spacing: 2px;
   }
 
   .totp-timer {
     height: 3px;
-    background: #ff7b1d; /* XHRM Orange */
+    background: var(--oxd-primary-one-color);
     border-radius: 2px;
     transition: width 1s linear;
   }
@@ -659,12 +659,12 @@ export default defineComponent({
   transition: all 0.2s;
 
   &.edit-btn {
-    background: #ff7b1d; /* XHRM Orange */
+    background: var(--oxd-primary-one-color);
     color: white;
     padding: 8px 24px;
 
     &:hover {
-      background: #e66000;
+      background: var(--oxd-primary-one-darken-5-color);
     }
   }
 

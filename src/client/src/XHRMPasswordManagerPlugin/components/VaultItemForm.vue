@@ -424,8 +424,8 @@ export default defineComponent({
     .header-icon {
       width: 44px;
       height: 44px;
-      background: #fff0e6;
-      color: #ff5500;
+      background: var(--oxd-primary-one-alpha-10-color);
+      color: var(--oxd-primary-one-color);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -541,7 +541,7 @@ export default defineComponent({
   transition: all 0.2s;
 
   &:hover {
-    color: #ff5500;
+    color: var(--oxd-primary-one-color);
     transform: scale(1.1);
   }
 }
@@ -578,9 +578,9 @@ export default defineComponent({
 
   &:focus {
     outline: none;
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.1);
+    box-shadow: 0 0 0 4px var(--oxd-primary-one-alpha-10-color);
   }
 }
 
@@ -609,7 +609,11 @@ export default defineComponent({
 }
 
 .btn-save {
-  background: linear-gradient(135deg, #ff7b00 0%, #ff5500 100%);
+  background: linear-gradient(
+    135deg,
+    var(--oxd-primary-gradient-start-color) 0%,
+    var(--oxd-primary-gradient-end-color) 100%
+  );
   color: white;
   border: none;
   padding: 14px 28px;

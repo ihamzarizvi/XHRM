@@ -187,7 +187,7 @@ export default defineComponent({
 
   &:focus {
     outline: none;
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
   }
 }
 
@@ -206,8 +206,8 @@ export default defineComponent({
 
   &:hover {
     background: #f1f5f9;
-    color: #ff5500;
-    border-color: #ff5500;
+    color: var(--oxd-primary-one-color);
+    border-color: var(--oxd-primary-one-color);
   }
 }
 
@@ -252,7 +252,7 @@ export default defineComponent({
 
 .pg-range {
   width: 100%;
-  accent-color: #ff5500;
+  accent-color: var(--oxd-primary-one-color);
 }
 
 .pg-toggles {
@@ -282,14 +282,14 @@ export default defineComponent({
   }
 
   input {
-    accent-color: #ff5500;
+    accent-color: var(--oxd-primary-one-color);
   }
 }
 
 .pg-use-btn {
   width: 100%;
   padding: 10px;
-  background: #ff5500;
+  background: var(--oxd-primary-one-color);
   color: white;
   border: none;
   border-radius: 8px;
@@ -298,7 +298,7 @@ export default defineComponent({
   transition: background 0.2s;
 
   &:hover {
-    background: #e64d00;
+    background: var(--oxd-primary-one-darken-5-color);
   }
 }
 

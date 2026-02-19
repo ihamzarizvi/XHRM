@@ -332,7 +332,7 @@ export default defineComponent({
 
   .sd-icon-lg {
     font-size: 3rem;
-    color: #ff5500;
+    color: var(--oxd-primary-one-color);
     margin-bottom: 16px;
     display: inline-block;
   }
@@ -350,7 +350,7 @@ export default defineComponent({
 }
 
 .btn-audit {
-  background: #ff5500;
+  background: var(--oxd-primary-one-color);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -359,7 +359,7 @@ export default defineComponent({
   cursor: pointer;
 
   &:hover {
-    background: #e64d00;
+    background: var(--oxd-primary-one-darken-5-color);
   }
 }
 
@@ -369,7 +369,7 @@ export default defineComponent({
 
   .spin {
     font-size: 2rem;
-    color: #ff5500;
+    color: var(--oxd-primary-one-color);
     margin-bottom: 16px;
     display: inline-block;
     animation: spin 1s linear infinite;
@@ -488,7 +488,7 @@ export default defineComponent({
   }
 
   &.active {
-    border-color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
     background: #fff7ed;
   }
 
@@ -591,8 +591,8 @@ export default defineComponent({
   cursor: pointer;
   font-size: 0.85rem;
   &:hover {
-    border-color: #ff5500;
-    color: #ff5500;
+    border-color: var(--oxd-primary-one-color);
+    color: var(--oxd-primary-one-color);
   }
 }
 

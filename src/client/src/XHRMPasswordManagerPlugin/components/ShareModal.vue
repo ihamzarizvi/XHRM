@@ -332,7 +332,7 @@ export default defineComponent({
 }
 
 .key-ready {
-  color: #ff7b1d;
+  color: var(--oxd-primary-one-color);
   font-size: 1.2rem;
 }
 </style>
