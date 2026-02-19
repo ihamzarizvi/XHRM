@@ -22,10 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // ─── Database Connection (same logic as run_sql.php) ──────────────────────────
 function getDbConnection()
 {
+    // web/api/ is 2 levels deep from project root
+    $projectRoot = dirname(__DIR__, 2);  // go up from web/api → web → project root
     $possibleConfs = [
-        __DIR__ . '/../lib/confs/Conf.php',
-        __DIR__ . '/../config/Conf.php',
-        dirname(__DIR__) . '/lib/confs/Conf.php',
+        $projectRoot . '/lib/confs/Conf.php',
+        $projectRoot . '/config/Conf.php',
     ];
 
     $dbHost = 'localhost';
@@ -53,8 +54,8 @@ function getDbConnection()
     // Fallback: .env file
     if (!$dbName) {
         $envPaths = [
-            dirname(__DIR__) . '/.env',
-            dirname(__DIR__) . '/.env.local',
+            $projectRoot . '/.env',
+            $projectRoot . '/.env.local',
         ];
         foreach ($envPaths as $ef) {
             if (file_exists($ef)) {
@@ -239,7 +240,8 @@ function importCsvFile($pdo, $file, $timezoneName, $timezoneOffset)
     foreach ($rawPunches as $empId => $dates) {
         foreach ($dates as $dateKey => $punches) {
             usort($punches, function ($a, $b) {
-                return $a <=> $b; });
+                return $a <=> $b;
+            });
             $r = [
                 'empNumber' => intval($empId),
                 'date' => $dateKey,
