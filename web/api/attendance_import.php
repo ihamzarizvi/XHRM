@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['debug'])) {
         $info['confs_checked'][$f] = file_exists($f) ? 'EXISTS' : 'NOT FOUND';
         if (file_exists($f)) {
             $content = file_get_contents($f);
-            $info['conf_preview'] = substr($content, 0, 800);
+            $info['conf_preview'] = substr($content, 0, 2000);
+            $info['conf_length'] = strlen($content);
             // Test regex matches
             preg_match("/dbhost\s*=\s*['\"]([^'\"]+)/", $content, $m);
             $info['regex_dbhost'] = $m[1] ?? 'NO MATCH';
@@ -43,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['debug'])) {
             $info['regex_dbname'] = $m[1] ?? 'NO MATCH';
             preg_match("/dbuser\s*=\s*['\"]([^'\"]+)/", $content, $m);
             $info['regex_dbuser'] = $m[1] ?? 'NO MATCH';
+            // Also try alternate patterns
+            preg_match("/host.*?['\"]([^'\"]+)/i", $content, $m);
+            $info['alt_host'] = $m[1] ?? 'NO MATCH';
+            preg_match("/database.*?['\"]([^'\"]+)/i", $content, $m);
+            $info['alt_database'] = $m[1] ?? 'NO MATCH';
         }
     }
     foreach ($envPaths as $f) {
