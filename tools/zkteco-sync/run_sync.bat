@@ -1,11 +1,6 @@
 @echo off
 title ZKTeco Attendance Sync Tool
 color 0B
-echo.
-echo  ╔══════════════════════════════════════════════╗
-echo  ║   ZKTeco K50 → XHRM Attendance Sync Tool    ║
-echo  ╚══════════════════════════════════════════════╝
-echo.
 
 cd /d "%~dp0"
 
@@ -32,7 +27,12 @@ if not exist ".venv" (
     call .venv\Scripts\activate.bat
 )
 
-echo  Select an option:
+:menu
+cls
+echo.
+echo  ╔══════════════════════════════════════════════╗
+echo  ║   ZKTeco K50 → XHRM Attendance Sync Tool    ║
+echo  ╚══════════════════════════════════════════════╝
 echo.
 echo    1. Sync Now (Pull + Backup + Push via API)
 echo    2. Sync Now (Pull + Backup + Push via CSV)
@@ -57,4 +57,6 @@ if "%choice%"=="8" python sync.py --test-server
 if "%choice%"=="9" exit /b 0
 
 echo.
-pause
+echo  Press any key to return to menu...
+pause >nul
+goto menu
