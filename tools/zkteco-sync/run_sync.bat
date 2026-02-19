@@ -43,9 +43,10 @@ echo    6. Show Status
 echo    7. Test Device Connection
 echo    8. Test Server Connection
 echo    9. Reset Sync Status (re-push all records)
-echo   10. Exit
+echo   10. Run Diagnostics (saves to diagnose_output.txt)
+echo   11. Exit
 echo.
-set /p choice="  Enter choice (1-10): "
+set /p choice="  Enter choice (1-11): "
 
 if "%choice%"=="1" python sync.py
 if "%choice%"=="2" python sync.py --push csv
@@ -56,7 +57,13 @@ if "%choice%"=="6" python sync.py --status
 if "%choice%"=="7" python sync.py --test-device
 if "%choice%"=="8" python sync.py --test-server
 if "%choice%"=="9" python sync.py --reset-sync
-if "%choice%"=="10" exit /b 0
+if "%choice%"=="10" (
+    python diagnose.py > diagnose_output.txt
+    type diagnose_output.txt
+    echo.
+    echo  Output saved to: %cd%\diagnose_output.txt
+)
+if "%choice%"=="11" exit /b 0
 
 echo.
 echo  Press any key to return to menu...
