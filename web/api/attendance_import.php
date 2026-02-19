@@ -84,21 +84,36 @@ function getDbConnection()
     $dbPort = '3306';
     $dbName = $dbUser = $dbPass = '';
 
-    // Try Conf.php (regex parse — handles $this->dbhost = 'value'; format)
+    // Try to load Conf class directly (most reliable)
     foreach ($possibleConfs as $f) {
         if (file_exists($f)) {
-            $content = file_get_contents($f);
-            if (preg_match("/dbhost\s*=\s*['\"]([^'\"]+)/", $content, $m))
-                $dbHost = $m[1];
-            if (preg_match("/dbport\s*=\s*['\"]([^'\"]+)/", $content, $m))
-                $dbPort = $m[1];
-            if (preg_match("/dbname\s*=\s*['\"]([^'\"]+)/", $content, $m))
-                $dbName = $m[1];
-            if (preg_match("/dbuser\s*=\s*['\"]([^'\"]+)/", $content, $m))
-                $dbUser = $m[1];
-            if (preg_match("/dbpass\s*=\s*['\"]([^'\"]*)/", $content, $m))
-                $dbPass = $m[1];
-            break;
+            try {
+                require_once $f;
+                if (class_exists('Conf')) {
+                    $conf = new Conf();
+                    $dbHost = $conf->getDbHost();
+                    $dbPort = $conf->getDbPort();
+                    $dbName = $conf->getDbName();
+                    $dbUser = $conf->getDbUser();
+                    $dbPass = $conf->getDbPass();
+                    break;
+                }
+            } catch (Exception $e) {
+                // Fallback to regex if class fails
+                $content = file_get_contents($f);
+                if (preg_match("/dbhost\s*=\s*['\"]([^'\"]+)/i", $content, $m))
+                    $dbHost = $m[1];
+                if (preg_match("/dbport\s*=\s*['\"]([^'\"]+)/i", $content, $m))
+                    $dbPort = $m[1];
+                // Match the LAST occurrence of dbName (skip test prefix)
+                if (preg_match_all("/dbname\s*=\s*['\"]([^'\"]+)/i", $content, $m))
+                    $dbName = end($m[1]);
+                if (preg_match("/dbuser\s*=\s*['\"]([^'\"]+)/i", $content, $m))
+                    $dbUser = $m[1];
+                if (preg_match("/dbpass\s*=\s*['\"]([^'\"]*)/i", $content, $m))
+                    $dbPass = $m[1];
+                break;
+            }
         }
     }
 
