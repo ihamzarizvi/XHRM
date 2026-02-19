@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {
   required,
   validSelection,
@@ -180,6 +180,17 @@ export default {
       window.appGlobal.baseUrl,
       `/api/v2/attendance/employees/${props.employee.empNumber}/records`,
     );
+
+    // Update API URL when employee changes
+    watch(
+      () => filters.value.employee?.id,
+      (newEmpId) => {
+        if (newEmpId) {
+          http._apiSection = `/api/v2/attendance/employees/${newEmpId}/records`;
+        }
+      },
+    );
+
     const {locale} = useLocale();
     const {jsDateFormat, userDateFormat, timeFormat, jsTimeFormat} =
       useDateFormat();
@@ -382,16 +393,13 @@ export default {
       this.checkedItems = [];
       await this.execQuery();
     },
-    onClickView() {
-      return navigate('/attendance/viewAttendanceRecord', undefined, {
-        employeeId: this.filters.employee?.id,
-        date: this.filters?.fromDate,
-      });
+    async onClickView() {
+      await this.execQuery();
     },
     onClickAdd() {
       return navigate('/attendance/proxyPunchInPunchOut', undefined, {
         employeeId: this.filters.employee?.id,
-        date: this.filters?.date,
+        date: this.filters?.fromDate,
       });
     },
     onClickEdit(item) {
