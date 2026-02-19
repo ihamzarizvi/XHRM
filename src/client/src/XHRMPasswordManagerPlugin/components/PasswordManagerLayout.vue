@@ -1502,3 +1502,22 @@ export default defineComponent({
   }
 }
 </style>
+
+<!-- Global (unscoped) CSS for sidebar icon override -->
+<style lang="scss">
+a.oxd-main-menu-item[href='/passwordManager/viewPasswordManager'] {
+  .oxd-main-menu-item--icon {
+    display: none !important;
+  }
+
+  &::before {
+    content: '\f538';
+    font-family: bootstrap-icons !important;
+    font-size: 22px;
+    line-height: 1;
+    margin-right: 10px;
+    -webkit-font-smoothing: antialiased;
+    flex-shrink: 0;
+  }
+}
+</style>

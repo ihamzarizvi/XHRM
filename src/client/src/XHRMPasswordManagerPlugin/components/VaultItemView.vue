@@ -651,6 +651,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
 }
 
 .totp-code {
