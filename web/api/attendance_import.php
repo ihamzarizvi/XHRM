@@ -155,6 +155,7 @@ function getDbConnection()
 function importRecords($pdo, $records)
 {
     $results = ['imported' => 0, 'skipped' => 0, 'errors' => []];
+    $missingEmployees = [];  // Track unique missing employee IDs
 
     foreach ($records as $record) {
         $empNumber = intval($record['empNumber'] ?? 0);
@@ -168,11 +169,14 @@ function importRecords($pdo, $records)
             continue;
         }
 
-        // Verify employee exists
+        // Verify employee exists (skip if already known to be missing)
+        if (in_array($empNumber, $missingEmployees)) {
+            continue;
+        }
         $stmt = $pdo->prepare("SELECT emp_number FROM hs_hr_employee WHERE emp_number = ?");
         $stmt->execute([$empNumber]);
         if (!$stmt->fetch()) {
-            $results['errors'][] = "Employee #{$empNumber} not found";
+            $missingEmployees[] = $empNumber;
             continue;
         }
 
@@ -264,6 +268,12 @@ function importRecords($pdo, $records)
         } catch (Exception $e) {
             $results['errors'][] = "Emp #{$empNumber}: " . $e->getMessage();
         }
+    }
+
+    if (!empty($missingEmployees)) {
+        sort($missingEmployees);
+        $results['errors'][] = "Employees not found in XHRM (IDs: " . implode(', ', $missingEmployees) . ")";
+        $results['missingEmployees'] = $missingEmployees;
     }
 
     return $results;

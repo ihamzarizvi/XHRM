@@ -359,20 +359,35 @@ def push_to_xhrm_api(conn, config):
             endpoint,
             json=payload,
             headers={"Content-Type": "application/json"},
-            timeout=30,
+            timeout=120,  # Increased timeout for large batches
             verify=True
         )
 
         if response.status_code == 200:
             result = response.json()
             if result.get("success"):
+                imported = result.get("imported", 0)
+                skipped = result.get("skipped", 0)
+                missing = result.get("missingEmployees", [])
+                errors = result.get("errors", [])
+
+                # Mark records as synced
                 mark_as_synced(conn, all_record_ids, method="api")
-                success_count = result.get("imported", len(entries))
-                logger.info(f"{Fore.GREEN}✓ Successfully pushed {success_count} entries to XHRM{Style.RESET_ALL}")
-                if result.get("errors"):
-                    for err in result["errors"]:
-                        logger.warning(f"  {Fore.YELLOW}⚠ {err}{Style.RESET_ALL}")
-                return success_count
+
+                logger.info(f"{Fore.GREEN}✓ API Import Summary:{Style.RESET_ALL}")
+                logger.info(f"  {Fore.GREEN}Imported:  {imported} records{Style.RESET_ALL}")
+                if skipped:
+                    logger.info(f"  {Fore.YELLOW}Skipped:   {skipped} (already existed){Style.RESET_ALL}")
+                if missing:
+                    logger.warning(f"  {Fore.YELLOW}⚠ {len(missing)} ZKTeco user IDs not found in XHRM:{Style.RESET_ALL}")
+                    logger.warning(f"    IDs: {', '.join(str(m) for m in missing)}")
+                    logger.warning(f"    → Add these employees in XHRM with matching emp numbers,")
+                    logger.warning(f"      then re-run sync to import their attendance.")
+                if errors:
+                    for err in errors:
+                        if "not found" not in err.lower():  # Don't repeat missing emp info
+                            logger.warning(f"  {Fore.YELLOW}⚠ {err}{Style.RESET_ALL}")
+                return imported
             else:
                 logger.error(f"{Fore.RED}✗ API error: {result.get('message', 'Unknown error')}{Style.RESET_ALL}")
                 return 0
