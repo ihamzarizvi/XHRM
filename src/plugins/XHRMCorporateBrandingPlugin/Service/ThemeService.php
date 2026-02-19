@@ -229,7 +229,7 @@ class ThemeService
         if ($this->getImageETag('client_logo') !== null) {
             return $request->getBaseUrl() . "/admin/theme/image/clientLogo?v=$assetsVersion";
         }
-        return $request->getBasePath() . "/images/orange.png?v=$assetsVersion";
+        return $request->getBasePath() . "/images/xhrm-logo-compact.svg?v=$assetsVersion";
     }
 
     /**
@@ -242,7 +242,7 @@ class ThemeService
         if ($this->getImageETag('client_banner') !== null) {
             return $request->getBaseUrl() . "/admin/theme/image/clientBanner?v=$assetsVersion";
         }
-        return $request->getBasePath() . "/images/XHRM-logo.png?v=$assetsVersion";
+        return $request->getBasePath() . "/images/xhrm-logo.svg?v=$assetsVersion";
     }
 
     /**
