@@ -35,10 +35,19 @@
           </oxd-grid-item>
           <oxd-grid-item>
             <date-input
-              v-model="filters.date"
+              v-model="filters.fromDate"
               :rules="rules.date"
               :years="yearArray"
-              :label="$t('general.date')"
+              :label="$t('general.from')"
+              required
+            />
+          </oxd-grid-item>
+          <oxd-grid-item>
+            <date-input
+              v-model="filters.toDate"
+              :rules="rules.date"
+              :years="yearArray"
+              :label="$t('general.to')"
               required
             />
           </oxd-grid-item>
@@ -148,7 +157,8 @@ export default {
 
   setup(props) {
     const filters = ref({
-      date: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      fromDate: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      toDate: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
       employee: props.employee
         ? {
             id: props.employee.empNumber,
@@ -160,7 +170,8 @@ export default {
 
     const serializedFilters = computed(() => {
       return {
-        date: filters.value.date,
+        fromDate: filters.value.fromDate,
+        toDate: filters.value.toDate,
         empNumber: filters.value.employee?.id,
       };
     });
@@ -374,7 +385,7 @@ export default {
     onClickView() {
       return navigate('/attendance/viewAttendanceRecord', undefined, {
         employeeId: this.filters.employee?.id,
-        date: this.filters?.date,
+        date: this.filters?.fromDate,
       });
     },
     onClickAdd() {

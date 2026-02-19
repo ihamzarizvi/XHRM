@@ -24,9 +24,17 @@
         <oxd-grid :cols="4" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <date-input
-              v-model="filters.date"
+              v-model="filters.fromDate"
               :rules="rules.date"
-              :label="$t('general.date')"
+              :label="$t('general.from')"
+              required
+            />
+          </oxd-grid-item>
+          <oxd-grid-item>
+            <date-input
+              v-model="filters.toDate"
+              :rules="rules.date"
+              :label="$t('general.to')"
               required
             />
           </oxd-grid-item>
@@ -125,12 +133,14 @@ export default {
       date: [required, validDateFormat(userDateFormat)],
     };
     const filters = ref({
-      date: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      fromDate: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      toDate: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
     });
 
     const serializedFilters = computed(() => {
       return {
-        date: filters.value.date,
+        fromDate: filters.value.fromDate,
+        toDate: filters.value.toDate,
       };
     });
 
