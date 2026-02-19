@@ -13,9 +13,43 @@ define('API_KEY', 'xhrm-zkteco-sync-2024-secret-key');
 
 header('Content-Type: application/json');
 
+// Allow GET with ?debug=1 for diagnostics
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['debug'])) {
+    $projectRoot = dirname(__DIR__, 2);
+    $possibleConfs = [
+        $projectRoot . '/lib/confs/Conf.php',
+        $projectRoot . '/config/Conf.php',
+    ];
+    $envPaths = [
+        $projectRoot . '/.env',
+        $projectRoot . '/.env.local',
+    ];
+    $info = [
+        '__DIR__' => __DIR__,
+        'projectRoot' => $projectRoot,
+        'confs_checked' => [],
+        'envs_checked' => [],
+        'root_listing' => [],
+    ];
+    foreach ($possibleConfs as $f) {
+        $info['confs_checked'][$f] = file_exists($f) ? 'EXISTS' : 'NOT FOUND';
+    }
+    foreach ($envPaths as $f) {
+        $info['envs_checked'][$f] = file_exists($f) ? 'EXISTS' : 'NOT FOUND';
+    }
+    if (is_dir($projectRoot)) {
+        $info['root_listing'] = scandir($projectRoot);
+    }
+    if (is_dir($projectRoot . '/lib')) {
+        $info['lib_listing'] = scandir($projectRoot . '/lib');
+    }
+    echo json_encode($info, JSON_PRETTY_PRINT);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    echo json_encode(['success' => false, 'message' => 'Method not allowed. Use GET ?debug=1 for diagnostics.']);
     exit;
 }
 
