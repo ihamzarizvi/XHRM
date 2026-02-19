@@ -33,6 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['debug'])) {
     ];
     foreach ($possibleConfs as $f) {
         $info['confs_checked'][$f] = file_exists($f) ? 'EXISTS' : 'NOT FOUND';
+        if (file_exists($f)) {
+            $content = file_get_contents($f);
+            $info['conf_preview'] = substr($content, 0, 800);
+            // Test regex matches
+            preg_match("/dbhost\s*=\s*['\"]([^'\"]+)/", $content, $m);
+            $info['regex_dbhost'] = $m[1] ?? 'NO MATCH';
+            preg_match("/dbname\s*=\s*['\"]([^'\"]+)/", $content, $m);
+            $info['regex_dbname'] = $m[1] ?? 'NO MATCH';
+            preg_match("/dbuser\s*=\s*['\"]([^'\"]+)/", $content, $m);
+            $info['regex_dbuser'] = $m[1] ?? 'NO MATCH';
+        }
     }
     foreach ($envPaths as $f) {
         $info['envs_checked'][$f] = file_exists($f) ? 'EXISTS' : 'NOT FOUND';
@@ -67,7 +78,7 @@ function getDbConnection()
     $dbPort = '3306';
     $dbName = $dbUser = $dbPass = '';
 
-    // Try Conf.php (regex parse — doesn't require class loading)
+    // Try Conf.php (regex parse — handles $this->dbhost = 'value'; format)
     foreach ($possibleConfs as $f) {
         if (file_exists($f)) {
             $content = file_get_contents($f);
