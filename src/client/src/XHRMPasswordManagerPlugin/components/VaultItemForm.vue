@@ -69,17 +69,30 @@
               <i class="bi bi-key-fill input-icon"></i>
               <input
                 v-model="form.password"
-                type="password"
-                class="premium-input pr-50"
+                :type="showPassword ? 'text' : 'password'"
+                class="premium-input pr-80"
                 placeholder="••••••••••••"
               />
-              <button
-                class="icon-action-btn"
-                title="Generate Password"
-                @click="showGenerator = !showGenerator"
-              >
-                <i class="bi bi-magic"></i>
-              </button>
+              <div class="input-actions">
+                <button
+                  class="icon-action-btn"
+                  type="button"
+                  title="Toggle Visibility"
+                  @click="showPassword = !showPassword"
+                >
+                  <i
+                    :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+                  ></i>
+                </button>
+                <button
+                  class="icon-action-btn"
+                  type="button"
+                  title="Generate Password"
+                  @click="showGenerator = !showGenerator"
+                >
+                  <i class="bi bi-magic"></i>
+                </button>
+              </div>
             </div>
 
             <div v-if="showGenerator" class="generator-wrapper">
@@ -355,6 +368,8 @@ export default defineComponent({
       showGenerator.value = false;
     };
 
+    const showPassword = ref(false);
+
     return {
       form,
       errors,
@@ -363,6 +378,7 @@ export default defineComponent({
       totpPreview,
       normalizeUrl,
       showGenerator,
+      showPassword,
       onPasswordSelected,
     };
   },
@@ -527,9 +543,19 @@ export default defineComponent({
   padding-right: 50px;
 }
 
-.icon-action-btn {
+.pr-80 {
+  padding-right: 80px;
+}
+
+.input-actions {
   position: absolute;
-  right: 12px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.icon-action-btn {
   background: none;
   border: none;
   color: #64748b;

@@ -11,14 +11,20 @@
       <div class="modal-body">
         <!-- Header Card -->
         <div class="item-header-card">
-          <div class="item-icon- large" :class="item.itemType">
-            <i :class="getItemIcon(item.itemType)"></i>
+          <div class="item-icon-large" :class="item.itemType">
+            <img
+              v-if="faviconUrl"
+              :src="faviconUrl"
+              class="item-favicon"
+              @error="faviconError = true"
+            />
+            <i v-else :class="getItemIcon(item.itemType)"></i>
           </div>
           <div class="item-header-info">
             <div class="item-name">{{ item.name }}</div>
             <div class="item-category">
               <i class="bi bi-folder"></i>
-              {{ categoryName || 'No folder' }}
+              {{ categoryName || 'Uncategorized' }}
             </div>
           </div>
         </div>
@@ -77,16 +83,25 @@
             <div v-if="decryptedData.totpSecret" class="field-row">
               <label>Verification Code (TOTP)</label>
               <div class="field-value-container">
-                <div class="totp-value">
-                  <span class="code">{{
+                <div class="totp-display">
+                  <span class="totp-code">{{
                     decryptedData.totpSecret === '[Encrypted Data]'
                       ? 'Unavailable'
                       : currentTotp || 'Generating...'
                   }}</span>
-                  <div
-                    class="totp-timer"
-                    :style="{width: timerWidth + '%'}"
-                  ></div>
+                  <div class="totp-circle-container">
+                    <svg class="totp-circle" viewBox="0 0 36 36">
+                      <circle class="totp-circle-bg" cx="18" cy="18" r="15.9" />
+                      <circle
+                        class="totp-circle-fg"
+                        cx="18"
+                        cy="18"
+                        r="15.9"
+                        :style="{strokeDashoffset: 100 - timerWidth + '%'}"
+                      />
+                    </svg>
+                    <span class="totp-seconds">{{ remainingSeconds }}</span>
+                  </div>
                 </div>
                 <button
                   class="action-btn"
@@ -195,7 +210,14 @@
 
 <script lang="ts">
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any */
-import {defineComponent, ref, onMounted, onUnmounted, PropType} from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  PropType,
+} from 'vue';
 import {SecurityService} from '../services/SecurityService';
 import {TOTPService} from '../services/TOTPService';
 import {format} from 'date-fns';
@@ -220,6 +242,8 @@ export default defineComponent({
     const showPassword = ref(false);
     const currentTotp = ref('');
     const timerWidth = ref(100);
+    const remainingSeconds = ref(30);
+    const faviconError = ref(false);
     let timerInterval: any = null;
 
     onMounted(async () => {
@@ -299,6 +323,7 @@ export default defineComponent({
 
           const remaining = TOTPService.getRemainingSeconds();
           timerWidth.value = (remaining / 30) * 100;
+          remainingSeconds.value = remaining;
         }
       };
 
@@ -366,11 +391,27 @@ export default defineComponent({
       }
     };
 
+    const faviconUrl = computed(() => {
+      if (faviconError.value) return null;
+      const url = decryptedData.value.url || props.item?.url;
+      if (!url) return null;
+      try {
+        const normalized = normalizeUrl(url);
+        const domain = new URL(normalized).hostname;
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      } catch (e) {
+        return null;
+      }
+    });
+
     return {
       decryptedData,
       showPassword,
       currentTotp,
       timerWidth,
+      remainingSeconds,
+      faviconUrl,
+      faviconError,
       copyToClipboard,
       normalizeUrl,
       formatDate,
@@ -457,7 +498,7 @@ export default defineComponent({
   margin-bottom: 24px;
   border: 1px solid #e5e7eb;
 
-  .item-icon- {
+  .item-icon-large {
     width: 48px;
     height: 48px;
     border-radius: 8px;
@@ -468,6 +509,13 @@ export default defineComponent({
     background: #ffffff;
     color: #6b7280;
     border: 1px solid #e5e7eb;
+    overflow: hidden;
+
+    .item-favicon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
   }
 
   .item-header-info {
@@ -598,27 +646,56 @@ export default defineComponent({
   }
 }
 
-/* TOTP Special Styling */
-.totp-value {
+/* TOTP Circular Timer */
+.totp-display {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 120px;
+  align-items: center;
+  gap: 10px;
+}
 
-  .code {
-    font-family: monospace;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--oxd-primary-one-color);
-    letter-spacing: 2px;
-  }
+.totp-code {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--oxd-primary-one-color);
+  letter-spacing: 2px;
+}
 
-  .totp-timer {
-    height: 3px;
-    background: var(--oxd-primary-one-color);
-    border-radius: 2px;
-    transition: width 1s linear;
-  }
+.totp-circle-container {
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.totp-circle {
+  width: 36px;
+  height: 36px;
+  transform: rotate(-90deg);
+}
+
+.totp-circle-bg {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 3;
+}
+
+.totp-circle-fg {
+  fill: none;
+  stroke: var(--oxd-primary-one-color);
+  stroke-width: 3;
+  stroke-dasharray: 100;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.totp-seconds {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #374151;
 }
 
 /* History */

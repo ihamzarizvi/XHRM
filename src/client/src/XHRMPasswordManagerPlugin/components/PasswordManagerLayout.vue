@@ -76,18 +76,34 @@
 
         <div
           v-if="showAddCategoryInput"
-          class="pm-nav-item"
+          class="pm-nav-item pm-category-input-row"
           style="padding: 5px 15px"
         >
           <input
             ref="categoryInput"
             v-model="newCategoryName"
             placeholder="New Category..."
-            class="pm-search-input"
-            style="padding: 8px; font-size: 0.9rem"
+            class="pm-search-input pm-category-input"
+            style="padding: 8px; font-size: 0.9rem; flex: 1"
             @keyup.enter="createCategory"
-            @blur="showAddCategoryInput = false"
           />
+          <button
+            class="pm-cat-btn pm-cat-save"
+            title="Save"
+            @click="createCategory"
+          >
+            <i class="bi bi-check-lg"></i>
+          </button>
+          <button
+            class="pm-cat-btn pm-cat-cancel"
+            title="Cancel"
+            @click="
+              showAddCategoryInput = false;
+              newCategoryName = '';
+            "
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
         </div>
 
         <div
@@ -1097,6 +1113,43 @@ export default defineComponent({
     background: var(--oxd-primary-one-alpha-10-color);
     border-color: var(--oxd-primary-one-color);
     color: var(--oxd-primary-one-color);
+  }
+}
+
+.pm-category-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pm-cat-btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+
+  &.pm-cat-save {
+    color: #16a34a;
+    &:hover {
+      background: #dcfce7;
+      border-color: #16a34a;
+    }
+  }
+
+  &.pm-cat-cancel {
+    color: #9ca3af;
+    &:hover {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+    }
   }
 }
 
