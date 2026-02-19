@@ -84,11 +84,16 @@
               <label>Verification Code (TOTP)</label>
               <div class="field-value-container">
                 <div class="totp-display">
-                  <span class="totp-code">{{
-                    decryptedData.totpSecret === '[Encrypted Data]'
-                      ? 'Unavailable'
-                      : currentTotp || 'Generating...'
-                  }}</span>
+                  <span
+                    class="totp-code"
+                    title="Click to copy"
+                    @click="copyToClipboard(currentTotp)"
+                    >{{
+                      decryptedData.totpSecret === '[Encrypted Data]'
+                        ? 'Unavailable'
+                        : currentTotp || 'Generating...'
+                    }}
+                  </span>
                   <div class="totp-circle-container">
                     <svg class="totp-circle" viewBox="0 0 36 36">
                       <circle class="totp-circle-bg" cx="18" cy="18" r="15.9" />
@@ -650,7 +655,7 @@ export default defineComponent({
 .totp-display {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
   flex: 1;
 }
 
@@ -660,6 +665,7 @@ export default defineComponent({
   font-weight: 600;
   color: var(--oxd-primary-one-color);
   letter-spacing: 2px;
+  cursor: pointer;
 }
 
 .totp-circle-container {
