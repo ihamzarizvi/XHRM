@@ -31,9 +31,12 @@
           </div>
         </div>
       </div>
+      <!-- login logo hidden -->
+      <!--
       <div class="XHRM-login-logo">
         <img :src="loginLogoSrc" alt="XHRM-logo" />
       </div>
+      -->
     </div>
   </div>
 </template>
