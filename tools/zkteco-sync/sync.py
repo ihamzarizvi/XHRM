@@ -669,6 +669,34 @@ def run_scheduled(config):
         print(f"\n{Fore.YELLOW}Scheduler stopped by user.{Style.RESET_ALL}")
 
 
+# ─── Reset Sync ────────────────────────────────────────────────────────────────
+
+def reset_sync_status(config):
+    """Reset all records to unsynced so they can be re-pushed."""
+    db_path = Path(config.get("backup", "db_path", fallback="./attendance_backup.db"))
+    if not db_path.is_absolute():
+        db_path = SCRIPT_DIR / db_path
+
+    if not db_path.exists():
+        print(f"{Fore.YELLOW}No sync database found. Run a sync first.{Style.RESET_ALL}")
+        return
+
+    conn = sqlite3.connect(str(db_path))
+    synced_count = conn.execute("SELECT COUNT(*) FROM raw_punches WHERE synced_to_xhrm = 1").fetchone()[0]
+
+    if synced_count == 0:
+        print(f"{Fore.YELLOW}No synced records to reset.{Style.RESET_ALL}")
+        conn.close()
+        return
+
+    conn.execute("UPDATE raw_punches SET synced_to_xhrm = 0, synced_at = NULL, sync_method = NULL")
+    conn.commit()
+    conn.close()
+
+    print(f"{Fore.GREEN}✓ Reset {synced_count} records to unsynced status.{Style.RESET_ALL}")
+    print(f"  Next sync will re-push all records to XHRM.")
+
+
 # ─── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -686,6 +714,7 @@ Examples:
   python sync.py --status           Show sync status
   python sync.py --test-device      Test ZKTeco device connection
   python sync.py --test-server      Test XHRM server connection
+  python sync.py --reset-sync       Reset sync status (re-push all records)
         """
     )
 
@@ -696,6 +725,7 @@ Examples:
     parser.add_argument("--status", action="store_true", help="Show sync status")
     parser.add_argument("--test-device", action="store_true", help="Test ZKTeco connection")
     parser.add_argument("--test-server", action="store_true", help="Test XHRM server connection")
+    parser.add_argument("--reset-sync", action="store_true", help="Reset sync status to re-push all records")
 
     args = parser.parse_args()
     config = load_config()
@@ -706,6 +736,8 @@ Examples:
         test_device(config)
     elif args.test_server:
         test_server(config)
+    elif args.reset_sync:
+        reset_sync_status(config)
     elif args.export_csv:
         db_path = Path(config.get("backup", "db_path", fallback="./attendance_backup.db"))
         if not db_path.is_absolute():
