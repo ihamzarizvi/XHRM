@@ -255,7 +255,7 @@ class ThemeService
         if ($this->getImageETag('login_banner') !== null) {
             return $request->getBaseUrl() . "/admin/theme/image/loginBanner?v=$assetsVersion";
         }
-        return $request->getBasePath() . "/images/ohrm_branding.png?v=$assetsVersion";
+        return $request->getBasePath() . "/images/xhrm-logo.svg?v=$assetsVersion";
     }
 }
 
