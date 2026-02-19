@@ -347,9 +347,6 @@ def push_to_xhrm_api(conn, config):
 
     endpoint = f"{url}/web/api/attendance_import.php"
 
-    # Load employee ID mapping (ZKTeco ID → XHRM employee number)
-    mapping = load_employee_mapping()
-
     # Group records by employee and date for punch-in/out pairing
     grouped = {}
     record_id_map = {}
@@ -367,21 +364,10 @@ def push_to_xhrm_api(conn, config):
     # Build attendance entries (earliest = in, latest = out)
     entries = []
     all_record_ids = []
-    skipped_unmapped = set()
     for (zk_id, date_key), punches in grouped.items():
-        # Translate ZKTeco ID to XHRM employee number
-        if mapping:
-            xhrm_id = mapping.get(int(zk_id))
-            if xhrm_id is None:
-                skipped_unmapped.add(int(zk_id))
-                all_record_ids.extend(record_id_map[(zk_id, date_key)])
-                continue
-        else:
-            xhrm_id = int(zk_id)  # No mapping file — use ZKTeco ID directly
-
         punches.sort()
         entry = {
-            "empNumber": xhrm_id,
+            "empNumber": int(zk_id),  # Sent as ZKTeco ID — PHP looks up by Employee Id field
             "date": date_key,
             "punchIn": punches[0].strftime("%Y-%m-%d %H:%M:%S"),
             "timezoneName": tz_name,
@@ -391,14 +377,9 @@ def push_to_xhrm_api(conn, config):
             entry["punchOut"] = punches[-1].strftime("%Y-%m-%d %H:%M:%S")
         entries.append(entry)
         all_record_ids.extend(record_id_map[(zk_id, date_key)])
-    if skipped_unmapped:
-        logger.warning(f"  {Fore.YELLOW}⚠ Skipped {len(skipped_unmapped)} unmapped ZKTeco IDs: "
-                        f"{', '.join(str(x) for x in sorted(skipped_unmapped))}{Style.RESET_ALL}")
-        logger.warning(f"    → Edit employee_mapping.ini to map these to XHRM employee numbers")
 
     if not entries:
-        logger.info(f"{Fore.YELLOW}No mapped records to push. Edit employee_mapping.ini first.{Style.RESET_ALL}")
-        mark_as_synced(conn, all_record_ids, method="api")
+        logger.info(f"{Fore.YELLOW}No records to push.{Style.RESET_ALL}")
         return 0
 
     payload = {

@@ -169,16 +169,19 @@ function importRecords($pdo, $records)
             continue;
         }
 
-        // Verify employee exists (skip if already known to be missing)
+        // Look up employee by employee_id (the "Employee Id" field in XHRM PIM form)
+        // This matches the ZKTeco user ID to the display Employee Id, not the internal emp_number
         if (in_array($empNumber, $missingEmployees)) {
             continue;
         }
-        $stmt = $pdo->prepare("SELECT emp_number FROM hs_hr_employee WHERE emp_number = ?");
-        $stmt->execute([$empNumber]);
-        if (!$stmt->fetch()) {
+        $stmt = $pdo->prepare("SELECT emp_number FROM hs_hr_employee WHERE employee_id = ?");
+        $stmt->execute([strval($empNumber)]);
+        $empRow = $stmt->fetch();
+        if (!$empRow) {
             $missingEmployees[] = $empNumber;
             continue;
         }
+        $realEmpNumber = intval($empRow['emp_number']);  // Internal emp_number for attendance table
 
         try {
             $punchInDt = new DateTime($punchInStr, new DateTimeZone($timezoneName));
@@ -193,7 +196,7 @@ function importRecords($pdo, $records)
                 AND DATE(punch_in_user_time) = ?
                 LIMIT 1
             ");
-            $stmt->execute([$empNumber, $dateStr]);
+            $stmt->execute([$realEmpNumber, $dateStr]);
             $existing = $stmt->fetch();
 
             if ($existing) {
@@ -251,7 +254,7 @@ function importRecords($pdo, $records)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
             $stmt->execute([
-                $empNumber,
+                $realEmpNumber,
                 $punchInUtc->format('Y-m-d H:i:s'),
                 $punchInDt->format('Y-m-d H:i:s'),
                 $timezoneOffset,
