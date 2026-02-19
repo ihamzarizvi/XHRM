@@ -261,14 +261,20 @@ def save_to_db(conn, attendance_records, users, device_ip):
     return new_count
 
 
-def get_unsynced_records(conn):
-    """Get records not yet pushed to XHRM."""
-    cursor = conn.execute("""
-        SELECT id, zk_user_id, user_name, timestamp, punch_type
-        FROM raw_punches
-        WHERE synced_to_xhrm = 0
-        ORDER BY timestamp ASC
-    """)
+def get_unsynced_records(conn, date_from=None, date_to=None):
+    """Get records not yet pushed to XHRM, optionally filtered by date range."""
+    query = "SELECT id, zk_user_id, user_name, timestamp, punch_type FROM raw_punches WHERE synced_to_xhrm = 0"
+    params = []
+
+    if date_from:
+        query += " AND DATE(timestamp) >= ?"
+        params.append(date_from)
+    if date_to:
+        query += " AND DATE(timestamp) <= ?"
+        params.append(date_to)
+
+    query += " ORDER BY timestamp ASC"
+    cursor = conn.execute(query, params)
     return cursor.fetchall()
 
 
@@ -332,9 +338,11 @@ def export_csv(conn, config, mark_synced=False):
 
 # ─── API Push ──────────────────────────────────────────────────────────────────
 
-def push_to_xhrm_api(conn, config):
+def push_to_xhrm_api(conn, config, date_from=None, date_to=None):
     """Push unsynced records to XHRM via the attendance import API."""
-    records = get_unsynced_records(conn)
+    if date_from or date_to:
+        logger.info(f"  Date filter: {date_from or 'any'} → {date_to or 'any'}")
+    records = get_unsynced_records(conn, date_from=date_from, date_to=date_to)
 
     if not records:
         logger.info(f"{Fore.YELLOW}No unsynced records to push.{Style.RESET_ALL}")
@@ -749,6 +757,8 @@ Examples:
   python sync.py --test-device      Test ZKTeco device connection
   python sync.py --test-server      Test XHRM server connection
   python sync.py --reset-sync       Reset sync status (re-push all records)
+  python sync.py --push-date-range  Push records for a specific date range (interactive)
+  python sync.py --date-from 2026-01-01 --date-to 2026-01-31  Push date range
         """
     )
 
@@ -760,6 +770,9 @@ Examples:
     parser.add_argument("--test-device", action="store_true", help="Test ZKTeco connection")
     parser.add_argument("--test-server", action="store_true", help="Test XHRM server connection")
     parser.add_argument("--reset-sync", action="store_true", help="Reset sync status to re-push all records")
+    parser.add_argument("--push-date-range", action="store_true", help="Push records for a specific date range (interactive)")
+    parser.add_argument("--date-from", type=str, help="Start date (YYYY-MM-DD) for push filter")
+    parser.add_argument("--date-to", type=str, help="End date (YYYY-MM-DD) for push filter")
 
     args = parser.parse_args()
     config = load_config()
@@ -806,6 +819,38 @@ Examples:
             conn = init_db(str(db_path))
             push_to_xhrm_api(conn, config)
             conn.close()
+    elif args.push_date_range:
+        # Interactive date range push
+        print(f"\n{Fore.CYAN}Push Attendance by Date Range{Style.RESET_ALL}")
+        print(f"  Enter dates in YYYY-MM-DD format, or press Enter to skip.\n")
+        date_from = input("  From date (e.g. 2026-01-01): ").strip() or None
+        date_to = input("  To date   (e.g. 2026-02-19): ").strip() or None
+        if date_from:
+            try:
+                datetime.strptime(date_from, "%Y-%m-%d")
+            except ValueError:
+                print(f"{Fore.RED}Invalid from-date format. Use YYYY-MM-DD{Style.RESET_ALL}")
+                return
+        if date_to:
+            try:
+                datetime.strptime(date_to, "%Y-%m-%d")
+            except ValueError:
+                print(f"{Fore.RED}Invalid to-date format. Use YYYY-MM-DD{Style.RESET_ALL}")
+                return
+        db_path = Path(config.get("backup", "db_path", fallback="./attendance_backup.db"))
+        if not db_path.is_absolute():
+            db_path = SCRIPT_DIR / db_path
+        conn = init_db(str(db_path))
+        push_to_xhrm_api(conn, config, date_from=date_from, date_to=date_to)
+        conn.close()
+    elif args.date_from or args.date_to:
+        # Date range from CLI args
+        db_path = Path(config.get("backup", "db_path", fallback="./attendance_backup.db"))
+        if not db_path.is_absolute():
+            db_path = SCRIPT_DIR / db_path
+        conn = init_db(str(db_path))
+        push_to_xhrm_api(conn, config, date_from=args.date_from, date_to=args.date_to)
+        conn.close()
     else:
         # Default: full sync with API push
         run_sync(config, push_method="api")
