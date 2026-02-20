@@ -1,0 +1,253 @@
+# Payroll Plugin Routes
+
+# ============================================
+# API Routes
+# ============================================
+
+# Salary Components CRUD
+apiv2_payroll_salary_components:
+  path: /api/v2/payroll/salary-components
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\SalaryComponentAPI
+
+apiv2_payroll_salary_component:
+  path: /api/v2/payroll/salary-components/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\SalaryComponentAPI
+  requirements:
+    id: '\d+'
+
+# Attendance Rules CRUD
+apiv2_payroll_attendance_rules:
+  path: /api/v2/payroll/attendance-rules
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\AttendanceRuleAPI
+
+apiv2_payroll_attendance_rule:
+  path: /api/v2/payroll/attendance-rules/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\AttendanceRuleAPI
+  requirements:
+    id: '\d+'
+
+# Overtime Rules CRUD
+apiv2_payroll_overtime_rules:
+  path: /api/v2/payroll/overtime-rules
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\OvertimeRuleAPI
+
+apiv2_payroll_overtime_rule:
+  path: /api/v2/payroll/overtime-rules/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\OvertimeRuleAPI
+  requirements:
+    id: '\d+'
+
+# Holiday Calendar CRUD
+apiv2_payroll_holidays:
+  path: /api/v2/payroll/holidays
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\HolidayAPI
+
+apiv2_payroll_holiday:
+  path: /api/v2/payroll/holidays/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\HolidayAPI
+  requirements:
+    id: '\d+'
+
+# Financial Year CRUD
+apiv2_payroll_financial_years:
+  path: /api/v2/payroll/financial-years
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\FinancialYearAPI
+
+apiv2_payroll_financial_year:
+  path: /api/v2/payroll/financial-years/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\FinancialYearAPI
+  requirements:
+    id: '\d+'
+
+# Tax Slabs CRUD
+apiv2_payroll_tax_slabs:
+  path: /api/v2/payroll/tax-slabs
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\TaxSlabAPI
+
+apiv2_payroll_tax_slab:
+  path: /api/v2/payroll/tax-slabs/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\TaxSlabAPI
+  requirements:
+    id: '\d+'
+
+# Payroll Run
+apiv2_payroll_runs:
+  path: /api/v2/payroll/runs
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayrollRunAPI
+
+apiv2_payroll_run:
+  path: /api/v2/payroll/runs/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayrollRunAPI
+  requirements:
+    id: '\d+'
+
+# Payroll Approval
+apiv2_payroll_approval:
+  path: /api/v2/payroll/runs/{id}/approve
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ PUT ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayrollApprovalAPI
+  requirements:
+    id: '\d+'
+
+# Payslips
+apiv2_payroll_payslips:
+  path: /api/v2/payroll/runs/{runId}/payslips
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayslipAPI
+  requirements:
+    runId: '\d+'
+
+apiv2_payroll_payslip:
+  path: /api/v2/payroll/payslips/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayslipAPI
+  requirements:
+    id: '\d+'
+
+# My Payslips (Employee)
+apiv2_payroll_my_payslips:
+  path: /api/v2/payroll/my-payslips
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET ]
+  defaults:
+    _api: XHRM\Payroll\Api\MyPayslipAPI
+
+# Employee Loans CRUD
+apiv2_payroll_loans:
+  path: /api/v2/payroll/loans
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\EmployeeLoanAPI
+
+apiv2_payroll_loan:
+  path: /api/v2/payroll/loans/{id}
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ GET, PUT, DELETE ]
+  defaults:
+    _api: XHRM\Payroll\Api\EmployeeLoanAPI
+  requirements:
+    id: '\d+'
+
+# ============================================
+# Screen Routes (Vue pages)
+# ============================================
+
+payroll_generate:
+  path: /payroll/generatePayroll
+  controller: XHRM\Payroll\Controller\GeneratePayrollController::handle
+  methods: [ GET ]
+
+payroll_runs:
+  path: /payroll/payrollRuns
+  controller: XHRM\Payroll\Controller\PayrollRunsController::handle
+  methods: [ GET ]
+
+payroll_approve:
+  path: /payroll/approvePayroll
+  controller: XHRM\Payroll\Controller\ApprovePayrollController::handle
+  methods: [ GET ]
+
+payroll_approve_detail:
+  path: /payroll/approvePayroll/{id}
+  controller: XHRM\Payroll\Controller\ApprovePayrollDetailController::handle
+  methods: [ GET ]
+
+payroll_employee_payslips:
+  path: /payroll/employeePayslips
+  controller: XHRM\Payroll\Controller\EmployeePayslipsController::handle
+  methods: [ GET ]
+
+payroll_payslip_detail:
+  path: /payroll/payslip/{id}
+  controller: XHRM\Payroll\Controller\PayslipDetailController::handle
+  methods: [ GET ]
+
+payroll_my_payslips:
+  path: /payroll/myPayslips
+  controller: XHRM\Payroll\Controller\MyPayslipsController::handle
+  methods: [ GET ]
+
+payroll_loans:
+  path: /payroll/loans
+  controller: XHRM\Payroll\Controller\LoansController::handle
+  methods: [ GET ]
+
+payroll_holiday_calendar:
+  path: /payroll/holidayCalendar
+  controller: XHRM\Payroll\Controller\HolidayCalendarController::handle
+  methods: [ GET ]
+
+# Admin Payroll Settings
+payroll_salary_components:
+  path: /admin/payrollSalaryComponents
+  controller: XHRM\Payroll\Controller\SalaryComponentsController::handle
+  methods: [ GET ]
+
+payroll_attendance_rules:
+  path: /admin/payrollAttendanceRules
+  controller: XHRM\Payroll\Controller\AttendanceRulesController::handle
+  methods: [ GET ]
+
+payroll_overtime_rules:
+  path: /admin/payrollOvertimeRules
+  controller: XHRM\Payroll\Controller\OvertimeRulesController::handle
+  methods: [ GET ]
+
+payroll_tax_slabs:
+  path: /admin/payrollTaxSlabs
+  controller: XHRM\Payroll\Controller\TaxSlabsController::handle
+  methods: [ GET ]
+
+payroll_financial_year:
+  path: /admin/payrollFinancialYear
+  controller: XHRM\Payroll\Controller\FinancialYearController::handle
+  methods: [ GET ]

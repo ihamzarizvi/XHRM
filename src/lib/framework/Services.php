@@ -455,5 +455,14 @@ final class Services
      * @see \XHRM\OpenidAuthentication\Service\SocialMediaAuthenticationService
      */
     public const SOCIAL_MEDIA_AUTH_SERVICE = 'oidc.social_media_auth_service';
+
+    ///////////////////////////////////////////////////////////////
+    /// Payroll plugin services
+    ///////////////////////////////////////////////////////////////
+
+    /**
+     * @see \XHRM\Payroll\Service\PayrollService
+     */
+    public const PAYROLL_SERVICE = 'payroll.payroll_service';
 }
 

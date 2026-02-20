@@ -34,6 +34,7 @@ import buzzPages from '@/XHRMBuzzPlugin';
 import systemCheckPages from '@/XHRMSystemCheckPlugin';
 import claimPages from '@/XHRMClaimPlugin';
 import PasswordManagerPages from '@/XHRMPasswordManagerPlugin';
+import PayrollPages from '@/XHRMPayrollPlugin';
 
 export default {
   ...AdminPages,
@@ -55,4 +56,5 @@ export default {
   ...systemCheckPages,
   ...claimPages,
   ...PasswordManagerPages,
+  ...PayrollPages,
 };
