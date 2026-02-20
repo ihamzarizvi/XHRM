@@ -42,7 +42,8 @@ export default {
       return data.map((item) => ({
         id: item.id,
         period: `${item.periodStart} — ${item.periodEnd}`,
-        periodType: item.periodType.charAt(0).toUpperCase() + item.periodType.slice(1),
+        periodType:
+          item.periodType.charAt(0).toUpperCase() + item.periodType.slice(1),
         employees: item.employeeCount,
         totalGross: `PKR ${Number(item.totalGross).toLocaleString()}`,
         totalNet: `PKR ${Number(item.totalNet).toLocaleString()}`,
@@ -54,17 +55,11 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/runs',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-      execQuery,
-    } = usePaginate(http, {
-      normalizer: dataNormalizer,
-      query: serializedFilters,
-    });
+    const {showPaginator, currentPage, total, pages, isLoading, execQuery} =
+      usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      });
 
     return {
       http,
@@ -74,7 +69,10 @@ export default {
       total,
       pages,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
     };
   },
   data() {

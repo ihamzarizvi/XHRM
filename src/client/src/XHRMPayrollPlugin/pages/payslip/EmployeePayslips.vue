@@ -29,7 +29,12 @@
       <oxd-divider />
       <oxd-form-actions>
         <oxd-button display-type="ghost" label="Reset" @click="onClickReset" />
-        <oxd-button class="XHRM-left-space" display-type="secondary" label="Search" type="submit" />
+        <oxd-button
+          class="XHRM-left-space"
+          display-type="secondary"
+          label="Search"
+          type="submit"
+        />
       </oxd-form-actions>
     </oxd-form>
   </oxd-table-filter>
@@ -81,7 +86,9 @@ export default {
     const dataNormalizer = (data) => {
       return data.map((item) => ({
         id: item.id,
-        employeeName: `${item.employee?.firstName || ''} ${item.employee?.lastName || ''}`,
+        employeeName: `${item.employee?.firstName || ''} ${
+          item.employee?.lastName || ''
+        }`,
         payPeriod: item.payPeriodType,
         basicSalary: `PKR ${Number(item.basicSalary).toLocaleString()}`,
         netSalary: `PKR ${Number(item.netSalary).toLocaleString()}`,
@@ -93,17 +100,11 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/payslips',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-      execQuery,
-    } = usePaginate(http, {
-      normalizer: dataNormalizer,
-      query: serializedFilters,
-    });
+    const {showPaginator, currentPage, total, pages, isLoading, execQuery} =
+      usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      });
 
     return {
       http,
@@ -113,7 +114,10 @@ export default {
       total,
       pages,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
       filters,
     };
   },

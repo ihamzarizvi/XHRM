@@ -23,7 +23,12 @@
       <oxd-divider />
       <oxd-form-actions>
         <oxd-button display-type="ghost" label="Reset" @click="onClickReset" />
-        <oxd-button class="XHRM-left-space" display-type="secondary" label="Search" type="submit" />
+        <oxd-button
+          class="XHRM-left-space"
+          display-type="secondary"
+          label="Search"
+          type="submit"
+        />
       </oxd-form-actions>
     </oxd-form>
   </oxd-table-filter>
@@ -91,10 +96,14 @@ export default {
     const dataNormalizer = (data) => {
       return data.map((item) => ({
         id: item.id,
-        employeeName: `${item.employee?.firstName || ''} ${item.employee?.lastName || ''}`,
+        employeeName: `${item.employee?.firstName || ''} ${
+          item.employee?.lastName || ''
+        }`,
         type: item.loanType === 'loan' ? 'Loan' : 'Advance',
         totalAmount: `PKR ${Number(item.totalAmount).toLocaleString()}`,
-        monthlyDeduction: `PKR ${Number(item.monthlyDeduction).toLocaleString()}`,
+        monthlyDeduction: `PKR ${Number(
+          item.monthlyDeduction,
+        ).toLocaleString()}`,
         remaining: `PKR ${Number(item.remainingAmount).toLocaleString()}`,
         startDate: item.startDate,
         status: item.status.charAt(0).toUpperCase() + item.status.slice(1),
@@ -105,17 +114,11 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/loans',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-      execQuery,
-    } = usePaginate(http, {
-      normalizer: dataNormalizer,
-      query: serializedFilters,
-    });
+    const {showPaginator, currentPage, total, pages, isLoading, execQuery} =
+      usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      });
 
     return {
       http,
@@ -125,7 +128,10 @@ export default {
       total,
       pages,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
       filters,
     };
   },
@@ -135,7 +141,11 @@ export default {
         {name: 'employeeName', title: 'Employee', style: {flex: 2}},
         {name: 'type', title: 'Type', style: {flex: 1}},
         {name: 'totalAmount', title: 'Total Amount', style: {flex: 2}},
-        {name: 'monthlyDeduction', title: 'Monthly Deduction', style: {flex: 2}},
+        {
+          name: 'monthlyDeduction',
+          title: 'Monthly Deduction',
+          style: {flex: 2},
+        },
         {name: 'remaining', title: 'Remaining', style: {flex: 2}},
         {name: 'startDate', title: 'Start Date', style: {flex: 1}},
         {name: 'status', title: 'Status', style: {flex: 1}},

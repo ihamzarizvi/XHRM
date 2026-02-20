@@ -1,8 +1,5 @@
 <template>
-  <oxd-dialog
-    :style="{maxWidth: '500px'}"
-    @update:show="onClose"
-  >
+  <oxd-dialog :style="{maxWidth: '500px'}" @update:show="onClose">
     <div class="XHRM-dialog-container-default">
       <oxd-text tag="h6" class="XHRM-main-title">
         {{ isEditMode ? 'Edit Attendance Rule' : 'Add Attendance Rule' }}

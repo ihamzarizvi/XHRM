@@ -59,36 +59,40 @@
             <oxd-grid-item>
               <div class="stat-card">
                 <oxd-text tag="p" class="stat-label">Employees</oxd-text>
-                <oxd-text tag="h5" class="stat-value">{{ previewData.employeeCount }}</oxd-text>
+                <oxd-text tag="h5" class="stat-value">{{
+                  previewData.employeeCount
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="stat-card">
                 <oxd-text tag="p" class="stat-label">Total Gross</oxd-text>
-                <oxd-text tag="h5" class="stat-value">PKR {{ formatAmount(previewData.totalGross) }}</oxd-text>
+                <oxd-text tag="h5" class="stat-value"
+                  >PKR {{ formatAmount(previewData.totalGross) }}</oxd-text
+                >
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="stat-card">
                 <oxd-text tag="p" class="stat-label">Total Deductions</oxd-text>
-                <oxd-text tag="h5" class="stat-value">PKR {{ formatAmount(previewData.totalDeductions) }}</oxd-text>
+                <oxd-text tag="h5" class="stat-value"
+                  >PKR {{ formatAmount(previewData.totalDeductions) }}</oxd-text
+                >
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="stat-card stat-card--net">
                 <oxd-text tag="p" class="stat-label">Total Net Pay</oxd-text>
-                <oxd-text tag="h5" class="stat-value">PKR {{ formatAmount(previewData.totalNet) }}</oxd-text>
+                <oxd-text tag="h5" class="stat-value"
+                  >PKR {{ formatAmount(previewData.totalNet) }}</oxd-text
+                >
               </div>
             </oxd-grid-item>
           </oxd-grid>
         </div>
 
         <oxd-form-actions>
-          <oxd-button
-            display-type="ghost"
-            label="Preview"
-            @click="onPreview"
-          />
+          <oxd-button display-type="ghost" label="Preview" @click="onPreview" />
           <oxd-button
             class="XHRM-left-space"
             display-type="secondary"

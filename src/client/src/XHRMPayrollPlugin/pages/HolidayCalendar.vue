@@ -69,7 +69,9 @@ export default {
     for (let y = currentYearValue - 2; y <= currentYearValue + 2; y++) {
       yearOptions.push({id: y, label: String(y)});
     }
-    const selectedYear = ref(yearOptions.find((y) => y.id === currentYearValue));
+    const selectedYear = ref(
+      yearOptions.find((y) => y.id === currentYearValue),
+    );
 
     const serializedFilters = computed(() => ({
       year: selectedYear.value?.id ?? currentYearValue,
@@ -82,7 +84,8 @@ export default {
         name: item.name,
         type: item.isRecurring ? 'Recurring' : 'One-time',
         halfDay: item.isHalfDay ? 'Yes' : 'No',
-        appliesTo: item.appliesTo === 'all' ? 'All Employees' : 'Specific Department',
+        appliesTo:
+          item.appliesTo === 'all' ? 'All Employees' : 'Specific Department',
       }));
     };
 
@@ -90,17 +93,11 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/holidays',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-      execQuery,
-    } = usePaginate(http, {
-      normalizer: dataNormalizer,
-      query: serializedFilters,
-    });
+    const {showPaginator, currentPage, total, pages, isLoading, execQuery} =
+      usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      });
 
     return {
       http,
@@ -112,7 +109,10 @@ export default {
       total,
       pages,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
     };
   },
   data() {

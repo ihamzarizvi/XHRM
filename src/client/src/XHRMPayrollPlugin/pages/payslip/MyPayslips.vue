@@ -36,7 +36,9 @@ export default {
     const dataNormalizer = (data) => {
       return data.map((item) => ({
         id: item.id,
-        period: `${item.payrollRun?.periodStart || ''} — ${item.payrollRun?.periodEnd || ''}`,
+        period: `${item.payrollRun?.periodStart || ''} — ${
+          item.payrollRun?.periodEnd || ''
+        }`,
         grossSalary: `PKR ${Number(item.grossSalary).toLocaleString()}`,
         deductions: `PKR ${Number(item.totalDeductions).toLocaleString()}`,
         netSalary: `PKR ${Number(item.netSalary).toLocaleString()}`,
@@ -48,13 +50,10 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/my-payslips',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-    } = usePaginate(http, {normalizer: dataNormalizer});
+    const {showPaginator, currentPage, total, pages, isLoading} = usePaginate(
+      http,
+      {normalizer: dataNormalizer},
+    );
 
     return {
       http,

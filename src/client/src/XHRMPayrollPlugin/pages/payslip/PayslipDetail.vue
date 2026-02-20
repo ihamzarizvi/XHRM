@@ -14,26 +14,33 @@
       <div v-if="payslip" class="payslip-content">
         <!-- Employee Info -->
         <div class="payslip-section">
-          <oxd-text tag="h6" class="section-title">Employee Information</oxd-text>
+          <oxd-text tag="h6" class="section-title"
+            >Employee Information</oxd-text
+          >
           <oxd-grid :cols="3" class="XHRM-full-width-grid">
             <oxd-grid-item>
               <div class="info-row">
                 <oxd-text tag="p" class="info-label">Name</oxd-text>
                 <oxd-text tag="p" class="info-value">
-                  {{ payslip.employee?.firstName }} {{ payslip.employee?.lastName }}
+                  {{ payslip.employee?.firstName }}
+                  {{ payslip.employee?.lastName }}
                 </oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="info-row">
                 <oxd-text tag="p" class="info-label">Employee ID</oxd-text>
-                <oxd-text tag="p" class="info-value">{{ payslip.employee?.employeeId }}</oxd-text>
+                <oxd-text tag="p" class="info-value">{{
+                  payslip.employee?.employeeId
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="info-row">
                 <oxd-text tag="p" class="info-label">Pay Period</oxd-text>
-                <oxd-text tag="p" class="info-value">{{ payslip.payPeriodType }}</oxd-text>
+                <oxd-text tag="p" class="info-value">{{
+                  payslip.payPeriodType
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
           </oxd-grid>
@@ -48,37 +55,49 @@
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">Working Days</oxd-text>
-                <oxd-text tag="h6" class="att-value">{{ payslip.totalWorkingDays }}</oxd-text>
+                <oxd-text tag="h6" class="att-value">{{
+                  payslip.totalWorkingDays
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">Present</oxd-text>
-                <oxd-text tag="h6" class="att-value att-value--good">{{ payslip.daysPresent }}</oxd-text>
+                <oxd-text tag="h6" class="att-value att-value--good">{{
+                  payslip.daysPresent
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">Absent</oxd-text>
-                <oxd-text tag="h6" class="att-value att-value--bad">{{ payslip.daysAbsent }}</oxd-text>
+                <oxd-text tag="h6" class="att-value att-value--bad">{{
+                  payslip.daysAbsent
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">Leaves</oxd-text>
-                <oxd-text tag="h6" class="att-value">{{ payslip.daysLeave }}</oxd-text>
+                <oxd-text tag="h6" class="att-value">{{
+                  payslip.daysLeave
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">Late</oxd-text>
-                <oxd-text tag="h6" class="att-value att-value--warn">{{ payslip.lateCount }}</oxd-text>
+                <oxd-text tag="h6" class="att-value att-value--warn">{{
+                  payslip.lateCount
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
             <oxd-grid-item>
               <div class="att-stat">
                 <oxd-text tag="p" class="att-label">OT Hours</oxd-text>
-                <oxd-text tag="h6" class="att-value">{{ payslip.overtimeHours }}</oxd-text>
+                <oxd-text tag="h6" class="att-value">{{
+                  payslip.overtimeHours
+                }}</oxd-text>
               </div>
             </oxd-grid-item>
           </oxd-grid>
@@ -90,37 +109,45 @@
         <oxd-grid :cols="2" class="XHRM-full-width-grid">
           <oxd-grid-item>
             <div class="payslip-section">
-              <oxd-text tag="h6" class="section-title section-title--earn">Earnings</oxd-text>
-              <div
-                v-for="item in earnings"
-                :key="item.id"
-                class="line-item"
+              <oxd-text tag="h6" class="section-title section-title--earn"
+                >Earnings</oxd-text
               >
+              <div v-for="item in earnings" :key="item.id" class="line-item">
                 <oxd-text tag="p">{{ item.name }}</oxd-text>
-                <oxd-text tag="p" class="line-amount">PKR {{ formatAmount(item.amount) }}</oxd-text>
+                <oxd-text tag="p" class="line-amount"
+                  >PKR {{ formatAmount(item.amount) }}</oxd-text
+                >
               </div>
               <oxd-divider />
               <div class="line-item line-item--total">
                 <oxd-text tag="p"><strong>Gross Salary</strong></oxd-text>
-                <oxd-text tag="p" class="line-amount"><strong>PKR {{ formatAmount(payslip.grossSalary) }}</strong></oxd-text>
+                <oxd-text tag="p" class="line-amount"
+                  ><strong
+                    >PKR {{ formatAmount(payslip.grossSalary) }}</strong
+                  ></oxd-text
+                >
               </div>
             </div>
           </oxd-grid-item>
           <oxd-grid-item>
             <div class="payslip-section">
-              <oxd-text tag="h6" class="section-title section-title--deduct">Deductions</oxd-text>
-              <div
-                v-for="item in deductions"
-                :key="item.id"
-                class="line-item"
+              <oxd-text tag="h6" class="section-title section-title--deduct"
+                >Deductions</oxd-text
               >
+              <div v-for="item in deductions" :key="item.id" class="line-item">
                 <oxd-text tag="p">{{ item.name }}</oxd-text>
-                <oxd-text tag="p" class="line-amount">PKR {{ formatAmount(item.amount) }}</oxd-text>
+                <oxd-text tag="p" class="line-amount"
+                  >PKR {{ formatAmount(item.amount) }}</oxd-text
+                >
               </div>
               <oxd-divider />
               <div class="line-item line-item--total">
                 <oxd-text tag="p"><strong>Total Deductions</strong></oxd-text>
-                <oxd-text tag="p" class="line-amount"><strong>PKR {{ formatAmount(payslip.totalDeductions) }}</strong></oxd-text>
+                <oxd-text tag="p" class="line-amount"
+                  ><strong
+                    >PKR {{ formatAmount(payslip.totalDeductions) }}</strong
+                  ></oxd-text
+                >
               </div>
             </div>
           </oxd-grid-item>
@@ -131,7 +158,9 @@
         <!-- Net Pay -->
         <div class="net-pay-section">
           <oxd-text tag="h5" class="net-pay-label">Net Pay</oxd-text>
-          <oxd-text tag="h4" class="net-pay-amount">PKR {{ formatAmount(payslip.netSalary) }}</oxd-text>
+          <oxd-text tag="h4" class="net-pay-amount"
+            >PKR {{ formatAmount(payslip.netSalary) }}</oxd-text
+          >
         </div>
       </div>
 
@@ -172,8 +201,12 @@ export default {
       }
     });
 
-    const earnings = computed(() => lineItems.value.filter((i) => i.type === 'earning'));
-    const deductions = computed(() => lineItems.value.filter((i) => i.type === 'deduction'));
+    const earnings = computed(() =>
+      lineItems.value.filter((i) => i.type === 'earning'),
+    );
+    const deductions = computed(() =>
+      lineItems.value.filter((i) => i.type === 'deduction'),
+    );
 
     return {payslip, lineItems, earnings, deductions, http};
   },
@@ -202,8 +235,12 @@ export default {
 .section-title {
   margin-bottom: 0.75rem;
   color: #1e293b;
-  &--earn { color: #16a34a; }
-  &--deduct { color: #dc2626; }
+  &--earn {
+    color: #16a34a;
+  }
+  &--deduct {
+    color: #dc2626;
+  }
 }
 .info-row {
   margin-bottom: 0.5rem;
@@ -228,9 +265,15 @@ export default {
 }
 .att-value {
   font-weight: 700;
-  &--good { color: #16a34a; }
-  &--bad { color: #dc2626; }
-  &--warn { color: #f59e0b; }
+  &--good {
+    color: #16a34a;
+  }
+  &--bad {
+    color: #dc2626;
+  }
+  &--warn {
+    color: #f59e0b;
+  }
 }
 .line-item {
   display: flex;

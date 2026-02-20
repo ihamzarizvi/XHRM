@@ -99,7 +99,10 @@ export default {
       isLoading,
       total,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
     };
   },
   data() {

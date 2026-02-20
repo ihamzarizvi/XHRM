@@ -23,11 +23,7 @@
       </oxd-form-row>
       <oxd-divider />
       <oxd-form-actions>
-        <oxd-button
-          display-type="ghost"
-          label="Reset"
-          @click="onClickReset"
-        />
+        <oxd-button display-type="ghost" label="Reset" @click="onClickReset" />
         <oxd-button
           class="XHRM-left-space"
           display-type="secondary"
@@ -121,15 +117,14 @@ export default {
 
     const dataNormalizer = (data) => {
       return data.map((item) => {
-        const typeLabel = item.type === 'earning'
-          ? 'Earning'
-          : 'Deduction';
-        const calcLabel = {
-          fixed: 'Fixed',
-          percentage: 'Percentage',
-          formula: 'Formula',
-          auto: 'Auto-calculated',
-        }[item.calculationType] || item.calculationType;
+        const typeLabel = item.type === 'earning' ? 'Earning' : 'Deduction';
+        const calcLabel =
+          {
+            fixed: 'Fixed',
+            percentage: 'Percentage',
+            formula: 'Formula',
+            auto: 'Auto-calculated',
+          }[item.calculationType] || item.calculationType;
 
         return {
           id: item.id,
@@ -147,17 +142,11 @@ export default {
       window.appGlobal.baseUrl,
       '/api/v2/payroll/salary-components',
     );
-    const {
-      showPaginator,
-      currentPage,
-      total,
-      pages,
-      isLoading,
-      execQuery,
-    } = usePaginate(http, {
-      normalizer: dataNormalizer,
-      query: serializedFilters,
-    });
+    const {showPaginator, currentPage, total, pages, isLoading, execQuery} =
+      usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      });
     onSort(execQuery);
 
     return {
@@ -168,7 +157,10 @@ export default {
       total,
       pages,
       execQuery,
-      items: usePaginate(http, {normalizer: dataNormalizer, query: serializedFilters}).response,
+      items: usePaginate(http, {
+        normalizer: dataNormalizer,
+        query: serializedFilters,
+      }).response,
       filters,
       sortDefinition,
     };
@@ -176,7 +168,12 @@ export default {
   data() {
     return {
       headers: [
-        {name: 'name', title: 'Name', sortField: 'salaryComponent.name', style: {flex: 2}},
+        {
+          name: 'name',
+          title: 'Name',
+          sortField: 'salaryComponent.name',
+          style: {flex: 2},
+        },
         {name: 'code', title: 'Code', style: {flex: 1}},
         {name: 'type', title: 'Type', style: {flex: 1}},
         {name: 'calculationType', title: 'Calculation', style: {flex: 1}},

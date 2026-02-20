@@ -1,8 +1,5 @@
 <template>
-  <oxd-dialog
-    :style="{maxWidth: '600px'}"
-    @update:show="onClose"
-  >
+  <oxd-dialog :style="{maxWidth: '600px'}" @update:show="onClose">
     <div class="XHRM-dialog-container-default">
       <oxd-text tag="h6" class="XHRM-main-title">
         {{ isEditMode ? 'Edit Salary Component' : 'Add Salary Component' }}
@@ -102,11 +99,7 @@
         </oxd-form-row>
         <oxd-divider />
         <oxd-form-actions>
-          <oxd-button
-            display-type="ghost"
-            label="Cancel"
-            @click="onClose"
-          />
+          <oxd-button display-type="ghost" label="Cancel" @click="onClose" />
           <oxd-button
             class="XHRM-left-space"
             display-type="secondary"
@@ -137,7 +130,9 @@ export default {
       form: {
         name: this.data?.name || '',
         code: this.data?.code || '',
-        type: this.data?.type ? {id: this.data.type.toLowerCase(), label: this.data.type} : null,
+        type: this.data?.type
+          ? {id: this.data.type.toLowerCase(), label: this.data.type}
+          : null,
         calculationType: null,
         defaultValue: this.data?.defaultValue || '',
         formula: this.data?.formula || '',
@@ -190,7 +185,10 @@ export default {
         this.$toast.saveSuccess();
         this.$emit('save');
       } catch (error) {
-        this.$toast.error({title: 'Error', message: 'Failed to save component'});
+        this.$toast.error({
+          title: 'Error',
+          message: 'Failed to save component',
+        });
       }
     },
   },

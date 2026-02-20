@@ -12,25 +12,33 @@
           <oxd-grid-item>
             <div class="stat-card">
               <oxd-text tag="p" class="stat-label">Period</oxd-text>
-              <oxd-text tag="h6" class="stat-value">{{ runData.periodStart }} — {{ runData.periodEnd }}</oxd-text>
+              <oxd-text tag="h6" class="stat-value"
+                >{{ runData.periodStart }} — {{ runData.periodEnd }}</oxd-text
+              >
             </div>
           </oxd-grid-item>
           <oxd-grid-item>
             <div class="stat-card">
               <oxd-text tag="p" class="stat-label">Employees</oxd-text>
-              <oxd-text tag="h5" class="stat-value">{{ runData.employeeCount }}</oxd-text>
+              <oxd-text tag="h5" class="stat-value">{{
+                runData.employeeCount
+              }}</oxd-text>
             </div>
           </oxd-grid-item>
           <oxd-grid-item>
             <div class="stat-card">
               <oxd-text tag="p" class="stat-label">Total Gross</oxd-text>
-              <oxd-text tag="h5" class="stat-value">PKR {{ formatAmount(runData.totalGross) }}</oxd-text>
+              <oxd-text tag="h5" class="stat-value"
+                >PKR {{ formatAmount(runData.totalGross) }}</oxd-text
+              >
             </div>
           </oxd-grid-item>
           <oxd-grid-item>
             <div class="stat-card stat-card--net">
               <oxd-text tag="p" class="stat-label">Total Net Pay</oxd-text>
-              <oxd-text tag="h5" class="stat-value">PKR {{ formatAmount(runData.totalNet) }}</oxd-text>
+              <oxd-text tag="h5" class="stat-value"
+                >PKR {{ formatAmount(runData.totalNet) }}</oxd-text
+              >
             </div>
           </oxd-grid-item>
         </oxd-grid>
@@ -59,11 +67,7 @@
         />
       </oxd-form-row>
       <oxd-form-actions v-if="runData && runData.status === 'pending_approval'">
-        <oxd-button
-          display-type="danger"
-          label="Reject"
-          @click="onReject"
-        />
+        <oxd-button display-type="danger" label="Reject" @click="onReject" />
         <oxd-button
           class="XHRM-left-space"
           display-type="secondary"
@@ -82,7 +86,8 @@
       </oxd-form-actions>
       <div v-if="emailResult" class="email-result">
         <oxd-text tag="p">
-          ✅ Sent: {{ emailResult.sent }} &nbsp; ❌ Failed: {{ emailResult.failed }} &nbsp; ⏭ Skipped: {{ emailResult.skipped }}
+          ✅ Sent: {{ emailResult.sent }} &nbsp; ❌ Failed:
+          {{ emailResult.failed }} &nbsp; ⏭ Skipped: {{ emailResult.skipped }}
         </oxd-text>
       </div>
     </div>
@@ -116,7 +121,9 @@ export default {
     const dataNormalizer = (data) => {
       return data.map((item) => ({
         id: item.id,
-        employeeName: `${item.employee?.firstName || ''} ${item.employee?.lastName || ''}`,
+        employeeName: `${item.employee?.firstName || ''} ${
+          item.employee?.lastName || ''
+        }`,
         basicSalary: `PKR ${Number(item.basicSalary).toLocaleString()}`,
         grossSalary: `PKR ${Number(item.grossSalary).toLocaleString()}`,
         deductions: `PKR ${Number(item.totalDeductions).toLocaleString()}`,
@@ -197,7 +204,10 @@ export default {
     },
     async onReject() {
       if (!this.rejectionNote) {
-        this.$toast.warn({title: 'Warning', message: 'Please add a rejection note'});
+        this.$toast.warn({
+          title: 'Warning',
+          message: 'Please add a rejection note',
+        });
         return;
       }
       try {
@@ -225,9 +235,15 @@ export default {
         );
         const response = await emailHttp.create({runId: this.payrollRunId});
         this.emailResult = response.data?.data;
-        this.$toast.success({title: 'Success', message: `${this.emailResult.sent} payslips emailed successfully`});
+        this.$toast.success({
+          title: 'Success',
+          message: `${this.emailResult.sent} payslips emailed successfully`,
+        });
       } catch (error) {
-        this.$toast.error({title: 'Error', message: 'Failed to email payslips'});
+        this.$toast.error({
+          title: 'Error',
+          message: 'Failed to email payslips',
+        });
       } finally {
         this.emailSending = false;
       }

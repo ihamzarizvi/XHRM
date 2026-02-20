@@ -85,7 +85,7 @@ export default {
       // TODO: Show add modal
     },
     onClickEdit(item) {
-      // TODO: Show edit modal  
+      // TODO: Show edit modal
     },
   },
 };
