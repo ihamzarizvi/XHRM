@@ -385,25 +385,15 @@ class PayrollService
      */
     private function getActiveEmployees(): array
     {
-        $conn = $this->getPayrollDao()->getEntityManager()->getConnection();
-        $sql = "SELECT emp_number, emp_firstname, emp_lastname 
-                FROM hs_hr_employee 
-                WHERE termination_id IS NULL 
-                ORDER BY emp_number";
-        return $conn->fetchAllAssociative($sql);
+        return $this->getPayrollDao()->getActiveEmployees();
     }
 
     /**
-     * Get employee's basic salary from hs_hr_emp_basicsalary
+     * Get employee's basic salary
      */
     private function getEmployeeBasicSalary(int $empNumber): float
     {
-        $conn = $this->getPayrollDao()->getEntityManager()->getConnection();
-        $sql = "SELECT ebsal_basic_salary FROM hs_hr_emp_basicsalary 
-                WHERE emp_number = :empNumber 
-                ORDER BY id DESC LIMIT 1";
-        $result = $conn->fetchOne($sql, ['empNumber' => $empNumber]);
-        return (float) ($result ?: 0);
+        return $this->getPayrollDao()->getEmployeeBasicSalary($empNumber);
     }
 
     /**
@@ -411,21 +401,7 @@ class PayrollService
      */
     private function getAttendanceRecords(int $empNumber, DateTime $start, DateTime $end): array
     {
-        $conn = $this->getPayrollDao()->getEntityManager()->getConnection();
-        $sql = "SELECT 
-                    DATE(punch_in_utc_time) as attendance_date,
-                    punch_in_note,
-                    TIMESTAMPDIFF(HOUR, punch_in_utc_time, punch_out_utc_time) as total_hours
-                FROM ohrm_attendance_record
-                WHERE employee_id = :empNumber
-                AND DATE(punch_in_utc_time) BETWEEN :start AND :end
-                AND punch_out_utc_time IS NOT NULL
-                GROUP BY DATE(punch_in_utc_time)";
-        return $conn->fetchAllAssociative($sql, [
-            'empNumber' => $empNumber,
-            'start' => $start->format('Y-m-d'),
-            'end' => $end->format('Y-m-d'),
-        ]);
+        return $this->getPayrollDao()->getAttendanceRecords($empNumber, $start, $end);
     }
 
     /**
@@ -433,16 +409,7 @@ class PayrollService
      */
     private function getApprovedLeaveCount(int $empNumber, DateTime $start, DateTime $end): int
     {
-        $conn = $this->getPayrollDao()->getEntityManager()->getConnection();
-        $sql = "SELECT COUNT(*) FROM ohrm_leave
-                WHERE emp_number = :empNumber
-                AND date BETWEEN :start AND :end
-                AND status = 3"; // 3 = approved
-        return (int) $conn->fetchOne($sql, [
-            'empNumber' => $empNumber,
-            'start' => $start->format('Y-m-d'),
-            'end' => $end->format('Y-m-d'),
-        ]);
+        return $this->getPayrollDao()->getApprovedLeaveCount($empNumber, $start, $end);
     }
 
     /**

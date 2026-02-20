@@ -71,6 +71,20 @@
           @click="onApprove"
         />
       </oxd-form-actions>
+      <oxd-form-actions v-if="runData && runData.status === 'approved'">
+        <oxd-button
+          display-type="secondary"
+          :label="emailSending ? 'Sending...' : 'Email All Payslips'"
+          icon-name="envelope"
+          :disabled="emailSending"
+          @click="onEmailPayslips"
+        />
+      </oxd-form-actions>
+      <div v-if="emailResult" class="email-result">
+        <oxd-text tag="p">
+          ✅ Sent: {{ emailResult.sent }} &nbsp; ❌ Failed: {{ emailResult.failed }} &nbsp; ⏭ Skipped: {{ emailResult.skipped }}
+        </oxd-text>
+      </div>
     </div>
   </div>
 </template>
@@ -132,6 +146,8 @@ export default {
   data() {
     return {
       rejectionNote: '',
+      emailSending: false,
+      emailResult: null,
       headers: [
         {name: 'employeeName', title: 'Employee', style: {flex: 2}},
         {name: 'basicSalary', title: 'Basic', style: {flex: 1}},
@@ -197,6 +213,23 @@ export default {
         navigate('/payroll/payrollRuns');
       } catch (error) {
         this.$toast.error({title: 'Error', message: 'Rejection failed'});
+      }
+    },
+    async onEmailPayslips() {
+      this.emailSending = true;
+      this.emailResult = null;
+      try {
+        const emailHttp = new APIService(
+          window.appGlobal.baseUrl,
+          '/api/v2/payroll/email-payslips',
+        );
+        const response = await emailHttp.create({runId: this.payrollRunId});
+        this.emailResult = response.data?.data;
+        this.$toast.success({title: 'Success', message: `${this.emailResult.sent} payslips emailed successfully`});
+      } catch (error) {
+        this.$toast.error({title: 'Error', message: 'Failed to email payslips'});
+      } finally {
+        this.emailSending = false;
       }
     },
   },

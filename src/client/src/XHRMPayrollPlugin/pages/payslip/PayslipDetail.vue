@@ -182,9 +182,8 @@ export default {
       return Number(amount || 0).toLocaleString();
     },
     onDownloadPdf() {
-      // TODO: Call PDF download API
       window.open(
-        `${window.appGlobal.baseUrl}/api/v2/payroll/payslips/${this.payslipId}/pdf`,
+        `${window.appGlobal.baseUrl}/payroll/payslip/${this.payslipId}/pdf`,
         '_blank',
       );
     },

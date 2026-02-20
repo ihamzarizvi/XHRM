@@ -251,3 +251,20 @@ payroll_financial_year:
   path: /admin/payrollFinancialYear
   controller: XHRM\Payroll\Controller\FinancialYearController::handle
   methods: [ GET ]
+
+# Payslip PDF (printable HTML)
+payroll_payslip_pdf:
+  path: /payroll/payslip/{id}/pdf
+  controller: XHRM\Payroll\Controller\PayslipPdfController::handle
+  methods: [ GET ]
+  requirements:
+    id: '\d+'
+
+# Email Payslips API
+apiv2_payroll_email:
+  path: /api/v2/payroll/email-payslips
+  controller: XHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ POST ]
+  defaults:
+    _api: XHRM\Payroll\Api\PayrollEmailAPI
+

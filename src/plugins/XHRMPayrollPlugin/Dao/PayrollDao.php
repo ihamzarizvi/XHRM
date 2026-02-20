@@ -353,4 +353,69 @@ class PayrollDao extends BaseDao
         $qb->delete()->where($qb->expr()->in('el.id', ':ids'))->setParameter('ids', $ids);
         return $qb->getQuery()->execute();
     }
+
+    // ===========================
+    // Native SQL Helpers
+    // ===========================
+
+    public function getActiveEmployees(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT emp_number, emp_firstname, emp_lastname 
+                FROM hs_hr_employee 
+                WHERE termination_id IS NULL 
+                ORDER BY emp_number";
+        return $conn->fetchAllAssociative($sql);
+    }
+
+    public function getEmployeeBasicSalary(int $empNumber): float
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT ebsal_basic_salary FROM hs_hr_emp_basicsalary 
+                WHERE emp_number = :empNumber 
+                ORDER BY id DESC LIMIT 1";
+        $result = $conn->fetchOne($sql, ['empNumber' => $empNumber]);
+        return (float) ($result ?: 0);
+    }
+
+    public function getAttendanceRecords(int $empNumber, \DateTime $start, \DateTime $end): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT 
+                    DATE(punch_in_utc_time) as attendance_date,
+                    punch_in_note,
+                    TIMESTAMPDIFF(HOUR, punch_in_utc_time, punch_out_utc_time) as total_hours
+                FROM ohrm_attendance_record
+                WHERE employee_id = :empNumber
+                AND DATE(punch_in_utc_time) BETWEEN :start AND :end
+                AND punch_out_utc_time IS NOT NULL
+                GROUP BY DATE(punch_in_utc_time)";
+        return $conn->fetchAllAssociative($sql, [
+            'empNumber' => $empNumber,
+            'start' => $start->format('Y-m-d'),
+            'end' => $end->format('Y-m-d'),
+        ]);
+    }
+
+    public function getApprovedLeaveCount(int $empNumber, \DateTime $start, \DateTime $end): int
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT COUNT(*) FROM ohrm_leave
+                WHERE emp_number = :empNumber
+                AND date BETWEEN :start AND :end
+                AND status = 3";
+        return (int) $conn->fetchOne($sql, [
+            'empNumber' => $empNumber,
+            'start' => $start->format('Y-m-d'),
+            'end' => $end->format('Y-m-d'),
+        ]);
+    }
+
+    public function getEmployeeWorkEmail(int $empNumber): ?string
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT emp_work_email FROM hs_hr_employee WHERE emp_number = :emp";
+        $email = $conn->fetchOne($sql, ['emp' => $empNumber]);
+        return $email ?: null;
+    }
 }
