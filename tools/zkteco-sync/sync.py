@@ -413,21 +413,31 @@ def push_to_xhrm_api(conn, config, date_from=None, date_to=None):
                 missing = result.get("missingEmployees", [])
                 errors = result.get("errors", [])
 
-                # Mark records as synced
-                mark_as_synced(conn, all_record_ids, method="api")
+                # Only mark records as synced if their employee was found on the server
+                # Records for missing employees stay unsynced so they auto-sync
+                # once the Employee Id is set in XHRM
+                missing_set = set(int(m) for m in missing) if missing else set()
+                synced_ids = []
+                for (zk_id, date_key), rids in record_id_map.items():
+                    if int(zk_id) not in missing_set:
+                        synced_ids.extend(rids)
+
+                if synced_ids:
+                    mark_as_synced(conn, synced_ids, method="api")
 
                 logger.info(f"{Fore.GREEN}✓ API Import Summary:{Style.RESET_ALL}")
                 logger.info(f"  {Fore.GREEN}Imported:  {imported} records{Style.RESET_ALL}")
                 if skipped:
-                    logger.info(f"  {Fore.YELLOW}Skipped:   {skipped} (already existed){Style.RESET_ALL}")
+                    logger.info(f"  {Fore.YELLOW}Skipped:   {skipped} (already existed on server){Style.RESET_ALL}")
                 if missing:
+                    unsynced_count = len(all_record_ids) - len(synced_ids)
                     logger.warning(f"  {Fore.YELLOW}⚠ {len(missing)} ZKTeco user IDs not found in XHRM:{Style.RESET_ALL}")
                     logger.warning(f"    IDs: {', '.join(str(m) for m in missing)}")
-                    logger.warning(f"    → Add these employees in XHRM with matching emp numbers,")
-                    logger.warning(f"      then re-run sync to import their attendance.")
+                    logger.warning(f"    → {unsynced_count} records kept as UNSYNCED (will auto-sync later)")
+                    logger.warning(f"    → Set matching Employee Ids in XHRM PIM, then re-run sync.")
                 if errors:
                     for err in errors:
-                        if "not found" not in err.lower():  # Don't repeat missing emp info
+                        if "not found" not in err.lower():
                             logger.warning(f"  {Fore.YELLOW}⚠ {err}{Style.RESET_ALL}")
                 return imported
             else:

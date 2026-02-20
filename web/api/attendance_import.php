@@ -200,30 +200,9 @@ function importRecords($pdo, $records)
             $existing = $stmt->fetch();
 
             if ($existing) {
-                // Update existing record with punch-out if available
-                if ($punchOutStr) {
-                    $punchOutDt = new DateTime($punchOutStr, new DateTimeZone($timezoneName));
-                    $punchOutUtc = clone $punchOutDt;
-                    $punchOutUtc->setTimezone(new DateTimeZone('UTC'));
-
-                    $stmt = $pdo->prepare("
-                        UPDATE ohrm_attendance_record
-                        SET punch_out_utc_time = ?, punch_out_user_time = ?,
-                            punch_out_time_offset = ?, punch_out_timezone_name = ?,
-                            state = 'PUNCHED OUT'
-                        WHERE id = ?
-                    ");
-                    $stmt->execute([
-                        $punchOutUtc->format('Y-m-d H:i:s'),
-                        $punchOutDt->format('Y-m-d H:i:s'),
-                        $timezoneOffset,
-                        $timezoneName,
-                        $existing['id']
-                    ]);
-                    $results['imported']++;
-                } else {
-                    $results['skipped']++;
-                }
+                // Record already exists for this employee+date — skip it
+                // This protects any manual edits made on the server
+                $results['skipped']++;
                 continue;
             }
 
