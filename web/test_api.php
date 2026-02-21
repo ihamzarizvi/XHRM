@@ -2,69 +2,106 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h2>Test API Endpoint Directly</h2>";
+echo "<h2>Direct Doctrine Test</h2>";
 
-// Test the API endpoint by making an internal curl request
-$cookie = '';
-$ch = curl_init();
+// Bootstrap the app with autoloader
+require_once __DIR__ . '/../src/vendor/autoload.php';
 
-// First, login
-curl_setopt_array($ch, [
-    CURLOPT_URL => 'https://mimar.xsofty.com/web/index.php/auth/validate',
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => http_build_query([
-        '_username' => 'Admin',
-        '_password' => 'Xsofty@1122',
-    ]),
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HEADER => true,
-    CURLOPT_FOLLOWLOCATION => false,
-    CURLOPT_SSL_VERIFYPEER => false,
-    CURLOPT_COOKIEFILE => '',
-    CURLOPT_COOKIEJAR => '/tmp/xhrm_cookies.txt',
-]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-echo "<p>Login: HTTP $httpCode</p>";
+$confPaths = [__DIR__ . '/../lib/confs/Conf.php', __DIR__ . '/../src/lib/confs/Conf.php'];
+foreach ($confPaths as $cp) {
+    if (file_exists($cp)) {
+        require_once $cp;
+        break;
+    }
+}
 
-// Get cookies
-preg_match_all('/Set-Cookie:\s*([^;]*)/mi', $response, $matches);
-$cookies = implode('; ', $matches[1]);
+$conf = new Conf();
+$pdo = new PDO("mysql:host={$conf->getDbHost()};dbname={$conf->getDbName()};port={$conf->getDbPort()}", $conf->getDbUser(), $conf->getDbPass(), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-// Now test the salary components API
-curl_setopt_array($ch, [
-    CURLOPT_URL => 'https://mimar.xsofty.com/web/index.php/api/v2/payroll/salary-components',
-    CURLOPT_POST => false,
-    CURLOPT_HTTPGET => true,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HEADER => false,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_COOKIEFILE => '/tmp/xhrm_cookies.txt',
-    CURLOPT_HTTPHEADER => [
-        'Accept: application/json',
-        'Content-Type: application/json',
-    ],
-]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-echo "<h3>GET /api/v2/payroll/salary-components</h3>";
-echo "<p>HTTP $httpCode</p>";
-echo "<pre>" . htmlspecialchars($response) . "</pre>";
+// Test 1: Try to use the Entity class directly
+echo "<h3>1. Entity Class Check</h3>";
+try {
+    $cls = 'XHRM\\Entity\\SalaryComponent';
+    if (class_exists($cls)) {
+        echo "<p style='color:green'>✓ $cls class exists</p>";
+        $obj = new $cls();
+        $obj->setName('Test');
+        $obj->setCode('TEST999');
+        $obj->setType('earning');
+        echo "<p style='color:green'>✓ Object created, name=" . $obj->getName() . "</p>";
+    } else {
+        echo "<p style='color:red'>✗ $cls NOT FOUND</p>";
+    }
+} catch (Throwable $e) {
+    echo "<p style='color:red'>Error: " . $e->getMessage() . "</p>";
+}
 
-// Test holidays
-curl_setopt($ch, CURLOPT_URL, 'https://mimar.xsofty.com/web/index.php/api/v2/payroll/holidays');
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-echo "<h3>GET /api/v2/payroll/holidays</h3>";
-echo "<p>HTTP $httpCode</p>";
-echo "<pre>" . htmlspecialchars($response) . "</pre>";
+// Test 2: Check if Doctrine can find the entity metadata
+echo "<h3>2. Doctrine ORM Check</h3>";
+try {
+    // Try to setup doctrine
+    $dbParams = [
+        'driver' => 'pdo_mysql',
+        'host' => $conf->getDbHost(),
+        'dbname' => $conf->getDbName(),
+        'user' => $conf->getDbUser(),
+        'password' => $conf->getDbPass(),
+        'port' => $conf->getDbPort(),
+        'charset' => 'utf8mb4',
+    ];
 
-// Test financial years
-curl_setopt($ch, CURLOPT_URL, 'https://mimar.xsofty.com/web/index.php/api/v2/payroll/financial-years');
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-echo "<h3>GET /api/v2/payroll/financial-years</h3>";
-echo "<p>HTTP $httpCode</p>";
-echo "<pre>" . htmlspecialchars($response) . "</pre>";
+    // Check entity paths
+    $entityPaths = [
+        __DIR__ . '/../src/plugins/XHRMPayrollPlugin/entity',
+        __DIR__ . '/../src/plugins/XHRMCorePlugin/entity',
+    ];
 
-curl_close($ch);
+    foreach ($entityPaths as $path) {
+        echo "<p>Path $path: " . (is_dir($path) ? 'EXISTS' : 'MISSING') . "</p>";
+        if (is_dir($path)) {
+            $files = glob($path . '/*.php');
+            echo "<p>  Files: " . count($files) . "</p>";
+        }
+    }
+
+    // Check if the SalaryComponent entity annotation is parseable
+    $refClass = new ReflectionClass('XHRM\\Entity\\SalaryComponent');
+    $docComment = $refClass->getDocComment();
+    echo "<p>Entity doc comment: <code>" . htmlspecialchars($docComment) . "</code></p>";
+
+    // Check namespace/file location
+    echo "<p>File: " . $refClass->getFileName() . "</p>";
+
+} catch (Throwable $e) {
+    echo "<p style='color:red'>Doctrine error: " . $e->getMessage() . "</p>";
+    echo "<pre>" . $e->getTraceAsString() . "</pre>";
+}
+
+// Test 3: Check if the Doctrine ORM integration finds entity paths
+echo "<h3>3. App Entity Dir Config</h3>";
+try {
+    // Check the config to see where entities are loaded from
+    $pluginConfig = __DIR__ . '/../src/plugins/XHRMPayrollPlugin/config/PayrollPluginConfiguration.php';
+    if (file_exists($pluginConfig)) {
+        echo "<p style='color:green'>✓ Plugin config exists</p>";
+        echo "<pre>" . htmlspecialchars(file_get_contents($pluginConfig)) . "</pre>";
+    }
+} catch (Throwable $e) {
+    echo "<p style='color:red'>Error: " . $e->getMessage() . "</p>";
+}
+
+// Test 4: Check the xhrm.log for recent errors
+echo "<h3>4. Recent Errors</h3>";
+$logFiles = [
+    '/home/u118669189/.logs/error_log_xsofty_com',
+    __DIR__ . '/../src/log/xhrm.log',
+    __DIR__ . '/../var/log/xhrm.log',
+];
+foreach ($logFiles as $lf) {
+    if (file_exists($lf)) {
+        $lines = file($lf);
+        $lastLines = array_slice($lines, -20);
+        echo "<h4>$lf (last 20 lines)</h4>";
+        echo "<pre style='font-size:9px;max-height:300px;overflow:auto'>" . htmlspecialchars(implode('', $lastLines)) . "</pre>";
+    }
+}
