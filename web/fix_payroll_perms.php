@@ -47,13 +47,13 @@ try {
         "INSERT IGNORE INTO ohrm_api_permission (api_name, module_id, data_group_id) SELECT 'XHRM\\\\Payroll\\\\Api\\\\PayrollEmailAPI', m.id, dg.id FROM ohrm_module m, ohrm_data_group dg WHERE m.name = 'payroll' AND dg.name = 'payroll'",
 
         // 3. Grant Admin role full access (non-self)
-        "INSERT IGNORE INTO ohrm_data_group_permission (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 1, 1, 1, 0 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'Admin' AND dg.name = 'payroll'",
+        "INSERT IGNORE INTO ohrm_user_role_data_group (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 1, 1, 1, 0 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'Admin' AND dg.name = 'payroll'",
 
         // 4. Grant Admin role full access (self)
-        "INSERT IGNORE INTO ohrm_data_group_permission (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 1, 1, 1, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'Admin' AND dg.name = 'payroll'",
+        "INSERT IGNORE INTO ohrm_user_role_data_group (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 1, 1, 1, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'Admin' AND dg.name = 'payroll'",
 
         // 5. Grant ESS role read access (self)
-        "INSERT IGNORE INTO ohrm_data_group_permission (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 0, 0, 0, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'ESS' AND dg.name = 'payroll'",
+        "INSERT IGNORE INTO ohrm_user_role_data_group (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 0, 0, 0, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'ESS' AND dg.name = 'payroll'",
     ];
 
     foreach ($statements as $i => $sql) {
@@ -76,7 +76,7 @@ try {
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<p><b>API Permissions registered (" . count($rows) . "):</b></p><pre>" . json_encode($rows, JSON_PRETTY_PRINT) . "</pre>";
 
-    $stmt = $pdo->query("SELECT ur.name AS role_name, p.can_read, p.can_create, p.can_update, p.can_delete, p.self FROM ohrm_data_group_permission p JOIN ohrm_user_role ur ON p.user_role_id = ur.id JOIN ohrm_data_group dg ON p.data_group_id = dg.id WHERE dg.name = 'payroll'");
+    $stmt = $pdo->query("SELECT ur.name AS role_name, p.can_read, p.can_create, p.can_update, p.can_delete, p.self FROM ohrm_user_role_data_group p JOIN ohrm_user_role ur ON p.user_role_id = ur.id JOIN ohrm_data_group dg ON p.data_group_id = dg.id WHERE dg.name = 'payroll'");
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<p><b>Role Permissions:</b></p><pre>" . json_encode($rows, JSON_PRETTY_PRINT) . "</pre>";
 
