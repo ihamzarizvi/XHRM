@@ -83,6 +83,7 @@
             "XHRM\\Mobile\\": "./src/plugins/XHRMMobilePlugin",
             "XHRM\\Claim\\": "./src/plugins/XHRMClaimPlugin",
             "XHRM\\PasswordManager\\": "./src/plugins/XHRMPasswordManagerPlugin",
+            "XHRM\\Payroll\\": "./src/plugins/XHRMPayrollPlugin",
             "XHRM\\Installer\\": "./installer",
             "XHRM\\Entity\\": [
                 "./src/plugins/XHRMAdminPlugin/entity",
@@ -100,7 +101,8 @@
                 "./src/plugins/XHRMLDAPAuthenticationPlugin/entity",
                 "./src/plugins/XHRMBuzzPlugin/entity",
                 "./src/plugins/XHRMClaimPlugin/entity",
-                "./src/plugins/XHRMOpenidAuthenticationPlugin/entity"
+                "./src/plugins/XHRMOpenidAuthenticationPlugin/entity",
+                "./src/plugins/XHRMPayrollPlugin/entity"
             ]
         }
     },

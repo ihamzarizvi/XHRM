@@ -75,6 +75,7 @@ class ComposerStaticInitb9f6a66eae6951ea8e908515b703d2a1
             'XHRM\\Recruitment\\' => 17,
             'XHRM\\Pim\\' => 9,
             'XHRM\\Performance\\' => 17,
+            'XHRM\\Payroll\\' => 13,
             'XHRM\\PasswordManager\\' => 21,
             'XHRM\\OpenidAuthentication\\' => 26,
             'XHRM\\ORM\\' => 9,
@@ -342,6 +343,10 @@ class ComposerStaticInitb9f6a66eae6951ea8e908515b703d2a1
         array (
             0 => __DIR__ . '/../..' . '/src/plugins/XHRMPerformancePlugin',
         ),
+        'XHRM\\Payroll\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/plugins/XHRMPayrollPlugin',
+        ),
         'XHRM\\PasswordManager\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/plugins/XHRMPasswordManagerPlugin',
@@ -408,6 +413,7 @@ class ComposerStaticInitb9f6a66eae6951ea8e908515b703d2a1
             13 => __DIR__ . '/../..' . '/src/plugins/XHRMBuzzPlugin/entity',
             14 => __DIR__ . '/../..' . '/src/plugins/XHRMClaimPlugin/entity',
             15 => __DIR__ . '/../..' . '/src/plugins/XHRMOpenidAuthenticationPlugin/entity',
+            16 => __DIR__ . '/../..' . '/src/plugins/XHRMPayrollPlugin/entity',
         ),
         'XHRM\\Dashboard\\' => 
         array (
