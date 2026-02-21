@@ -4,32 +4,29 @@ ini_set('display_errors', 1);
 
 echo "<h2>Fix Payroll API Permissions</h2>";
 
-// Try multiple possible locations for Conf.php
+// Find and load Conf
 $confPaths = [
     __DIR__ . '/../lib/confs/Conf.php',
     __DIR__ . '/../src/lib/confs/Conf.php',
 ];
-$confLoaded = false;
 foreach ($confPaths as $cp) {
     if (file_exists($cp)) {
         require_once $cp;
-        $confLoaded = true;
         echo "<p>Conf loaded from: $cp</p>";
         break;
     }
 }
-if (!$confLoaded) {
-    die("<p style='color:red'>Cannot find Conf.php</p>");
-}
+
 $conf = new Conf();
 
 try {
     $pdo = new PDO(
-        "mysql:host={$conf->dbhost};dbname={$conf->dbname};port={$conf->dbport}",
-        $conf->dbuser,
-        $conf->dbpass,
+        "mysql:host={$conf->getDbHost()};dbname={$conf->getDbName()};port={$conf->getDbPort()}",
+        $conf->getDbUser(),
+        $conf->getDbPass(),
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
+    echo "<p style='color:green'>✓ Database connected</p>";
 
     $statements = [
         // 1. Create data group for Payroll
@@ -55,7 +52,7 @@ try {
         // 4. Grant Admin role full access (self)
         "INSERT IGNORE INTO ohrm_data_group_permission (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 1, 1, 1, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'Admin' AND dg.name = 'payroll'",
 
-        // 5. Grant ESS role read access
+        // 5. Grant ESS role read access (self)
         "INSERT IGNORE INTO ohrm_data_group_permission (user_role_id, data_group_id, can_read, can_create, can_update, can_delete, self) SELECT r.id, dg.id, 1, 0, 0, 0, 1 FROM ohrm_user_role r, ohrm_data_group dg WHERE r.name = 'ESS' AND dg.name = 'payroll'",
     ];
 
@@ -75,11 +72,11 @@ try {
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<p><b>Data Group:</b></p><pre>" . json_encode($rows, JSON_PRETTY_PRINT) . "</pre>";
 
-    $stmt = $pdo->query("SELECT ap.id, ap.api_name, m.name AS module_name, dg.name AS data_group FROM ohrm_api_permission ap JOIN ohrm_module m ON ap.module_id = m.id JOIN ohrm_data_group dg ON ap.data_group_id = dg.id WHERE dg.name = 'payroll'");
+    $stmt = $pdo->query("SELECT ap.id, ap.api_name FROM ohrm_api_permission ap JOIN ohrm_data_group dg ON ap.data_group_id = dg.id WHERE dg.name = 'payroll'");
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<p><b>API Permissions registered (" . count($rows) . "):</b></p><pre>" . json_encode($rows, JSON_PRETTY_PRINT) . "</pre>";
 
-    $stmt = $pdo->query("SELECT ur.name AS role_name, dg.name AS data_group, p.can_read, p.can_create, p.can_update, p.can_delete, p.self FROM ohrm_data_group_permission p JOIN ohrm_user_role ur ON p.user_role_id = ur.id JOIN ohrm_data_group dg ON p.data_group_id = dg.id WHERE dg.name = 'payroll'");
+    $stmt = $pdo->query("SELECT ur.name AS role_name, p.can_read, p.can_create, p.can_update, p.can_delete, p.self FROM ohrm_data_group_permission p JOIN ohrm_user_role ur ON p.user_role_id = ur.id JOIN ohrm_data_group dg ON p.data_group_id = dg.id WHERE dg.name = 'payroll'");
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<p><b>Role Permissions:</b></p><pre>" . json_encode($rows, JSON_PRETTY_PRINT) . "</pre>";
 
