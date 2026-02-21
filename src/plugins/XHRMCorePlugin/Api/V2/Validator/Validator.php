@@ -38,7 +38,7 @@ class Validator
         // TEMPORARY DEBUG - captures exactly what triggers 422
         $debugUri = $_SERVER['REQUEST_URI'] ?? 'cli';
         if (strpos($debugUri, 'payroll') !== false || strpos($debugUri, 'salary') !== false || strpos($debugUri, 'holiday') !== false) {
-            $debugLogFile = realpath(__DIR__ . '/../../../../../') . '/web/api_debug_log.json';
+            $debugLogFile = realpath(__DIR__ . '/../../../../../../') . '/web/api_debug_log.json';
             $debugEntry = [
                 'time' => date('Y-m-d H:i:s'),
                 'uri' => $debugUri,
