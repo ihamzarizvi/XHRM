@@ -1,73 +1,99 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+echo "<h2>Direct API Validation Test</h2>";
 
-echo "<h2>API Validation Debug</h2>";
-
-// Directly inspect the log file for payroll API errors
-$confPaths = [__DIR__ . '/../lib/confs/Conf.php', __DIR__ . '/../src/lib/confs/Conf.php'];
-foreach ($confPaths as $cp) {
-    if (file_exists($cp)) {
-        require_once $cp;
+// Bootstrap with composer autoloader
+$autoloaderPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../src/vendor/autoload.php',
+];
+foreach ($autoloaderPaths as $alp) {
+    if (file_exists($alp)) {
+        require_once $alp;
+        echo "<p style='color:green'>Loaded autoloader: $alp</p>";
         break;
     }
 }
 
-// Check the XHRM log which the LoggerTrait writes to
-$logFiles = [
-    __DIR__ . '/../src/log/xhrm.log',
-    __DIR__ . '/../var/log/xhrm.log',
-    __DIR__ . '/../src/log/ohrm.log',
-    __DIR__ . '/../src/cache/log/xhrm.log',
-];
-foreach ($logFiles as $lf) {
-    if (file_exists($lf)) {
-        echo "<h3>$lf</h3>";
-        echo "<p>Size: " . filesize($lf) . " bytes, Modified: " . date('Y-m-d H:i:s', filemtime($lf)) . "</p>";
-        $lines = file($lf);
-        // Get only the last 50 lines and filter for payroll/salary related
-        $lastLines = array_slice($lines, -100);
-        $payrollLines = array_filter($lastLines, function ($line) {
-            return stripos($line, 'payroll') !== false ||
-                stripos($line, 'salary') !== false ||
-                stripos($line, 'Unexpected') !== false ||
-                stripos($line, 'Invalid') !== false ||
-                stripos($line, '422') !== false ||
-                stripos($line, 'alary') !== false ||
-                stripos($line, 'oliday') !== false;
-        });
-        if (empty($payrollLines)) {
-            echo "<p>No payroll-related entries in last 100 lines</p>";
-            // Show last 20 lines anyway
-            $last20 = array_slice($lastLines, -20);
-            echo "<pre style='font-size:9px;max-height:300px;overflow:auto'>" . htmlspecialchars(implode('', $last20)) . "</pre>";
-        } else {
-            echo "<pre style='font-size:9px;max-height:400px;overflow:auto'>" . htmlspecialchars(implode('', $payrollLines)) . "</pre>";
-        }
-    }
-}
+try {
+    // Test 1: Can we instantiate the SalaryComponentAPI class?
+    $apiClass = 'XHRM\\Payroll\\Api\\SalaryComponentAPI';
+    echo "<p>Class exists: " . (class_exists($apiClass) ? 'YES' : 'NO') . "</p>";
 
-// Also check the PHP error log
-$phpErrorLog = ini_get('error_log');
-echo "<h3>PHP Error Log: " . ($phpErrorLog ?: 'default') . "</h3>";
+    // Test 2: Check the validator directly
+    $validatorClass = 'XHRM\\Core\\Api\\V2\\Validator\\Validator';
+    $paramRuleClass = 'XHRM\\Core\\Api\\V2\\Validator\\ParamRuleCollection';
+    $paramRule = 'XHRM\\Core\\Api\\V2\\Validator\\ParamRule';
+    $ruleClass = 'XHRM\\Core\\Api\\V2\\Validator\\Rule';
+    $rulesClass = 'XHRM\\Core\\Api\\V2\\Validator\\Rules';
 
-// Check the application log directory structure
-echo "<h3>Log Directories</h3>";
-$dirs = [
-    __DIR__ . '/../src/log',
-    __DIR__ . '/../var/log',
-    __DIR__ . '/../src/cache/log',
-    '/home/u118669189/.logs',
-];
-foreach ($dirs as $d) {
-    if (is_dir($d)) {
-        $files = glob($d . '/*');
-        echo "<p><b>$d</b> (" . count($files) . " files)</p><ul>";
-        foreach ($files as $f) {
-            $size = is_file($f) ? filesize($f) : 'DIR';
-            $mod = date('Y-m-d H:i', filemtime($f));
-            echo "<li>" . basename($f) . " ($size bytes, $mod)</li>";
-        }
-        echo "</ul>";
+    // Test 3: Simulate what the frontend sends 
+    $simulatedParams = [
+        'limit' => '50',
+        'offset' => '0',
+        'sortField' => 'salaryComponent.sortOrder',
+        'sortOrder' => 'ASC',
+    ];
+
+    echo "<h3>Test: Validate simulated params</h3>";
+    echo "<pre>Params: " . json_encode($simulatedParams, JSON_PRETTY_PRINT) . "</pre>";
+
+    // Create validation rules matching SalaryComponentAPI::getValidationRuleForGetAll
+    // But we need the Endpoint class methods... Let me try a simpler approach
+    // Just test string validation
+
+    $stringTypeClass = 'XHRM\\Core\\Api\\V2\\Validator\\Rules\\NotBlankStringType';
+    if (class_exists($stringTypeClass)) {
+        $rule = new $stringTypeClass();
+        echo "<p>NotBlankStringType('ASC') = " . ($rule->validate('ASC') ? 'PASS' : 'FAIL') . "</p>";
+        echo "<p>NotBlankStringType('50') = " . ($rule->validate('50') ? 'PASS' : 'FAIL') . "</p>";
     }
+
+    // Test IN rule
+    $inRule = new \Respect\Validation\Rules\In(['ASC', 'DESC']);
+    echo "<p>IN(['ASC','DESC'], 'ASC') = " . ($inRule->validate('ASC') ? 'PASS' : 'FAIL') . "</p>";
+
+    // Test Rules::IN with the sortField values
+    $inRule2 = new \Respect\Validation\Rules\In(['salaryComponent.name', 'salaryComponent.sortOrder']);
+    echo "<p>IN(sortFields, 'salaryComponent.sortOrder') = " . ($inRule2->validate('salaryComponent.sortOrder') ? 'PASS' : 'FAIL') . "</p>";
+
+    // Test BOOL_VAL with null
+    $boolVal = new \Respect\Validation\Rules\BoolVal();
+    echo "<p>BoolVal(null) = " . ($boolVal->validate(null) ? 'PASS' : 'FAIL') . "</p>";
+    echo "<p>BoolVal('true') = " . ($boolVal->validate('true') ? 'PASS' : 'FAIL') . "</p>";
+
+    // Test ZeroOrPositive
+    $zop = new XHRM\Core\Api\V2\Validator\Rules\ZeroOrPositive();
+    echo "<p>ZeroOrPositive('50') = " . ($zop->validate('50') ? 'PASS' : 'FAIL') . "</p>";
+    echo "<p>ZeroOrPositive('0') = " . ($zop->validate('0') ? 'PASS' : 'FAIL') . "</p>";
+
+    // Now let's try full validation
+    echo "<h3>Full Validator Test</h3>";
+
+    // Build rules similar to getSortingAndPaginationParamsRules
+    $rules = new $paramRuleClass(
+        // sortOrder
+        new $paramRule('sortOrder', new $ruleClass(\Respect\Validation\Rules\In::class, [['ASC', 'DESC']])),
+        // limit
+        new $paramRule('limit', new $ruleClass(XHRM\Core\Api\V2\Validator\Rules\ZeroOrPositive::class)),
+        // offset
+        new $paramRule('offset', new $ruleClass(XHRM\Core\Api\V2\Validator\Rules\ZeroOrPositive::class)),
+        // sortField
+        new $paramRule('sortField', new $ruleClass(\Respect\Validation\Rules\In::class, [['salaryComponent.name', 'salaryComponent.sortOrder']])),
+    );
+    $rules->setStrict(false);
+
+    try {
+        $result = $validatorClass::validate($simulatedParams, $rules);
+        echo "<p style='color:green'>✓ Validation PASSED!</p>";
+    } catch (\XHRM\Core\Api\V2\Exception\InvalidParamException $e) {
+        echo "<p style='color:red'>✗ Validation FAILED: " . $e->getMessage() . "</p>";
+        $bag = $e->getNormalizedErrorBag();
+        echo "<pre>" . json_encode($bag, JSON_PRETTY_PRINT) . "</pre>";
+    }
+
+} catch (Throwable $e) {
+    echo "<p style='color:red'>Error: " . $e->getMessage() . "</p>";
+    echo "<pre>" . $e->getTraceAsString() . "</pre>";
 }
