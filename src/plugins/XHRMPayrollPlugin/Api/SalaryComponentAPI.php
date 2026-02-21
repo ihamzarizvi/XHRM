@@ -131,7 +131,7 @@ class SalaryComponentAPI extends Endpoint implements CrudEndpoint
             new ParamRule(self::PARAMETER_IS_TAXABLE, new Rule(Rules::BOOL_VAL)),
             new ParamRule(self::PARAMETER_IS_ACTIVE, new Rule(Rules::BOOL_VAL)),
             $this->getValidationDecorator()->notRequiredParamRule(
-                new ParamRule(self::PARAMETER_SORT_ORDER, new Rule(Rules::INT_TYPE))
+                new ParamRule(self::PARAMETER_SORT_ORDER, new Rule(Rules::ZERO_OR_POSITIVE))
             ),
         );
     }
