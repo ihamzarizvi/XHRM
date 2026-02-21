@@ -93,7 +93,9 @@ class AttendanceRuleAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(...$this->getSortingAndPaginationParamsRules([]));
+        $rules = new ParamRuleCollection(...$this->getSortingAndPaginationParamsRules([]));
+        $rules->setStrict(false);
+        return $rules;
     }
 
     public function getValidationRuleForGetOne(): ParamRuleCollection

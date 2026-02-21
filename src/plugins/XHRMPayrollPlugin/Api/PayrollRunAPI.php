@@ -132,10 +132,12 @@ class PayrollRunAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(
+        $rules = new ParamRuleCollection(
             $this->getValidationDecorator()->notRequiredParamRule(new ParamRule('status', new Rule(Rules::STRING_TYPE))),
             ...$this->getSortingAndPaginationParamsRules([])
         );
+        $rules->setStrict(false);
+        return $rules;
     }
 
     public function getValidationRuleForGetOne(): ParamRuleCollection

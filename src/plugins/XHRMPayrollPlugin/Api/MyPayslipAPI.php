@@ -35,8 +35,10 @@ class MyPayslipAPI extends Endpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(
+        $rules = new ParamRuleCollection(
             ...$this->getSortingAndPaginationParamsRules([])
         );
+        $rules->setStrict(false);
+        return $rules;
     }
 }

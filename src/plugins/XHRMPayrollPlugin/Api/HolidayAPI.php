@@ -97,10 +97,12 @@ class HolidayAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(
-            $this->getValidationDecorator()->notRequiredParamRule(new ParamRule('year', new Rule(Rules::INT_TYPE))),
+        $rules = new ParamRuleCollection(
+            $this->getValidationDecorator()->notRequiredParamRule(new ParamRule('year', new Rule(Rules::POSITIVE))),
             ...$this->getSortingAndPaginationParamsRules([])
         );
+        $rules->setStrict(false);
+        return $rules;
     }
 
     public function getValidationRuleForGetOne(): ParamRuleCollection

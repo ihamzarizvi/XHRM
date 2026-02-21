@@ -138,7 +138,7 @@ class SalaryComponentAPI extends Endpoint implements CrudEndpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection(
+        $rules = new ParamRuleCollection(
             $this->getValidationDecorator()->notRequiredParamRule(
                 new ParamRule(self::PARAMETER_TYPE, new Rule(Rules::STRING_TYPE))
             ),
@@ -147,6 +147,8 @@ class SalaryComponentAPI extends Endpoint implements CrudEndpoint
             ),
             ...$this->getSortingAndPaginationParamsRules(['salaryComponent.name', 'salaryComponent.sortOrder'])
         );
+        $rules->setStrict(false);
+        return $rules;
     }
 
     public function getValidationRuleForGetOne(): ParamRuleCollection

@@ -51,6 +51,8 @@ class PayrollEmailAPI extends Endpoint
 
     public function getValidationRuleForGetAll(): ParamRuleCollection
     {
-        return new ParamRuleCollection();
+        $rules = new ParamRuleCollection();
+        $rules->setStrict(false);
+        return $rules;
     }
 }
