@@ -35,6 +35,27 @@ class Validator
      */
     public static function validate(array $values, ?ParamRuleCollection $rules = null): bool
     {
+        // TEMPORARY DEBUG - captures exactly what triggers 422
+        $debugUri = $_SERVER['REQUEST_URI'] ?? 'cli';
+        if (strpos($debugUri, 'payroll') !== false || strpos($debugUri, 'salary') !== false || strpos($debugUri, 'holiday') !== false) {
+            $debugLogFile = realpath(__DIR__ . '/../../../../../') . '/web/api_debug_log.json';
+            $debugEntry = [
+                'time' => date('Y-m-d H:i:s'),
+                'uri' => $debugUri,
+                'param_values' => $values,
+                'rule_keys' => $rules ? array_keys($rules->getMap()) : [],
+                'is_strict' => $rules ? $rules->isStrict() : null,
+            ];
+            $debugExisting = [];
+            if (file_exists($debugLogFile)) {
+                $debugExisting = json_decode(file_get_contents($debugLogFile), true) ?: [];
+            }
+            $debugExisting[] = $debugEntry;
+            $debugExisting = array_slice($debugExisting, -20);
+            @file_put_contents($debugLogFile, json_encode($debugExisting, JSON_PRETTY_PRINT));
+        }
+        // END TEMPORARY DEBUG
+
         $paramRules = $rules->getMap();
         $paramKeys = array_keys($paramRules);
         $values = self::getOnlyNecessaryValues($values, $rules);
