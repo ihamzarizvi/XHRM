@@ -2,10 +2,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h2>API Debug - Check what params fail validation</h2>";
+echo "<h2>API Validation Debug</h2>";
 
-// Load autoloader
-require_once __DIR__ . '/../src/vendor/autoload.php';
+// Directly inspect the log file for payroll API errors
 $confPaths = [__DIR__ . '/../lib/confs/Conf.php', __DIR__ . '/../src/lib/confs/Conf.php'];
 foreach ($confPaths as $cp) {
     if (file_exists($cp)) {
@@ -13,101 +12,62 @@ foreach ($confPaths as $cp) {
         break;
     }
 }
-$conf = new Conf();
-$pdo = new PDO("mysql:host={$conf->getDbHost()};dbname={$conf->getDbName()};port={$conf->getDbPort()}", $conf->getDbUser(), $conf->getDbPass(), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-// Retrieve the validation rules from the SalaryComponentAPI
-echo "<h3>1. Checking SalaryComponent getAll Validation Rules</h3>";
-try {
-    // Check what the actual validation rule names are
-    $ruleClass = 'XHRM\\Core\\Api\\V2\\Validator\\ParamRuleCollection';
-    $endpointClass = 'XHRM\\Payroll\\Api\\SalaryComponentAPI';
-
-    echo "<p>SalaryComponentAPI class exists: " . (class_exists($endpointClass) ? 'YES' : 'NO') . "</p>";
-    echo "<p>ParamRuleCollection class exists: " . (class_exists($ruleClass) ? 'YES' : 'NO') . "</p>";
-
-    // Check the actual sort/pagination param names
-    $commonParamsClass = 'XHRM\\Core\\Api\\CommonParams';
-    if (class_exists($commonParamsClass)) {
-        $reflector = new ReflectionClass($commonParamsClass);
-        $constants = $reflector->getConstants();
-        echo "<p><b>CommonParams constants:</b></p><pre>";
-        foreach ($constants as $k => $v) {
-            if (stripos($k, 'SORT') !== false || stripos($k, 'LIMIT') !== false || stripos($k, 'OFFSET') !== false || stripos($k, 'PAGE') !== false) {
-                echo "$k = $v\n";
-            }
-        }
-        echo "</pre>";
-    }
-
-    // Check the Request class getAllParameters method
-    $reqClass = 'XHRM\\Core\\Api\\V2\\Request';
-    if (class_exists($reqClass)) {
-        $reflector = new ReflectionClass($reqClass);
-        $method = $reflector->getMethod('getAllParameters');
-        echo "<p>Request::getAllParameters() method exists on line " . $method->getStartLine() . "-" . $method->getEndLine() . "</p>";
-        echo "<p>File: " . $method->getFileName() . "</p>";
-
-        // Read the actual source code of the method
-        $source = file_get_contents($method->getFileName());
-        $lines = explode("\n", $source);
-        $methodLines = array_slice($lines, $method->getStartLine() - 1, $method->getEndLine() - $method->getStartLine() + 1);
-        echo "<pre>";
-        foreach ($methodLines as $i => $line) {
-            echo ($method->getStartLine() + $i) . ": " . htmlspecialchars($line) . "\n";
-        }
-        echo "</pre>";
-    }
-
-} catch (Throwable $e) {
-    echo "<p style='color:red'>Error: " . $e->getMessage() . "</p>";
-    echo "<pre>" . $e->getTraceAsString() . "</pre>";
-}
-
-// 2. Simulate what the frontend sends and check
-echo "<h3>2. Simulated Request Params</h3>";
-$simulatedParams = [
-    'limit' => '50',
-    'offset' => '0',
-    'sortField' => 'salaryComponent.sortOrder',
-    'sortOrder' => 'ASC',
+// Check the XHRM log which the LoggerTrait writes to
+$logFiles = [
+    __DIR__ . '/../src/log/xhrm.log',
+    __DIR__ . '/../var/log/xhrm.log',
+    __DIR__ . '/../src/log/ohrm.log',
+    __DIR__ . '/../src/cache/log/xhrm.log',
 ];
-echo "<p>Frontend GET sends: </p><pre>" . json_encode($simulatedParams, JSON_PRETTY_PRINT) . "</pre>";
-
-// 3. Check if the entity mapping is correct
-echo "<h3>3. Entity Check</h3>";
-try {
-    $entityClass = 'XHRM\\Entity\\SalaryComponent';
-    if (class_exists($entityClass)) {
-        $ref = new ReflectionClass($entityClass);
-        echo "<p style='color:green'>✓ SalaryComponent entity at: " . $ref->getFileName() . "</p>";
-        echo "<p>Doc comment: " . htmlspecialchars($ref->getDocComment()) . "</p>";
+foreach ($logFiles as $lf) {
+    if (file_exists($lf)) {
+        echo "<h3>$lf</h3>";
+        echo "<p>Size: " . filesize($lf) . " bytes, Modified: " . date('Y-m-d H:i:s', filemtime($lf)) . "</p>";
+        $lines = file($lf);
+        // Get only the last 50 lines and filter for payroll/salary related
+        $lastLines = array_slice($lines, -100);
+        $payrollLines = array_filter($lastLines, function ($line) {
+            return stripos($line, 'payroll') !== false ||
+                stripos($line, 'salary') !== false ||
+                stripos($line, 'Unexpected') !== false ||
+                stripos($line, 'Invalid') !== false ||
+                stripos($line, '422') !== false ||
+                stripos($line, 'alary') !== false ||
+                stripos($line, 'oliday') !== false;
+        });
+        if (empty($payrollLines)) {
+            echo "<p>No payroll-related entries in last 100 lines</p>";
+            // Show last 20 lines anyway
+            $last20 = array_slice($lastLines, -20);
+            echo "<pre style='font-size:9px;max-height:300px;overflow:auto'>" . htmlspecialchars(implode('', $last20)) . "</pre>";
+        } else {
+            echo "<pre style='font-size:9px;max-height:400px;overflow:auto'>" . htmlspecialchars(implode('', $payrollLines)) . "</pre>";
+        }
     }
-
-    $entityClass2 = 'XHRM\\Entity\\Holiday';
-    if (class_exists($entityClass2)) {
-        $ref2 = new ReflectionClass($entityClass2);
-        echo "<p style='color:green'>✓ Holiday entity at: " . $ref2->getFileName() . "</p>";
-        echo "<p>Doc comment: " . htmlspecialchars($ref2->getDocComment()) . "</p>";
-    }
-} catch (Throwable $e) {
-    echo "<p style='color:red'>Error: " . $e->getMessage() . "</p>";
 }
 
-// 4. Check if Doctrine's metadata cache has entries for payroll entities
-echo "<h3>4. Doctrine Metadata Cache</h3>";
-$metaCacheDir = __DIR__ . '/../src/cache/doctrine_metadata';
-if (is_dir($metaCacheDir)) {
-    $files = [];
-    $iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($metaCacheDir));
-    foreach ($iter as $f) {
-        if ($f->isFile())
-            $files[] = $f->getFilename();
+// Also check the PHP error log
+$phpErrorLog = ini_get('error_log');
+echo "<h3>PHP Error Log: " . ($phpErrorLog ?: 'default') . "</h3>";
+
+// Check the application log directory structure
+echo "<h3>Log Directories</h3>";
+$dirs = [
+    __DIR__ . '/../src/log',
+    __DIR__ . '/../var/log',
+    __DIR__ . '/../src/cache/log',
+    '/home/u118669189/.logs',
+];
+foreach ($dirs as $d) {
+    if (is_dir($d)) {
+        $files = glob($d . '/*');
+        echo "<p><b>$d</b> (" . count($files) . " files)</p><ul>";
+        foreach ($files as $f) {
+            $size = is_file($f) ? filesize($f) : 'DIR';
+            $mod = date('Y-m-d H:i', filemtime($f));
+            echo "<li>" . basename($f) . " ($size bytes, $mod)</li>";
+        }
+        echo "</ul>";
     }
-    echo "<p>Total cached metadata files: " . count($files) . "</p>";
-    // Look for payroll-related
-    $payrollFiles = array_filter($files, fn($f) => stripos($f, 'SalaryComponent') !== false || stripos($f, 'Holiday') !== false || stripos($f, 'FinancialYear') !== false);
-    echo "<p>Payroll metadata files: " . count($payrollFiles) . "</p>";
-    foreach ($payrollFiles as $pf)
-        echo "<p>  - $pf</p>";
 }
