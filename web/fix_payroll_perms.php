@@ -4,7 +4,23 @@ ini_set('display_errors', 1);
 
 echo "<h2>Fix Payroll API Permissions</h2>";
 
-require_once __DIR__ . '/../lib/confs/Conf.php';
+// Try multiple possible locations for Conf.php
+$confPaths = [
+    __DIR__ . '/../lib/confs/Conf.php',
+    __DIR__ . '/../src/lib/confs/Conf.php',
+];
+$confLoaded = false;
+foreach ($confPaths as $cp) {
+    if (file_exists($cp)) {
+        require_once $cp;
+        $confLoaded = true;
+        echo "<p>Conf loaded from: $cp</p>";
+        break;
+    }
+}
+if (!$confLoaded) {
+    die("<p style='color:red'>Cannot find Conf.php</p>");
+}
 $conf = new Conf();
 
 try {
