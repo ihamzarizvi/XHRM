@@ -57,7 +57,7 @@ class ValidationDecorator
                 new Rule($paramRule->getCompositeClass(), [...$paramRule->getRules()])
             ]
         );
-        $paramRule->setCompositeClass(Rules::ONE_OF);
+        $paramRule->setCompositeClass(Rules::ANY_OF);
         return $paramRule;
     }
 }
