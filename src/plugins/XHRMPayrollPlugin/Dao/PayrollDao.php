@@ -140,7 +140,11 @@ class PayrollDao extends BaseDao
         $qb = $this->createQueryBuilder(Holiday::class, 'h');
         $qb->orderBy('h.date', 'ASC');
         if ($year !== null) {
-            $qb->andWhere('YEAR(h.date) = :year')->setParameter('year', $year);
+            $start = new \DateTime("{$year}-01-01");
+            $end = new \DateTime("{$year}-12-31");
+            $qb->andWhere('h.date BETWEEN :start AND :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end);
         }
         return $qb->getQuery()->execute();
     }
